@@ -52,13 +52,17 @@ Entity	*World::addEntity(Entity *entity)
 World	*World::addSystem(ISystem *system)
 {
   this->_systems.push_back(system);
+  std::sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
+							      const ISystem *system_b) -> bool {
+	      return (system_a->getPriority() > system_b->getPriority());
+	    });
   return (this);
 }
 
 //----- ----- Methods ----- ----- //
 void	World::process()
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this](ISystem *system) -> void {
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
       system->process(this->_entities);
     });
 }

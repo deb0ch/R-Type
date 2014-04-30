@@ -4,10 +4,10 @@
 #include	"BarSystem.hh"
 
 //----- ----- Constructors ----- ----- //
-BarSystem::BarSystem()
+BarSystem::BarSystem() : ASystem(5)
 {}
 
-BarSystem::BarSystem(const BarSystem&)
+BarSystem::BarSystem(const BarSystem&) : BarSystem()
 {}
 
 //----- ----- Destructor ----- ----- //

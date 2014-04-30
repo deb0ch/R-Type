@@ -1,8 +1,9 @@
 #include "ASystem.hh"
 #include <algorithm>
 
-ASystem::ASystem()
+ASystem::ASystem(unsigned int priority)
 {
+  this->_priority = priority;
 }
 
 ASystem::~ASystem()
@@ -15,4 +16,9 @@ void ASystem::process(std::vector<Entity *> &entities)
       if (this->canProcess(entity))
 	this->processEntity(entity);
     });
+}
+
+unsigned int	ASystem::getPriority() const
+{
+  return this->_priority;
 }

@@ -1,21 +1,21 @@
 #ifndef ISYSTEM_H_
 # define ISYSTEM_H_
 
-# include	<vector>
+# include		<vector>
+# include		"Entity.hh"
 
-# include	"Entity.hh"
-
-class		ISystem
+class			ISystem
 {
 public:
-		ISystem() {};
-  virtual	~ISystem() {};
+			ISystem() {};
+  virtual		~ISystem() {};
 
-  virtual void	process(std::vector<Entity *>&) = 0;
+  virtual void		process(std::vector<Entity *>&) = 0;
+  virtual unsigned int	getPriority() const = 0;
 protected:
   /* Defined system MUST implement those methods */
-  virtual bool	canProcess(Entity *) = 0;
-  virtual void	processEntity(Entity *) = 0;
+  virtual bool		canProcess(Entity *) = 0;
+  virtual void		processEntity(Entity *) = 0;
 };
 
 #endif /* !ISYSTEM_H_ */

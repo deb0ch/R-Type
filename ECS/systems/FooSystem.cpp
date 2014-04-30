@@ -4,10 +4,10 @@
 #include	"FooSystem.hh"
 
 //----- ----- Constructors ----- ----- //
-FooSystem::FooSystem()
+FooSystem::FooSystem() : ASystem(6)
 {}
 
-FooSystem::FooSystem(const FooSystem&)
+FooSystem::FooSystem(const FooSystem &) : FooSystem()
 {}
 
 //----- ----- Destructor ----- ----- //
