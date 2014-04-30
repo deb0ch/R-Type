@@ -26,8 +26,9 @@ SRCS	=	main.cpp		\
 		ASystem.cpp		\
 		AComponent.cpp		\
 \
-		FooComponent.cpp	\
-		FooSystem.cpp
+		FooSystem.cpp		\
+		BarSystem.cpp		\
+		FooComponent.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
