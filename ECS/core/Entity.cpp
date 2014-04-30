@@ -54,6 +54,7 @@ bool	Entity::removeComponent(IComponent *e)
 
   if (iterator == this->_components.end())
     return (false);
+  std::for_each(iterator, this->_components.end(), VectorDeleter<IComponent*>());
   this->_components.erase(iterator, this->_components.end());
   return (true);
 }
@@ -67,6 +68,7 @@ bool	Entity::removeComponent(const std::string &id)
 
   if (iterator == this->_components.end())
     return (false);
+  std::for_each(iterator, this->_components.end(), VectorDeleter<IComponent*>());
   this->_components.erase(iterator, this->_components.end());
   return (true);
 }

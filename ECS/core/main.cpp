@@ -28,6 +28,7 @@ int		main()
   a->addComponent(b);
   a->removeComponent(NULL);
   std::cout << a->hasComponent("FooComponent") << std::endl;
+  delete a;
 
   /**
    * Should be an infinite loop.
