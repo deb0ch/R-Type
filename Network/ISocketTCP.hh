@@ -11,7 +11,7 @@ class ISocketTCP
 public:
 	enum
 	{
-		AnyPort = 0 ///< Special value that tells the system to pick any available port
+		AnyPort = 0
 	};
 
 public:
@@ -20,7 +20,7 @@ public:
 public:
 	virtual ISocketTCP	*accept() = 0;
 	virtual void		listen(const std::size_t block) = 0;
-	virtual void		bind(int port, std::string address = "") = 0;
+	virtual void		bind(int port, const std::string & address = "") = 0;
 	virtual void		setBlocking(bool const blocking) = 0;
 	virtual const bool	isBlocking() const = 0;
 	virtual void		connect(const std::string &address, const int port) = 0;
