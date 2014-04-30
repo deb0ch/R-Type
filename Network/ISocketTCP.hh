@@ -26,7 +26,7 @@ public:
 
 public:
   virtual void		setBlocking(bool const blocking) = 0;
-  virtual bool		isBlocking() const = 0;
+  virtual const bool	isBlocking() const = 0;
   virtual const Status	connect(const std::string &address, const int port) = 0;
   virtual const Status	connect(const int address, const int port) = 0;
   virtual const Status	send(const void* data, const std::size_t size) = 0;

@@ -3,15 +3,16 @@
 
 # include "ISocketTCP.hh"
 
-class USocketTCP : public ISocketTCP
+class SocketTCP : public ISocketTCP
 {
 
 public:
-  virtual ~USocketTCP(){};
+  virtual ~SocketTCP();
+  SocketTCP();
 
 public:
-  virtual void setBlocking(bool const blocking);
-  virtual bool isBlocking() const;
+  virtual void setBlocking(const bool blocking);
+  virtual const bool isBlocking() const;
   virtual void close();
   virtual void init();
 
@@ -21,8 +22,8 @@ public:
   virtual const ISocketTCP::Status receive(void* data, const std::size_t size,
 					   std::size_t &received);
 private:
-  USocketTCP(const USocketTCP &);
-  USocketTCP &operator=(const USocketTCP &);
+  SocketTCP(const SocketTCP &);
+  SocketTCP &operator=(const SocketTCP &);
 
 };
 
