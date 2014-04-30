@@ -8,6 +8,7 @@
 class Socket : public ISocket
 {
 protected :
+	SOCKET socket;
 	WSADATA wsaData;
 
 public :

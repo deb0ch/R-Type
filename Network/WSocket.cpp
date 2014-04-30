@@ -18,12 +18,15 @@ void Socket::init()
 		// Class d'exception a faire
 		std::cerr << "WSAStartup failed: " << res << std::endl;
 	}
+	this->socket = INVALID_SOCKET;
 	std::cout << "win init" << std::endl;
 }
 
 void Socket::close()
 {
 	std::cout << "win close" << std::endl;
+	closesocket(this->socket);
+	WSACleanup();
 }
 
 void Socket::send()
