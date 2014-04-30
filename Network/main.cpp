@@ -12,11 +12,6 @@ int	main()
 {
 	ISocket *sock = new Socket();
 
-	sock->init();
-	sock->send();
-	sock->recieve();
-	sock->close();
-
 #ifdef __linux__ 
 	sleep(5);
 #elif _WIN32

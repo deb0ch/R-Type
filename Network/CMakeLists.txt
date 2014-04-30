@@ -3,8 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 project (R-Type)
 
 set(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
-set(HEADER_FILES ISocket.hh WSocket.hh USocket.hh)
-set(SOURCES main.cpp WSocket.cpp USocket.cpp)
+set(HEADER_FILES *.hh)
+set(SOURCES *.cpp)
 
 file(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
 
