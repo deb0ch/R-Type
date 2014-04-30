@@ -1,16 +1,16 @@
 #include <iostream>
 
 #ifdef __linux__ 
-#include "USocket.hh"
+#include "USocketTCP.hh"
 #include <unistd.h>
 #elif _WIN32
-#include "WSocket.hh"
+#include "WSocketTCP.hh"
 #include <Windows.h>
 #endif
 
 int	main()
 {
-	ISocket *sock = new Socket();
+	ISocketTCP *sock = new SocketTCP();
 
 #ifdef __linux__ 
 	sleep(5);

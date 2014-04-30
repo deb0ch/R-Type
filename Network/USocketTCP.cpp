@@ -1,3 +1,4 @@
+#ifdef __linux__
 
 # include "USocketTCP.hh"
 
@@ -66,3 +67,5 @@ void SocketTCP::close()
 {
   ::close(this->_socket);
 }
+
+#endif
