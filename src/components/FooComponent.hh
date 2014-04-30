@@ -1,9 +1,9 @@
 #ifndef FOOCOMPONENT_H_
 # define FOOCOMPONENT_H_
 
-#include	"IComponent.hh"
+#include "AComponent.hh"
 
-class		FooComponent : public IComponent
+class		FooComponent : public AComponent
 {
 protected:
   int		_foo;

@@ -12,6 +12,10 @@ public:
   virtual	~ISystem() {};
 
   virtual void	process(std::vector<Entity *>&) = 0;
+protected:
+  /* Defined system MUST implement those methods */
+  virtual bool	canProcess(Entity *) = 0;
+  virtual void	processEntity(Entity *) = 0;
 };
 
 #endif /* !ISYSTEM_H_ */
