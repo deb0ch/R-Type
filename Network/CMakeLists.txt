@@ -4,6 +4,7 @@ project (R-Type)
 
 set(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
 
-file(GLOB_RECURSE SOURCES main.cpp)
+include_directories({CMAKE_SOURCE_DIR})
+file(GLOB_RECURSE SOURCES main.cpp WSocket.cpp)
 
 add_executable(R-Type ${SOURCES})
