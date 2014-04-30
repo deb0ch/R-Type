@@ -1,6 +1,7 @@
-#ifndef		SOCKET_H_
-# define	SOCKET_H_
+#ifndef		ISOCKETTCP_H_
+# define	ISOCKETTCP_H_
 
+# include <string>
 # include "SocketFD.hh"
 
 class ISocketTCP
@@ -21,13 +22,13 @@ public:
     };
 
 public:
-  virtual ~Socket(){};
+  virtual ~ISocketTCP(){};
 
 public:
   virtual void		setBlocking(bool const blocking) = 0;
   virtual bool		isBlocking() const = 0;
-  virtual const Status	connect(const std::string &address, const int port);
-  virtual const Status	connect(const int address, const int port);
+  virtual const Status	connect(const std::string &address, const int port) = 0;
+  virtual const Status	connect(const int address, const int port) = 0;
   virtual const Status	send(const void* data, const std::size_t size) = 0;
   virtual const Status	receive(void* data, const std::size_t size,
 				std::size_t &received) = 0;
@@ -36,4 +37,4 @@ public:
 
 };
 
-#endif /* !SOCKET_H_ */
+#endif /* !ISOCKETTCP_H_ */
