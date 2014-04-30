@@ -5,22 +5,22 @@
 
 void Socket::init()
 {
-	std::cout << "init" << std::endl;
+	std::cout << "win init" << std::endl;
 }
 
 void Socket::close()
 {
-	std::cout << "close" << std::endl;
+	std::cout << "win close" << std::endl;
 }
 
 void Socket::send()
 {
-	std::cout << "send" << std::endl;
+	std::cout << "win send" << std::endl;
 }
 
 void Socket::recieve()
 {
-	std::cout << "recieve" << std::endl;
+	std::cout << "win recieve" << std::endl;
 }
 
 #endif

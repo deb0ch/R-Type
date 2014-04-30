@@ -1,15 +1,22 @@
+#include <iostream>
 
 #ifdef __linux__ 
+#include "USocket.hh"
 #include <unistd.h>
 #elif _WIN32
-#include <windows.h>
+#include "WSocket.hh"
+#include <Windows.h>
 #endif
-
-#include <iostream>
 
 int	main()
 {
-	std::cout << "Hello world!" << std::endl;
+	ISocket *sock = new Socket();
+
+	sock->init();
+	sock->send();
+	sock->recieve();
+	sock->close();
+
 #ifdef __linux__ 
 	sleep(5);
 #elif _WIN32

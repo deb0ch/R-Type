@@ -1,5 +1,5 @@
-#ifndef		WSOCKET_H_
-# define	WSOCKET_H_
+#ifndef		USOCKET_H_
+# define	USOCKET_H_
 
 #include "ISocket.hh"
 
@@ -12,4 +12,4 @@ public :
   void close();
 };
 
-#endif /* !WSOCKET_H_ */
+#endif /* !USOCKET_H_ */
