@@ -31,11 +31,39 @@ Entity	*Entity::addComponent(IComponent *component)
   return (this);
 }
 
-bool	Entity::hasComponent(const std::string &string_type) const
+IComponent	*Entity::hasComponent(const std::string &string_type) const
 {
-  return (std::any_of(_components.begin(), _components.end(), [string_type](IComponent *component) -> bool {
-	if (component->getType() == string_type)
-	  return (true);
-	return (false);
-      }));
+  auto iterator = std::find_if(this->_components.begin(), this->_components.end(),
+			       [string_type] (IComponent *component) -> bool {
+				 if (component->getType() == string_type)
+				   return (true);
+				 return (false);
+			       });
+
+  if (iterator == this->_components.end())
+    return (NULL);
+  return (*iterator);
+}
+
+bool	Entity::removeComponent(IComponent *e)
+{
+  auto iterator = std::remove(this->_components.begin(), this->_components.end(), e);
+
+  if (iterator == this->_components.end())
+    return (false);
+  this->_components.erase(iterator, this->_components.end());
+  return (true);
+}
+
+bool	Entity::removeComponent(const std::string &id)
+{
+  auto iterator = std::remove_if(this->_components.begin(), this->_components.end(),
+				 [id] (IComponent *component) -> bool {
+				   return (component->getType() == id);
+				 });
+
+  if (iterator == this->_components.end())
+    return (false);
+  this->_components.erase(iterator, this->_components.end());
+  return (true);
 }

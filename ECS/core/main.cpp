@@ -20,6 +20,15 @@ int		main()
 
   world.addEntity(world.createEntity());
 
+  Entity *a;
+  IComponent *b;
+
+  a = world.createEntity();
+  b = new FooComponent(5);
+  a->addComponent(b);
+  a->removeComponent(NULL);
+  std::cout << a->hasComponent("FooComponent") << std::endl;
+
   /**
    * Should be an infinite loop.
    * Delta time should be calculated and passed to World::process()
