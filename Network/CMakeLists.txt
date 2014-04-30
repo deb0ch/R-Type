@@ -4,6 +4,6 @@ project (R-Type)
 
 set(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
 
-file(GLOB_RECURSE SOURCES *.cpp)
+file(GLOB_RECURSE SOURCES main.cpp)
 
 add_executable(R-Type ${SOURCES})
