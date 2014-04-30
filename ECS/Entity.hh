@@ -17,7 +17,7 @@ public:
   ~Entity();
   Entity&	operator=(const Entity&);
 
-  void		addComponent(IComponent *);
+  Entity	*addComponent(IComponent *);
   bool		hasComponent(const std::string &string_type) const;
 };
 

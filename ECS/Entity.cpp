@@ -25,9 +25,10 @@ Entity&	Entity::operator=(const Entity& ref)
 
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
-void	Entity::addComponent(IComponent *component)
+Entity	*Entity::addComponent(IComponent *component)
 {
   this->_components.push_back(component);
+  return (this);
 }
 
 bool	Entity::hasComponent(const std::string &string_type) const

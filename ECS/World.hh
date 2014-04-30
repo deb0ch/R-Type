@@ -19,10 +19,10 @@ public:
   ~World();
   World&	operator=(const World&);
 
-  Entity*	getEntity();
+  Entity	*createEntity();
 
-  void		addEntity(Entity *);
-  void		addSystem(ISystem *);
+  Entity	*addEntity(Entity *);
+  World		*addSystem(ISystem *);
 
   void		process();
 };

@@ -32,7 +32,7 @@ World&	World::operator=(const World& ref)
 
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
-Entity	*World::getEntity()
+Entity	*World::createEntity()
 {
   Entity	*res;
 
@@ -41,16 +41,18 @@ Entity	*World::getEntity()
   return (res);
 }
 
-void	World::addEntity(Entity *entity)
+Entity	*World::addEntity(Entity *entity)
 {
   this->_entities.push_back(entity);
   if (entity->_id >= this->_nextEntityID)
     _nextEntityID = entity->_id + 1;
+  return (entity);
 }
 
-void	World::addSystem(ISystem *system)
+World	*World::addSystem(ISystem *system)
 {
   this->_systems.push_back(system);
+  return (this);
 }
 
 //----- ----- Methods ----- ----- //
