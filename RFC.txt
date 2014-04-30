@@ -1,4 +1,4 @@
-//Question
+﻿//Question
 	pk ne pas tout gérer du coté server?
 	pas besoin de pigpong ni tcp pour quiter la partie si on ne resoi pas sont paquet on ne l'affiche pas
 
@@ -93,3 +93,33 @@ SHOOT TYPE
         +-------+------------+-------+---------+
 
         PRESSED is an Uchar. It means if the shot key is pressed or released.
+
+ENTITY TYPE
+
+        0       1           5            9       10           14    ...
+        +-------+-----------+------------+-------+------------+------+
+        | TYPE  | ID Entity | NUM PAQUET | FORCE |  COMPONENT | ...  |
+        +-------+-----------+------------+-------+------------+------+
+
+DEAD TYPE
+
+        0       1           5
+        +-------+-----------+
+        | TYPE  | ID Entity |
+        +-------+-----------+
+
+QUIT TYPE
+
+        0       1           5
+        +-------+-----------+
+        | TYPE  | ID Entity |
+        +-------+-----------+
+
+CLIENT EVENT
+
+
+        0       1           5              9
+        +-------+-----------+--------------+
+        | TYPE  | NUM PAQUET|  TYPE EVENT  |
+        +-------+-----------+--------------+
+
