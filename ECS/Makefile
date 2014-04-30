@@ -5,7 +5,7 @@ RM	=	rm -f
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
 CXXFLAGS 	+=	-ansi -pedantic
-CXXFLAGS	+=	-I./ECS/core/ -I./ECS/systems/ -I./ECS/components/ -I./ECS/entities/
+CXXFLAGS	+=	-I./core/ -I./systems/ -I./components/ -I./entities/
 CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
@@ -19,17 +19,17 @@ LDFLAGS	+=	$(LIBDIR) $(LIB)
 
 NAME	=	rtype
 
-SRCS	=	ECS/core/main.cpp		\
-		ECS/core/World.cpp		\
+SRCS	=	core/main.cpp		\
+		core/World.cpp		\
 \
-		ECS/core/Entity.cpp		\
+		core/Entity.cpp		\
 \
-		ECS/core/ASystem.cpp		\
-		ECS/core/AComponent.cpp		\
+		core/ASystem.cpp		\
+		core/AComponent.cpp		\
 \
-		ECS/components/FooComponent.cpp	\
-		ECS/systems/FooSystem.cpp	\
-		ECS/systems/BarSystem.cpp
+		components/FooComponent.cpp	\
+		systems/FooSystem.cpp	\
+		systems/BarSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
