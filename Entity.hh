@@ -4,6 +4,7 @@
 # include	<vector>
 
 # include	"IComponent.hh"
+# include	<string>
 
 class		Entity
 {
@@ -17,6 +18,7 @@ public:
   Entity&	operator=(const Entity&);
 
   void		addComponent(IComponent *);
+  bool		hasComponent(const std::string &string_type) const;
 };
 
 #endif /* !ENTITY_H_ */

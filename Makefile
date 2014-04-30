@@ -23,6 +23,9 @@ SRCS	=	main.cpp		\
 \
 		Entity.cpp		\
 \
+		ASystem.cpp		\
+		AComponent.cpp		\
+\
 		FooComponent.cpp	\
 		FooSystem.cpp
 

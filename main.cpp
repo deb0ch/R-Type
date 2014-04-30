@@ -2,6 +2,7 @@
 
 #include	"FooSystem.hh"
 #include	"World.hh"
+#include	"FooComponent.hh"
 
 int		main()
 {
@@ -9,9 +10,9 @@ int		main()
 
   world.addSystem(new FooSystem());
 
-  world.addEntity(world.getEntity());
-  world.addEntity(world.getEntity());
-  world.addEntity(world.getEntity());
+  world.addEntity(world.getEntity()); //->addComponent(static_cast<IComponent *>(new FooComponent(12)))
+  world.addEntity(world.getEntity()); //->addComponent(new FooComponent(12))
+  world.addEntity(world.getEntity()); //->addComponent(new FooComponent(12))
 
   /**
    * Should be an infinite loop.
