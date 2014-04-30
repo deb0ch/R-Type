@@ -23,6 +23,8 @@ public:
 
   Entity	*addEntity(Entity *);
   World		*addSystem(ISystem *);
+  World		*removeEntity(Entity *);
+  World		*removeSystem(ISystem *);
 
   void		process();
 };

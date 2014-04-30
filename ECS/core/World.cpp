@@ -52,10 +52,23 @@ Entity	*World::addEntity(Entity *entity)
 World	*World::addSystem(ISystem *system)
 {
   this->_systems.push_back(system);
+  system->setWorld(this);
   std::sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
 							      const ISystem *system_b) -> bool {
 	      return (system_a->getPriority() > system_b->getPriority());
 	    });
+  return (this);
+}
+
+World	*World::removeEntity(Entity *entity)
+{
+  this->_entities.erase(std::remove(this->_entities.begin(), this->_entities.end(), entity), this->_entities.end());
+  return (this);
+}
+
+World	*World::removeSystem(ISystem *system)
+{
+  this->_systems.erase(std::remove(this->_systems.begin(), this->_systems.end(), system), this->_systems.end());
   return (this);
 }
 

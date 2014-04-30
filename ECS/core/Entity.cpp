@@ -1,5 +1,6 @@
-#include <algorithm>
-#include "Entity.hh"
+#include	<algorithm>
+#include	"Entity.hh"
+#include	"VectorDeleter.hpp"
 
 //----- ----- Constructors ----- ----- //
 Entity::Entity()
@@ -13,7 +14,9 @@ Entity::Entity(const Entity& ref)
 
 //----- ----- Destructor ----- ----- //
 Entity::~Entity()
-{}
+{
+  std::for_each(this->_components.begin(), this->_components.end(), VectorDeleter<IComponent*>());
+}
 
 //----- ----- Operators ----- ----- //
 Entity&	Entity::operator=(const Entity& ref)
