@@ -2,6 +2,16 @@
 
 #include	"FooSystem.hh"
 #include	"World.hh"
+#include	"FooComponent.hh"
+
+void	create_entity_test(World &world)
+{
+  Entity *e;
+
+  e = world.getEntity();
+  e->addComponent(new FooComponent(15));
+  world.addEntity(e);
+}
 
 int		main()
 {
@@ -9,9 +19,9 @@ int		main()
 
   world.addSystem(new FooSystem());
 
-  world.addEntity(world.getEntity());
-  world.addEntity(world.getEntity());
-  world.addEntity(world.getEntity());
+  create_entity_test(world);
+  create_entity_test(world);
+  create_entity_test(world);
 
   /**
    * Should be an infinite loop.

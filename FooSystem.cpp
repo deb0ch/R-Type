@@ -24,9 +24,14 @@ FooSystem&	FooSystem::operator=(const FooSystem&)
 //----- ----- Setters ----- ----- //
 
 //----- ----- Methods ----- ----- //
-void		FooSystem::process(std::vector<Entity *> &entities)
+void		FooSystem::processEntity(Entity *entity)
 {
-  std::for_each(entities.begin(), entities.end(), [](Entity *entity) -> void {
-      std::cout << "FooSystem is processing entity " << entity->_id << " !" << std::endl;
-	});
+  std::cout << "FooSystem is processing entity " << entity->_id << " !" << std::endl;
+}
+
+bool		FooSystem::canProcess(Entity *entity)
+{
+  if (entity->hasComponent("FooComponent"))
+    return (true);
+  return (false);
 }

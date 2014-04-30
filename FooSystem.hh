@@ -1,19 +1,19 @@
 #ifndef FOOSYSTEM_H_
 # define FOOSYSTEM_H_
 
-#include	"ISystem.hh"
+# include "ASystem.hh"
 
-class		FooSystem : public ISystem
+class		FooSystem : public ASystem
 {
-protected:
-
 public:
-  FooSystem();
-  FooSystem(const FooSystem&);
-  ~FooSystem();
+		FooSystem();
+		FooSystem(const FooSystem&);
+		~FooSystem();
   FooSystem&	operator=(const FooSystem&);
 
-  virtual void	process(std::vector<Entity *>&);
+protected:
+  virtual void	processEntity(Entity *);
+  virtual bool	canProcess(Entity *);
 };
 
 #endif /* !FOOSYSTEM_H_ */

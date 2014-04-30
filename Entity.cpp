@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Entity.hh"
 
 //----- ----- Constructors ----- ----- //
@@ -27,4 +28,13 @@ Entity&	Entity::operator=(const Entity& ref)
 void	Entity::addComponent(IComponent *component)
 {
   this->_components.push_back(component);
+}
+
+bool	Entity::hasComponent(const std::string &string_type) const
+{
+  return (std::any_of(_components.begin(), _components.end(), [string_type](IComponent *component) -> bool {
+	if (component->getType() == string_type)
+	  return (true);
+	return (false);
+      }));
 }

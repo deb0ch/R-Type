@@ -1,12 +1,12 @@
 #include "FooComponent.hh"
 
 //----- ----- Constructors ----- ----- //
-FooComponent::FooComponent(int foo)
+FooComponent::FooComponent(int foo) : AComponent("FooComponent")
 {
   this->_foo = foo;
 }
 
-FooComponent::FooComponent(const FooComponent&)
+FooComponent::FooComponent(const FooComponent&) : AComponent("FooComponent")
 {}
 
 //----- ----- Destructor ----- ----- //
