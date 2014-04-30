@@ -4,7 +4,7 @@
 # include <string>
 # include "IComponent.hh"
 
-class AComponent
+class AComponent : public IComponent
 {
 public:
   AComponent() = delete;

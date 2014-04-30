@@ -4,15 +4,24 @@
 #include	"World.hh"
 #include	"FooComponent.hh"
 
+void	create_entity_test(World &world)
+{
+  Entity *e;
+
+  e = world.getEntity();
+  e->addComponent(new FooComponent(15));
+  world.addEntity(e);
+}
+
 int		main()
 {
   World		world;
 
   world.addSystem(new FooSystem());
 
-  world.addEntity(world.getEntity()); //->addComponent(static_cast<IComponent *>(new FooComponent(12)))
-  world.addEntity(world.getEntity()); //->addComponent(new FooComponent(12))
-  world.addEntity(world.getEntity()); //->addComponent(new FooComponent(12))
+  create_entity_test(world);
+  create_entity_test(world);
+  create_entity_test(world);
 
   /**
    * Should be an infinite loop.
