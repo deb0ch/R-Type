@@ -10,5 +10,9 @@
 int	main()
 {
 	std::cout << "Hello world!" << std::endl;
+#ifdef __linux__ 
+	sleep(5);
+#elif _WIN32
 	Sleep(5000);
+#endif
 }
