@@ -22,16 +22,18 @@ LDFLAGS	+=	$(LIBDIR) $(LIB)
 
 NAME	=	rtype
 
-SRCS	=	main.cpp			\
+SRCS	=	main.cpp				\
 \
-		components/Pos2DComponent.cpp	\
-		components/Box2DComponent.cpp	\
-		components/Speed2DComponent.cpp	\
+		components/Pos2DComponent.cpp		\
+		components/Speed2DComponent.cpp		\
+		components/Box2DComponent.cpp		\
+		components/SFMLSpriteComponent.cpp	\
 \
-		systems/MoveSystem.cpp		\
-		systems/CollisionSystem.cpp	\
+		events/CollisionEvent.cpp		\
 \
-		events/CollisionEvent.cpp
+		systems/MoveSystem.cpp			\
+		systems/CollisionSystem.cpp		\
+		systems/SFMLRenderSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
