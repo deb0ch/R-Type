@@ -1,6 +1,6 @@
-CC	=	g++
+CXX		=	g++
 
-RM	=	rm -f
+RM		=	rm -f
 
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
