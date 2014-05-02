@@ -16,7 +16,8 @@ public:
 
   virtual void	bind(const int port, const std::string &address = "") = 0;
   virtual int	send(const void* data, const size_t size, const int address, const int port) = 0;
-  virtual int	receive(void* data, const size_t size, std::string &address, int port) = 0;
+  virtual int	send(const void* data, const size_t size, const std::string & address, const int port) = 0;
+  virtual int	receive(void* data, const size_t size, std::string& address, int& port) = 0;
   virtual void	close() = 0;
   virtual void	init() = 0;
 

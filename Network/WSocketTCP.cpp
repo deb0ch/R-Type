@@ -81,17 +81,6 @@ ISocketTCP *SocketTCP::accept()
 		return (NULL);
 	}
 	return (new SocketTCP(sock));
-	/*sockaddr_in clientService;
-	int			socketlen = sizeof(clientService);
-	SOCKET		sock;
-
-	sock = ::accept(this->socket, reinterpret_cast<SOCKADDR*>(&clientService), &socketlen);
-	if (sock == INVALID_SOCKET)
-	{
-		std::cerr << "accept() failed." << std::endl;
-		return (NULL);
-	}
-	return (new SocketTCP(sock));*/
 }
 
 void SocketTCP::bind(int port, const std::string &address)

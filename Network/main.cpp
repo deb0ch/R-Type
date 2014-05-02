@@ -2,12 +2,14 @@
 
 #ifdef __linux__
 #include "USocketTCP.hh"
+#include "USocketUDP.hh"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #elif _WIN32
 #include "WSocketTCP.hh"
+#include "WSocketUDP.hh"
 #include <Windows.h>
 #endif
 
@@ -55,13 +57,47 @@ void testserver()
 	}
 }
 
+void testrecept()
+{
+	ISocketUDP *sock = new SocketUDP();
+	char toto[42];
+	std::string ipaddress;
+	int port;
+	int res;
+
+	sock->init();
+	sock->bind(PORT, IPADRESS);
+	res = 1;
+	while (res != 0)
+	{
+		memset(toto, 0, 42);
+		res = sock->receive(toto, 42, ipaddress, port);
+		std::cout << ipaddress << " send " << toto << std::endl;
+	}
+}
+
+void testsend()
+{
+	ISocketUDP *sock = new SocketUDP();
+	char toto[42];
+	int res;
+
+	sock->init();
+	res = 1;
+	res = sock->send(toto, 42, IPADRESS, PORT);
+}
+
 int	main()
 {
 	// BUG SERVER PARTIE
 	// RECIEVE FAILED !!!!
+	// TCP
 	//testclient();
-	testserver();
+	//testserver();
 
+	// UDP
+	//testrecept();
+	testsend();
 #ifdef __linux__
 	sleep(4);
 #elif _WIN32
