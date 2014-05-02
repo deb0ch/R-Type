@@ -1,4 +1,4 @@
-CC	=	g++
+CXX	=	g++
 
 RM	=	rm -f
 
@@ -32,7 +32,7 @@ LIBECS:
 		make -C ./ECS/
 
 $(NAME):	$(OBJS)
-		$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 		$(RM) $(OBJS)
