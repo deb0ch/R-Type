@@ -9,12 +9,21 @@ SocketTCP::SocketTCP() {
   this->_isBlocking = true;
 }
 
-SocketTCP::~SocketTCP() {
-  this->close();
+SocketTCP::SocketTCP(int socket) {
+  this->_isBlocking = true;
+  this->_socket = socket;
 }
 
 void SocketTCP::init() {
-  //TODO
+  int reuseAddr = 1;
+
+  this->_socket = ::socket(AF_INET, SOCK_STREAM, 0);
+  setsockopt(this->_socket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
+  if (this->_socket < 0)
+    {
+      //TODO throw
+      std::cerr << "socket() failed." << std::endl;
+    }
 }
 
 void SocketTCP::setBlocking(bool const blocking) {
@@ -31,6 +40,21 @@ void SocketTCP::setBlocking(bool const blocking) {
 
 const bool SocketTCP::isBlocking() const {
   return (this->_isBlocking);
+}
+
+ISocketTCP		*SocketTCP::accept() {
+  struct sockaddr_in	cs;
+  socklen_t		lencs = sizeof(cs);
+  int			socket;
+
+  socket = ::accept(this->_socket, reinterpret_cast<struct sockaddr*>(&cs), &lencs);
+  if (socket < 0)
+    {
+      //TODO throw
+      std::cerr << "accept() failed." << std::endl;
+      return (NULL);
+    }
+  return (new SocketTCP(socket));
 }
 
 void SocketTCP::connect(const std::string &address, const int port) {
@@ -75,8 +99,7 @@ int SocketTCP::send(const void* data, const std::size_t size) {
   return (ret);
 }
 
-int SocketTCP::receive(void* data, const std::size_t size,
-		       std::size_t &received) {
+int SocketTCP::receive(void* data, const std::size_t size) {
   int ret = ::recv(this->_socket, data, size, 0);
 
   if (ret == -1)
@@ -86,6 +109,10 @@ int SocketTCP::receive(void* data, const std::size_t size,
 
 void SocketTCP::close() {
   ::close(this->_socket);
+}
+
+SocketTCP::~SocketTCP() {
+  this->close();
 }
 
 #endif

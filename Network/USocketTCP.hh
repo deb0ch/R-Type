@@ -20,7 +20,7 @@ public:
 
 public:
   virtual ISocketTCP	*accept();
-  virtual void		listen(uint32_t block);
+  virtual void		listen(const std::size_t block);
   virtual void		bind(int port, const std::string & address = "");
 
   virtual void setBlocking(const bool blocking);
@@ -31,8 +31,11 @@ public:
   virtual void connect(const std::string &address, const int port);
   virtual void connect(const int address, const int port);
   virtual int send(const void* data, const std::size_t size);
-  virtual int receive(void* data, const std::size_t size,
-					   std::size_t &received);
+  virtual int receive(void* data, const std::size_t size);
+
+private:
+  SocketTCP(int socke);
+
 private:
   SocketTCP(const SocketTCP &);
   SocketTCP &operator=(const SocketTCP &);
