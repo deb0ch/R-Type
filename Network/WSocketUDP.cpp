@@ -66,6 +66,24 @@ void SocketUDP::bind(int port, const std::string &address)
 	}
 }
 
+int	SocketUDP::send(const void* data, const size_t size, const std::string & address, const int port)
+{
+	hostent* hostinfo = NULL;
+	sockaddr_in dest;
+	int len_sockint = sizeof(dest);
+	int res;
+
+	hostinfo = ::gethostbyname(address.c_str());
+	dest.sin_port = ::htons(port);
+	dest.sin_family = AF_INET;
+	dest.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
+
+	res = sendto(this->socket, reinterpret_cast<const char *>(data), size, 0,
+		reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
+
+	return (res);
+}
+
 int	SocketUDP::send(const void* data, const size_t size, const int address, const int port)
 {
 	sockaddr_in dest;
@@ -75,19 +93,11 @@ int	SocketUDP::send(const void* data, const size_t size, const int address, cons
 	dest.sin_port = ::htons(port);
 	dest.sin_family = AF_INET;
 	dest.sin_addr.s_addr = ::htonl(address);
+	
 	res = sendto(this->socket, reinterpret_cast<const char *>(data), size, 0,
 		reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
-	if (res == SOCKET_ERROR)
-	{
-		std::cerr << "send failed" << std::endl;
-		// Exception
-	}
-	return (res);
-}
 
-int	send(const void* data, const size_t size, const std::string & address, const int port)
-{
-	return (0);
+	return (res);
 }
 
 int	SocketUDP::receive(void* data, const size_t size,
@@ -98,21 +108,19 @@ int	SocketUDP::receive(void* data, const size_t size,
 
 	int res = ::recvfrom(this->socket, reinterpret_cast<char *>(data),
 		size, 0, reinterpret_cast<struct sockaddr *>(&src), &len_sockint);
-	if (res == SOCKET_ERROR)
-	{
-		std::cerr << "recieve failed" << std::endl;
-		// Exception
-	}
 	address = inet_ntoa(src.sin_addr);
 	port = ntohs(src.sin_port);
+	if (res == SOCKET_ERROR)
+	{
+		// Exception
+		std::cerr << "recvfrom failed" << std::endl;
+	}
 	return (res);
 }
 
-void		SocketUDP::setBlocking(const bool block)
+void		SocketUDP::setBlocking(const bool blocking)
 {
-	u_long blocking = block ? 0 : 1;
-	this->blockSocket = block;
-	ioctlsocket(this->socket, FIONBIO, &blocking);
+	this->blockSocket = blocking;
 }
 
 const bool	SocketUDP::isBlocking() const
