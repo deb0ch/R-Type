@@ -22,22 +22,30 @@ LDFLAGS	+=	$(LIBDIR) $(LIB)
 
 NAME	=	rtype
 
-SRCS	=	main.cpp			\
+SRCS	=	main.cpp				\
 \
-		components/Pos2DComponent.cpp	\
-		components/Box2DComponent.cpp	\
+		components/Pos2DComponent.cpp		\
+		components/Speed2DComponent.cpp		\
+		components/Box2DComponent.cpp		\
+		components/SFMLSpriteComponent.cpp	\
 \
-		systems/MoveSystem.cpp		\
-		systems/CollisionSystem.cpp	\
+		events/CollisionEvent.cpp		\
 \
-		events/CollisionEvent.cpp
+		systems/MoveSystem.cpp			\
+		systems/CollisionSystem.cpp		\
+		systems/SFMLRenderSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:		LIBECS $(NAME)
+all:		LIBNETWORK LIBECS $(NAME)
 
 LIBECS:
 		make -C ./ECS/
+
+LIBNETWORK:
+		mkdir -p Network/build
+		cd Network/build && cmake ..
+		$(MAKE) -C Network/build
 
 $(NAME):	$(OBJS)
 		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
