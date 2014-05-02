@@ -21,6 +21,7 @@ NAME	=	rtype
 SRCS	=	main.cpp			\
 \
 		components/Pos2DComponent.cpp	\
+		components/Box2DComponent.cpp	\
 \
 		systems/MoveSystem.cpp
 

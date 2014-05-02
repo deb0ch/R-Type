@@ -104,6 +104,11 @@ World	*World::removeSystem(const std::string &type)
   return (this);
 }
 
+std::vector<Entity *> &World::getEntities()
+{
+  return (this->_entities);
+}
+
 //----- ----- Methods ----- ----- //
 void	World::process()
 {

@@ -28,6 +28,8 @@ public:
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
+  std::vector<Entity *> &getEntities();
+
   void		process();
 };
 

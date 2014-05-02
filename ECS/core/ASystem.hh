@@ -2,6 +2,7 @@
 # define ASYSTEM_H_
 
 # include		"ISystem.hh"
+# include		"World.hh"
 
 class			ASystem : public ISystem
 {
