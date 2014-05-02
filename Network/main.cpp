@@ -1,8 +1,11 @@
 #include <iostream>
 
-#ifdef __linux__ 
+#ifdef __linux__
 #include "USocketTCP.hh"
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #elif _WIN32
 #include "WSocketTCP.hh"
 #include <Windows.h>
@@ -14,7 +17,7 @@
 void testclient()
 {
 	ISocketTCP *sock = new SocketTCP();
-	char *sendmsg = "i am the client !";
+	char sendmsg[] = "i am the client !";
 	sock->init();
 	sock->connect(IPADRESS, PORT);
 	char toto[42];
@@ -30,32 +33,38 @@ void testclient()
 
 void testserver()
 {
-	ISocketTCP *sock = new SocketTCP();
-	ISocketTCP *client;
-	char *sendmsg = "i am the server !";
-	char toto[42];
+  ISocketTCP *sock = new SocketTCP();
+  ISocketTCP *client;
+  char sendmsg[] = "i am the server !";
+  char toto[42];
 
-	sock->init();
-	sock->bind(PORT, IPADRESS);
-	sock->listen(10);
-	client = sock->accept();
-	memset(toto, 0, 42);
-	std::size_t res = client->receive(toto, 42);
-	if (res > 0)
+  sock->init();
+  sock->bind(PORT, IPADRESS);
+  sock->listen(10);
+  client = sock->accept();
+  memset(toto, 0, 42);
+  std::size_t res = 0;
+  while ((res  = client->receive(toto, 42)))
+    {
+      if (res > 0)
 	{
-		std::cout << "server recieve [" << toto << "]" << std::endl;
-		//sock->send(sendmsg, strlen(sendmsg));
+	  std::cout << "server recieve [" << toto << "]" << std::endl;
+	  //sock->send(sendmsg, strlen(sendmsg));
 	}
+      else{
+	break;
+      }
+    }
 }
 
 int	main()
 {
 	// BUG SERVER PARTIE
 	// RECIEVE FAILED !!!!
-	testclient();
-	//testserver();
+	//testclient();
+	testserver();
 
-#ifdef __linux__ 
+#ifdef __linux__
 	sleep(4);
 #elif _WIN32
 	Sleep(10000);

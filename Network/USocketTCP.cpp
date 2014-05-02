@@ -42,6 +42,31 @@ const bool SocketTCP::isBlocking() const {
   return (this->_isBlocking);
 }
 
+void		SocketTCP::listen(const std::size_t block)
+{
+  if (::listen(this->_socket, block) < 0)
+    std::cerr << "listen() failed." << std::endl; //TODO throw
+}
+
+void		SocketTCP::bind(int port, const std::string & address) {
+  struct hostent*    hostinfo = NULL;
+  struct sockaddr_in sin;
+
+  if (address == "")
+    sin.sin_addr.s_addr = htonl(INADDR_ANY);
+  else
+    {
+      hostinfo = ::gethostbyname(address.c_str());
+      if (hostinfo == NULL)
+	std::cerr << "bind didn't know this host." << std::endl; //TODO throw
+      sin.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
+    }
+  sin.sin_family = AF_INET;
+  sin.sin_port = htons(port);
+  if (::bind(this->_socket, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)))
+    std::cerr << "bind() failed." << std::endl; //TODO throw
+}
+
 ISocketTCP		*SocketTCP::accept() {
   struct sockaddr_in	cs;
   socklen_t		lencs = sizeof(cs);
