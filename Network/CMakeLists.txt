@@ -7,7 +7,7 @@ set(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
 set(HEADER_FILES 
 	ISocketTCP.hh
 	USocketTCP.hh
-	WSocketTCP.
+	WSocketTCP.hh
 	ISocketUDP.hh
 	WSocketUDP.hh
 	USocketUDP.hh
