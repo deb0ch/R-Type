@@ -1,6 +1,7 @@
 #ifdef __linux__
 
 #include <fcntl.h>
+#include "NetworkException.hh"
 #include "USocketTCP.hh"
 
 static const int INVALIDE_SOCKET = -1;
