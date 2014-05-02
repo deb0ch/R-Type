@@ -26,9 +26,8 @@ public:
 
 	virtual void connect(const std::string &address, const int port);
 	virtual void connect(const int address, const int port);
-	virtual void send(const void* data, const std::size_t size);
-	virtual void receive(void* data, const std::size_t size,
-		std::size_t &received);
+	virtual int send(const void* data, const std::size_t size);
+	virtual int receive(void* data, const std::size_t size);
 private:
 	SocketTCP(const SocketTCP &);
 	SocketTCP &operator=(const SocketTCP &);
