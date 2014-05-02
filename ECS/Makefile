@@ -5,51 +5,48 @@ RM	=	rm -f
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
 CXXFLAGS 	+=	-ansi -pedantic
-CXXFLAGS	+=	-I./core/ -I./systems/ -I./components/ -I./entities/
 CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE =
+INCLUDE		=	-I./core/ -I./systems/ -I./components/ -I./entities/
 
-LIBDIR	=
-LIB	=
+#LIBDIR		=
+#LIB		=
 
-LDFLAGS	+=	$(LIBDIR) $(LIB)
+#LDFLAGS	+=	$(LIBDIR) $(LIB)
 
-NAME	=	rtype
+NAME	=	libecs.a
 
-SRCS	=	core/main.cpp		\
-		core/World.cpp		\
-\
-		core/Entity.cpp		\
-\
-		core/ASystem.cpp		\
+SRCS	=	core/World.cpp			\
+		core/Entity.cpp			\
 		core/AComponent.cpp		\
-\
-		components/FooComponent.cpp	\
-		systems/FooSystem.cpp	\
-		systems/BarSystem.cpp
+		core/ASystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-		$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+		ar rcs $(NAME) $(OBJS)
+		mkdir -p includes/
+		cp core/*.hh includes/
 
 clean:
 		$(RM) $(OBJS)
+		$(RM) -r includes/
 
 fclean:		clean
 		$(RM) $(NAME)
+		rm -rf includes/
 
 re:		fclean all
 
-run:		$(NAME)
-		./$(NAME) $(PARAMS)
+#run:		$(NAME)
+#		./$(NAME) $(PARAMS)
 
-debug:		$(NAME)
-		valgrind --track-origins=yes $(OPTIONS) ./$(NAME) $(PARAMS)
+#debug:		$(NAME)
+#		valgrind --track-origins=yes $(OPTIONS) ./$(NAME) $(PARAMS)
 
-.PHONY:		all clean fclean re run debug
+.PHONY:		all clean fclean re
+#run debug

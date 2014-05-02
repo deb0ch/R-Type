@@ -1,22 +1,17 @@
 #include	<iostream>
 
-#include	"BarSystem.hh"
-#include	"FooComponent.hh"
-#include	"FooSystem.hh"
 #include	"World.hh"
+#include	"Pos2DComponent.hh"
+#include	"MoveSystem.hh"
 
 int		main()
 {
   World		world;
 
-  world.addSystem(new FooSystem());
-  world.addSystem(new BarSystem());
+  world.addSystem(new MoveSystem());
 
   world.addEntity(world.createEntity()
-		  ->addComponent(new FooComponent(0)));
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new FooComponent(42)));
+  		  ->addComponent(new Pos2DComponent(0.0f, 0.0f)));
 
   world.addEntity(world.createEntity());
 
