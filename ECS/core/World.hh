@@ -19,10 +19,14 @@ public:
   ~World();
   World&	operator=(const World&);
 
-  Entity*	getEntity();
+  Entity	*createEntity();
 
-  void		addEntity(Entity *);
-  void		addSystem(ISystem *);
+  World		*addEntity(Entity *);
+  World		*addSystem(ISystem *);
+  World		*removeEntity(Entity *);
+  World		*removeEntity(unsigned long id);
+  World		*removeSystem(ISystem *);
+  World		*removeSystem(const std::string &type);
 
   void		process();
 };

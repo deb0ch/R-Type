@@ -1,27 +1,24 @@
 #include	<iostream>
 
+#include	"BarSystem.hh"
+#include	"FooComponent.hh"
 #include	"FooSystem.hh"
 #include	"World.hh"
-#include	"FooComponent.hh"
-
-void	create_entity_test(World &world)
-{
-  Entity *e;
-
-  e = world.getEntity();
-  e->addComponent(new FooComponent(15));
-  world.addEntity(e);
-}
 
 int		main()
 {
   World		world;
 
   world.addSystem(new FooSystem());
+  world.addSystem(new BarSystem());
 
-  create_entity_test(world);
-  create_entity_test(world);
-  create_entity_test(world);
+  world.addEntity(world.createEntity()
+		  ->addComponent(new FooComponent(0)));
+
+  world.addEntity(world.createEntity()
+		  ->addComponent(new FooComponent(42)));
+
+  world.addEntity(world.createEntity());
 
   /**
    * Should be an infinite loop.
