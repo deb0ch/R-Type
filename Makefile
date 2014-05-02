@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/includes/ -I./components/ -I./systems/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/
 
 LIBDIR		=	-L./ECS/
 LIB		=	-lecs
