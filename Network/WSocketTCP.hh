@@ -22,6 +22,8 @@ public:
 	virtual void listen(const std::size_t block);
 	virtual void bind(const int port, const std::string & address = "");
 	virtual void setBlocking(bool const blocking);
+	virtual const int		getHandle() const;
+
 	virtual const bool	isBlocking() const;
 	virtual void close();
 	virtual void init();
@@ -33,9 +35,7 @@ public:
 private:
 	SocketTCP(const SocketTCP &);
 	SocketTCP &operator=(const SocketTCP &);
-	const struct addrinfo *getaddrfrom(const int address, const int port);
-	const struct addrinfo *getaddrfrom(const std::string &address, const int port);
 };
 
 
-#endif /* !USOCKETTCP_H_ */
+#endif /* !WSOCKETTCP_H_ */

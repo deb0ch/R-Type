@@ -21,6 +21,7 @@ public:
 public:
   virtual void		setBlocking(const bool blocking);
   virtual const bool	isBlocking() const;
+  virtual const int		getHandle() const;
 
   virtual void	bind(const int port, const std::string &address = "");
   virtual int	send(const void* data, const size_t size, const int address, const int port);

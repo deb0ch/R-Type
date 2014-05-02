@@ -1,6 +1,7 @@
 #ifdef __linux__
 
 #include <fcntl.h>
+#include "NetworkException.hh"
 #include "USocketTCP.hh"
 
 static const int INVALIDE_SOCKET = -1;
@@ -24,6 +25,11 @@ void SocketTCP::init() {
       //TODO throw
       std::cerr << "socket() failed." << std::endl;
     }
+}
+
+const int		SocketTCP::getHandle() const
+{
+	return (this->_socket);
 }
 
 void SocketTCP::setBlocking(bool const blocking) {
