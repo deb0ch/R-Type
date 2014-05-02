@@ -11,6 +11,8 @@ public:
 		CollisionSystem();
   virtual	~CollisionSystem();
 
+  void		collision_event(IEvent *);
+
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
 protected:

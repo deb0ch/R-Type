@@ -9,14 +9,14 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./lib/SFML-1.6/includes
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/
 
-LIBDIR		+=	-L./ECS/
+LIBDIR		+=	-L./ECS/ -L./Network/build/
 #LIBDIR		+=	-L./lib/openal-soft-1.15.1/
 #LIBDIR		+=	-L./lib/SFML-1.6/lib/
 LIB		+=	-lecs
 #LIB		+=	-lopenal
-LIB		+=	-lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio
+LIB		+=	-lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio -lNetworklib
 
 LDFLAGS	+=	$(LIBDIR) $(LIB)
 
@@ -28,7 +28,9 @@ SRCS	=	main.cpp			\
 		components/Box2DComponent.cpp	\
 \
 		systems/MoveSystem.cpp		\
-		systems/CollisionSystem.cpp
+		systems/CollisionSystem.cpp	\
+\
+		events/CollisionEvent.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
