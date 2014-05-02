@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/
 
 LIBDIR		=	-L./ECS/
 LIB		=	-lecs
@@ -24,7 +24,9 @@ SRCS	=	main.cpp			\
 		components/Box2DComponent.cpp	\
 \
 		systems/MoveSystem.cpp		\
-		systems/CollisionSystem.cpp
+		systems/CollisionSystem.cpp	\
+\
+		events/CollisionEvent.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 

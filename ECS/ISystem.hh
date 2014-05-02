@@ -3,6 +3,7 @@
 
 # include		<vector>
 # include		"Entity.hh"
+# include		"IEvent.hh"
 
 class			World;
 

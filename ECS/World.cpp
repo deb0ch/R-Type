@@ -144,3 +144,13 @@ void	World::stop()
       system->stop();
     });
 }
+
+void		World::sendEvent(IEvent *event)
+{
+  this->_event_manager.sendEvent(event);
+}
+
+bool		World::hasEventHandler(const std::string &type) const
+{
+  return (this->_event_manager.hasHandler(type));
+}
