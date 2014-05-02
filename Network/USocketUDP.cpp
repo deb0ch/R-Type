@@ -17,13 +17,12 @@ SocketUDP::SocketUDP(int socket) {
 void SocketUDP::init() {
   int reuseAddr = 1;
 
-  this->_socket = ::socket(AF_INET, SOCK_STREAM, 0);
+  this->_socket = ::socket(AF_INET, SOCK_DGRAM, 0);
   setsockopt(this->_socket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
-  if (this->_socket < 0)
-    {
-      //TODO throw
-      std::cerr << "socket() failed." << std::endl;
-    }
+  if (this->_socket < 0) {
+    //TODO throw
+    std::cerr << "socket() failed." << std::endl;
+  }
 }
 
 void		SocketUDP::bind(const int port, const std::string & address) {
@@ -45,16 +44,51 @@ void		SocketUDP::bind(const int port, const std::string & address) {
     std::cerr << "bind() failed." << std::endl; //TODO throw
 }
 
-int	send(const void* data, const size_t size, const int address, const int port)
-{
+int	SocketUDP::send(const void* data, const size_t size, const int address, const int port) {
+  struct sockaddr_in to;
 
+  to.sin_addr.s_addr = htonl(address);
+  to.sin_port = htons(port);
+  to.sin_family = AF_INET;
+
+  int s = ::sendto(this->_socket, data, size, MSG_NOSIGNAL,
+		   reinterpret_cast<struct sockaddr*>(&to), sizeof(struct sockaddr));
+  if (s == -1)
+    s = -1; //TODO throw;
+  return (s);
 }
 
-int	receive(void* data, const size_t size, const std::string &address, const int port)
-{
+int	SocketUDP::send(const void* data, const size_t size,
+			const std::string & address, const int port) {
+  struct sockaddr_in	to;
+  struct hostent	*hostinfo = NULL;
+  int			s;
 
+  hostinfo = ::gethostbyname(address.c_str());
+  if (hostinfo == NULL)
+    std::cerr << "connection failure." << std::endl;
+  to.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
+  to.sin_port = htons(port);
+  to.sin_family = AF_INET;
+
+  s = ::sendto(this->_socket, data, size, MSG_NOSIGNAL,
+	       reinterpret_cast<struct sockaddr*>(&to), sizeof(struct sockaddr));
+  if (s == -1)
+    s = -1; //TODO throw;
+  return (s);
 }
 
+int	SocketUDP::receive(void* data, const size_t size, std::string &address, int &port) {
+  struct sockaddr_in	from;
+  socklen_t		lenfrom = sizeof(from);
+
+  int s = ::recvfrom(this->_socket, data, size, 0, reinterpret_cast<struct sockaddr*>(&from), &lenfrom);
+  if (s == -1)
+    s = -1; //TODO throw; SocketException(errno);
+  address = ::inet_ntoa(from.sin_addr);
+  port = ::ntohs(from.sin_port);
+  return (s);
+}
 
 void SocketUDP::setBlocking(bool const blocking) {
   int status = ::fcntl(this->_socket, F_GETFL);

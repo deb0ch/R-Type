@@ -117,7 +117,7 @@ void SocketTCP::connect(const int address, const int port) {
 }
 
 int SocketTCP::send(const void* data, const std::size_t size) {
-  int ret = ::send(this->_socket, data, size, 0);
+  int ret = ::send(this->_socket, data, size, MSG_NOSIGNAL);
 
   if (ret == -1)
     ret = -1 ;//TODO throw exection
@@ -125,10 +125,13 @@ int SocketTCP::send(const void* data, const std::size_t size) {
 }
 
 int SocketTCP::receive(void* data, const std::size_t size) {
-  int ret = ::recv(this->_socket, data, size, 0);
+  int ret = ::recv(this->_socket, data, size, MSG_NOSIGNAL);
 
   if (ret == -1)
-    ret = -1 ;//TODO throw exection
+    {
+      ret = -1 ;//TODO throw exection
+      std::cout << "ERROR recv" << std::endl;
+    }
   return (ret);
 }
 
