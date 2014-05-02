@@ -58,7 +58,7 @@ Entity		*Entity::removeComponent(const std::string &type)
 }
 
 //----- ----- Methods ----- ----- //
-IComponent	*Entity::hasComponent(const std::string &type) const
+IComponent	*Entity::getComponent(const std::string &type) const
 {
   auto iterator = std::find_if(this->_components.begin(), this->_components.end(),
 			       [type] (IComponent *component) -> bool {
@@ -68,4 +68,9 @@ IComponent	*Entity::hasComponent(const std::string &type) const
   if (iterator == this->_components.end())
     return (NULL);
   return (*iterator);
+}
+
+bool		Entity::hasComponent(const std::string &string_type) const
+{
+  return (this->getComponent(string_type) != NULL);
 }
