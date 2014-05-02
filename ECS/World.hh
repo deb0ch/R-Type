@@ -31,6 +31,10 @@ public:
   std::vector<Entity *> &getEntities();
 
   void		process();
+  void		start();
+  void		pause();
+  void		resume();
+  void		stop();
 };
 
 #endif /* !WORLD_H_ */

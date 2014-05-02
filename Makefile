@@ -1,4 +1,4 @@
-CC	=	g++
+CXX	=	g++
 
 RM	=	rm -f
 
@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/includes/ -I./components/ -I./systems/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/
 
 LIBDIR		=	-L./ECS/
 LIB		=	-lecs
@@ -33,7 +33,7 @@ LIBECS:
 		make -C ./ECS/
 
 $(NAME):	$(OBJS)
-		$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 		$(RM) $(OBJS)

@@ -3,6 +3,7 @@
 #include	"World.hh"
 #include	"Pos2DComponent.hh"
 #include	"MoveSystem.hh"
+#include	"Entity.hh"
 
 int		main()
 {

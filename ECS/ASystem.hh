@@ -13,6 +13,16 @@ protected:
   unsigned int		_priority;
   World			*_world;
 
+  /* Defined system MUST implement those methods */
+  virtual bool		canProcess(Entity *) = 0;
+  virtual void		processEntity(Entity *) = 0;
+
+  /* Theses method CAN be overloaded in the derived classes  */
+  virtual void		sortEntities(std::vector<Entity *>&);
+
+  virtual void		beforeProcess();
+  virtual void		afterProcess();
+
 public:
   ASystem() = delete;
   ASystem(const std::string &type, unsigned int priority = _default_priority);
@@ -24,7 +34,10 @@ public:
   virtual void		setWorld(World *);
 
   virtual void		process(std::vector<Entity *>&);
-  virtual void		sortEntities(std::vector<Entity *> &) = 0;
+  virtual void		start();
+  virtual void		pause();
+  virtual void		resume();
+  virtual void		stop();
 };
 
 #endif /* !ASYSTEM_H_ */
