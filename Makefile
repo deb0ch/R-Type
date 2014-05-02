@@ -4,7 +4,7 @@ RM	=	rm -f
 
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
-CXXFLAGS 	+=	-ansi -pedantic
+CXXFLAGS 	+=	-pedantic
 CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
