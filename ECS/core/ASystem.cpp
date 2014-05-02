@@ -38,3 +38,6 @@ void		ASystem::process(std::vector<Entity *> &entities)
 	this->processEntity(entity);
     });
 }
+
+void		ASystem::sortEntities(std::vector<Entity *> &)
+{}

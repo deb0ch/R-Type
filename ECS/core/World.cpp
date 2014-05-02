@@ -63,8 +63,8 @@ World	*World::addSystem(ISystem *system)
 World	*World::removeEntity(Entity *entity)
 {
   if (entity)
-    return (this->removeEntity(entity->_id));
-  return (NULL);
+    this->removeEntity(entity->_id);
+  return (this);
 }
 
 World	*World::removeEntity(unsigned long id)
@@ -75,7 +75,7 @@ World	*World::removeEntity(unsigned long id)
 			 });
 
   if (it == this->_entities.end())
-    return (NULL);
+    return (this);
 
   delete *it;
   this->_entities.erase(it);
@@ -85,8 +85,8 @@ World	*World::removeEntity(unsigned long id)
 World	*World::removeSystem(ISystem *system)
 {
   if (system)
-    return (this->removeSystem(system->getType()));
-  return (NULL);
+    this->removeSystem(system->getType());
+  return (this);
 }
 
 World	*World::removeSystem(const std::string &type)
@@ -97,7 +97,7 @@ World	*World::removeSystem(const std::string &type)
 			 });
 
   if (it == this->_systems.end())
-    return (NULL);
+    return (this);
 
   delete *it;
   this->_systems.erase(it);
