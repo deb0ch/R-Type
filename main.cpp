@@ -11,6 +11,10 @@
 #include	"Speed2DComponent.hh"
 #include	"Box2DComponent.hh"
 #include	"SFMLSpriteComponent.hh"
+#include	"MoveSystem.hh"
+#include	"Entity.hh"
+#include	"NetworkSystem.hh"
+#include	"NetworkUpdateComponent.hh"
 
 int		main()
 {
@@ -33,13 +37,19 @@ int		main()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png")));
+		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new NetworkUpdateComponent()));
 
   CollisionSystem *collision;
 
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
+
+  NetworkSystem *network;
+
+  network = new NetworkSystem({"Pos2DComponent"});
+  world.addSystem(network);
 
   world.start();
   for (;;)

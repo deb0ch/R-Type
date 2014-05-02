@@ -48,3 +48,8 @@ void	Pos2DComponent::setY(float y)
 {
   this->_y = y;
 }
+
+std::string Pos2DComponent::serialize() const
+{
+  return ("prout");
+}

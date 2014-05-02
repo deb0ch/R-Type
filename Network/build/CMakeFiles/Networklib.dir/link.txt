@@ -1,2 +1,0 @@
-/usr/bin/ar cr libNetworklib.a  CMakeFiles/Networklib.dir/USocketTCP.cpp.o CMakeFiles/Networklib.dir/WSocketTCP.cpp.o CMakeFiles/Networklib.dir/USocketUDP.cpp.o CMakeFiles/Networklib.dir/WSocketUDP.cpp.o CMakeFiles/Networklib.dir/NetworkException.cpp.o
-/usr/bin/ranlib libNetworklib.a

@@ -28,9 +28,11 @@ SRCS	=	main.cpp				\
 		components/Speed2DComponent.cpp		\
 		components/Box2DComponent.cpp		\
 		components/SFMLSpriteComponent.cpp	\
+		components/NetworkUpdateComponent.cpp	\
 \
 		events/CollisionEvent.cpp		\
 \
+		systems/NetworkSystem.cpp		\
 		systems/MoveSystem.cpp			\
 		systems/CollisionSystem.cpp		\
 		systems/SFMLRenderSystem.cpp
