@@ -34,10 +34,15 @@ SRCS	=	main.cpp			\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:		LIBECS $(NAME)
+all:		LIBNETWORK LIBECS $(NAME)
 
 LIBECS:
 		make -C ./ECS/
+
+LIBNETWORK:
+		mkdir -p Network/build
+		cd Network/build && cmake ..
+		$(MAKE) -C Network/build
 
 $(NAME):	$(OBJS)
 		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
