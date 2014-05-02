@@ -5,6 +5,7 @@
 #include <ws2tcpip.h>
 #include <stdlib.h>
 #include "WSocketTCP.hh"
+#include <signal.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -17,6 +18,11 @@ SocketTCP::SocketTCP()
 		// exception
 	}
 	this->socket = INVALID_SOCKET;
+}
+
+SocketTCP::SocketTCP(const SOCKET &sock)
+{
+
 }
 
 SocketTCP::~SocketTCP()
@@ -60,11 +66,6 @@ void SocketTCP::close()
 	closesocket(this->socket);
 }
 
-void SocketTCP::setSocket(const SOCKET sock)
-{
-	this->socket = sock;
-}
-
 ISocketTCP *SocketTCP::accept()
 {
 	SOCKET result = ::accept(this->socket, NULL, NULL);
@@ -81,8 +82,7 @@ ISocketTCP *SocketTCP::accept()
 //	{
 
 //	}
-	res->setSocket(result);
-	return (res);
+	return new SocketTCP(result);
 }
 
 void SocketTCP::bind(int port, const std::string &address)
