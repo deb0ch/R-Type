@@ -6,8 +6,8 @@
 class		Speed2DComponent : public AComponent
 {
 protected:
-  float		_sX;
-  float		_sY;
+  float		_vX;
+  float		_vY;
 
 public:
 		Speed2DComponent(float x = 0.0f, float y = 0.0f);
@@ -15,11 +15,11 @@ public:
   virtual	~Speed2DComponent();
   Speed2DComponent	&operator=(const Speed2DComponent&);
 
-  float		getX() const;
-  float		getY() const;
+  float		getVX() const;
+  float		getVY() const;
 
-  void		setSX(float x);
-  void		setSY(float y);
+  void		setVX(float x);
+  void		setVY(float y);
 };
 
 #endif /* !SPEED2DCOMPONENT_H_ */

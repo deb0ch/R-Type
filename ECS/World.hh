@@ -28,7 +28,13 @@ public:
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
-  void		process();
+  std::vector<Entity *> &getEntities();
+
+  void		process(const float delta);
+  void		start();
+  void		pause();
+  void		resume();
+  void		stop();
 };
 
 #endif /* !WORLD_H_ */

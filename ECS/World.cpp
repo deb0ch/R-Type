@@ -104,10 +104,43 @@ World	*World::removeSystem(const std::string &type)
   return (this);
 }
 
+std::vector<Entity *> &World::getEntities()
+{
+  return (this->_entities);
+}
+
 //----- ----- Methods ----- ----- //
-void	World::process()
+void	World::process(const float delta)
+{
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this, delta] (ISystem *system) -> void {
+      system->process(this->_entities, delta);
+    });
+}
+
+void	World::start()
 {
   std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->process(this->_entities);
+      system->start();
+    });
+}
+
+void	World::pause()
+{
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
+      system->pause();
+    });
+}
+
+void	World::resume()
+{
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
+      system->resume();
+    });
+}
+
+void	World::stop()
+{
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
+      system->stop();
     });
 }

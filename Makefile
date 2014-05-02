@@ -1,4 +1,4 @@
-CC	=	g++
+CXX	=	g++
 
 RM	=	rm -f
 
@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/includes/ -I./components/ -I./systems/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/
 
 LIBDIR		=	-L./ECS/
 LIB		=	-lecs
@@ -21,8 +21,11 @@ NAME	=	rtype
 SRCS	=	main.cpp			\
 \
 		components/Pos2DComponent.cpp	\
+		components/Box2DComponent.cpp	\
+		components/Speed2DComponent.cpp	\
 \
-		systems/MoveSystem.cpp
+		systems/MoveSystem.cpp		\
+		systems/CollisionSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
@@ -32,7 +35,7 @@ LIBECS:
 		make -C ./ECS/
 
 $(NAME):	$(OBJS)
-		$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 		$(RM) $(OBJS)

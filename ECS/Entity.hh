@@ -21,7 +21,19 @@ public:
 
   Entity	*removeComponent(IComponent *);
   Entity	*removeComponent(const std::string &id);
-  IComponent	*hasComponent(const std::string &string_type) const;
+
+  bool		hasComponent(const std::string &string_type) const;
+  IComponent	*getComponent(const std::string &string_type) const;
+
+  template <typename T>
+  T		*getComponent(const std::string &string_type) const
+  {
+    IComponent	*component;
+
+    if (!(component = this->getComponent(string_type)))
+      return (NULL);
+    return (dynamic_cast<T*>(component));
+  }
 };
 
 #endif /* !ENTITY_H_ */

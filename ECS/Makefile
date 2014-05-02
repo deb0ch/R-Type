@@ -1,6 +1,6 @@
-CC	=	g++
+CXX		=	g++
 
-RM	=	rm -f
+RM		=	rm -f
 
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./core/ -I./systems/ -I./components/ -I./entities/
+INCLUDE		=
 
 #LIBDIR		=
 #LIB		=
@@ -18,10 +18,10 @@ INCLUDE		=	-I./core/ -I./systems/ -I./components/ -I./entities/
 
 NAME	=	libecs.a
 
-SRCS	=	core/World.cpp			\
-		core/Entity.cpp			\
-		core/AComponent.cpp		\
-		core/ASystem.cpp
+SRCS	=	World.cpp		\
+		Entity.cpp		\
+		AComponent.cpp		\
+		ASystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
@@ -29,16 +29,12 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 		ar rcs $(NAME) $(OBJS)
-		mkdir -p includes/
-		cp core/*.hh includes/
 
 clean:
 		$(RM) $(OBJS)
-		$(RM) -r includes/
 
 fclean:		clean
 		$(RM) $(NAME)
-		rm -rf includes/
 
 re:		fclean all
 
