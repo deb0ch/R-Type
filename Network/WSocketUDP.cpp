@@ -96,7 +96,6 @@ int	SocketUDP::send(const void* data, const size_t size, const int address, cons
 	
 	res = sendto(this->socket, reinterpret_cast<const char *>(data), size, 0,
 		reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
-
 	return (res);
 }
 

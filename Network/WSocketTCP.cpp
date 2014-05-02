@@ -33,7 +33,8 @@ SocketTCP::~SocketTCP()
 
 int SocketTCP::send(const void* data, const std::size_t size)
 {
-	int res = ::send(this->socket, reinterpret_cast<const char *>(data), size, 0);
+	int res = ::send(this->socket, reinterpret_cast<const char *>(data),
+		size, 0);
 	if (res == SOCKET_ERROR)
 	{
 		std::cerr << "send failed" << std::endl;
@@ -86,7 +87,7 @@ ISocketTCP *SocketTCP::accept()
 void SocketTCP::bind(int port, const std::string &address)
 {
 	if (address == "")
-		this->clientService.sin_addr.s_addr = ::htonl(INADDR_ANY);
+			this->clientService.sin_addr.s_addr = ::htonl(INADDR_ANY);
 	else
 		this->clientService.sin_addr.s_addr = inet_addr(address.c_str());
 	this->clientService.sin_family = AF_INET;
