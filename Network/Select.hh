@@ -1,9 +1,13 @@
 #ifndef SELECT_HH
 # define SELECT_HH
 
-#include <sys/time.h>
 #include <sys/types.h>
-#include <unistd.h>
+#ifdef _WIN32
+	#include <Windows.h>
+#elif
+	#include <sys/time.h>
+	#include <unistd.h>
+#endif
 
 class			Select
 {

@@ -29,10 +29,10 @@ void	Select::doSelect()
 
 bool	Select::issetReads(const int fd)
 {
-  return (FD_ISSET(fd, this->_reads));
+  return (FD_ISSET(fd, this->_reads) != 0);
 }
 
 bool	Select::issetWrites(const int fd)
 {
-  return (FD_ISSET(fd, this->_writes));
+  return (FD_ISSET(fd, this->_writes) != 0);
 }
