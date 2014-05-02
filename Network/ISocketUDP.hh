@@ -4,8 +4,9 @@
 # include <string>
 # include <iostream>
 # include "SocketFD.hh"
+# include "ISocket.hh"
 
-class ISocketUDP
+class ISocketUDP : public ISocket
 {
 public:
   virtual ~ISocketUDP(){};
