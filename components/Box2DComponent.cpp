@@ -1,9 +1,9 @@
 #include "Box2DComponent.hh"
 
-Box2DComponent::Box2DComponent() : AComponent("Box2DComponent")
+Box2DComponent::Box2DComponent(float width, float height) : AComponent("Box2DComponent")
 {
-  this->_width = 1.f;
-  this->_height = 1.f;
+  this->_width = width;
+  this->_height = height;
 }
 
 Box2DComponent::~Box2DComponent()

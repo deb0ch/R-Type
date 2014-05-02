@@ -6,7 +6,7 @@
 class Box2DComponent : public AComponent
 {
 public:
-		Box2DComponent();
+  Box2DComponent(float width, float height);
   virtual	~Box2DComponent();
   		Box2DComponent(const Box2DComponent&);
   Box2DComponent	&operator=(const Box2DComponent&);
