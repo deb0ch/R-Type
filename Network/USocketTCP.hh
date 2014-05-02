@@ -21,7 +21,7 @@ public:
 public:
   virtual ISocketTCP	*accept();
   virtual void		listen(uint32_t block);
-  virtual void		bind(int port, std::string address = "");
+  virtual void		bind(int port, const std::string & address = "");
 
   virtual void setBlocking(const bool blocking);
   virtual const bool isBlocking() const;

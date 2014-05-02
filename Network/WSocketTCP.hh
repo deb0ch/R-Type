@@ -2,6 +2,7 @@
 # define	WSOCKETTCP_H_
 
 # include <Windows.h>
+# include <string>
 # include "ISocketTCP.hh"
 
 class SocketTCP : public ISocketTCP
@@ -9,14 +10,15 @@ class SocketTCP : public ISocketTCP
 private:
 	SOCKET socket;
 	WSADATA wsaData;
+	struct addrinfo *ptr;
 
 public:
 	SocketTCP();
 	~SocketTCP();
 
-	virtual ISocketTCP	*accept() = 0;
-	virtual void		listen(const std::size_t block) = 0;
-	virtual void		bind(int port, std::string address = "") = 0;
+	virtual ISocketTCP	*accept();
+	virtual void listen(const std::size_t block);
+	virtual void bind(int port, const std::string & address = "");
 	virtual void setBlocking(bool const blocking);
 	virtual const bool isBlocking() const;
 	virtual void close();
@@ -30,6 +32,9 @@ public:
 private:
 	SocketTCP(const SocketTCP &);
 	SocketTCP &operator=(const SocketTCP &);
+	const struct addrinfo *getaddrfrom(const int address, const int port);
+	const struct addrinfo *getaddrfrom(const std::string &address, const int port);
+	void setSocket(const SOCKET sock);
 };
 
 
