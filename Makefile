@@ -30,7 +30,7 @@ SRCS	=	main.cpp				\
 \
 		systems/MoveSystem.cpp			\
 		systems/CollisionSystem.cpp		\
-		systems/Networksystem.cpp		\
+		systems/NetworkSystem.cpp		\
 \
 		events/CollisionEvent.cpp
 

@@ -10,7 +10,7 @@ public:
   virtual	~NetworkSystem();
 
   virtual bool	canProcess(Entity *);
-  virtual void	processEntity(Entity *);
+  virtual void	processEntity(Entity *, const float delta);
 private:
   std::vector<std::string> _component_to_send;
 };

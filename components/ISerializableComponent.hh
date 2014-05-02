@@ -2,6 +2,7 @@
 # define ISERIALIZABLECOMPONENT_H_
 
 # include <string>
+# include "IComponent.hh"
 
 class ISerializableComponent
 {
