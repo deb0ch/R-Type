@@ -21,7 +21,8 @@ NAME	=	libecs.a
 SRCS	=	World.cpp		\
 		Entity.cpp		\
 		AComponent.cpp		\
-		ASystem.cpp
+		ASystem.cpp		\
+		AEvent.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 

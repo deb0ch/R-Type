@@ -1,5 +1,6 @@
-#include	"ASystem.hh"
 #include	<algorithm>
+#include	"ASystem.hh"
+#include	"IEvent.hh"
 
 //----- ----- Constructors ----- ----- //
 ASystem::ASystem(const std::string &type, unsigned int priority)

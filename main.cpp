@@ -29,8 +29,11 @@ int		main()
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f)));
 
-  world.addSystem(new CollisionSystem())
-    ->addSystem(new MoveSystem());
+  CollisionSystem *collision;
+
+  collision = new CollisionSystem();
+  world.addSystem(collision);
+  world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
   /*
    * Should be an infinite loop.
