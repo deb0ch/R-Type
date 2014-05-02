@@ -22,6 +22,7 @@ SRCS	=	main.cpp			\
 \
 		components/Pos2DComponent.cpp	\
 		components/Box2DComponent.cpp	\
+		components/Speed2DComponent.cpp	\
 \
 		systems/MoveSystem.cpp		\
 		systems/CollisionSystem.cpp
