@@ -1,7 +1,9 @@
 #include	<iostream>
 
 #include	"SFMLRenderSystem.hh"
+
 #include	"SFMLSpriteComponent.hh"
+#include	"Pos2DComponent.hh"
 
 //----- ----- Constructors ----- ----- //
 SFMLRenderSystem::SFMLRenderSystem()
@@ -25,8 +27,10 @@ bool		SFMLRenderSystem::canProcess(Entity *entity)
 void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 {
   SFMLSpriteComponent	*sprite = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
-  if (!sprite)
-    return ;
+  Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
+
+  sprite->getSprite()->SetX(pos->getX());
+  sprite->getSprite()->SetY(pos->getY());
   this->_window->Draw(*sprite->getSprite());
 }
 
