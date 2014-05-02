@@ -12,12 +12,14 @@ protected:
   /* Defined system MUST implement those methods */
   virtual bool		canProcess(Entity *) = 0;
   virtual void		processEntity(Entity *) = 0;
+  virtual void		sortEntities(std::vector<Entity *>&) = 0;
 
 public:
 			ISystem() {};
   virtual		~ISystem() {};
 
   virtual unsigned int	getPriority() const = 0;
+  virtual const std::string	&getType() const = 0;
 
   virtual void		setWorld(World *) = 0;
 

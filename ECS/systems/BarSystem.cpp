@@ -4,7 +4,7 @@
 #include	"BarSystem.hh"
 
 //----- ----- Constructors ----- ----- //
-BarSystem::BarSystem() : ASystem(5)
+BarSystem::BarSystem() : ASystem("BarSystem", 5)
 {}
 
 BarSystem::BarSystem(const BarSystem&) : BarSystem()
@@ -33,3 +33,6 @@ bool		BarSystem::canProcess(Entity *)
 {
   return (true);
 }
+
+void		BarSystem::sortEntities(std::vector<Entity *>&)
+{}

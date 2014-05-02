@@ -41,12 +41,12 @@ Entity	*World::createEntity()
   return (res);
 }
 
-Entity	*World::addEntity(Entity *entity)
+World	*World::addEntity(Entity *entity)
 {
   this->_entities.push_back(entity);
   if (entity->_id >= this->_nextEntityID)
     _nextEntityID = entity->_id + 1;
-  return (entity);
+  return (this);
 }
 
 World	*World::addSystem(ISystem *system)
@@ -62,13 +62,45 @@ World	*World::addSystem(ISystem *system)
 
 World	*World::removeEntity(Entity *entity)
 {
-  this->_entities.erase(std::remove(this->_entities.begin(), this->_entities.end(), entity), this->_entities.end());
+  if (entity)
+    return (this->removeEntity(entity->_id));
+  return (NULL);
+}
+
+World	*World::removeEntity(unsigned long id)
+{
+  auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
+			 [id] (Entity *entity) -> bool {
+			   return (entity->_id == id);
+			 });
+
+  if (it == this->_entities.end())
+    return (NULL);
+
+  delete *it;
+  this->_entities.erase(it);
   return (this);
 }
 
 World	*World::removeSystem(ISystem *system)
 {
-  this->_systems.erase(std::remove(this->_systems.begin(), this->_systems.end(), system), this->_systems.end());
+  if (system)
+    return (this->removeSystem(system->getType()));
+  return (NULL);
+}
+
+World	*World::removeSystem(const std::string &type)
+{
+  auto it = std::find_if(this->_systems.begin(), this->_systems.end(),
+			 [type] (ISystem *system) -> bool {
+			   return (system->getType() == type);
+			 });
+
+  if (it == this->_systems.end())
+    return (NULL);
+
+  delete *it;
+  this->_systems.erase(it);
   return (this);
 }
 

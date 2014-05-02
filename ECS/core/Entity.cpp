@@ -19,7 +19,7 @@ Entity::~Entity()
 }
 
 //----- ----- Operators ----- ----- //
-Entity&	Entity::operator=(const Entity& ref)
+Entity&		Entity::operator=(const Entity& ref)
 {
   this->_id = ref._id;
   this->_components = ref._components;
@@ -28,47 +28,43 @@ Entity&	Entity::operator=(const Entity& ref)
 
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
-Entity	*Entity::addComponent(IComponent *component)
+Entity		*Entity::addComponent(IComponent *component)
 {
   this->_components.push_back(component);
   return (this);
 }
 
-IComponent	*Entity::hasComponent(const std::string &string_type) const
+Entity		*Entity::removeComponent(IComponent *e)
+{
+  if (e)
+    return (this->removeComponent(e->getType()));
+  return (NULL);
+}
+
+Entity		*Entity::removeComponent(const std::string &type)
+{
+  auto it = std::find_if(this->_components.begin(), this->_components.end(),
+			 [type] (IComponent *component) -> bool {
+			   return (component->getType() == type);
+			 });
+
+  if (it == this->_components.end())
+    return (NULL);
+
+  delete *it;
+  this->_components.erase(it);
+  return (this);
+}
+
+//----- ----- Methods ----- ----- //
+IComponent	*Entity::hasComponent(const std::string &type) const
 {
   auto iterator = std::find_if(this->_components.begin(), this->_components.end(),
-			       [string_type] (IComponent *component) -> bool {
-				 if (component->getType() == string_type)
-				   return (true);
-				 return (false);
+			       [type] (IComponent *component) -> bool {
+				 return (component->getType() == type);
 			       });
 
   if (iterator == this->_components.end())
     return (NULL);
   return (*iterator);
-}
-
-bool	Entity::removeComponent(IComponent *e)
-{
-  auto iterator = std::remove(this->_components.begin(), this->_components.end(), e);
-
-  if (iterator == this->_components.end())
-    return (false);
-  std::for_each(iterator, this->_components.end(), VectorDeleter<IComponent*>());
-  this->_components.erase(iterator, this->_components.end());
-  return (true);
-}
-
-bool	Entity::removeComponent(const std::string &id)
-{
-  auto iterator = std::remove_if(this->_components.begin(), this->_components.end(),
-				 [id] (IComponent *component) -> bool {
-				   return (component->getType() == id);
-				 });
-
-  if (iterator == this->_components.end())
-    return (false);
-  std::for_each(iterator, this->_components.end(), VectorDeleter<IComponent*>());
-  this->_components.erase(iterator, this->_components.end());
-  return (true);
 }

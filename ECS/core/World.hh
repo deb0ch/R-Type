@@ -21,10 +21,12 @@ public:
 
   Entity	*createEntity();
 
-  Entity	*addEntity(Entity *);
+  World		*addEntity(Entity *);
   World		*addSystem(ISystem *);
   World		*removeEntity(Entity *);
+  World		*removeEntity(unsigned long id);
   World		*removeSystem(ISystem *);
+  World		*removeSystem(const std::string &type);
 
   void		process();
 };

@@ -9,7 +9,7 @@ public:
 		IComponent() {};
   virtual	~IComponent() {};
 
-  virtual const std::string &getType() const = 0;
+  virtual const std::string	&getType() const = 0;
 };
 
 #endif /* !ICOMPONENT_H_ */

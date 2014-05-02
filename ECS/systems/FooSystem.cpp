@@ -4,7 +4,7 @@
 #include	"FooSystem.hh"
 
 //----- ----- Constructors ----- ----- //
-FooSystem::FooSystem() : ASystem(6)
+FooSystem::FooSystem() : ASystem("FooSystem", 6)
 {}
 
 FooSystem::FooSystem(const FooSystem &) : FooSystem()
@@ -35,3 +35,6 @@ bool		FooSystem::canProcess(Entity *entity)
     return (true);
   return (false);
 }
+
+void		FooSystem::sortEntities(std::vector<Entity *>&)
+{}

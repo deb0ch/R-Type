@@ -14,6 +14,7 @@ public:
 protected:
   virtual void	processEntity(Entity *);
   virtual bool	canProcess(Entity *);
+  virtual void	sortEntities(std::vector<Entity *>&);
 };
 
 #endif /* !FOOSYSTEM_H_ */
