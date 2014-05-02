@@ -14,9 +14,9 @@ private:
   unsigned long		_nextEntityID;
 
 public:
-  World();
-  World(const World&);
-  ~World();
+		World();
+		World(const World&);
+  virtual	~World();
   World&	operator=(const World&);
 
   Entity	*createEntity();

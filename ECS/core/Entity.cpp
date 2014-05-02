@@ -66,6 +66,6 @@ IComponent	*Entity::hasComponent(const std::string &type) const
 			       });
 
   if (iterator == this->_components.end())
-    return (this);
+    return (NULL);
   return (*iterator);
 }

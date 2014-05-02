@@ -12,9 +12,9 @@ public:
   unsigned long			_id;
   std::vector<IComponent*>	_components;
 
-  Entity();
-  Entity(const Entity&);
-  ~Entity();
+		Entity();
+		Entity(const Entity&);
+  virtual	~Entity();
   Entity&	operator=(const Entity&);
 
   Entity	*addComponent(IComponent *);

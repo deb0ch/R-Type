@@ -23,7 +23,7 @@ public:
   virtual void		setWorld(World *);
 
   virtual void		process(std::vector<Entity *>&);
-  virtual void	ASystem::sortEntities(std::vector<Entity *> &) = 0;
+  virtual void		sortEntities(std::vector<Entity *> &) = 0;
 };
 
 #endif /* !ASYSTEM_H_ */
