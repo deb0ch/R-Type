@@ -20,11 +20,37 @@ public:
   Select(const int to = 1);
   ~Select() {}
 
-  template <class T>
-  void initReads(T<int> const &);
+  template <typename T>
+  void	initReads(T const &container)
+  {
+    int	tmp;
 
-  template <class T>
-  void initWrites(T<int> const &);
+    this->_reads = new fd_set();
+    FD_ZERO(this->_reads);
+    for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
+      {
+	tmp = (*it)->getHandle();
+	if (tmp > this->maxFd)
+	  this->maxFd = tmp;
+	FD_SET(tmp, this->_reads);
+      }
+  }
+
+  template <typename T>
+  void	initWrites(T const &container)
+  {
+    int	tmp;
+
+    this->_writes = new fd_set();
+    FD_ZERO(this->_writes);
+    for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
+      {
+	tmp = (*it)->getHandle();
+	if (tmp > this->maxFd)
+	  this->maxFd = tmp;
+	FD_SET(tmp, this->_writes);
+      }
+  }
 
   void	setTimeOut(const int);
   void	doSelect();

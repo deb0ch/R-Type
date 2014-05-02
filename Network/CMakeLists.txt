@@ -12,13 +12,15 @@ set(HEADER_FILES
 	WSocketUDP.hh
 	USocketUDP.hh
 	NetworkException.hh
-	ISocket.hh)
+	ISocket.hh
+	Select.hh)
 	
 set(SOURCES USocketTCP.cpp
 	WSocketTCP.cpp
 	USocketUDP.cpp
 	WSocketUDP.cpp
 	NetworkException.cpp
+	Select.cpp
 	main.cpp)
 
 file(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
