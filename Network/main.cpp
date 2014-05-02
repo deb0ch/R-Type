@@ -13,7 +13,8 @@
 #include <Windows.h>
 #endif
 
-#define IPADRESS "127.0.0.1"
+#define IPADRESS_CLIENT "10.41.177.15"
+#define IPADRESS_SERVER "10.41.179.57"
 #define PORT 6667
 
 void testclient()
@@ -21,7 +22,7 @@ void testclient()
 	ISocketTCP *sock = new SocketTCP();
 	char sendmsg[] = "i am the client !";
 	sock->init();
-	sock->connect(IPADRESS, PORT);
+	sock->connect(IPADRESS_CLIENT, PORT);
 	char toto[42];
 	sock->send(sendmsg, strlen(sendmsg));
 	std::cout << "i send to the server [" << sendmsg << "]" << std::endl;
@@ -41,13 +42,13 @@ void testserver()
 	char toto[42];
 
 	sock->init();
-	sock->bind(PORT, IPADRESS);
+	sock->bind(PORT, IPADRESS_SERVER);
 	sock->listen(10);
 	client = NULL;
 	client = sock->accept();
 	memset(toto, 0, 42);
 	std::size_t res = 0;
-	if ((res = client->receive(toto, 42)))
+	while ((res = client->receive(toto, 42)))
 	{
 		if (res > 0)
 		{
@@ -66,7 +67,7 @@ void testrecept()
 	int res;
 
 	sock->init();
-	sock->bind(PORT, IPADRESS);
+	sock->bind(PORT, IPADRESS_CLIENT);
 	res = 1;
 	while (res != 0)
 	{
@@ -79,18 +80,19 @@ void testrecept()
 void testsend()
 {
 	ISocketUDP *sock = new SocketUDP();
-	char toto[42];
+	std::string line;
 	int res;
 
 	sock->init();
 	res = 1;
-	res = sock->send(toto, 42, IPADRESS, PORT);
+	while (std::getline(std::cin, line))
+	{
+		res = sock->send(line.c_str(), 42, IPADRESS_CLIENT, PORT);
+	}
 }
 
 int	main()
 {
-	// BUG SERVER PARTIE
-	// RECIEVE FAILED !!!!
 	// TCP
 	//testclient();
 	//testserver();
