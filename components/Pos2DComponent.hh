@@ -2,8 +2,9 @@
 # define POS2DCOMPONENT_H_
 
 # include	"AComponent.hh"
+# include	"ISerializableComponent.hh"
 
-class		Pos2DComponent : public AComponent
+class		Pos2DComponent : public AComponent, public ISerializableComponent
 {
 protected:
   float		_x;
@@ -14,6 +15,7 @@ public:
 		Pos2DComponent(const Pos2DComponent&);
   virtual	~Pos2DComponent();
   Pos2DComponent	&operator=(const Pos2DComponent&);
+  virtual std::string serialize() const;
 
   float		getX() const;
   float		getY() const;

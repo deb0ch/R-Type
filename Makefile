@@ -22,13 +22,15 @@ LDFLAGS	+=	$(LIBDIR) $(LIB)
 
 NAME	=	rtype
 
-SRCS	=	main.cpp			\
+SRCS	=	main.cpp				\
 \
-		components/Pos2DComponent.cpp	\
-		components/Box2DComponent.cpp	\
+		components/Pos2DComponent.cpp		\
+		components/Box2DComponent.cpp		\
+		components/NetworkUpdateComponent.cpp	\
 \
-		systems/MoveSystem.cpp		\
-		systems/CollisionSystem.cpp	\
+		systems/MoveSystem.cpp			\
+		systems/CollisionSystem.cpp		\
+		systems/Networksystem.cpp		\
 \
 		events/CollisionEvent.cpp
 
