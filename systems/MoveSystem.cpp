@@ -14,17 +14,15 @@ MoveSystem::~MoveSystem()
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
-bool		MoveSystem::canProcess(Entity *)
+bool		MoveSystem::canProcess(Entity *e)
 {
-  return (true);
+  if (e->hasComponent("Speed2DComponent") && e->hasComponent("Pos2DComponent"))
+    return (true);
+  return (false);
 }
 
 void		MoveSystem::processEntity(Entity *)
 {
+  if (e->hasComponent("Speed2DComponent"))
   std::cout << "yeah" << std::endl;
-}
-
-void		MoveSystem::sortEntities(std::vector<Entity *>&)
-{
-
 }
