@@ -15,7 +15,7 @@ protected:
 
   /* Defined system MUST implement those methods */
   virtual bool		canProcess(Entity *) = 0;
-  virtual void		processEntity(Entity *) = 0;
+  virtual void		processEntity(Entity *, const float delta) = 0;
 
   /* Theses method CAN be overloaded in the derived classes  */
   virtual void		sortEntities(std::vector<Entity *>&);
@@ -33,7 +33,7 @@ public:
 
   virtual void		setWorld(World *);
 
-  virtual void		process(std::vector<Entity *>&);
+  virtual void		process(std::vector<Entity *>&, const float delta);
   virtual void		start();
   virtual void		pause();
   virtual void		resume();

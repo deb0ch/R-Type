@@ -19,7 +19,7 @@ bool		MoveSystem::canProcess(Entity *)
   return (true);
 }
 
-void		MoveSystem::processEntity(Entity *)
+void		MoveSystem::processEntity(Entity *, const float)
 {
   std::cout << "yeah" << std::endl;
 }

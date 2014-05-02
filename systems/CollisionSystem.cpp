@@ -16,7 +16,7 @@ bool	CollisionSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void	CollisionSystem::processEntity(Entity *entity)
+void	CollisionSystem::processEntity(Entity *entity, const float)
 {
   std::vector<Entity *> &world_entities = this->_world->getEntities();
   Box2DComponent	*entity_box;

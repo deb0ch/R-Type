@@ -7,7 +7,7 @@ class			MoveSystem : public ASystem
 {
 protected:
   virtual bool		canProcess(Entity *);
-  virtual void		processEntity(Entity *);
+  virtual void		processEntity(Entity *, const float);
   virtual void		sortEntities(std::vector<Entity *>&);
 
 public:

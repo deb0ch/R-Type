@@ -110,10 +110,10 @@ std::vector<Entity *> &World::getEntities()
 }
 
 //----- ----- Methods ----- ----- //
-void	World::process()
+void	World::process(const float delta)
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->process(this->_entities);
+  std::for_each(this->_systems.begin(), this->_systems.end(), [this, delta] (ISystem *system) -> void {
+      system->process(this->_entities, delta);
     });
 }
 

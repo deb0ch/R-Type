@@ -33,7 +33,7 @@ int		main()
    */
   for (int i = 0 ; i < 3 ; i++)
     {
-      world.process();
+      world.process(0.16f);
       std::cout << std::endl;
     }
 
