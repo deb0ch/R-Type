@@ -1,0 +1,11 @@
+Systems:
+* MoveSystem
+* CollisionSystem
+* InputSystem
+* RenderSystem
+
+Components:
+* Pos2DComponent X
+* Box2DComponent
+* Speed2DComponent
+* Sprite2DComponent
