@@ -30,15 +30,16 @@ Entity&		Entity::operator=(const Entity& ref)
 //----- ----- Setters ----- ----- //
 Entity		*Entity::addComponent(IComponent *component)
 {
-  this->_components.push_back(component);
+  if (component && !this->hasComponent(component->getType()))
+    this->_components.push_back(component);
   return (this);
 }
 
 Entity		*Entity::removeComponent(IComponent *e)
 {
   if (e)
-    return (this->removeComponent(e->getType()));
-  return (NULL);
+    this->removeComponent(e->getType());
+  return (this);
 }
 
 Entity		*Entity::removeComponent(const std::string &type)
@@ -49,7 +50,7 @@ Entity		*Entity::removeComponent(const std::string &type)
 			 });
 
   if (it == this->_components.end())
-    return (NULL);
+    return (this);
 
   delete *it;
   this->_components.erase(it);
@@ -65,6 +66,6 @@ IComponent	*Entity::hasComponent(const std::string &type) const
 			       });
 
   if (iterator == this->_components.end())
-    return (NULL);
+    return (this);
   return (*iterator);
 }
