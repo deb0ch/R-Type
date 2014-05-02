@@ -26,6 +26,11 @@ void SocketTCP::init() {
     }
 }
 
+const int		SocketTCP::getHandle() const
+{
+	return (this->_socket);
+}
+
 void SocketTCP::setBlocking(bool const blocking) {
   int status = ::fcntl(this->_socket, F_GETFL);
 

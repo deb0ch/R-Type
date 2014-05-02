@@ -106,6 +106,10 @@ const bool SocketUDP::isBlocking() const {
   return (this->_isBlocking);
 }
 
+const int		SocketUDP::getHandle() const
+{
+	return (this->_socket);
+}
 
 void SocketUDP::close() {
   ::close(this->_socket);
