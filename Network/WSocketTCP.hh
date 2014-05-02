@@ -11,6 +11,7 @@ private:
 	SOCKET socket;
 	WSADATA wsaData;
 	struct addrinfo *ptr;
+	SocketTCP(const SOCKET &sock);
 
 public:
 	SocketTCP();
@@ -33,7 +34,6 @@ private:
 	SocketTCP &operator=(const SocketTCP &);
 	const struct addrinfo *getaddrfrom(const int address, const int port);
 	const struct addrinfo *getaddrfrom(const std::string &address, const int port);
-	void setSocket(const SOCKET sock);
 };
 
 

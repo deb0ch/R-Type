@@ -7,13 +7,6 @@
 
 class ISocketTCP
 {
-
-public:
-	enum
-	{
-		AnyPort = 0
-	};
-
 public:
 	virtual ~ISocketTCP(){};
 
