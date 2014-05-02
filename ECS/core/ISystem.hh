@@ -12,6 +12,8 @@ protected:
   /* Defined system MUST implement those methods */
   virtual bool		canProcess(Entity *) = 0;
   virtual void		processEntity(Entity *) = 0;
+
+  /* This method can be implemented to sort entites before process  */
   virtual void		sortEntities(std::vector<Entity *>&) = 0;
 
 public:
