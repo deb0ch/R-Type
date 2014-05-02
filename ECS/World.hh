@@ -30,7 +30,7 @@ public:
 
   std::vector<Entity *> &getEntities();
 
-  void		process();
+  void		process(const float delta);
   void		start();
   void		pause();
   void		resume();

@@ -12,7 +12,7 @@ public:
   virtual	~CollisionSystem();
 
   virtual bool	canProcess(Entity *);
-  virtual void	processEntity(Entity *);
+  virtual void	processEntity(Entity *, const float);
 protected:
    bool		isColliding(const Pos2DComponent &pos1, const Box2DComponent &box1,
 			    const Pos2DComponent &pos2, const Box2DComponent &box2) const;

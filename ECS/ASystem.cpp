@@ -30,13 +30,13 @@ void		ASystem::setWorld(World *world)
 }
 
 //----- ----- Methods ----- ----- //
-void		ASystem::process(std::vector<Entity *> &entities)
+void		ASystem::process(std::vector<Entity *> &entities, const float delta)
 {
   this->beforeProcess();
   this->sortEntities(entities);
-  std::for_each(entities.begin(), entities.end(), [this] (Entity *entity) -> void {
+  std::for_each(entities.begin(), entities.end(), [this, delta] (Entity *entity) -> void {
       if (this->canProcess(entity))
-	this->processEntity(entity);
+	this->processEntity(entity, delta);
     });
   this->afterProcess();
 }
