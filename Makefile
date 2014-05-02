@@ -4,15 +4,19 @@ RM	=	rm -f
 
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
-CXXFLAGS 	+=	-ansi -pedantic
+CXXFLAGS 	+=	-pedantic
 CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes
 
-LIBDIR		=	-L./ECS/
-LIB		=	-lecs
+LIBDIR		+=	-L./ECS/
+#LIBDIR		+=	-L./lib/openal-soft-1.15.1/
+#LIBDIR		+=	-L./lib/SFML-1.6/lib/
+LIB		+=	-lecs
+#LIB		+=	-lopenal
+LIB		+=	-lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio
 
 LDFLAGS	+=	$(LIBDIR) $(LIB)
 
