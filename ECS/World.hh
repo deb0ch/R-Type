@@ -29,6 +29,10 @@ public:
   World		*removeSystem(const std::string &type);
 
   void		process();
+  void		start();
+  void		pause();
+  void		resume();
+  void		stop();
 };
 
 #endif /* !WORLD_H_ */
