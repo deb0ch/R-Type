@@ -8,9 +8,10 @@
 class SocketTCP : public ISocketTCP
 {
 private:
+	bool blockingSocket;
 	SOCKET socket;
 	WSADATA wsaData;
-	struct addrinfo *ptr;
+	struct sockaddr_in clientService;
 	SocketTCP(const SOCKET &sock);
 
 public:
@@ -19,9 +20,9 @@ public:
 
 	virtual ISocketTCP	*accept();
 	virtual void listen(const std::size_t block);
-	virtual void bind(int port, const std::string & address = "");
+	virtual void bind(const int port, const std::string & address = "");
 	virtual void setBlocking(bool const blocking);
-	virtual const bool isBlocking() const;
+	virtual const bool	isBlocking() const;
 	virtual void close();
 	virtual void init();
 

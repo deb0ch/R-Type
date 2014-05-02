@@ -33,28 +33,26 @@ void testclient()
 
 void testserver()
 {
-  ISocketTCP *sock = new SocketTCP();
-  ISocketTCP *client;
-  char sendmsg[] = "i am the server !";
-  char toto[42];
+	ISocketTCP *sock = new SocketTCP();
+	ISocketTCP *client;
+	char sendmsg[] = "i am the server !";
+	char toto[42];
 
-  sock->init();
-  sock->bind(PORT, IPADRESS);
-  sock->listen(10);
-  client = sock->accept();
-  memset(toto, 0, 42);
-  std::size_t res = 0;
-  while ((res  = client->receive(toto, 42)))
-    {
-      if (res > 0)
+	sock->init();
+	sock->bind(PORT, IPADRESS);
+	sock->listen(10);
+	client = NULL;
+	client = sock->accept();
+	memset(toto, 0, 42);
+	std::size_t res = 0;
+	if ((res = client->receive(toto, 42)))
 	{
-	  std::cout << "server recieve [" << toto << "]" << std::endl;
-	  //sock->send(sendmsg, strlen(sendmsg));
+		if (res > 0)
+		{
+			std::cout << "server recieve [" << toto << "]" << std::endl;
+			//sock->send(sendmsg, strlen(sendmsg));
+		}
 	}
-      else{
-	break;
-      }
-    }
 }
 
 int	main()
