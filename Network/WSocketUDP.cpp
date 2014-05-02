@@ -127,4 +127,9 @@ const bool	SocketUDP::isBlocking() const
 	return (this->blockSocket);
 }
 
+const int	SocketUDP::getHandle() const
+{
+	return (this->socket);
+}
+
 #endif

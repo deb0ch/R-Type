@@ -14,6 +14,7 @@ public:
 public:
   virtual void		setBlocking(const bool blocking) = 0;
   virtual const bool	isBlocking() const = 0;
+  virtual const int		getHandle() const = 0;
 
   virtual void	bind(const int port, const std::string &address = "") = 0;
   virtual int	send(const void* data, const size_t size, const int address, const int port) = 0;

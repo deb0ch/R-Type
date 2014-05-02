@@ -31,6 +31,11 @@ SocketTCP::~SocketTCP()
 	WSACleanup();
 }
 
+const int		SocketTCP::getHandle() const
+{
+	return (this->socket);
+}
+
 int SocketTCP::send(const void* data, const std::size_t size)
 {
 	int res = ::send(this->socket, reinterpret_cast<const char *>(data),
