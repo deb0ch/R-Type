@@ -1,3 +1,6 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(
   HEADER_FILES
   ISocketTCP.hh
@@ -19,14 +22,10 @@ SET(
   WSocketUDP.cpp
   NetworkException.cpp
   Select.cpp
-  )
+  main.cpp)
 
 SET (LIB_TYPE STATIC)
 
 FILE(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
 
 ADD_LIBRARY(Networklib ${LIB_TYPE} ${SOURCES})
-
-ADD_DEFINITIONS(
-  -std=c++11
-  )
