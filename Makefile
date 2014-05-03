@@ -39,7 +39,7 @@ SRCS	=	main.cpp				\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:		LIBNETWORK LIBECS LIBSFML $(NAME)
+all:		LIBNETWORK LIBECS $(NAME)
 
 LIBECS:
 		$(MAKE) -C ./ECS/
@@ -70,6 +70,7 @@ fclean:		clean
 
 installsfml:	LIBSFML
 		$(MAKE) install -C SFML-src/build/
+		cp /usr/local/lib/libsfml-* /usr/lib
 
 re:		fclean all
 
