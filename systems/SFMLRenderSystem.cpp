@@ -36,6 +36,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 void		SFMLRenderSystem::start()
 {
   this->_window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "EpicGradius");
+  this->_window->setFramerateLimit(60);
 }
 
 void		SFMLRenderSystem::beforeProcess()
