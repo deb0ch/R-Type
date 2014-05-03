@@ -22,23 +22,32 @@ void NetworkException::addError(const int error)
 #endif
 }
 
-NetworkException::NetworkException(const NetworkException::ERROR_TYPE type, const int error)
+NetworkException::NetworkException(const NetworkException::ERROR_TYPE type, const int error,
+				   const NetworkException::SEVERITY severity)
 {
-	if (NetworkException::_msg.find(type) != NetworkException::_msg.end())
-		this->_info = NetworkException::_msg[type];
-	else
-		this->_info = NetworkException::_msg[NONE];
-	this->addError(error);
+  this->_severity = severity;
+  if (NetworkException::_msg.find(type) != NetworkException::_msg.end())
+    this->_info = NetworkException::_msg[type];
+  else
+    this->_info = NetworkException::_msg[NONE];
+  this->addError(error);
 }
 
-NetworkException::NetworkException(const NetworkException::ERROR_TYPE type, const std::string &info) {
-	if (NetworkException::_msg.find(type) != NetworkException::_msg.end())
-		this->_info = NetworkException::_msg[type];
-	else
-		this->_info = NetworkException::_msg[NONE];
-	this->_info += info;
+NetworkException::NetworkException(const NetworkException::ERROR_TYPE type, const std::string &info,
+				   const NetworkException::SEVERITY severity)
+{
+  this->_severity = severity;
+  if (NetworkException::_msg.find(type) != NetworkException::_msg.end())
+    this->_info = NetworkException::_msg[type];
+  else
+    this->_info = NetworkException::_msg[NONE];
+  this->_info += info;
 }
 
 const char*   NetworkException::what() const throw() {
 	return (this->_info.c_str());
+}
+
+const NetworkException::SEVERITY NetworkException::getSeverity() const {
+  return this->_severity;
 }

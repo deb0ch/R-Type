@@ -24,7 +24,8 @@ void	Select::doSelect()
   while ((ret = select(this->maxFd + 1, this->_reads, this->_writes, NULL, this->_to)) == -1 &&
 	 errno == EINTR)
     if (ret == -1 && errno != EINTR)
-      throw NetworkException(NetworkException::SELECT, "Function select failed");
+      throw NetworkException(NetworkException::SELECT, "Function select failed",
+			     NetworkException::FATAL);
 }
 
 bool	Select::issetReads(const int fd)
