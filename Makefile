@@ -16,7 +16,12 @@ clean:
 fclean:		clean
 		$(RM) $(NAME)
 
-installsfml:	LIBSFML
+sfml:
+		mkdir -p SFML-src/build
+		cd SFML-src/build && cmake ..
+		$(MAKE) -C SFML-src/build
+
+installsfml:	sfml
 		$(MAKE) install -C SFML-src/build/
 		cp /usr/local/lib/libsfml-* /usr/lib
 
