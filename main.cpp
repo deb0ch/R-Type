@@ -51,11 +51,12 @@ int		main()
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
   NetworkSystem *network;
+  std::vector<std::string> arg = {"Pos2DComponent"};
 
-  network = new NetworkSystem({"Pos2DComponent"});
+  network = new NetworkSystem(arg);
   world.addSystem(network);
 
-  std::string test("Les pigouins Ã§a glisse!");
+  std::string test("Les pigouins ça glisse!");
   world.setSharedObject<std::string>("Test", &test);
   std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
   std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
