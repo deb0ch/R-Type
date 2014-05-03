@@ -63,7 +63,6 @@ clean:
 		$(RM) $(OBJS)
 		$(MAKE) clean -C ./ECS/
 		$(MAKE) clean -C Network/build
-		$(MAKE) clean -C SFML-src/build
 
 fclean:		clean
 		$(RM) $(NAME)
