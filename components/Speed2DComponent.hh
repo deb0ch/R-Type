@@ -20,6 +20,9 @@ public:
 
   void		setVX(float x);
   void		setVY(float y);
+
+  void		addVX(float x);
+  void		addVY(float y);
 };
 
 #endif /* !SPEED2DCOMPONENT_H_ */
