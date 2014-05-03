@@ -16,6 +16,7 @@ class NetworkException : public std::exception
 public:
   enum	ERROR_TYPE {
     NONE,
+    SELECT,
     UDP,
     TCP
   };

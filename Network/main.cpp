@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <list>
+#include "Select.hh"
 #elif _WIN32
 #include "WSocketTCP.hh"
 #include "WSocketUDP.hh"
@@ -91,6 +93,24 @@ void testsend()
 	}
 }
 
+void	selecttest()
+{
+  std::list<ISocket *>	l;
+  Select	s(2);
+
+  l.push_back(new SocketUDP());
+  l.push_back(new SocketUDP());
+  l.push_back(new SocketUDP());
+  l.push_back(new SocketUDP());
+  while (42)
+    {
+      s.initReads(l);
+      s.doSelect();
+      if (s.issetReads(l.front()->getHandle()))
+	std::cout << "Yeah baby!" << std::endl;
+    }
+}
+
 int	main()
 {
 	// TCP
@@ -99,7 +119,10 @@ int	main()
 
 	// UDP
 	//testrecept();
-	testsend();
+	//testsend();
+
+	// SELECT
+	selecttest();
 #ifdef __linux__
 	sleep(4);
 #elif _WIN32
