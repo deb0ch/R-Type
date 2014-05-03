@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #ifdef _WIN32
 	#include <Windows.h>
-#elif
+#elif __linux__
 	#include <sys/time.h>
 	#include <unistd.h>
 #endif

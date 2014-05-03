@@ -1,47 +1,64 @@
-CC	=	g++
+CXX	=	g++
 
 RM	=	rm -f
 
 CXXFLAGS	+=	-Wextra -Wall
 CXXFLAGS	+=	-Werror
-CXXFLAGS 	+=	-ansi -pedantic
-CXXFLAGS	+=	-I./src/core/ -I./src/systems/ -I./src/components/ -I./src/entities/
+CXXFLAGS 	+=	-pedantic
 CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE =
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/
 
-LIBDIR	=
-LIB	=
+LIBDIR		+=	-L./ECS/ -L./Network/build/
+#LIBDIR		+=	-L./lib/openal-soft-1.15.1/
+#LIBDIR		+=	-L./lib/SFML-1.6/lib/
+LIB		+=	-lecs
+#LIB		+=	-lopenal
+LIB		+=	-lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio -lNetworklib
 
 LDFLAGS	+=	$(LIBDIR) $(LIB)
 
 NAME	=	rtype
 
-SRCS	=	src/core/main.cpp		\
-		src/core/World.cpp		\
+SRCS	=	main.cpp				\
 \
-		src/core/Entity.cpp		\
+		components/Pos2DComponent.cpp		\
+		components/Speed2DComponent.cpp		\
+		components/Box2DComponent.cpp		\
+		components/SFMLSpriteComponent.cpp	\
+		components/NetworkUpdateComponent.cpp	\
 \
-		src/core/ASystem.cpp		\
-		src/core/AComponent.cpp		\
+		events/CollisionEvent.cpp		\
 \
-		src/components/FooComponent.cpp	\
-		src/systems/FooSystem.cpp
+		systems/NetworkSystem.cpp		\
+		systems/MoveSystem.cpp			\
+		systems/CollisionSystem.cpp		\
+		systems/SFMLRenderSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:		$(NAME)
+all:		LIBNETWORK LIBECS $(NAME)
+
+LIBECS:
+		make -C ./ECS/
+
+LIBNETWORK:
+		mkdir -p Network/build
+		cd Network/build && cmake ..
+		$(MAKE) -C Network/build
 
 $(NAME):	$(OBJS)
-		$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+		$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 clean:
 		$(RM) $(OBJS)
+		make clean -C ./ECS/
 
 fclean:		clean
 		$(RM) $(NAME)
+		make fclean -C ./ECS/
 
 re:		fclean all
 
