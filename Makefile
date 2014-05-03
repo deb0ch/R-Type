@@ -26,7 +26,7 @@ SRCS	=	main.cpp				\
 \
 		components/Pos2DComponent.cpp		\
 		components/Speed2DComponent.cpp		\
-		components/Friction2DComponent.cpp		\
+		components/Friction2DComponent.cpp	\
 		components/Box2DComponent.cpp		\
 		components/SFMLSpriteComponent.cpp	\
 		components/NetworkUpdateComponent.cpp	\

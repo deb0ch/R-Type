@@ -27,13 +27,15 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Network)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/systems)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
 
-if (UNIX)
-	SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/SFML-src/cmake/Modules")
-	FIND_PACKAGE(SFML 2 COMPONENTS system window graphics network audio)
-	LINK_DIRECTORIES(${SFML_LIBRARIES})
-endif (UNIX)
-
 ADD_EXECUTABLE(RType ${SOURCE} ${HEADER})
+
+if (UNIX)
+	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-window.so.2.1)
+	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-system.so.2.1)
+	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-network.so.2.1)
+	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-audio.so.2.1)
+	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-graphics.so.2.1)
+endif (UNIX)
 
 if (WIN32)
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-W/sfml-audio.lib)
