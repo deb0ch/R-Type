@@ -33,4 +33,7 @@ run:		$(NAME)
 debug:		$(NAME)
 		valgrind --track-origins=yes $(OPTIONS) ./$(NAME) $(PARAMS)
 
-.PHONY:		$(NAME) all clean fclean re run debug
+doc:
+		doxygen doxygen.cfg
+
+.PHONY:		$(NAME) all clean fclean re run debug doc
