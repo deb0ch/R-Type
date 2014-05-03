@@ -2,7 +2,8 @@
 #include "NetworkSystem.hh"
 #include "ISerializableComponent.hh"
 
-NetworkSystem::NetworkSystem(const std::vector<std::string> &component_to_send) : ASystem("NetworkSystem")
+NetworkSystem::NetworkSystem(const std::vector<std::string> &component_to_send)
+  : ASystem("NetworkSystem")
 {
   this->_component_to_send = component_to_send;
 }
