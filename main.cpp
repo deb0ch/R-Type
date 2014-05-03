@@ -54,6 +54,17 @@ int		main()
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MovementSpeedComponent(5)));
 
+  world.addEntity(world.createEntity()
+  		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
+  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Speed2DComponent(5.f, 5.f))
+		  ->addComponent(new Friction2DComponent(0.3))
+		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new NetworkUpdateComponent())
+		  ->addComponent(new SFMLInputComponent())
+		  ->addComponent(new PlayerMovementComponent())
+		  ->addComponent(new MovementSpeedComponent(2)));
+
   CollisionSystem *collision;
 
   collision = new CollisionSystem();
