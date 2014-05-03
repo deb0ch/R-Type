@@ -9,9 +9,9 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/ -I./SFML-src/include/
 
-LIBDIR		+=	-L./ECS/ -L./Network/build/
+LIBDIR		+=	-L./ECS/ -L./Network/build/ -L./SFML-src/build/lib/
 #LIBDIR		+=	-L./lib/openal-soft-1.15.1/
 #LIBDIR		+=	-L./lib/SFML-1.6/lib/
 LIB		+=	-lecs
@@ -43,7 +43,12 @@ OBJS	=	$(SRCS:.cpp=.o)
 all:		LIBNETWORK LIBECS $(NAME)
 
 LIBECS:
-		make -C ./ECS/
+		$(MAKE) -C ./ECS/
+
+LIBSFML:
+		mkdir -p SFML-src/build
+		cd SFML-src/build && cmake ..
+		$(MAKE) -C ./SFML-src/build
 
 LIBNETWORK:
 		mkdir -p Network/build
@@ -55,11 +60,18 @@ $(NAME):	$(OBJS)
 
 clean:
 		$(RM) $(OBJS)
-		make clean -C ./ECS/
+		$(MAKE) clean -C ./ECS/
+		$(MAKE) clean -C Network/build
+		$(MAKE) clean -C SFML-src/build
 
 fclean:		clean
 		$(RM) $(NAME)
-		make fclean -C ./ECS/
+		$(MAKE) fclean -C ./ECS/
+		$(MAKE) fclean -C Network/build
+
+installsfml:	LIBSFML
+		$(MAKE) install -C SFML-src/build/
+		cp /usr/local/lib/libsfml-* /usr/lib
 
 re:		fclean all
 
