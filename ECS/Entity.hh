@@ -2,9 +2,10 @@
 # define ENTITY_H_
 
 # include	<vector>
+# include	<string>
+# include	<iostream>
 
 # include	"IComponent.hh"
-# include	<string>
 
 class		Entity
 {
@@ -29,10 +30,13 @@ public:
   T		*getComponent(const std::string &string_type) const
   {
     IComponent	*component;
+    T		*tmp;
 
     if (!(component = this->getComponent(string_type)))
       return (NULL);
-    return (dynamic_cast<T*>(component));
+    if (!(tmp = dynamic_cast<T*>(component)))
+      std::cerr << __PRETTY_FUNCTION__ << ": Invalid type" << std::endl;
+    return (tmp);
   }
 };
 
