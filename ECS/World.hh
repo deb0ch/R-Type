@@ -6,14 +6,16 @@
 # include	"Entity.hh"
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
+# include	"Any.hpp"
 
 class		World
 {
 private:
-  std::vector<Entity*>	_entities;
-  std::vector<ISystem*>	_systems;
-  unsigned long		_nextEntityID;
-  EventManager<ISystem>	_event_manager;
+  std::vector<Entity*>		_entities;
+  std::vector<ISystem*>		_systems;
+  std::map<std::string, Any>	_shared_objs;
+  unsigned long			_nextEntityID;
+  EventManager<ISystem>		_event_manager;
 
 public:
 		World();
@@ -48,6 +50,29 @@ public:
   void		pause();
   void		resume();
   void		stop();
+
+  template <typename T>
+  void		setSharedObject(const std::string &type, T *obj)
+  {
+    auto it = this->_shared_objs.find(type);
+
+    if (it != this->_shared_objs.end())
+      it->second = obj;
+    else
+      {
+	this->_shared_objs.insert(std::make_pair(type, Any(obj)));
+      }
+  }
+
+  template <typename T>
+  T		*getSharedObject(const std::string &type)
+  {
+    auto it = this->_shared_objs.find(type);
+
+    if (it == this->_shared_objs.end())
+      return (NULL);
+    return (it->second.getValue<T>());
+  }
 };
 
 #endif /* !WORLD_H_ */

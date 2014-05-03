@@ -55,6 +55,11 @@ int		main()
   network = new NetworkSystem({"Pos2DComponent"});
   world.addSystem(network);
 
+  std::string test("Les pigouins ça glisse!");
+  world.setSharedObject<std::string>("Test", &test);
+  std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
+  std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
+
   world.start();
   for (;;)
     {
