@@ -31,7 +31,6 @@ World&	World::operator=(const World& ref)
 }
 
 //----- ----- Getters ----- ----- //
-//----- ----- Setters ----- ----- //
 Entity	*World::createEntity()
 {
   Entity	*res;
@@ -40,6 +39,8 @@ Entity	*World::createEntity()
   res->_id = this->_nextEntityID++;
   return (res);
 }
+
+//----- ----- Setters ----- ----- //
 
 World	*World::addEntity(Entity *entity)
 {
