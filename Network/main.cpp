@@ -1,19 +1,17 @@
+#include <list>
 #include <iostream>
-
-#ifdef __linux__
-#include "USocketTCP.hh"
-#include "USocketUDP.hh"
-#include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <list>
-#include "Select.hh"
+
+#ifdef __linux__
+#include <unistd.h>
+#include <stdlib.h>
 #elif _WIN32
-#include "WSocketTCP.hh"
-#include "WSocketUDP.hh"
 #include <Windows.h>
 #endif
+
+#include "Select.hh"
+#include "Socket.hh"
 
 #define IPADRESS_CLIENT "10.41.177.15"
 #define IPADRESS_SERVER "10.41.179.57"
