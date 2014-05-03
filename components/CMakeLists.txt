@@ -1,0 +1,20 @@
+set(HEADER
+   ${HEADER}
+   	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
+	PARENT_SCOPE
+	)
+
+SET(SOURCE
+	${SOURCE}
+	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
+	PARENT_SCOPE
+	)
