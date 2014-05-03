@@ -86,7 +86,7 @@ ISocketTCP		*SocketTCP::accept() {
     throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
 			   NetworkException::S_WARNING);
   socket = ::accept(this->_socket, reinterpret_cast<struct sockaddr*>(&cs), &lencs);
-  if (socket ==  INVALIDE_SOCKET)
+  if (socket == INVALIDE_SOCKET)
     {
       if (this->_socket == INVALIDE_SOCKET)
 	throw NetworkException(NetworkException::TCP, errno,
@@ -134,7 +134,7 @@ int SocketTCP::send(const void* data, const std::size_t size) {
     throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
 			   NetworkException::S_WARNING);
   if ((ret = ::send(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_WARNING);
+    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
   return (ret);
 }
 
@@ -145,7 +145,7 @@ int SocketTCP::receive(void* data, const std::size_t size) {
     throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
 			   NetworkException::S_WARNING);
   if ((ret = ::recv(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_WARNING);
+    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
   return (ret);
 }
 
