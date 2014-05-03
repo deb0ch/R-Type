@@ -11,7 +11,7 @@ CXXFLAGS	+=	$(INCLUDE)
 
 INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/ -I./SFML-src/include/
 
-LIBDIR		+=	-L./ECS/ -L./Network/build/
+LIBDIR		+=	-L./ECS/ -L./Network/build/ -L./SFML-src/build/lib/
 #LIBDIR		+=	-L./lib/openal-soft-1.15.1/
 #LIBDIR		+=	-L./lib/SFML-1.6/lib/
 LIB		+=	-lecs
@@ -39,14 +39,15 @@ SRCS	=	main.cpp				\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-all:		LIBNETWORK LIBECS $(NAME)
+all:		LIBNETWORK LIBECS LIBSFML $(NAME)
 
 LIBECS:
 		$(MAKE) -C ./ECS/
 
 LIBSFML:
-		cd SFML-src && cmake .
-		$(MAKE) -C ./SFML-src/
+		mkdir -p SFML-src/build
+		cd SFML-src/build && cmake ..
+		$(MAKE) -C ./SFML-src/build
 
 LIBNETWORK:
 		mkdir -p Network/build
@@ -60,12 +61,15 @@ clean:
 		$(RM) $(OBJS)
 		$(MAKE) clean -C ./ECS/
 		$(MAKE) clean -C Network/build
-		$(MAKE) clean -C SFML-src
+		$(MAKE) clean -C SFML-src/build
 
 fclean:		clean
 		$(RM) $(NAME)
 		$(MAKE) fclean -C ./ECS/
 		$(MAKE) fclean -C Network/build
+
+installsfml:	LIBSFML
+		$(MAKE) install -C SFML-src/build/
 
 re:		fclean all
 
