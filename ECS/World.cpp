@@ -154,3 +154,8 @@ bool		World::hasEventHandler(const std::string &type) const
 {
   return (this->_event_manager.hasHandler(type));
 }
+
+IComponent	*World::createComponent(const std::string &type) const
+{
+  return (this->_component_factory.create(type));
+}

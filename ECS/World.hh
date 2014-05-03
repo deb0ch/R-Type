@@ -7,6 +7,7 @@
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
 # include	"Any.hpp"
+# include	"Factory.hpp"
 
 class		World
 {
@@ -16,6 +17,7 @@ private:
   std::map<std::string, Any>	_shared_objs;
   unsigned long			_nextEntityID;
   EventManager<ISystem>		_event_manager;
+  Factory<IComponent>		_component_factory;
 
 public:
 		World();
@@ -72,6 +74,16 @@ public:
     if (it == this->_shared_objs.end())
       return (NULL);
     return (it->second.getValue<T>());
+  }
+
+  IComponent	*createComponent(const std::string &type) const;
+
+  template <typename T>
+  void		registerComponent()
+  {
+    T		tmp;
+
+    this->_component_factory.add<T>(tmp.getType());
   }
 };
 
