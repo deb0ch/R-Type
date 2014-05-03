@@ -34,16 +34,6 @@ int		main()
   world.addSystem(new SFMLInputSystem());
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
-		  ->addComponent(new Box2DComponent(20.f, 20.f))
-		  ->addComponent(new Speed2DComponent(1.f, 1.f)));
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(2.f, 2.f)));
-
-  world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
