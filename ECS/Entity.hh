@@ -35,7 +35,7 @@ public:
     if (!(component = this->getComponent(string_type)))
       return (NULL);
     if (!(tmp = dynamic_cast<T*>(component)))
-      std::cerr << __PRETTY_FUNCTION__ << ": Invalid type" << std::endl;
+      std::cerr << ": Invalid type" << std::endl;
     return (tmp);
   }
 };
