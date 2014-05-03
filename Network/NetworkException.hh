@@ -22,9 +22,9 @@ public:
   };
 
   enum	SEVERITY {
-    FATAL,
-    ERROR,
-    WARNING
+    S_FATAL,
+    S_ERROR,
+    S_WARNING
   };
 
   static std::map<NetworkException::ERROR_TYPE, const std::string> _msg;
