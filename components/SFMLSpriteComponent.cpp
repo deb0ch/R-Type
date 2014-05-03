@@ -4,10 +4,11 @@
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
   : AComponent("SFMLSpriteComponent")
 {
-  sf::Image	image;
+  sf::Texture	image;
 
-  image.LoadFromFile(filename);
-  this->_sprite = new sf::Sprite(image);
+  image.loadFromFile(filename);
+  this->_sprite = new sf::Sprite();
+  this->_sprite->setTexture(image);
 }
 
 SFMLSpriteComponent::SFMLSpriteComponent(const SFMLSpriteComponent &ref)

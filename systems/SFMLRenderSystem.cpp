@@ -29,9 +29,8 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   SFMLSpriteComponent	*sprite = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
   Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
 
-  sprite->getSprite()->SetX(pos->getX());
-  sprite->getSprite()->SetY(pos->getY());
-  this->_window->Draw(*sprite->getSprite());
+  sprite->getSprite()->setPosition(pos->getX(), pos->getY());
+  this->_window->draw(*sprite->getSprite());
 }
 
 void		SFMLRenderSystem::start()
@@ -41,10 +40,10 @@ void		SFMLRenderSystem::start()
 
 void		SFMLRenderSystem::beforeProcess()
 {
-  this->_window->Clear();
+  this->_window->clear();
 }
 
 void		SFMLRenderSystem::afterProcess()
 {
-  this->_window->Display();
+  this->_window->display();
 }

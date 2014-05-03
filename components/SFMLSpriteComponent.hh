@@ -1,7 +1,7 @@
 #ifndef SFMLSPRITECOMPONENT_H_
 # define SFMLSPRITECOMPONENT_H_
 
-# include	<SFML/Graphics.hpp>
+# include	"SFML/Graphics.hpp"
 
 # include	"AComponent.hh"
 

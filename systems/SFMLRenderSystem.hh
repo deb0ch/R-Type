@@ -1,7 +1,7 @@
 #ifndef SFMLRENDERSYSTEM_H_
 # define SFMLRENDERSYSTEM_H_
 
-# include		<SFML/Graphics.hpp>
+# include		"SFML/Graphics.hpp"
 
 # include		"ASystem.hh"
 
