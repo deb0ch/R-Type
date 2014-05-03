@@ -10,7 +10,7 @@ std::map<NetworkException::ERROR_TYPE, const std::string> NetworkException::_msg
 
 void NetworkException::addError(const int error)
 {
-	char buffer[64];
+	char buffer[512];
 	std::string res;
 
 #ifdef _WIN32
