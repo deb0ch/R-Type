@@ -2,14 +2,14 @@
 
 //----- ----- Constructors ----- ----- //
 Pos2DComponent::Pos2DComponent(float x, float y)
-  : AComponent("Pos2DComponent")
+  : ASerializableComponent("Pos2DComponent")
 {
   this->_x = x;
   this->_y = y;
 }
 
 Pos2DComponent::Pos2DComponent(const Pos2DComponent &ref)
-  : AComponent("Pos2DComponent")
+  : ASerializableComponent("Pos2DComponent")
 {
   this->_x = ref._x;
   this->_y = ref._y;

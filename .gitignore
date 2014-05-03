@@ -16,7 +16,7 @@
 *.lib
 
 # Executables
-rtype
+RType
 *.exe
 *.out
 *.app
