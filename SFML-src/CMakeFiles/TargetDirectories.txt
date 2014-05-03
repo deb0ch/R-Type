@@ -1,0 +1,5 @@
+/home/ouabde_r/Téléchargements/SFML-master/src/SFML/Audio/CMakeFiles/sfml-audio.dir
+/home/ouabde_r/Téléchargements/SFML-master/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir
+/home/ouabde_r/Téléchargements/SFML-master/src/SFML/Network/CMakeFiles/sfml-network.dir
+/home/ouabde_r/Téléchargements/SFML-master/src/SFML/System/CMakeFiles/sfml-system.dir
+/home/ouabde_r/Téléchargements/SFML-master/src/SFML/Window/CMakeFiles/sfml-window.dir

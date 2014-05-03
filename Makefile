@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/
+INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/ -I./SFML-src/include/
 
 LIBDIR		+=	-L./ECS/ -L./Network/build/
 #LIBDIR		+=	-L./lib/openal-soft-1.15.1/
@@ -42,7 +42,11 @@ OBJS	=	$(SRCS:.cpp=.o)
 all:		LIBNETWORK LIBECS $(NAME)
 
 LIBECS:
-		make -C ./ECS/
+		$(MAKE) -C ./ECS/
+
+LIBSFML:
+		cd SFML-src && cmake .
+		$(MAKE) -C ./SFML-src/
 
 LIBNETWORK:
 		mkdir -p Network/build
@@ -54,11 +58,14 @@ $(NAME):	$(OBJS)
 
 clean:
 		$(RM) $(OBJS)
-		make clean -C ./ECS/
+		$(MAKE) clean -C ./ECS/
+		$(MAKE) clean -C Network/build
+		$(MAKE) clean -C SFML-src
 
 fclean:		clean
 		$(RM) $(NAME)
-		make fclean -C ./ECS/
+		$(MAKE) fclean -C ./ECS/
+		$(MAKE) fclean -C Network/build
 
 re:		fclean all
 
