@@ -39,7 +39,8 @@ SRCS	=	main.cpp				\
 		systems/Friction2DSystem.cpp		\
 		systems/CollisionSystem.cpp		\
 		systems/SFMLRenderSystem.cpp		\
-		systems/SFMLInputSystem.cpp
+		systems/SFMLInputSystem.cpp		\
+		systems/PlayerMovementSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
