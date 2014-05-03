@@ -3,13 +3,11 @@
 
 # include <string>
 # include <iostream>
-# include "SocketFD.hh"
+
+#define MSG_INVALIDE_SOCKET "The socket is invalide"
 
 class ISocket
 {
-public:
-  static const std::string MSG_INVALIDE_SOCKET = "The socket is invalide";
-
 public:
   virtual void		setBlocking(const bool blocking) = 0;
   virtual const bool	isBlocking() const = 0;
