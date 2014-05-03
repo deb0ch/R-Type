@@ -29,13 +29,15 @@ SRCS	=	main.cpp				\
 		components/Box2DComponent.cpp		\
 		components/SFMLSpriteComponent.cpp	\
 		components/NetworkUpdateComponent.cpp	\
+		components/SFMLInputComponent.cpp	\
 \
 		events/CollisionEvent.cpp		\
 \
 		systems/NetworkSystem.cpp		\
 		systems/MoveSystem.cpp			\
 		systems/CollisionSystem.cpp		\
-		systems/SFMLRenderSystem.cpp
+		systems/SFMLRenderSystem.cpp		\
+		systems/SFMLInputSystem.cpp
 
 OBJS	=	$(SRCS:.cpp=.o)
 
