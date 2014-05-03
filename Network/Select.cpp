@@ -25,7 +25,7 @@ void	Select::doSelect()
 	 errno == EINTR)
     if (ret == -1 && errno != EINTR)
       throw NetworkException(NetworkException::SELECT, "Function select failed",
-			     NetworkException::FATAL);
+			     NetworkException::S_FATAL);
 }
 
 bool	Select::issetReads(const int fd)
