@@ -4,11 +4,13 @@
 #include	"Entity.hh"
 
 #include	"MoveSystem.hh"
+#include	"Friction2DSystem.hh"
 #include	"CollisionSystem.hh"
 #include	"SFMLRenderSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
+#include	"Friction2DComponent.hh"
 #include	"Box2DComponent.hh"
 #include	"SFMLSpriteComponent.hh"
 #include	"MoveSystem.hh"
@@ -21,6 +23,7 @@ int		main()
   World		world;
 
   world.addSystem(new MoveSystem());
+  world.addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
 
   world.addEntity(world.createEntity()
@@ -37,6 +40,7 @@ int		main()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
+		  ->addComponent(new Friction2DComponent())
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
 		  ->addComponent(new NetworkUpdateComponent()));
 
