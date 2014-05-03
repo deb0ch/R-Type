@@ -48,3 +48,13 @@ void	Speed2DComponent::setVY(float y)
 {
   this->_vY = y;
 }
+
+void	Speed2DComponent::addVX(float x)
+{
+  this->_vX += x;
+}
+
+void	Speed2DComponent::addVY(float y)
+{
+  this->_vY += y;
+}

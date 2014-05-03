@@ -7,6 +7,8 @@
 #include	"Friction2DSystem.hh"
 #include	"CollisionSystem.hh"
 #include	"SFMLRenderSystem.hh"
+#include	"SFMLInputSystem.hh"
+#include	"PlayerMovementSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -17,6 +19,8 @@
 #include	"Entity.hh"
 #include	"NetworkSystem.hh"
 #include	"NetworkUpdateComponent.hh"
+#include	"SFMLInputComponent.hh"
+#include	"PlayerMovementComponent.hh"
 
 int		main()
 {
@@ -25,6 +29,8 @@ int		main()
   world.addSystem(new MoveSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new PlayerMovementSystem());
+  world.addSystem(new SFMLInputSystem());
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
@@ -40,9 +46,11 @@ int		main()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent())
+		  ->addComponent(new Friction2DComponent(0.3))
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkUpdateComponent()));
+		  ->addComponent(new NetworkUpdateComponent())
+		  ->addComponent(new SFMLInputComponent())
+		  ->addComponent(new PlayerMovementComponent()));
 
   CollisionSystem *collision;
 
@@ -51,11 +59,12 @@ int		main()
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
   NetworkSystem *network;
+  std::vector<std::string> arg = {"Pos2DComponent"};
 
-  network = new NetworkSystem({"Pos2DComponent"});
+  network = new NetworkSystem(arg);
   world.addSystem(network);
 
-  std::string test("Les pigouins Ã§a glisse!");
+  std::string test("Les pigouins ça glisse!");
   world.setSharedObject<std::string>("Test", &test);
   std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
   std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
