@@ -13,7 +13,7 @@ public:
   virtual bool canProcess(Entity *);
   virtual void processEntity(Entity *, const float);
 protected:
-  static const std::map<sf::Keyboard::Key, std::pair<float, float> > KeyMovement;
+  static const std::map<sf::Keyboard::Key, std::pair<int, int> > KeyMovement;
 };
 
 #endif /* !PLAYERMOVEMENTSYSTEM_H_ */

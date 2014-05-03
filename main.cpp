@@ -21,6 +21,7 @@
 #include	"NetworkUpdateComponent.hh"
 #include	"SFMLInputComponent.hh"
 #include	"PlayerMovementComponent.hh"
+#include	"MovementSpeedComponent.hh"
 
 int		main()
 {
@@ -50,7 +51,8 @@ int		main()
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
-		  ->addComponent(new PlayerMovementComponent()));
+		  ->addComponent(new PlayerMovementComponent())
+		  ->addComponent(new MovementSpeedComponent(5)));
 
   CollisionSystem *collision;
 
@@ -68,6 +70,9 @@ int		main()
   world.setSharedObject<std::string>("Test", &test);
   std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
   std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
+
+  world.registerComponent<Pos2DComponent>();
+  std::cout << world.createComponent("Pos2DComponent")->getType() << std::endl;
 
   world.start();
   for (;;)

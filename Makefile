@@ -31,6 +31,8 @@ SRCS	=	main.cpp				\
 		components/SFMLSpriteComponent.cpp	\
 		components/NetworkUpdateComponent.cpp	\
 		components/SFMLInputComponent.cpp	\
+		components/ASerializableComponent.cpp	\
+		components/MovementSpeedComponent.cpp	\
 \
 		events/CollisionEvent.cpp		\
 \
