@@ -35,6 +35,7 @@ SRCS	=	main.cpp				\
 \
 		systems/NetworkSystem.cpp		\
 		systems/MoveSystem.cpp			\
+		systems/Friction2DSystem.cpp		\
 		systems/CollisionSystem.cpp		\
 		systems/SFMLRenderSystem.cpp
 

@@ -1,7 +1,7 @@
 #include "Friction2DComponent.hh"
 
 //----- ----- Constructors ----- ----- //
-Friction2DComponent::Friction2DComponent(float coef = 1)
+Friction2DComponent::Friction2DComponent(float coef)
   : AComponent("Friction2DComponent"), _frictionCoef(coef)
 {}
 

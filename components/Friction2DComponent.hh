@@ -10,7 +10,7 @@ public:
   void	setFrictionCoef(float coef);
 
 public:
-		Friction2DComponent(float);
+		Friction2DComponent(float coef = 0.01);
 		Friction2DComponent(const Friction2DComponent&);
   virtual	~Friction2DComponent();
   Friction2DComponent	&operator=(const Friction2DComponent&);

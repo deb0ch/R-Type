@@ -40,7 +40,7 @@ int		main()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent(1.f))
+		  ->addComponent(new Friction2DComponent())
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
 		  ->addComponent(new NetworkUpdateComponent()));
 

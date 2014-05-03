@@ -21,7 +21,6 @@ bool		Friction2DSystem::canProcess(Entity *entity)
   if (entity->hasComponent("Speed2DComponent"))
     return (true);
   return (false);
-
 }
 
 // Decreases the speed of the component. The formula is newSpeed = oldSpeed / (coef + 1)
@@ -37,8 +36,8 @@ void			Friction2DSystem::processEntity(Entity *entity, const float)
       || !(friction = entity->getComponent<Friction2DComponent>("Friction2DComponent"))
       || friction->getFrictionCoef() <= -1)
     return ;
-  speed->getVx /= friction->getFrictionCoef() + 1;
-  speed->getVy /= friction->getFrictionCoef() + 1;
+  speed->setVX(speed->getVX() / (friction->getFrictionCoef() + 1.f));
+  speed->setVY(speed->getVY() / (friction->getFrictionCoef() + 1.f));
   /*  tests */
-  std::cout << "Vy = " << pos->getY() << " et Vx = " << pos->getX() << std::endl;
+  std::cout << "Vy = " << speed->getVX() << " et Vx = " << speed->getVY() << std::endl;
 }
