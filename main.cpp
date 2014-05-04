@@ -23,6 +23,12 @@
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
 
+#ifdef _WIN32
+	#define PATH "sprites\\"
+#elif __linux__
+	#define PATH "sprite/"
+#endif
+
 int		main()
 {
   World		world;
@@ -37,8 +43,8 @@ int		main()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent(0.3))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new Friction2DComponent(0.3f))
+		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
@@ -48,8 +54,8 @@ int		main()
   		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent(0.3))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new Friction2DComponent(0.3f))
+		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
