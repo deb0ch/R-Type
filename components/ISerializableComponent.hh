@@ -10,7 +10,7 @@ public:
   virtual ~ISerializableComponent()
   {}
 
-  virtual std::string serialize() const = 0;
+  virtual int serialize(char *buffer, int lenght) const = 0;
 protected:
 
 };
