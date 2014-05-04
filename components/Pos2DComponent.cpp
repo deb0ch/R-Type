@@ -1,4 +1,5 @@
 #include "Pos2DComponent.hh"
+#include "Serializer.hpp"
 
 //----- ----- Constructors ----- ----- //
 Pos2DComponent::Pos2DComponent(float x, float y)
@@ -49,7 +50,12 @@ void	Pos2DComponent::setY(float y)
   this->_y = y;
 }
 
-std::string Pos2DComponent::serialize() const
+int		Pos2DComponent::serialize(char *buffer, int lenght) const
 {
-  return ("prout");
+  int		lenght_written;
+
+  lenght_written = 0;
+  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_x);
+  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_y);
+  return (lenght_written);
 }

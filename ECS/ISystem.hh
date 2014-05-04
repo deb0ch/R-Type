@@ -19,6 +19,7 @@ public:
   virtual void		setWorld(World *) = 0;
 
   virtual void		process(std::vector<Entity *>&, const float delta) = 0;
+  virtual void		init() = 0;
   virtual void		start() = 0;
   virtual void		pause() = 0;
   virtual void		resume() = 0;

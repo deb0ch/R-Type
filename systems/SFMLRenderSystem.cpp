@@ -5,17 +5,13 @@
 #include	"SFMLSpriteComponent.hh"
 #include	"Pos2DComponent.hh"
 
-//----- ----- Constructors ----- ----- //
 SFMLRenderSystem::SFMLRenderSystem()
   : ASystem("SFMLRenderSystem")
 {}
 
-//----- ----- Destructor ----- ----- //
 SFMLRenderSystem::~SFMLRenderSystem()
 {}
 
-//----- ----- Getters ----- ----- //
-//----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 bool		SFMLRenderSystem::canProcess(Entity *entity)
 {
@@ -26,16 +22,22 @@ bool		SFMLRenderSystem::canProcess(Entity *entity)
 
 void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 {
-  SFMLSpriteComponent	*sprite = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
+  SFMLSpriteComponent	*spriteComp = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
   Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
 
-  sprite->getSprite()->setPosition(pos->getX(), pos->getY());
-  this->_window->draw(*sprite->getSprite());
+  ImageLoader *imageLoader = this->_world->getSharedObject<ImageLoader>("imageLoader");
+  if (!imageLoader)
+    return ; //TODO throw
+  sf::Sprite *sprite = spriteComp->getSprite(*imageLoader);
+  sprite->setPosition(pos->getX(), pos->getY());
+  this->_window->draw(*sprite);
+  delete sprite;
 }
 
 void		SFMLRenderSystem::start()
 {
   this->_window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "EpicGradius");
+  this->_window->setFramerateLimit(60);
 }
 
 void		SFMLRenderSystem::beforeProcess()

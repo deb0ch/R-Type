@@ -1,10 +1,10 @@
 #ifndef POS2DCOMPONENT_H_
 # define POS2DCOMPONENT_H_
 
-# include	"AComponent.hh"
+# include	"AComponent.hpp"
 # include	"ISerializableComponent.hh"
 
-class		Pos2DComponent : public AComponent, public ISerializableComponent
+class		Pos2DComponent : public AComponent<Pos2DComponent>, public ISerializableComponent
 {
 protected:
   float		_x;
@@ -15,7 +15,7 @@ public:
 		Pos2DComponent(const Pos2DComponent&);
   virtual	~Pos2DComponent();
   Pos2DComponent	&operator=(const Pos2DComponent&);
-  virtual std::string serialize() const;
+  virtual int	serialize(char *buffer, int lenght) const;
 
   float		getX() const;
   float		getY() const;

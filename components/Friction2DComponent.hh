@@ -1,9 +1,9 @@
 #ifndef FRICTION2DCOMPONENT_H_
 # define FRICTION2DCOMPONENT_H_
 
-# include	"AComponent.hh"
+# include	"AComponent.hpp"
 
-class		Friction2DComponent : public AComponent
+class		Friction2DComponent : public AComponent<Friction2DComponent>
 {
 public:
   float	getFrictionCoef() const;

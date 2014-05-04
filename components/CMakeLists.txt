@@ -6,6 +6,10 @@ set(HEADER
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
 	PARENT_SCOPE
 	)
 
@@ -16,5 +20,8 @@ SET(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
 	PARENT_SCOPE
 	)
