@@ -52,9 +52,17 @@ void	Pos2DComponent::setY(float y)
 
 std::string	Pos2DComponent::serialize() const
 {
-  std::string	buffer;
+  char		buffer[500];
+  float		x;
+  float		y;
+  int		lenght = 0;
+  int		lenght_read = 0;
 
-  Serializer<float>::serialize(buffer, this->_x);
-  Serializer<float>::serialize(buffer, this->_y);
+  lenght += Serializer<float>::serialize(buffer + lenght, 500 - lenght, this->_x);
+  lenght += Serializer<float>::serialize(buffer + lenght, 500 - lenght, this->_y);
+  std::cout << "Serializing x: " << _x << " y: " << _y << std::endl;
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, x);
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, y);
+  std::cout << "Unserialized x: " << x << " y: " << y << std::endl;
   return (buffer);
 }

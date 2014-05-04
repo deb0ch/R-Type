@@ -18,50 +18,72 @@ class Serializer
 private:
 
 public:
-  static void	serialize(std::string &str, const T &elements)
+  static int	serialize(char *str, int len, const T &elements)
   {
     int		i;
+    int		j;
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
+    if (len < sizeof(T))
+      {
+	std::cout << "Not enough space" << std::endl;
+	return (0);
+      }
     if (isBigEndian())
       i = 0;
     else
-      i = sizeof(T);
-    while ((isBigEndian() && i >= 0) || (!isBigEndian() && i < sizeof(T)))
+      i = sizeof(T) - 1;
+    j = 0;
+    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
       {
-	str += tab[i];
+	if (j >= len)
+	  {
+	    std::cerr << "serialize: Wrong size" << std::endl; // raise expression
+	    return (0);
+	  }
+	str[j] = tab[i];
+	std::cout << "Serialize: " << i << " " << tab[i] << std::endl;
 	if (isBigEndian())
 	  ++i;
 	else
 	  --i;
+	++j;
       }
+    return (sizeof(T));
   };
 
-  static int	unserialize(std::string &str, T &elements)
+  static int	unserialize(const char *str, int len, T &elements)
   {
     int		i;
+    int		j;
     char	*tab;
-    auto	it = str.begin();
 
     tab = reinterpret_cast<char *>(&elements);
+    if (len < sizeof(T))
+      {
+	std::cout << "Not enough space" << std::endl;
+	return (0);
+      }
     if (isBigEndian())
       i = 0;
     else
-      i = sizeof(T);
-    while ((isBigEndian() && i >= 0) || (!isBigEndian() && i < sizeof(T)))
+      i = sizeof(T) - 1;
+    j = 0;
+    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
       {
-	if (it == str.end())
+	if (j >= len)
 	  {
 	    std::cerr << "unserialize: Wrong size" << std::endl; // raise expression
-	    return (-1);
+	    return (0);
 	  }
-	tab[i] = *it;
+	tab[j] = str[i];
+	std::cout << "Unserialize: " << i << " " << tab[j] << std::endl;
 	if (isBigEndian())
 	  ++i;
 	else
 	  --i;
-	++it;
+	++j;
       }
     return (sizeof(T));
   }
