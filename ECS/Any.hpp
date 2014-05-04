@@ -5,31 +5,66 @@
 
 class Any
 {
+private:
+  class IContainer
+  {
+    public:
+    virtual ~IContainer()
+    {}
+
+    virtual IContainer *clone() = 0;
+  };
+
+  template <typename T>
+  class Container : public IContainer
+  {
+  public:
+    Container(T *value)
+    {
+      this->_value = value;
+    }
+
+    virtual ~Container()
+    {}
+
+    virtual IContainer *clone()
+    {
+      return new Container<T>(this->_value);
+    }
+
+    T *_value;
+  };
 public:
   Any()
   {
-    this->_value = NULL;
+    this->_container = NULL;
   }
 
   virtual ~Any()
-  {}
+  {
+    if (this->_container)
+      delete this->_container;
+  }
 
   template <typename T>
   Any(T *value)
   {
-    this->_value = value;
+    this->_container = new Container<T>(value);
   }
 
   template <typename T>
   const T *getValue() const
   {
-    const T	*tmp;
+    const Container<T>	*tmp;
 
-    if (this->_value)
+    if (this->_container)
       {
-	if (!(tmp = reinterpret_cast<const T *>(this->_value)))
-	  std::cerr << "Bad type" << std::endl; // Raise exception
-	return (tmp);
+	if (!(tmp = dynamic_cast<const Container<T> * >(this->_container)))
+	  {
+	    std::cerr << "Bad type" << std::endl; // Raise exception
+	    return (NULL);
+	  }
+	return (tmp->_value);
       }
     return (NULL);
   }
@@ -37,13 +72,16 @@ public:
   template <typename T>
   T *getValue()
   {
-    T	*tmp;
+    Container<T>	*tmp;
 
-    if (this->_value)
+    if (this->_container)
       {
-	if (!(tmp = reinterpret_cast<T *>(this->_value)))
+	if (!(tmp = dynamic_cast< Container<T> * >(this->_container)))
+	  {
 	    std::cerr << "Bad type" << std::endl; // Raise exception
-	return (tmp);
+	    return (NULL);
+	  }
+	return (tmp->_value);
       }
     return (NULL);
   }
@@ -51,23 +89,27 @@ public:
   template <typename T>
   Any &operator=(T *value)
   {
-    this->_value = value;
+    if (this->_container)
+      delete this->_container;
+    this->_container = new Container<T>(value);
     return (*this);
   }
 
   Any(const Any &other)
   {
-    this->_value = other._value;
+    this->_container = other._container->clone();
   }
 
   Any &operator=(const Any &other)
   {
-    this->_value = other._value;
+    if (this->_container)
+      delete this->_container;
+    this->_container = other._container->clone();
     return (*this);
   }
 
 protected:
-  void	*_value;
+  IContainer *_container;
 };
 
 #endif /* !ANY_HPP_ */
