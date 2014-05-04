@@ -59,3 +59,13 @@ int		Pos2DComponent::serialize(char *buffer, int lenght) const
   lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_y);
   return (lenght_written);
 }
+
+int		Pos2DComponent::unserialize(const char *buffer, int lenght)
+{
+  int		lenght_read;
+
+  lenght_read = 0;
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_x);
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_y);
+  return (lenght_read);
+}

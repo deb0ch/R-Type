@@ -12,12 +12,12 @@
 class		World
 {
 private:
-  std::vector<Entity*>		_entities;
-  std::vector<ISystem*>		_systems;
-  std::map<std::string, Any>	_shared_objs;
-  unsigned long			_nextEntityID;
-  EventManager<ISystem>		_event_manager;
-  Factory<IComponent>		_component_factory;
+  std::vector<Entity*>				_entities;
+  std::vector<ISystem*>				_systems;
+  std::map<std::string, Any>			_shared_objs;
+  unsigned long					_nextEntityID;
+  EventManager<ISystem>				_event_manager;
+  Factory<IComponent, std::size_t>		_component_factory;
 
 public:
 		World();
@@ -76,6 +76,7 @@ public:
     return (it->second.getValue<T>());
   }
 
+  IComponent	*createComponent(std::size_t type) const;
   IComponent	*createComponent(const std::string &type) const;
   void		registerComponent(const IComponent *component);
 };

@@ -2,7 +2,8 @@ set(HEADER
    ${HEADER}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
@@ -14,7 +15,8 @@ SET(SOURCE
 	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp

@@ -11,6 +11,7 @@ public:
   {}
 
   virtual int serialize(char *buffer, int lenght) const = 0;
+  virtual int unserialize(const char *buffer, int lenght) = 0;
 protected:
 
 };

@@ -57,6 +57,40 @@ Entity		*Entity::removeComponent(const std::string &type)
   return (this);
 }
 
+
+Entity		*Entity::removeAllComponent()
+{
+  std::for_each(this->_components.begin(), this->_components.end(), VectorDeleter<IComponent*>());
+  this->_components.clear();
+  return (this);
+}
+
+
+Entity		*Entity::removeAllComponentExcept(const IComponent *component)
+{
+  if (!component)
+    return (this);
+  return (this->removeAllComponentExcept(component->getType()));
+}
+
+Entity		*Entity::removeAllComponentExcept(const std::string &type)
+{
+  IComponent	*except_component = NULL;
+
+  std::for_each(this->_components.begin(), this->_components.end(),
+		[type, &except_component] (IComponent *component) -> void {
+		  if (component->getType() != type)
+		    delete component;
+		  else
+		    except_component = component;
+		});
+
+  this->_components.clear();
+  if (except_component)
+    this->addComponent(except_component);
+  return (this);
+}
+
 //----- ----- Methods ----- ----- //
 IComponent	*Entity::getComponent(const std::string &type) const
 {

@@ -9,6 +9,7 @@
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLInputSystem.hh"
 #include	"PlayerMovementSystem.hh"
+#include	"NetworkSendUpdateComponent.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -17,17 +18,16 @@
 #include	"SFMLSpriteComponent.hh"
 #include	"MoveSystem.hh"
 #include	"Entity.hh"
-#include	"NetworkSystem.hh"
-#include	"NetworkUpdateComponent.hh"
+#include	"NetworkSendUpdateSystem.hh"
 #include	"SFMLInputComponent.hh"
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
 #include	"ImageLoader.hh"
 
 #ifdef _WIN32
-	#define PATH "sprites\\"
+#define PATH "sprites\\"
 #elif __linux__
-	#define PATH "sprites/"
+#define PATH "sprites/"
 #endif
 
 int		main()
@@ -43,47 +43,47 @@ int		main()
   world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
-  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
-		  ->addComponent(new NetworkUpdateComponent())
+		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MovementSpeedComponent(5)));
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
-  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
-		  ->addComponent(new NetworkUpdateComponent())
+		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MovementSpeedComponent(2)));
 
-    world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  world.addEntity(world.createEntity()
+		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkUpdateComponent()));
+		  ->addComponent(new NetworkSendUpdateComponent()));
 
-      world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  world.addEntity(world.createEntity()
+		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkUpdateComponent()));
+		  ->addComponent(new NetworkSendUpdateComponent()));
 
-        world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  world.addEntity(world.createEntity()
+		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkUpdateComponent()));
+		  ->addComponent(new NetworkSendUpdateComponent()));
 
   CollisionSystem *collision;
 
@@ -91,10 +91,10 @@ int		main()
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
-  NetworkSystem *network;
+  NetworkSendUpdateSystem *network;
   std::vector<std::string> arg = {"Pos2DComponent"};
 
-  network = new NetworkSystem(arg);
+  network = new NetworkSendUpdateSystem(arg);
   world.addSystem(network);
 
   std::string test("Les pigouins ça glisse!");

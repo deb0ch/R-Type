@@ -23,6 +23,10 @@ public:
   Entity	*removeComponent(IComponent *);
   Entity	*removeComponent(const std::string &id);
 
+  Entity	*removeAllComponent();
+  Entity	*removeAllComponentExcept(const IComponent *);
+  Entity	*removeAllComponentExcept(const std::string &id);
+
   bool		hasComponent(const std::string &string_type) const;
   IComponent	*getComponent(const std::string &string_type) const;
 

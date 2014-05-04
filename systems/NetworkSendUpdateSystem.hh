@@ -1,5 +1,5 @@
-#ifndef NETWORKSYSTEM_H_
-# define NETWORKSYSTEM_H_
+#ifndef NETWORKSENDUPDATESYSTEM_H_
+# define NETWORKSENDUPDATESYSTEM_H_
 
 # include "ASystem.hh"
 
@@ -8,11 +8,11 @@ enum PacketType
     ENTITY_UPDATE
   };
 
-class NetworkSystem : public ASystem
+class NetworkSendUpdateSystem : public ASystem
 {
 public:
-		NetworkSystem(const std::vector<std::string> &component_to_send);
-  virtual	~NetworkSystem();
+		NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send);
+  virtual	~NetworkSendUpdateSystem();
 
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
@@ -23,4 +23,4 @@ private:
   static const int _buffer_size = 512;
 };
 
-#endif /* !NETWORKSYSTEM_H_ */
+#endif /* !NETWORKSENDUPDATESYSTEM_H_ */
