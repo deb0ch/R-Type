@@ -72,7 +72,7 @@ int		main()
   std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
   std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
 
-  world.registerComponent<Pos2DComponent>();
+  world.registerComponent(new Pos2DComponent());
   std::cout << world.createComponent("Pos2DComponent")->getType() << std::endl;
 
   world.start();
