@@ -1,5 +1,6 @@
 #include "ImageLoader.hh"
 
+/*
 #include <stdlib.h>
 #include <io.h>
 #include <process.h>
@@ -13,6 +14,7 @@ int fileExists(const std::string & filename)
 	return (access(filename.c_str(), 4));
 #endif
 }
+*/
 
 ImageLoader::ImageLoader() {
   this->_images = std::map<std::string, std::pair<sf::Texture *, ImageLoader::InfImg> >();
