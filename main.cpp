@@ -22,6 +22,13 @@
 #include	"SFMLInputComponent.hh"
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
+#include	"ImageLoader.hh"
+
+#ifdef _WIN32
+	#define PATH "sprites\\"
+#elif __linux__
+	#define PATH "sprites/"
+#endif
 
 int		main()
 {
@@ -33,12 +40,14 @@ int		main()
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
 
+  world.setSharedObject("imageLoader", new ImageLoader());
+
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent(0.3))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new Friction2DComponent(0.3f))
+		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
@@ -48,12 +57,33 @@ int		main()
   		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
-		  ->addComponent(new Friction2DComponent(0.3))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new Friction2DComponent(0.3f))
+		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MovementSpeedComponent(2)));
+
+    world.addEntity(world.createEntity()
+  		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
+  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Speed2DComponent(5.f, 2.f))
+		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new NetworkUpdateComponent()));
+
+      world.addEntity(world.createEntity()
+  		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
+  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
+		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new NetworkUpdateComponent()));
+
+        world.addEntity(world.createEntity()
+  		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Speed2DComponent(20.f, 5.f))
+		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+		  ->addComponent(new NetworkUpdateComponent()));
 
   CollisionSystem *collision;
 
