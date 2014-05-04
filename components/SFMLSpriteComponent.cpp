@@ -1,15 +1,11 @@
+#include <iostream>
 #include "SFMLSpriteComponent.hh"
+#include "ImageLoader.hh"
 
 //----- ----- Constructors ----- ----- //
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
-  : AComponent("SFMLSpriteComponent")
-{
-  sf::Texture	image;
-
-  image.loadFromFile(filename);
-  this->_sprite = new sf::Sprite();
-  this->_sprite->setTexture(image);
-}
+  : AComponent("SFMLSpriteComponent"), _filaName(filename)
+{}
 
 SFMLSpriteComponent::SFMLSpriteComponent(const SFMLSpriteComponent &ref)
   : AComponent("SFMLSpriteComponent")
@@ -19,7 +15,9 @@ SFMLSpriteComponent::SFMLSpriteComponent(const SFMLSpriteComponent &ref)
 
 //----- ----- Destructor ----- ----- //
 SFMLSpriteComponent::~SFMLSpriteComponent()
-{}
+{
+  delete this->_sprite;
+}
 
 //----- ----- Operators ----- ----- //
 SFMLSpriteComponent	&SFMLSpriteComponent::operator=(const SFMLSpriteComponent &ref)
@@ -29,9 +27,9 @@ SFMLSpriteComponent	&SFMLSpriteComponent::operator=(const SFMLSpriteComponent &r
 }
 
 //----- ----- Getters ----- ----- //
-sf::Sprite		*SFMLSpriteComponent::getSprite() const
+sf::Sprite	&SFMLSpriteComponent::getSprite() const
 {
-  return (this->_sprite);
+  sf::Sprite *sprite = new sf::Sprite();
+  sprite->setTexture();
+  return (*this->_sprite);
 }
-
-//----- ----- Setters ----- ----- //

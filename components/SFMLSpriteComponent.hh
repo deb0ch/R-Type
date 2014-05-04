@@ -8,7 +8,7 @@
 class		SFMLSpriteComponent : public AComponent
 {
 protected:
-  sf::Sprite	*_sprite;
+  const std::string	_filaName;
 
 public:
 		SFMLSpriteComponent(const std::string &filename);
@@ -16,7 +16,7 @@ public:
   virtual	~SFMLSpriteComponent();
   SFMLSpriteComponent	&operator=(const SFMLSpriteComponent&);
 
-  sf::Sprite		*getSprite() const;
+  sf::Sprite	&getSprite() const;
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */

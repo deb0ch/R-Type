@@ -9,7 +9,7 @@ CXXFLAGS	+=	-std=c++11
 CXXFLAGS	+=	-ggdb3 -O0
 CXXFLAGS	+=	$(INCLUDE)
 
-INCLUDE		=	-I./ECS/ -I./components/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/ -I./SFML-src/include/
+INCLUDE		=	-I./ECS/ -I./components/ -I./utility/ -I./systems/ -I./events/ -I./lib/SFML-1.6/includes -I./Network/ -I./SFML-src/include/
 
 LIBDIR		+=	-L./ECS/ -L./Network/build/ -L./SFML-src/build/lib/
 #LIBDIR		+=	-L./lib/openal-soft-1.15.1/
@@ -23,6 +23,8 @@ LDFLAGS	+=	$(LIBDIR) $(LIB)
 NAME	=	rtype
 
 SRCS	=	main.cpp				\
+\
+		utility/ImageLoader.cpp			\
 \
 		components/Pos2DComponent.cpp		\
 		components/Speed2DComponent.cpp		\
