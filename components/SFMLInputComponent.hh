@@ -4,9 +4,9 @@
 #include <map>
 #include "SFML/Window/Keyboard.hpp"
 #include "SFML/Window/Event.hpp"
-#include "AComponent.hh"
+#include "AComponent.hpp"
 
-class		SFMLInputComponent : public AComponent
+class		SFMLInputComponent : public AComponent<SFMLInputComponent>
 {
 public:
   SFMLInputComponent();

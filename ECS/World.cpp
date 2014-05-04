@@ -160,3 +160,10 @@ IComponent	*World::createComponent(const std::string &type) const
 {
   return (this->_component_factory.create(type));
 }
+
+void		World::registerComponent(const IComponent *component)
+{
+  if (!component)
+    return ;
+  this->_component_factory.add(component->getType(), component);
+}

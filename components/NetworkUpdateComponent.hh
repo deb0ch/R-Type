@@ -1,9 +1,9 @@
 #ifndef NETWORKUPDATECOMPONENT_H_
 # define NETWORKUPDATECOMPONENT_H_
 
-# include "AComponent.hh"
+# include "AComponent.hpp"
 
-class NetworkUpdateComponent : public AComponent
+class NetworkUpdateComponent : public AComponent<NetworkUpdateComponent>
 {
 public:
   NetworkUpdateComponent();

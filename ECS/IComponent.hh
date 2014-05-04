@@ -10,6 +10,7 @@ public:
   virtual	~IComponent() {};
 
   virtual const std::string	&getType() const = 0;
+  virtual IComponent *clone() const = 0;
 };
 
 #endif /* !ICOMPONENT_H_ */

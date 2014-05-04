@@ -3,9 +3,9 @@
 
 # include	"SFML/Graphics.hpp"
 
-# include	"AComponent.hh"
+# include	"AComponent.hpp"
 
-class		SFMLSpriteComponent : public AComponent
+class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>
 {
 protected:
   sf::Sprite	*_sprite;

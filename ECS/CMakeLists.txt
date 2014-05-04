@@ -1,5 +1,5 @@
 SET(HEADERS
-  AComponent.hh
+  AComponent.hpp
   AEvent.hh
   ASystem.hh
   Entity.hh
@@ -10,7 +10,6 @@ SET(HEADERS
   World.hh)
 
 SET(SOURCES
-  AComponent.cpp
   AEvent.cpp
   ASystem.cpp
   Entity.cpp

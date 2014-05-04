@@ -12,29 +12,25 @@ public:
   virtual ~Factory()
   {}
 
-  template <typename T>
-  void	add(const std::string &type)
+  void	add(const std::string &key, const U *obj)
   {
-    this->_types.insert(std::make_pair(type, &Factory::makeInstance<T>));
+    auto it = this->_types.find(key);
+
+    if (it == this->_types.end())
+      this->_types.insert(std::make_pair(key, obj));
   }
 
-  U	*create(const std::string &type) const
+  U	*create(const std::string &key) const
   {
-    auto it = this->_types.find(type);
+    auto it = this->_types.find(key);
 
     if (it == this->_types.end())
       return (NULL);
-    return ((this->*(it->second))());
+    return it->second->clone();
   }
 
-private:
-  template <typename X>
-  U	*makeInstance() const
-  {
-    return (static_cast<U *>(new X()));
-  }
 protected:
-  std::map<Key, U * (Factory::*)() const> _types;
+  std::map<Key, const U *> _types;
 };
 
 #endif /* !FACTORY_H_ */
