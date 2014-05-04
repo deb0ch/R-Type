@@ -1,5 +1,19 @@
 #include "ImageLoader.hh"
 
+#include <stdlib.h>
+#include <io.h>
+#include <process.h>
+#include <direct.h>
+
+int fileExists(const std::string & filename)
+{
+#ifdef _WIN32
+	return (_access(filename.c_str(), 4));
+#elif __linux__
+	return (access(filename.c_str(), 4));
+#endif
+}
+
 ImageLoader::ImageLoader() {
   this->_images = std::map<const std::string, sf::Texture *>();
 }
