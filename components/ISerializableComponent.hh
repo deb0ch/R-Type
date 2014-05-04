@@ -1,5 +1,5 @@
-#ifndef ISERIALIZABLECOMPONENT_H_
-# define ISERIALIZABLECOMPONENT_H_
+#ifndef ASERIALIZABLECOMPONENT_H_
+# define ASERIALIZABLECOMPONENT_H_
 
 # include <string>
 # include "IComponent.hh"
@@ -15,4 +15,4 @@ protected:
 
 };
 
-#endif /* !ISERIALIZABLECOMPONENT_H_ */
+#endif /* !ASERIALIZABLECOMPONENT_H_ */

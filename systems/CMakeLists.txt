@@ -4,6 +4,9 @@ set(HEADER
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
 	PARENT_SCOPE
 	)
 
@@ -13,5 +16,8 @@ SET(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
 	PARENT_SCOPE
 	)

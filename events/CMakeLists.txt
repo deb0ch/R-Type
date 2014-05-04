@@ -1,0 +1,11 @@
+set(HEADER
+   ${HEADER}
+   ${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.hh
+   PARENT_SCOPE
+	)
+	
+SET(SOURCE
+	${SOURCE}
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.cpp
+	PARENT_SCOPE
+	)

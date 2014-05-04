@@ -1,9 +1,9 @@
 #ifndef SPEED2DCOMPONENT_H_
 # define SPEED2DCOMPONENT_H_
 
-# include	"AComponent.hh"
+# include	"AComponent.hpp"
 
-class		Speed2DComponent : public AComponent
+class		Speed2DComponent : public AComponent<Speed2DComponent>
 {
 protected:
   float		_vX;
@@ -20,6 +20,9 @@ public:
 
   void		setVX(float x);
   void		setVY(float y);
+
+  void		addVX(float x);
+  void		addVY(float y);
 };
 
 #endif /* !SPEED2DCOMPONENT_H_ */
