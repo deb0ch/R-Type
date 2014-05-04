@@ -1,6 +1,7 @@
 #include <iostream>
 #include "NetworkSystem.hh"
-#include "ASerializableComponent.hh"
+#include "ISerializableComponent.hh"
+#include "IComponent.hh"
 
 NetworkSystem::NetworkSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSystem")
@@ -20,16 +21,18 @@ bool				NetworkSystem::canProcess(Entity *entity)
 
 void				NetworkSystem::processEntity(Entity *entity, const float)
 {
-  ASerializableComponent	*component;
+  ISerializableComponent	*serializable_component;
+  IComponent			*component;
   std::string			buffer;
   std::hash<std::string>	hash;
 
   for (auto it = this->_component_to_send.begin(); it != this->_component_to_send.end(); ++it)
     {
-      if ((component = entity->getComponent<ASerializableComponent>(*it)))
+      if ((serializable_component = entity->getComponent<ISerializableComponent>(*it)) &&
+	  (component = dynamic_cast<IComponent *>(serializable_component)))
 	{
 	  buffer += std::to_string(hash(component->getType()));
-	  buffer += component->serialize();
+	  buffer += serializable_component->serialize();
 	}
     }
   // Send buffer here

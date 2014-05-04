@@ -1,9 +1,9 @@
 #ifndef BOX2DCOMPONENT_H_
 # define BOX2DCOMPONENT_H_
 
-# include "AComponent.hh"
+# include "AComponent.hpp"
 
-class Box2DComponent : public AComponent
+class Box2DComponent : public AComponent<Box2DComponent>
 {
 public:
   Box2DComponent(float width, float height);

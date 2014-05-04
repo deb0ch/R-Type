@@ -77,14 +77,7 @@ public:
   }
 
   IComponent	*createComponent(const std::string &type) const;
-
-  template <typename T>
-  void		registerComponent()
-  {
-    T		tmp;
-
-    this->_component_factory.add<T>(tmp.getType());
-  }
+  void		registerComponent(const IComponent *component);
 };
 
 #endif /* !WORLD_H_ */

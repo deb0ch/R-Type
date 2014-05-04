@@ -1,9 +1,9 @@
 #ifndef MOVEMENTSPEEDCOMPONENT_H_
 # define MOVEMENTSPEEDCOMPONENT_H_
 
-# include "AComponent.hh"
+# include "AComponent.hpp"
 
-class MovementSpeedComponent : public AComponent
+class MovementSpeedComponent : public AComponent<MovementSpeedComponent>
 {
 public:
 		MovementSpeedComponent(float movement_speed = 1.f);

@@ -30,7 +30,6 @@ World&	World::operator=(const World& ref)
   return (*this);
 }
 
-//----- ----- Setters ----- ----- //
 Entity	*World::createEntity()
 {
   Entity	*res;
@@ -39,6 +38,8 @@ Entity	*World::createEntity()
   res->_id = this->_nextEntityID++;
   return (res);
 }
+
+//----- ----- Setters ----- ----- //
 
 World	*World::addEntity(Entity *entity)
 {
@@ -157,4 +158,11 @@ bool		World::hasEventHandler(const std::string &type) const
 IComponent	*World::createComponent(const std::string &type) const
 {
   return (this->_component_factory.create(type));
+}
+
+void		World::registerComponent(const IComponent *component)
+{
+  if (!component)
+    return ;
+  this->_component_factory.add(component->getType(), component);
 }

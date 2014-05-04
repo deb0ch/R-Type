@@ -5,7 +5,7 @@
 # include "AComponent.hh"
 # include "ImageLoader.hh"
 
-class		SFMLSpriteComponent : public AComponent
+class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>
 {
 protected:
   std::string	_filaName;
