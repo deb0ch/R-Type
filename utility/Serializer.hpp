@@ -27,7 +27,7 @@ public:
     tab = reinterpret_cast<const char *>(&elements);
     if (len < sizeof(T))
       {
-	std::cout << "Not enough space" << std::endl;
+	std::cout << "Not enough space" << std::endl; // raise exception
 	return (0);
       }
     if (isBigEndian())
@@ -43,7 +43,6 @@ public:
 	    return (0);
 	  }
 	str[j] = tab[i];
-	std::cout << "Serialize: " << i << " " << tab[i] << std::endl;
 	if (isBigEndian())
 	  ++i;
 	else
@@ -62,7 +61,7 @@ public:
     tab = reinterpret_cast<char *>(&elements);
     if (len < sizeof(T))
       {
-	std::cout << "Not enough space" << std::endl;
+	std::cout << "Not enough space" << std::endl; // raise exception
 	return (0);
       }
     if (isBigEndian())
@@ -74,11 +73,10 @@ public:
       {
 	if (j >= len)
 	  {
-	    std::cerr << "unserialize: Wrong size" << std::endl; // raise expression
+	    std::cerr << "unserialize: Wrong size" << std::endl; // raise exception
 	    return (0);
 	  }
 	tab[j] = str[i];
-	std::cout << "Unserialize: " << i << " " << tab[j] << std::endl;
 	if (isBigEndian())
 	  ++i;
 	else
