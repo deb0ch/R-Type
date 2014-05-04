@@ -1,0 +1,24 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT (LibManager)
+
+SET(HEADER_FILES
+	ILibraryLoader.hh
+	ULibraryLoader.hh
+	WLibraryLoader.hh)
+
+SET(SOURCES
+  ULibraryLoader.cpp
+  WLibraryLoader.cpp
+  main.cpp)
+
+INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}/test")
+ADD_SUBDIRECTORY("${CMAKE_CURRENT_SOURCE_DIR}/test")
+  
+#SET (LIB_TYPE STATIC)
+
+FILE(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
+
+
+ADD_EXECUTABLE(LibManager ${SOURCES})
+#ADD_LIBRARY(LibraryLoader ${LIB_TYPE} ${SOURCES})
