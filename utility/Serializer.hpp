@@ -7,12 +7,12 @@
 const static short dummy_value = 0x00FF;
 
 # ifdef __linux__
-constexpr 
+constexpr
 # endif
 const static char *dummy_tab = reinterpret_cast<const char *>(&dummy_value);
 
 # ifdef __linux__
-constexpr 
+constexpr
 # endif
 static bool	isBigEndian()
 {
