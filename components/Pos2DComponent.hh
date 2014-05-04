@@ -15,7 +15,7 @@ public:
 		Pos2DComponent(const Pos2DComponent&);
   virtual	~Pos2DComponent();
   Pos2DComponent	&operator=(const Pos2DComponent&);
-  virtual std::string serialize() const;
+  virtual int	serialize(char *buffer, int lenght) const;
 
   float		getX() const;
   float		getY() const;
