@@ -51,6 +51,9 @@ void		ASystem::beforeProcess()
 void		ASystem::afterProcess()
 {}
 
+void		ASystem::init()
+{}
+
 void		ASystem::start()
 {}
 
