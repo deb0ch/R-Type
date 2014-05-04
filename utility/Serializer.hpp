@@ -5,9 +5,16 @@
 # include <iostream>
 
 const static short dummy_value = 0x00FF;
-constexpr const static char *dummy_tab = reinterpret_cast<const char *>(&dummy_value);
 
-constexpr static bool	isBigEndian()
+# ifdef __linux__
+constexpr 
+# endif
+const static char *dummy_tab = reinterpret_cast<const char *>(&dummy_value);
+
+# ifdef __linux__
+constexpr 
+# endif
+static bool	isBigEndian()
 {
   return (dummy_tab[0] == 0x00);
 }
