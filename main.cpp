@@ -27,7 +27,7 @@
 #ifdef _WIN32
 	#define PATH "sprites\\"
 #elif __linux__
-	#define PATH "sprite/"
+	#define PATH "sprites/"
 #endif
 
 int		main()

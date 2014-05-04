@@ -2,7 +2,7 @@
 # define SFMLSPRITECOMPONENT_H_
 
 # include "SFML/Graphics.hpp"
-# include "AComponent.hh"
+# include "AComponent.hpp"
 # include "ImageLoader.hh"
 
 class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>
