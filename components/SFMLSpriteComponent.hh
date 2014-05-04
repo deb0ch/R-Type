@@ -1,22 +1,20 @@
 #ifndef SFMLSPRITECOMPONENT_H_
 # define SFMLSPRITECOMPONENT_H_
 
-# include	"SFML/Graphics.hpp"
-
-# include	"AComponent.hh"
+# include "SFML/Graphics.hpp"
+# include "AComponent.hh"
+# include "ImageLoader.hh"
 
 class		SFMLSpriteComponent : public AComponent
 {
 protected:
-  const std::string	_filaName;
+  std::string	_filaName;
 
 public:
 		SFMLSpriteComponent(const std::string &filename);
-		SFMLSpriteComponent(const SFMLSpriteComponent&);
   virtual	~SFMLSpriteComponent();
-  SFMLSpriteComponent	&operator=(const SFMLSpriteComponent&);
 
-  sf::Sprite	&getSprite() const;
+  sf::Sprite	*getSprite(ImageLoader &imageLoader);
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */

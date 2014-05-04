@@ -12,10 +12,10 @@ public:
 
 public:
   void addImage(const std::string &fileImage);
-  const sf::Texture *getImage(const std::string &fileImage) const;
+  sf::Texture *getImage(const std::string &fileImage) const;
 
 private:
-  std::map<const std::string, sf::Texture *>	_images;
+  std::map<const std::string, sf::Texture *> _images;
 
 private:
   ImageLoader(const ImageLoader &);

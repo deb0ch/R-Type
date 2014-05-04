@@ -22,6 +22,7 @@
 #include	"SFMLInputComponent.hh"
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
+#include	"ImageLoader.hh"
 
 int		main()
 {
@@ -32,6 +33,8 @@ int		main()
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
+
+  world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))

@@ -30,7 +30,6 @@ World&	World::operator=(const World& ref)
   return (*this);
 }
 
-//----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 Entity	*World::createEntity()
 {

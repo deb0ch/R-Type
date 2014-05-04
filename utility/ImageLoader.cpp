@@ -24,7 +24,7 @@ void ImageLoader::addImage(const std::string &fileImage) {
   }
 }
 
-const sf::Texture *ImageLoader::getImage(const std::string &fileImage) const {
+sf::Texture *ImageLoader::getImage(const std::string &fileImage) const {
   auto it = this->_images.find(fileImage);
 
   if (it != this->_images.end()) {
