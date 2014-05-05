@@ -19,6 +19,7 @@ private:
   void		updateEntity(Entity *, const char *, int);
   int		getEntityInfos(const char *buffer, int lenght,
 			       unsigned int &id_entity, unsigned int &num_packet);
+  bool		remoteEntityExists(unsigned int);
 
 protected:
   int	i;			// Create lag to test entity transfert

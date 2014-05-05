@@ -49,12 +49,17 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 	  lenght_read = 1;
 	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
 					      id_entity, num_packet);
-	  entity = this->_world->createEntity();
-	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
-	  std::cout << "-------------------- CREATE ENTITY -----------------------" << std::endl;
-	  this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
-	  this->_world->addEntity(entity);
-	  it = this->_packets_to_apply->erase(it);
+	  if (!this->remoteEntityExists(id_entity))
+	    {
+	      entity = this->_world->createEntity();
+	      entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
+	      std::cout << "-------------------- CREATE ENTITY -----------------------" << std::endl;
+	      this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
+	      this->_world->addEntity(entity);
+	      it = this->_packets_to_apply->erase(it);
+	    }
+	  else
+	    ++it;
 	}
       else
 	++it;
@@ -166,4 +171,18 @@ int				NetworkReceiveUpdateSystem::getEntityInfos(const char *buffer,
 						       lenght - lenght_read, num_packet);
   ++lenght_read;	// force byte -- may change
   return (lenght_read);
+}
+
+bool				NetworkReceiveUpdateSystem::remoteEntityExists(unsigned int id)
+{
+  std::vector<Entity *> &entities = this->_world->getEntities();
+
+  return (std::find_if(entities.begin(), entities.end(), [id] (Entity *entity) -> bool {
+	NetworkReceiveUpdateComponent *network_component;
+
+	network_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+	if (network_component && network_component->getRemoteID() == id)
+	  return (true);
+	return (false);
+      }) != entities.end());
 }
