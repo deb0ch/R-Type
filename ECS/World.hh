@@ -9,28 +9,54 @@
 # include	"Any.hpp"
 # include	"Factory.hpp"
 
+/**
+ * @brief The primary class of the framework that contains all the entities and the systems.
+ * @todo Add two boolean state attributes to keep trace of the start() / stop() and pause() / resume() methods calls.
+ * @todo Reflect if init is really usefull.
+ */
 class		World
 {
 private:
   std::vector<Entity*>		_entities;
   std::vector<ISystem*>		_systems;
+  /** @brief A map of object pointers that can be shared between systems. */
   std::map<std::string, Any>	_shared_objs;
+  /** @brief The next Entity::_id that will be attributed when calling createEntity(). */
   unsigned long			_nextEntityID;
+  /** An event manager that allows systems to comunicate together. */
   EventManager<ISystem>		_event_manager;
   Factory<IComponent>		_component_factory;
 
 public:
-		World();
-		World(const World&);
+
+  World();
+  World(const World&);
   virtual	~World();
   World&	operator=(const World&);
 
+  /**
+   * @brief Create a new Entity with an ID that come from the current World.
+   * @return A new Entity with an ID already setted.
+   */
   Entity	*createEntity();
 
+  /**
+   * @brief Add an Entity into the World.
+   * @param entity The Entity to add into the World.
+   * @return A pointer to the World to concatenate method calls.
+   */
   World		*addEntity(Entity *);
+
+  /**
+   * @brief Add a System into the World.
+   * @param system The System to add into the World.
+   * @return A pointer to the World to concatenate method calls.
+   */
   World		*addSystem(ISystem *);
+  /** @see World::removeEntity(unsigned long id); */
   World		*removeEntity(Entity *);
   World		*removeEntity(unsigned long id);
+    /** @see World::removeSystem(const std::string &type) */
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
@@ -48,9 +74,15 @@ public:
   std::vector<Entity *> &getEntities();
 
   void		process(const float delta);
+  /** @brief Init all the systems. */
+  void		init();
+  /** @brief Start all the systems. */
   void		start();
+  /** @brief Pause all the systems. */
   void		pause();
+  /** @brief Resume all the systems. */
   void		resume();
+  /** @brief Stop all the systems. */
   void		stop();
 
   template <typename T>

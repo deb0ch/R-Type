@@ -28,6 +28,9 @@ public:
 	    this->_event_handlers.end());
   }
 
+  /**
+   * @todo Change the parameter from IEvent* to IEvent.
+   */
   void		sendEvent(IEvent *event)
   {
     auto it = this->_event_handlers.begin();
