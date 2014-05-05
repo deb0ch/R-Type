@@ -33,6 +33,9 @@ void	SFMLInputSystem::beforeProcess()
       this->_inputs[it->first] = false;
 }
 
+/**
+ * @todo Send event to say an entity is moving
+ */
 void	SFMLInputSystem::processEntity(Entity *e, const float)
 {
   SFMLInputComponent *inputComp;
