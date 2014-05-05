@@ -3,18 +3,20 @@
 
 #include <string>
 #include "IAnimal.hh"
-/*
+
 template <typename T>
 class ILibraryLoader
 {
 public:
 	virtual T *getInstance(const std::string &path, const std::string &entry = "getInstance") = 0;
+	virtual void clearLastLibrary() = 0;
 };
-*/
+
+/*
 class ILibraryLoader
 {
 public:
 	virtual IAnimal *getInstance(const std::string &path, const std::string &entry = "getInstance") = 0;
 };
-
+*/
 #endif

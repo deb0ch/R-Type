@@ -10,7 +10,7 @@ void Armadillo::scream() const
 
 extern "C"
 {
-	DECLSPEC Armadillo *getInstance()
+	DECLSPEC Armadillo *entrypoint()
 	{
 		return new Armadillo();
 	}
