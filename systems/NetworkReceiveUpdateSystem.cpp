@@ -107,9 +107,7 @@ int				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   lenght_read = 0;
   lenght_read += Serializer<std::size_t>::unserialize(buffer + lenght_read,
 						      lenght - lenght_read, component_hash);
-  std::cout << component_hash << std::endl;
   new_component = this->_world->createComponent(component_hash);
-  std::cout << new_component << std::endl;
   if (!(serializable_component = dynamic_cast<ISerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;
@@ -141,9 +139,6 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
   while (lenght_read < lenght)
     {
       lenght_read += this->unserializeComponent(entity, buffer + lenght_read, lenght - lenght_read);
-      std::for_each(entity->_components.begin(), entity->_components.end(), [] (IComponent *component) -> void {
-	  std::cout << component->getType() << std::endl;
-	});
     }
 }
 
