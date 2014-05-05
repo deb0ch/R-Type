@@ -19,15 +19,13 @@ const std::map<sf::Keyboard::Key, bool> SFMLInputComponent::getInputs() const {
 
 bool SFMLInputComponent::isActived(const sf::Keyboard::Key key) const {
   std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
-  if (it != this->_inputs.end()) {
+  if (it != this->_inputs.end())
     return it->second;
-  }
   return false;
 }
 
 void SFMLInputComponent::setStatusKey(const sf::Keyboard::Key key, const bool status) {
   std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
-  if (it != this->_inputs.end()) {
+  if (it != this->_inputs.end())
     this->_inputs[key] = status;
-  }
 }
