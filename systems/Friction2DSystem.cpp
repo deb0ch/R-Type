@@ -38,6 +38,4 @@ void			Friction2DSystem::processEntity(Entity *entity, const float)
     return ;
   speed->setVX(speed->getVX() / (friction->getFrictionCoef() + 1.f));
   speed->setVY(speed->getVY() / (friction->getFrictionCoef() + 1.f));
-  /*  tests */
-  std::cout << "Vy = " << speed->getVX() << " et Vx = " << speed->getVY() << std::endl;
 }
