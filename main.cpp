@@ -9,6 +9,8 @@
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLInputSystem.hh"
 #include	"PlayerMovementSystem.hh"
+#include	"EntityDeleterSystem.hh"
+#include	"OutOfBoundsSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -39,6 +41,7 @@ int		main()
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
+  world.addSystem(new OutOfBoundsSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
@@ -85,11 +88,19 @@ int		main()
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new NetworkUpdateComponent()));
 
-  CollisionSystem *collision;
+  /* add EventHandler */
 
+  CollisionSystem *collision;
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
+
+  EntityDeleterSystem *entityDeleterSystem;
+  entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
+  /* END add EventHandler */
 
   NetworkSystem *network;
   std::vector<std::string> arg = {"Pos2DComponent"};
