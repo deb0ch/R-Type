@@ -24,9 +24,8 @@ protected:
   virtual void		afterProcess();
 
 public:
-			ASystem() = delete;
-			ASystem(const std::string &type,
-				unsigned int priority = _default_priority);
+  ASystem() = delete;
+  ASystem(const std::string &type, unsigned int priority = _default_priority);
   virtual		~ASystem();
 
   virtual const std::string	&getType() const;
@@ -35,6 +34,7 @@ public:
   virtual void		setWorld(World *);
 
   virtual void		process(std::vector<Entity *>&, const float delta);
+  virtual void		init();
   virtual void		start();
   virtual void		pause();
   virtual void		resume();

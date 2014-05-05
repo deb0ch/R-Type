@@ -16,6 +16,7 @@
 *.lib
 
 # Executables
+RType
 *.exe
 *.out
 *.app
@@ -23,3 +24,5 @@
 TAGS
 */build
 build
+
+/doc/html/
