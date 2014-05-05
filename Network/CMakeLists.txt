@@ -20,8 +20,7 @@ SET(
   USocketUDP.cpp
   WSocketUDP.cpp
   NetworkException.cpp
-  Select.cpp
-  main.cpp)
+  Select.cpp)
 
 SET (LIB_TYPE STATIC)
 

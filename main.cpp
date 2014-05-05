@@ -9,19 +9,21 @@
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLInputSystem.hh"
 #include	"PlayerMovementSystem.hh"
-#include	"NetworkSendUpdateComponent.hh"
+#include	"NetworkSendUpdateSystem.hh"
+#include	"NetworkReceiveUpdateSystem.hh"
+#include	"MoveSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
 #include	"Friction2DComponent.hh"
 #include	"Box2DComponent.hh"
 #include	"SFMLSpriteComponent.hh"
-#include	"MoveSystem.hh"
-#include	"Entity.hh"
-#include	"NetworkSendUpdateSystem.hh"
 #include	"SFMLInputComponent.hh"
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
+#include	"NetworkSendUpdateComponent.hh"
+#include	"NetworkReceiveUpdateComponent.hh"
+
 #include	"ImageLoader.hh"
 
 #ifdef _WIN32
@@ -39,6 +41,7 @@ int		main()
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
+  world.addSystem(new NetworkReceiveUpdateSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
@@ -48,9 +51,9 @@ int		main()
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
-		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
+		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(5)));
 
   world.addEntity(world.createEntity()
@@ -59,31 +62,41 @@ int		main()
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")))
-		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
+		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(2)));
 
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkSendUpdateComponent()));
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));
 
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkSendUpdateComponent()));
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));
 
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(20.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-		  ->addComponent(new NetworkSendUpdateComponent()));
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));
+
+  Entity *update_entity;
+
+  update_entity = world.createEntity();
+  update_entity->addComponent(new Pos2DComponent(100.0f, 0.f))
+    ->addComponent(new Speed2DComponent(2.f, 2.f))
+    ->addComponent(new NetworkSendUpdateComponent())
+    ->addComponent(new NetworkReceiveUpdateComponent(update_entity->_id))
+    ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")));
+  world.addEntity(update_entity);
 
   CollisionSystem *collision;
 
@@ -92,7 +105,7 @@ int		main()
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
   NetworkSendUpdateSystem *network;
-  std::vector<std::string> arg = {"Pos2DComponent"};
+  std::vector<std::string> arg = {"Pos2DComponent", "SFMLSpriteComponent", "Speed2DComponent"};
 
   network = new NetworkSendUpdateSystem(arg);
   world.addSystem(network);
@@ -103,6 +116,8 @@ int		main()
   std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
 
   world.registerComponent(new Pos2DComponent());
+  world.registerComponent(new SFMLSpriteComponent());
+  world.registerComponent(new Speed2DComponent());
   std::cout << world.createComponent("Pos2DComponent")->getType() << std::endl;
 
   world.start();

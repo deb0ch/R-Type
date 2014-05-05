@@ -1,4 +1,5 @@
 #include "Speed2DComponent.hh"
+#include "Serializer.hpp"
 
 //----- ----- Constructors ----- ----- //
 Speed2DComponent::Speed2DComponent(float x, float y)
@@ -57,4 +58,23 @@ void	Speed2DComponent::addVX(float x)
 void	Speed2DComponent::addVY(float y)
 {
   this->_vY += y;
+}
+int	Speed2DComponent::serialize(char *buffer, int lenght) const
+{
+  int	lenght_written;
+
+  lenght_written = 0;
+  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_vX);
+  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_vY);
+  return (lenght_written);
+}
+
+int	Speed2DComponent::unserialize(const char *buffer, int lenght)
+{
+  int	lenght_read;
+
+  lenght_read = 0;
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_vX);
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_vY);
+  return (lenght_read);
 }

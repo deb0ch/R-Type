@@ -21,7 +21,7 @@ private:
 			       unsigned int &id_entity, unsigned int &num_packet);
 
 protected:
-  std::vector< std::pair<const char *, int> > _packets_to_apply;
+  std::vector< std::pair<const char *, int> > *_packets_to_apply;
 };
 
 #endif /* !NETWORKRECEIVEUPDATESYSTEM_H_ */

@@ -2,8 +2,9 @@
 # define SPEED2DCOMPONENT_H_
 
 # include	"AComponent.hpp"
+# include	"ISerializableComponent.hh"
 
-class		Speed2DComponent : public AComponent<Speed2DComponent>
+class		Speed2DComponent : public AComponent<Speed2DComponent>, public ISerializableComponent
 {
 protected:
   float		_vX;
@@ -14,6 +15,9 @@ public:
 		Speed2DComponent(const Speed2DComponent&);
   virtual	~Speed2DComponent();
   Speed2DComponent	&operator=(const Speed2DComponent&);
+
+  virtual int	serialize(char *buffer, int lenght) const;
+  virtual int	unserialize(const char *buffer, int lenght);
 
   float		getVX() const;
   float		getVY() const;

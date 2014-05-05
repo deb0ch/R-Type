@@ -21,6 +21,17 @@ bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
   return (false);
 }
 
+void				NetworkSendUpdateSystem::beforeProcess()
+{
+  this->_packets_sended =
+    this->_world->getSharedObject<std::vector< std::pair<const char *, int> > >("LeChevalCestTropGenial");
+}
+
+void				NetworkSendUpdateSystem::start()
+{
+  this->_world->setSharedObject("LeChevalCestTropGenial", new std::vector< std::pair<const char *, int> >());
+}
+
 int				NetworkSendUpdateSystem::serializeComponents(Entity *entity, char *buffer,
 								   int buffer_size)
 {
@@ -48,7 +59,7 @@ int				NetworkSendUpdateSystem::serializeComponents(Entity *entity, char *buffer
 void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkSendUpdateComponent	*network_component;
-  char				buffer[this->_buffer_size];
+  char				*buffer = new char[this->_buffer_size];
   int				lenght_written;
 
   network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
@@ -64,5 +75,7 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   lenght_written += this->serializeComponents(entity, buffer + lenght_written,
 					      this->_buffer_size - lenght_written);
   network_component->increasePacketNumber();
+  std::cout << "Send packet: " << buffer << std::endl;
+  this->_packets_sended->push_back(std::make_pair(buffer, lenght_written));
   // Send buffer here
 }

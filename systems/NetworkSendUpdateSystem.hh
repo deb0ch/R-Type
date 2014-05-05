@@ -16,10 +16,14 @@ public:
 
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
+  virtual void	beforeProcess();
+  virtual void	start();
+
 private:
   int		serializeComponents(Entity *, char *buffer, int buffer_size);
 private:
   std::vector<std::string> _component_to_send;
+  std::vector< std::pair<const char *, int> > *_packets_sended;
   static const int _buffer_size = 512;
 };
 
