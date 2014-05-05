@@ -7,7 +7,6 @@
 class ImageLoader
 {
 public:
-
   typedef struct	s_NbSprite
   {
     unsigned int	nbSprintX;
@@ -25,10 +24,25 @@ public:
   virtual ~ImageLoader();
 
 public:
+  /**
+   * @brief addImage if dosn't existe
+   * @throw RTException throw execption when: loadFromFile failed OR
+   * NbSprite.nbSprint = 0 OR fileName dosn't exist
+   */
   void addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite);
+
+  /**
+   * @brief Allocate Sprite OR throw RTException
+   * @throw RTException throw execption when: fileImage has not been add
+   */
   sf::Sprite *createSprite(const std::string &fileImage, const unsigned int numSprite) const;
 
 private:
+  /**
+   * @brief get paire if exist or throw RTException
+   * @throw RTException throw execption when: loadFromFile failed OR
+   * NbSprite.nbSprint = 0 OR fileName dosn't exist
+   */
   const std::pair<sf::Texture *, ImageLoader::InfImg> &getPair(const std::string &fileImage) const;
 
 private:

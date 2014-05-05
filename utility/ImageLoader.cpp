@@ -1,23 +1,12 @@
+#include "Unistd.hh"
+#include "RTException.hh"
 #include "ImageLoader.hh"
 
-/*
-#include <stdlib.h>
-#include <io.h>
-#include <process.h>
-#include <direct.h>
-
-int fileExists(const std::string & filename)
-{
-#ifdef _WIN32
-	return (_access(filename.c_str(), 4));
-#elif __linux__
-	return (access(filename.c_str(), 4));
-#endif
-}
-*/
+static std::string NAME_CLASS = "RT::ImageLoader";
 
 ImageLoader::ImageLoader() {
   this->_images = std::map<std::string, std::pair<sf::Texture *, ImageLoader::InfImg> >();
+  RTException::addClass(NAME_CLASS, "Execption ImageLoader");
 }
 
 ImageLoader::~ImageLoader() {
@@ -34,10 +23,12 @@ void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite n
   if (it == this->_images.end()) {
     sf::Texture	*image = new sf::Texture();
 
+    if (access(fileImage.c_str(), R_OK) == -1)
+      throw RTException(NAME_CLASS, errno, RTException::S_ERROR);
     if (!image->loadFromFile(fileImage))
-      throw 4; //TODO throw;
+      throw RTException(NAME_CLASS, "loadFromFile failed", RTException::S_ERROR);
     if (nbSprite.nbSprintX == 0 || nbSprite.nbSprintY == 0)
-      throw 5; //TODO throw
+      throw RTException(NAME_CLASS, "Invalide ImageLoader::NbSprite", RTException::S_ERROR);
     sf::Vector2u v(image->getSize().x / nbSprite.nbSprintX, image->getSize().y / nbSprite.nbSprintY);
     ImageLoader::InfImg infoImg;
     infoImg.nbSprite = nbSprite;
@@ -49,24 +40,27 @@ void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite n
 const std::pair<sf::Texture *, ImageLoader::InfImg> &ImageLoader::getPair(const std::string
 									  &fileImage) const
 {
-
   auto it = this->_images.find(fileImage);
 
   if (it != this->_images.end()) {
     return ((it->second));
   }
-  throw 5;  //TODO throw
+  throw RTException(NAME_CLASS, "Invalide ImageLoader::NbSprite", RTException::S_WARNING);
 }
 
 sf::Sprite *ImageLoader::createSprite(const std::string &fileImage,
 				      const unsigned int  numSprite) const {
   sf::Sprite *sprite = new sf::Sprite();
-  //TODO try catch
-  auto _pair = this->getPair(fileImage);
+  std::pair<sf::Texture *, ImageLoader::InfImg> textureInfo;
 
-  sprite->setTexture(*_pair.first);
-  int x = (numSprite % _pair.second.nbSprite.nbSprintX) * _pair.second.rect.x;
-  int y = (numSprite / _pair.second.nbSprite.nbSprintX) * _pair.second.rect.y;
-  sprite->setTextureRect(sf::IntRect(x, y, _pair.second.rect.x, _pair.second.rect.y));
+  try {
+    textureInfo = this->getPair(fileImage);
+  } catch (RTException e) {
+    throw RTException(NAME_CLASS, e.what(), RTException::S_ERROR);
+  }
+  sprite->setTexture(*textureInfo.first);
+  int x = (numSprite % textureInfo.second.nbSprite.nbSprintX) * textureInfo.second.rect.x;
+  int y = (numSprite / textureInfo.second.nbSprite.nbSprintX) * textureInfo.second.rect.y;
+  sprite->setTextureRect(sf::IntRect(x, y, textureInfo.second.rect.x, textureInfo.second.rect.y));
   return (sprite);
 }
