@@ -7,6 +7,8 @@ set(HEADER
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
 	PARENT_SCOPE
 	)
 
@@ -19,5 +21,7 @@ SET(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
 	PARENT_SCOPE
 	)

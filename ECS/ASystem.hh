@@ -24,9 +24,8 @@ protected:
   virtual void		afterProcess();
 
 public:
-			ASystem() = delete;
-			ASystem(const std::string &type,
-				unsigned int priority = _default_priority);
+  ASystem() = delete;
+  ASystem(const std::string &type, unsigned int priority = _default_priority);
   virtual		~ASystem();
 
   virtual const std::string	&getType() const;

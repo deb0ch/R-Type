@@ -1,0 +1,102 @@
+@startuml
+
+title Packages - Class Diagram
+
+
+package ECSFramework {
+    class World
+    class Entity
+    class IComponent
+    class AComponent
+    class ISystem
+    class ASystem
+    class EventManager
+    class IEvent
+    class AEvent
+    class VectorDeleter
+    class Any
+    class IContainer
+    class Container
+    class Factory<typename U>
+}
+
+package RType {
+    package Events {
+        class CollisionEvent
+    }
+    package Components {
+        class Box2DComponent
+        class Friction2DComponent
+        class Speed2DComponent
+        class Pos2DComponent
+    }
+    package Systems {
+        class MoveSystem
+        class CollisionSystem
+        class FrictionSystem
+        class NetworkSystem
+    }
+}
+
+package NetworkAbstraction {
+    class ISocket
+    class ISocketUDP
+    class ISocketTCP
+    class Select
+    class NetworkException
+    class SocketTCP
+    class SocketUDP
+}
+
+AComponent -up-|> IComponent
+ASystem -up-|> ISystem
+AEvent -up-|> IEvent
+EventManager o-- IEvent
+
+World o-- ISystem
+World o-- Entity
+World o-- Factory
+World o-- EventManager
+World o-- Any
+World -- VectorDeleter
+
+Entity o-- IComponent
+Entity -- VectorDeleter
+
+Any o-- IContainer
+Container -up-|> IContainer
+
+/'
+'' ----- ----- -----
+'/
+
+ISocketTCP -up-|> ISocket
+ISocketUDP -up-|> ISocket
+SocketTCP -up-|> ISocketTCP
+SocketUDP -up-|> ISocketUDP
+SocketUDP -- NetworkException
+SocketTCP -- NetworkException
+Select -- NetworkException
+
+/'
+'' ----- ----- -----
+'/
+
+Pos2DComponent -up-|> AComponent
+Box2DComponent -up-|> AComponent
+Speed2DComponent -up-|> AComponent
+Friction2DComponent -up-|> AComponent
+
+MoveSystem -up-|> ASystem
+CollisionSystem -up-|> ASystem
+FrictionSystem -up-|> ASystem
+NetworkSystem -up-|> ASystem
+
+MoveSystem -- Pos2DComponent
+MoveSystem -- Speed2DComponent
+CollisionSystem -- Pos2DComponent
+CollisionSystem -- Box2Dcomponent
+
+CollisionEvent -up-|> AEvent
+
+@enduml

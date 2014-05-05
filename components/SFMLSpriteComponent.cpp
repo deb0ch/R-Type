@@ -12,13 +12,8 @@ SFMLSpriteComponent::~SFMLSpriteComponent()
 
 //----- ----- Getters ----- ----- //
 sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader) {
-  sf::Sprite *sprite = new sf::Sprite();
+  imageLoader.addImage(this->_filaName, ImageLoader::NbSprite{5,5});
 
-  //TODO catch exection
-  imageLoader.addImage(this->_filaName);
-  sf::Texture *image = imageLoader.getImage(this->_filaName);
-  if (!image)
-    return NULL;
-  sprite->setTexture(*image);
+  sf::Sprite *sprite = imageLoader.createSprite(this->_filaName, 0);
   return (sprite);
 }

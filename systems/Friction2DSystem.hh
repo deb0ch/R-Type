@@ -1,5 +1,5 @@
-#ifndef FRICTION2DSYSTEM_H_
-# define FRICTION2DSYSTEM_H_
+#ifndef			FRICTION2DSYSTEM_H_
+# define		FRICTION2DSYSTEM_H_
 
 # include		"ASystem.hh"
 

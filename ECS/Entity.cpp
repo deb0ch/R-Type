@@ -28,6 +28,9 @@ Entity&		Entity::operator=(const Entity& ref)
 
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
+/**
+ * @todo Throw an exception if the component already exists in the Entity.
+ */
 Entity		*Entity::addComponent(IComponent *component)
 {
   if (component && !this->hasComponent(component->getType()))
@@ -58,6 +61,9 @@ Entity		*Entity::removeComponent(const std::string &type)
 }
 
 //----- ----- Methods ----- ----- //
+/**
+ * @todo Throw an exception if the component is not found.
+ */
 IComponent	*Entity::getComponent(const std::string &type) const
 {
   auto iterator = std::find_if(this->_components.begin(), this->_components.end(),
