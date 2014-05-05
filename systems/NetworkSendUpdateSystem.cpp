@@ -75,7 +75,6 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   lenght_written += this->serializeComponents(entity, buffer + lenght_written,
 					      this->_buffer_size - lenght_written);
   network_component->increasePacketNumber();
-  std::cout << "Send packet: " << buffer << std::endl;
   this->_packets_sended->push_back(std::make_pair(buffer, lenght_written));
   // Send buffer here
 }

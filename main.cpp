@@ -66,27 +66,6 @@ int		main()
 		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(2)));
 
-  // world.addEntity(world.createEntity()
-  // 		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
-  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-  // 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-  // 		  ->addComponent(new NetworkSendUpdateComponent()));
-
-  // world.addEntity(world.createEntity()
-  // 		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
-  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-  // 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
-  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-  // 		  ->addComponent(new NetworkSendUpdateComponent()));
-
-  // world.addEntity(world.createEntity()
-  // 		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
-  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-  // 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
-  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
-  // 		  ->addComponent(new NetworkSendUpdateComponent()));
-
   Entity *update_entity;
 
   update_entity = world.createEntity();
@@ -124,9 +103,38 @@ int		main()
   for (;;)
     {
       world.process(0.16f);
+      Pos2DComponent *tmp;
+      NetworkReceiveUpdateComponent *tmp2;
+
+      tmp = update_entity->getComponent<Pos2DComponent>("Pos2DComponent");
+      tmp2 = update_entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+      std::cout << "Remote id: " << tmp2->getRemoteID() << " id: " << update_entity->_id << std::endl;
+      std::cout << tmp->getX() << " - " << tmp->getY() << std::endl;
       std::cout << std::endl;
     }
   world.stop();
 
   return (0);
 }
+
+
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));
+
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));
+
+  // world.addEntity(world.createEntity()
+  // 		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+  // 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+  // 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
+  // 		  ->addComponent(new SFMLSpriteComponent("sprites/ship.png"))
+  // 		  ->addComponent(new NetworkSendUpdateComponent()));

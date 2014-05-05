@@ -21,6 +21,7 @@ private:
 			       unsigned int &id_entity, unsigned int &num_packet);
 
 protected:
+  int	i;			// Create lag to test entity transfert
   std::vector< std::pair<const char *, int> > *_packets_to_apply;
 };
 

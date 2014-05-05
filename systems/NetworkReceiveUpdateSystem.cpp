@@ -5,7 +5,9 @@
 #include "ISerializableComponent.hh"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
-{}
+{
+  i = 0;
+}
 
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
@@ -23,9 +25,7 @@ void				NetworkReceiveUpdateSystem::beforeProcess()
     this->_world->getSharedObject< std::vector< std::pair<const char *, int> > >("LeChevalCestTropGenial");
 
   if (tmp)
-    {
-      this->_packets_to_apply = tmp;
-    }
+    this->_packets_to_apply = tmp;
 }
 
 void				NetworkReceiveUpdateSystem::afterProcess()
@@ -35,7 +35,14 @@ void				NetworkReceiveUpdateSystem::afterProcess()
   Entity			*entity;
   int				lenght_read;
 
-  for (auto it = this->_packets_to_apply->begin(); it != this->_packets_to_apply->end(); ++it)
+  if (i < 50)
+    {
+      i++;
+      return ;
+    }
+  i = 0;
+  auto it = this->_packets_to_apply->begin();
+  while (it != this->_packets_to_apply->end())
     {
       if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
 	{
@@ -48,11 +55,50 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 	  this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
 	  this->_world->addEntity(entity);
 	  it = this->_packets_to_apply->erase(it);
-	  if (it == this->_packets_to_apply->end())
-	    return ;
 	}
+      else
+	++it;
     }
 }
+
+void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
+{
+  NetworkReceiveUpdateComponent	*receive_component;
+  int				lenght_read;
+  unsigned int			id_entity;
+  unsigned int			num_packet;
+
+  if (i < 50)
+    return ;
+  receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+  auto it = this->_packets_to_apply->begin();
+  while (it != this->_packets_to_apply->end())
+    {
+      if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
+	{
+	  lenght_read = 1;
+	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
+					      id_entity, num_packet);
+	  if (id_entity == receive_component->getRemoteID())
+	    {
+	      if (num_packet > receive_component->getPacketNum())
+		{
+		  std::cout << "-------------------- UPDATING ENTITY -----------------------" << std::endl;
+		  this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
+		  receive_component->setPacketNum(num_packet);
+		}
+	      it = this->_packets_to_apply->erase(it);
+	    }
+	  else
+	    ++it;
+	}
+      else
+	++it;
+    }
+}
+
+
+// -------------- Private functions --------------
 
 int				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 										 const char *buffer,
@@ -86,7 +132,17 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
   int				lenght_read;
 
   lenght_read = 0;
-  entity->removeAllComponentExcept("NetworkReceiveUpdateComponent");
+  auto it = entity->_components.begin();
+  while (it != entity->_components.end())
+    {
+      if (dynamic_cast<ISerializableComponent *>(*it) != NULL) // We delete all serializable component
+	{
+	  delete *it;
+	  it = entity->_components.erase(it);
+	}
+      else
+	++it;
+    }
   while (lenght_read < lenght)
     {
       lenght_read += this->unserializeComponent(entity, buffer + lenght_read, lenght - lenght_read);
@@ -110,38 +166,4 @@ int				NetworkReceiveUpdateSystem::getEntityInfos(const char *buffer,
 						       lenght - lenght_read, num_packet);
   ++lenght_read;	// force byte -- may change
   return (lenght_read);
-}
-
-
-void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
-{
-  NetworkReceiveUpdateComponent	*receive_component;
-  int				lenght_read;
-  unsigned int			id_entity;
-  unsigned int			num_packet;
-
-  // std::cout << "Processing entity" << std::endl;
-  receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
-  for (auto it = this->_packets_to_apply->begin(); it != this->_packets_to_apply->end(); ++it)
-    {
-      if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
-	{
-	  lenght_read = 1;
-	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
-					      id_entity, num_packet);
-	  if (num_packet > receive_component->getPacketNum())
-	    {
-	      std::cout << "-------------------- UPDATING ENTITY -----------------------" << std::endl;
-	      this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
-	      receive_component->setPacketNum(num_packet);
-	    }
-	  else
-	    {
-	      std::cout << "-------------------- INVALID NUM PACKET ----------------------" << std::endl;
-	    }
-	  it = this->_packets_to_apply->erase(it);
-	  if (it == this->_packets_to_apply->end())
-	    return ;
-	}
-    }
 }
