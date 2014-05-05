@@ -9,7 +9,8 @@ class ILibraryLoader
 {
 public:
 	virtual T *getInstance(const std::string &path, const std::string &entry = "getInstance") = 0;
-	virtual void clearLastLibrary() = 0;
+	virtual void clearLibraries() = 0;
+	virtual void clearLibrary(const std::string &path) = 0;
 };
 
 /*

@@ -4,6 +4,7 @@
 #include <string>
 #include <Windows.h>
 #include <iostream>
+#include <map>
 #include "ILibraryLoader.hh"
 
 #pragma comment(lib, "ws2_32.lib")
@@ -12,18 +13,40 @@ template <typename T>
 class LibraryLoader : public ILibraryLoader<T>
 {
 private:
-	HINSTANCE last_Instance;
+	std::map<const std::string, HINSTANCE> libs;
 
 public:
+	~LibraryLoader();
 	T *getInstance(const std::string &path, const std::string &entry);
-	void clearLastLibrary();
+	void clearLibraries();
+	void clearLibrary(const std::string &path);
 };
 
+template <typename T>
+LibraryLoader<T>::~LibraryLoader()
+{
+	this->clearLibraries();
+}
 
 template <typename T>
-void		LibraryLoader<T>::clearLastLibrary()
+void		LibraryLoader<T>::clearLibraries()
 {
-	FreeLibrary(this->last_Instance);
+	auto it = this->libs.begin();
+
+	for (it = this->libs.begin(); it != this->libs.end(); ++it)
+	{
+		FreeLibrary(it->second);
+	}
+	this->libs.clear();
+}
+
+template <typename T>
+void		LibraryLoader<T>::clearLibrary(const std::string &path)
+{
+	auto it = this->libs.find(path);
+
+	FreeLibrary(it->second);
+	this->libs.erase(it);
 }
 
 template <typename T>
@@ -31,14 +54,25 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 {
 	T *(*instancier)();
 	T *res = NULL;
-	HINSTANCE Handle = LoadLibrary(path.c_str());
-	if (Handle != INVALID_HANDLE_VALUE)
+	HINSTANCE Handle = NULL;
+
+	auto it = this->libs.find(path);
+	if (it == this->libs.end())
 	{
-		instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
-		if (instancier)
-		{
-			res = instancier();
-		}
+		std::cout << "toto" << std::endl;
+		Handle = LoadLibrary(path.c_str());
+		this->libs[path] = Handle;
+	}
+	else
+		Handle = it->second;
+	if (Handle == NULL || Handle == INVALID_HANDLE_VALUE)
+	{
+		// Excpetion
+	}
+	instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
+	if (instancier)
+	{
+		res = instancier();
 	}
 	return (res);
 }
