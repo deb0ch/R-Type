@@ -1,4 +1,5 @@
 #include "Friction2DComponent.hh"
+#include "Serializer.hpp"
 
 //----- ----- Constructors ----- ----- //
 Friction2DComponent::Friction2DComponent(float coef)
@@ -32,4 +33,24 @@ float	Friction2DComponent::getFrictionCoef() const
 void	Friction2DComponent::setFrictionCoef(float coef)
 {
   this->_frictionCoef = coef;
+}
+
+int	Friction2DComponent::serialize(char *buffer, int lenght) const
+{
+  int		lenght_written;
+
+  lenght_written = 0;
+  lenght_written += Serializer<float>::serialize(buffer + lenght_written,
+						 lenght - lenght_written, this->_frictionCoef);
+  return (lenght_written);
+}
+
+int	Friction2DComponent::unserialize(const char *buffer, int lenght)
+{
+  int		lenght_read;
+
+  lenght_read = 0;
+  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read,
+						this->_frictionCoef);
+  return (lenght_read);
 }

@@ -83,7 +83,7 @@ int		main()
   world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
   NetworkSendUpdateSystem *network;
-  std::vector<std::string> arg = {"Pos2DComponent", "SFMLSpriteComponent", "Speed2DComponent"};
+  std::vector<std::string> arg = {"Pos2DComponent", "SFMLSpriteComponent", "Speed2DComponent", "Friction2DComponent"};
 
   network = new NetworkSendUpdateSystem(arg);
   world.addSystem(network);
@@ -97,6 +97,7 @@ int		main()
   world.registerComponent(new Pos2DComponent());
   world.registerComponent(new SFMLSpriteComponent());
   world.registerComponent(new Speed2DComponent());
+  world.registerComponent(new Friction2DComponent());
   std::cout << world.createComponent("Pos2DComponent")->getType() << std::endl;
 
   world.start();

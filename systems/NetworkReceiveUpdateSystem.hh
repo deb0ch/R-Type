@@ -22,7 +22,6 @@ private:
   bool		remoteEntityExists(unsigned int);
 
 protected:
-  int	i;			// Create lag to test entity transfert
   std::vector< std::pair<const char *, int> > *_packets_to_apply;
 };
 

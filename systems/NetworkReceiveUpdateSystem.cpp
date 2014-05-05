@@ -5,9 +5,7 @@
 #include "ISerializableComponent.hh"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
-{
-  i = 0;
-}
+{}
 
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
@@ -35,12 +33,6 @@ void				NetworkReceiveUpdateSystem::afterProcess()
   Entity			*entity;
   int				lenght_read;
 
-  if (i < 50)
-    {
-      i++;
-      return ;
-    }
-  i = 0;
   auto it = this->_packets_to_apply->begin();
   while (it != this->_packets_to_apply->end())
     {
@@ -73,8 +65,6 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
   unsigned int			id_entity;
   unsigned int			num_packet;
 
-  if (i < 50)
-    return ;
   receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
   auto it = this->_packets_to_apply->begin();
   while (it != this->_packets_to_apply->end())
