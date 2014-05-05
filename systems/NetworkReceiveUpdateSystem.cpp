@@ -44,6 +44,7 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 					      id_entity, num_packet);
 	  entity = this->_world->createEntity();
 	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
+	  std::cout << "-------------------- CREATE ENTITY -----------------------" << std::endl;
 	  this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
 	  this->_world->addEntity(entity);
 	  it = this->_packets_to_apply->erase(it);
@@ -125,14 +126,18 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
     {
       if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
 	{
-	  std::cout << "Cycling though inside packet" << std::endl;
 	  lenght_read = 1;
 	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
 					      id_entity, num_packet);
 	  if (num_packet > receive_component->getPacketNum())
 	    {
+	      std::cout << "-------------------- UPDATING ENTITY -----------------------" << std::endl;
 	      this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
 	      receive_component->setPacketNum(num_packet);
+	    }
+	  else
+	    {
+	      std::cout << "-------------------- INVALID NUM PACKET ----------------------" << std::endl;
 	    }
 	  it = this->_packets_to_apply->erase(it);
 	  if (it == this->_packets_to_apply->end())

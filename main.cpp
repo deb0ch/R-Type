@@ -41,7 +41,6 @@ int		main()
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
-  world.addSystem(new NetworkReceiveUpdateSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
@@ -95,7 +94,7 @@ int		main()
     ->addComponent(new Speed2DComponent(2.f, 2.f))
     ->addComponent(new NetworkSendUpdateComponent())
     ->addComponent(new NetworkReceiveUpdateComponent(update_entity->_id))
-    ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship.png")));
+    ->addComponent(new SFMLSpriteComponent(PATH + std::string("ship2.png")));
   world.addEntity(update_entity);
 
   CollisionSystem *collision;
@@ -109,6 +108,7 @@ int		main()
 
   network = new NetworkSendUpdateSystem(arg);
   world.addSystem(network);
+  world.addSystem(new NetworkReceiveUpdateSystem());
 
   std::string test("Les pigouins ça glisse!");
   world.setSharedObject<std::string>("Test", &test);
