@@ -17,9 +17,9 @@ public:
   virtual const int	getHandle() const = 0;
 
   virtual void	bind(const int port, const std::string &address = "") = 0;
-  virtual int	send(const IBuffer *, const int address, const int port) = 0;
-  virtual int	send(const IBuffer *, const std::string & address, const int port) = 0;
-  virtual int	receive(const IBuffer *, const size_t size, std::string& address, int& port) = 0;
+  virtual int	send(const IBuffer &, const int address, const int port) = 0;
+  virtual int	send(const IBuffer &, const std::string & address, const int port) = 0;
+  virtual int	receive(IBuffer &, const size_t size, std::string& address, int& port) = 0;
   //virtual int	send(const void* data, const size_t size, const int address, const int port) = 0;
   //virtual int	send(IBuffer *data, const std::string & address, const int port) = 0;
   //virtual int	receive(void* data, const size_t size, std::string& address, int& port) = 0;

@@ -47,6 +47,11 @@ void			NetworkBuffer::setLength(unsigned int lenght)
   this->_buffer_size = lenght;
 }
 
+void			NetworkBuffer::getMaxSize() const
+{
+  return (bufferMaxSize);
+}
+
 IBuffer		&NetworkBuffer::operator<<(const int &value)
 {
   this->serialize(value);
