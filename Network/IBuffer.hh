@@ -29,6 +29,7 @@ public:
   virtual char			*getBuffer() = 0;
   virtual unsigned int		getLength() const = 0;
   virtual void			setLength(unsigned int) = 0;
+  virtual int			getMaxSize() const = 0;
 protected:
 
 };
