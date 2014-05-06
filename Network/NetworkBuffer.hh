@@ -34,6 +34,7 @@ public:
 
   virtual bool		end() const;
   virtual void		rewind();
+  virtual void		reset();
 
 protected:
   static const int	bufferMaxSize = 512;
