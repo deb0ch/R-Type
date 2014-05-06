@@ -47,7 +47,7 @@ void			NetworkBuffer::setLength(unsigned int lenght)
   this->_buffer_size = lenght;
 }
 
-void			NetworkBuffer::getMaxSize() const
+int			NetworkBuffer::getMaxSize() const
 {
   return (bufferMaxSize);
 }

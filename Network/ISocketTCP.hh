@@ -4,6 +4,7 @@
 # include <string>
 # include <iostream>
 # include "ISocket.hh"
+# include "IBuffer.hh"
 
 class ISocketTCP : public ISocket
 {
