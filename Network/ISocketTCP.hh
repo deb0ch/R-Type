@@ -23,7 +23,7 @@ public:
 	virtual void		connect(const std::string &address, const int port) = 0;
 	virtual void		connect(const int address, const int port) = 0;
 	virtual int			send(const IBuffer &) = 0;
-	virtual int			receive(IBuffer &data, const std::size_t size) = 0;
+	virtual int			receive(IBuffer &data) = 0;
 	//virtual int		send(const void* data, const std::size_t size) = 0;
 	//virtual int		receive(void* data, const std::size_t size) = 0;
 	virtual void		close() = 0;
