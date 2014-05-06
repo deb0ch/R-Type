@@ -1,7 +1,11 @@
 #ifdef _WIN32
+#define PATHLIB "..\\plugin\\Debug\\"
+#define EXTENSION ".dll"
 #include "WLibraryLoader.hpp"
 #elif __linux__
 # define _BSD_SOURCE
+#define EXTENSION ".so"
+#define PATHLIB "../Plugin/lib"
 #include <unistd.h>
 #include "ULibraryLoader.hpp"
 #endif
@@ -15,24 +19,24 @@ int main()
 {
 	ILibraryLoader<IAnimal> *loader = new LibraryLoader<IAnimal>();
 
-	IAnimal *toto = loader->getInstance("test/libplatypus.so");
+	IAnimal *toto = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
 	if (toto)
 		toto->scream();
-	loader->clearLibrary("test/libplatypus.so");
-	IAnimal *titi = loader->getInstance("test/libplatypus.so");
+	loader->clearLibrary(PATHLIB + std::string("platypus") + EXTENSION);
+	IAnimal *titi = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
 	if (titi)
 		titi->scream();
-	IAnimal *cheval = loader->getInstance("test/libplatypus.so");
+	IAnimal *cheval = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
 	if (cheval)
 		cheval->scream();
-	IAnimal *tata = loader->getInstance("test/libarmadillo.so", "entrypoint");
+	IAnimal *tata = loader->getInstance(PATHLIB + std::string("armadillo") + EXTENSION, "entrypoint");
 	if (tata)
 		tata->scream();
 	loader->clearLibraries();
-	IAnimal *poney = loader->getInstance("test/libplatypus.so");
+	IAnimal *poney = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
 	if (poney)
 		poney->scream();
-	IAnimal *chocolat = loader->getInstance("test/libarmadillo.so", "entrypoint");
+	IAnimal *chocolat = loader->getInstance(PATHLIB + std::string("armadillo") + EXTENSION, "entrypoint");
 	if (chocolat)
 		chocolat->scream();
 #if _WIN32

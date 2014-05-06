@@ -1,5 +1,15 @@
-set(HEADER
-   ${HEADER}
+set(HEADER_S
+   ${HEADER_S}
+	PARENT_SCOPE)
+
+SET(SOURCE_S
+	${SOURCE_S}
+	PARENT_SCOPE)
+
+
+
+set(HEADER_C
+   ${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.hh
@@ -9,11 +19,10 @@ set(HEADER
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
-	PARENT_SCOPE
-	)
+	PARENT_SCOPE)
 
-SET(SOURCE
-	${SOURCE}
+SET(SOURCE_C
+	${SOURCE_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.cpp
@@ -23,5 +32,4 @@ SET(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
-	PARENT_SCOPE
-	)
+	PARENT_SCOPE)
