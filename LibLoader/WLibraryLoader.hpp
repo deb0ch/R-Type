@@ -1,13 +1,13 @@
 #ifndef _LIBRARYLOADER_H_
-#define _LIBRARYLOADER_H_
+# define _LIBRARYLOADER_H_
 
-#include <string>
-#include <Windows.h>
-#include <iostream>
-#include <map>
-#include "ILibraryLoader.hh"
+# include <string>
+# include <Windows.h>
+# include <iostream>
+# include <map>
+# include "ILibraryLoader.hh"
 
-#pragma comment(lib, "ws2_32.lib")
+# pragma comment(lib, "ws2_32.lib")
 
 template <typename T>
 class LibraryLoader : public ILibraryLoader<T>
@@ -76,4 +76,5 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	}
 	return (res);
 }
-#endif
+
+#endif /* !_LIBRARYLOADER_H_ */

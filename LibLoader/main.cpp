@@ -1,6 +1,7 @@
 #include "ILibraryLoader.hh"
 #include "IAnimal.hh"
 #include <iostream>
+
 #ifdef _WIN32
 	#include "WLibraryLoader.hpp"
 #elif __linux__
