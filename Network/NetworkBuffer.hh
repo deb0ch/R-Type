@@ -19,17 +19,17 @@ public:
   }
 
   virtual IBuffer	&operator<<(const int &);
+  virtual IBuffer	&operator<<(const unsigned int &);
   virtual IBuffer	&operator<<(const unsigned long &);
   virtual IBuffer	&operator<<(const float &);
   virtual IBuffer	&operator<<(const std::string &);
-  virtual IBuffer	&operator<<(const std::size_t &);
   virtual IBuffer	&operator<<(const char &);
 
   virtual IBuffer	&operator>>(int &);
+  virtual IBuffer	&operator>>(unsigned int &);
   virtual IBuffer	&operator>>(unsigned long &);
   virtual IBuffer	&operator>>(float &);
   virtual IBuffer	&operator>>(std::string &);
-  virtual IBuffer	&operator>>(std::size_t &);
   virtual IBuffer	&operator>>(char &);
 
   virtual bool		end() const;
@@ -37,8 +37,8 @@ public:
   virtual void		reset();
   const char		*getBuffer() const;
   char			*getBuffer();
-  unsigned int		getLenght() const;
-  void			setLenght(unsigned int);
+  unsigned int		getLength() const;
+  void			setLength(unsigned int);
 
 
 protected:
