@@ -27,6 +27,26 @@ void		NetworkBuffer::reset()
   this->_buffer_size = 0;
 }
 
+const char		*NetworkBuffer::getBuffer() const
+{
+  return (this->_buffer);
+}
+
+char			*NetworkBuffer::getBuffer()
+{
+  return (this->_buffer);
+}
+
+unsigned int		NetworkBuffer::getLenght() const
+{
+  return (this->_buffer_size);
+}
+
+void			NetworkBuffer::setLenght(unsigned int lenght)
+{
+  this->_buffer_size = lenght;
+}
+
 IBuffer		&NetworkBuffer::operator<<(const int &value)
 {
   this->serialize(value);

@@ -35,6 +35,11 @@ public:
   virtual bool		end() const;
   virtual void		rewind();
   virtual void		reset();
+  const char		*getBuffer() const;
+  char			*getBuffer();
+  unsigned int		getLenght() const;
+  void			setLenght(unsigned int);
+
 
 protected:
   static const int	bufferMaxSize = 512;
