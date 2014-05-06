@@ -1,12 +1,22 @@
-set(HEADER
-  ${HEADER}
+set(HEADER_S
+  ${HEADER_S}
+  PARENT_SCOPE
+  )
+
+SET(SOURCE_S
+  ${SOURCE_S}
+  PARENT_SCOPE
+  )
+  
+set(HEADER_C
+  ${HEADER_C}
   ${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.hh
   PARENT_SCOPE
   )
 
-SET(SOURCE
-  ${SOURCE}
+SET(SOURCE_C
+  ${SOURCE_C}
   ${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.cpp
   PARENT_SCOPE
