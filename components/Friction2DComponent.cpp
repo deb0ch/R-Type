@@ -33,3 +33,13 @@ void	Friction2DComponent::setFrictionCoef(float coef)
 {
   this->_frictionCoef = coef;
 }
+
+void	Friction2DComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_frictionCoef;
+}
+
+void	Friction2DComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_frictionCoef;
+}

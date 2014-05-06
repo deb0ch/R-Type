@@ -10,7 +10,7 @@
 class		Entity
 {
 public:
-  unsigned long			_id;
+  unsigned int			_id;
   std::vector<IComponent*>	_components;
 
 		Entity();
@@ -23,6 +23,10 @@ public:
   /** @see Entity::removeComponent(const std::string &type) */
   Entity	*removeComponent(IComponent *);
   Entity	*removeComponent(const std::string &id);
+
+  Entity	*removeAllComponent();
+  Entity	*removeAllComponentExcept(const IComponent *);
+  Entity	*removeAllComponentExcept(const std::string &id);
 
   bool		hasComponent(const std::string &string_type) const;
   /** @see Entity::getComponent(const std::string &type) */

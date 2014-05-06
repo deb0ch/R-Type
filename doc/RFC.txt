@@ -1,17 +1,17 @@
 ﻿//Question
-	pk ne pas tout gérer du coté server?
-	pas besoin de pigpong ni tcp pour quiter la partie si on ne resoi pas sont paquet on ne l'affiche pas
-
 //TODO TCP IN GAME
        LANCEMENT DE LA PARTIE
        QUITER LA PARTIE
 //TODO TCP
        CONNECTION
        JOINDRE UNE PARTIE
+	   
+//TODO UDP
+		GAME
        
 
 Note:	"(C)" is used when a message has been send by the client.
-	"(S)" is used when a message has been send by the server.
+		"(S)" is used when a message has been send by the server.
 
 DATA SECTION
 
@@ -66,33 +66,19 @@ UDP HEADER SECTION
     +---------------+-------+----------------------------------------+
     |PLAYER_INFO(C) |   0   |the player send is information          |
     +---------------+-------+----------------------------------------+
-    |SHOOT(C)       |   1   |the player loads his weapon or shoot    |
-    +---------------+-------+----------------------------------------+
-    |ENTITY_INFO(S) |   2   |entity information send to all users    |
+    |ENTITY_INFO(S) |   1   |entity information send to all users    |
     +---------------+-------+----------------------------------------+
 
-MOVE TYPE
+EVENT TYPE
 	  
-        This packet is sent by client when the player moves.
+        This packet is sent by client when the player does an action.
 
-        0      1            5       6   10  14   
-        +------+------------+-----------+---+
-        | MOVE | num_packet | NUM_P | x | y |
-        +-------------------+-------+---+---+
+        0      1            5       6
+        +------+------------+-------+-----
+        | TYPE | num_packet | EVENT | ...
+        +-------------------+-------+-----
 
-        DIRECTION is an Uchar. It represents the directional of the player.
-
-
-SHOOT TYPE
-  
-        This packet is sent by the client when the player shoots.
-
-        0       1            2       4         5
-        +-------+------------+-------+---------+
-        | SHOOT | num_packet | NUM_P | PRESSED |
-        +-------+------------+-------+---------+
-
-        PRESSED is an Uchar. It means if the shot key is pressed or released.
+        EVENT is an Uchar. It represents the action of the player.
 
 ENTITY TYPE
 
@@ -123,3 +109,35 @@ CLIENT EVENT
         | TYPE  | NUM PAQUET|  TYPE EVENT  |
         +-------+-----------+--------------+
 
+
+***************************************************
+------------- COMPONENT SERIALIZATION -------------
+***************************************************
+
+POS 2D
+
+		0       4       8      12
+        +------+------+------+
+        | HASH | POSX | POSY |
+        +------+------+------+
+
+SPEED 2D
+
+		0       4        8        12
+        +-------+--------+--------+
+        | HASH  | SPEEDX | SPEEDY |
+        +-------+--------+--------+
+
+FRICTION 2D
+
+		0      4       8
+        +------+-------+
+        | HASH | COEFF |
+        +------+-------+
+		
+RENDER
+
+		0      4      ...
+        +------+------+
+        | HASH | PATH |
+        +------+------+

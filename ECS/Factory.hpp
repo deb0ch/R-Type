@@ -12,7 +12,7 @@ public:
   virtual ~Factory()
   {}
 
-  void	add(const std::string &key, const U *obj)
+  void	add(const Key &key, const U *obj)
   {
     auto it = this->_types.find(key);
 
@@ -20,7 +20,7 @@ public:
       this->_types.insert(std::make_pair(key, obj));
   }
 
-  U	*create(const std::string &key) const
+  U	*create(const Key &key) const
   {
     auto it = this->_types.find(key);
 

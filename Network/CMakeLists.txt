@@ -11,6 +11,8 @@ SET(
   NetworkException.hh
   ISocket.hh
   Select.hh
+  IBuffer.hh
+  NetworkBuffer.hh
   )
 
 SET(
@@ -21,7 +23,8 @@ SET(
   WSocketUDP.cpp
   NetworkException.cpp
   Select.cpp
-  main.cpp)
+  NetworkBuffer.cpp
+  )
 
 SET (LIB_TYPE STATIC)
 
