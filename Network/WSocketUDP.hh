@@ -4,6 +4,7 @@
 # include <Windows.h>
 # include <string>
 # include "ISocketUDP.hh"
+# include "IBuffer.hh"
 
 class SocketUDP : public ISocketUDP
 {
@@ -23,8 +24,11 @@ public:
   virtual const int		getHandle() const;
 
   virtual void	bind(const int port, const std::string &address = "");
-  virtual int	send(const void* data, const size_t size, const int address, const int port);
-  virtual int	send(const void* data, const size_t size, const std::string & address, const int port);
+
+  virtual int	send(const IBuffer *, const int address, const int port) = 0;
+  virtual int	send(const IBuffer *, const std::string & address, const int port) = 0;
+  //virtual int	send(const void* data, const size_t size, const int address, const int port);
+  //virtual int	send(const void* data, const size_t size, const std::string & address, const int port);
   virtual int	receive(void* data, const size_t size, std::string& address, int& port);
   virtual void	close();
   virtual void	init();
