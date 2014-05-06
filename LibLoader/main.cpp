@@ -1,12 +1,15 @@
+#ifdef _WIN32
+#include "WLibraryLoader.hpp"
+#elif __linux__
+# define _BSD_SOURCE
+#include <unistd.h>
+#include "ULibraryLoader.hpp"
+#endif
+
 #include "ILibraryLoader.hh"
 #include "IAnimal.hh"
 #include <iostream>
 
-#ifdef _WIN32
-	#include "WLibraryLoader.hpp"
-#elif __linux__
-	#include "ULibraryLoader.hpp"
-#endif
 
 int main()
 {
@@ -32,5 +35,9 @@ int main()
 	IAnimal *chocolat = loader->getInstance("..\\test\\Debug\\armadillo.dll", "entrypoint");
 	if (chocolat)
 		chocolat->scream();
+#if _WIN32
 	Sleep(50000);
+#elif __linux__
+	usleep(50000);
+#endif
 }
