@@ -4,11 +4,10 @@
 # include "ThreadException.hh"
 # include "IMutex.hh"
 
-# ifdef __linux__
-#  include <pthread.h>
-# endif /* !__linux__ */
+# include <pthread.h>
 
-class UMutex : public IMutex
+
+class Mutex : public IMutex
 {
 public:
   virtual void		lock();
@@ -17,12 +16,12 @@ public:
   virtual STATUS	status() const;
 
 public:
-			UMutex();
-  virtual		~UMutex();
+			Mutex();
+  virtual		~Mutex();
 
 private:
-			UMutex(const UMutex & other) = delete;
-  UMutex &		operator=(const UMutex & other) = delete;
+			Mutex(const Mutex & other) = delete;
+  Mutex &		operator=(const Mutex & other) = delete;
 
 private:
   int			_ret;

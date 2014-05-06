@@ -7,8 +7,9 @@
 
 # include <string>
 # include "ThreadException.hh"
-# include "../ECS/Any.hpp"
+# include "Any.hpp"
 
+template <typename T>
 class	IThread
 {
 public:
@@ -20,12 +21,12 @@ public:
     };
 
 public:
-  virtual void		start(void* arg, void* (*fct)(void*)) = 0;
-  virtual void		exit() = 0;
-  virtual void		join() = 0;
-  virtual STATUS	status() const = 0;
+	virtual void		start(Any arg, T* obj, void (T::*fct)(Any &)) = 0;
+	virtual void		exit() = 0;
+	virtual void		wait() = 0;
+	virtual STATUS		status() const = 0;
 
-  virtual		 ~IThread() {}
+	virtual			~IThread() {}
 };
 
 #endif /* !ITHREAD_H_ */

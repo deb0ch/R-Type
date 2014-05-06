@@ -9,4 +9,4 @@
 	#include "WSocketUDP.hh"
 #endif
 
-#endif
+#endif /* !_SOCKET_INCLUDE_H_ */

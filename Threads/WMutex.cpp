@@ -1,40 +1,48 @@
-#include "UMutex.hh"
+#ifdef _WIN32
+
+# include "WMutex.hh"
 
 // Public
 
-void	UMutex::lock()
+void	Mutex::lock()
 {
-  if ((_ret = pthread_mutex_lock(&_mutex)) != 0)
-    throw ThreadException(ThreadException::MUTEX, _ret, ThreadException::S_WARNING);
-  _status = LOCKED;
+	if ((_ret = WaitForSingleObject(_mutexHandle, INFINITE)) == WAIT_FAILED)
+		throw ThreadException(ThreadException::MUTEX, GetLastError(), ThreadException::S_WARNING);
+	_status = LOCKED;
 }
 
-void	UMutex::trylock()
+void	Mutex::trylock()
 {
-  if ((_ret = pthread_mutex_trylock(&_mutex)) != 0 && _ret != EBUSY)
-    throw ThreadException(ThreadException::MUTEX, _ret, ThreadException::S_WARNING);
-  _status = LOCKED;
+	if ((_ret = WaitForSingleObject(_mutexHandle, 0)) == WAIT_FAILED)
+		throw ThreadException(ThreadException::MUTEX, GetLastError(), ThreadException::S_WARNING);
+	_status = LOCKED;
 }
 
-void	UMutex::unlock()
+void	Mutex::unlock()
 {
-  if ((_ret = pthread_mutex_unlock(&_mutex)) != 0)
-    throw ThreadException(ThreadException::MUTEX, _ret, ThreadException::S_ERROR);
-  _status = UNLOCKED;
+	if (ReleaseMutex(_mutexHandle) == false)
+		throw ThreadException(ThreadException::MUTEX, GetLastError(), ThreadException::S_ERROR);
+	_status = UNLOCKED;
 }
 
-IMutex::STATUS	UMutex::status() const
+IMutex::STATUS	Mutex::status() const
 {
-  return (_status);
+	return (_status);
 }
 
-UMutex::UMutex()
-  : _ret(0), _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
-{}
-
-UMutex::~UMutex()
+Mutex::Mutex()
+: _ret(0), _status(UNLOCKED)
 {
-  pthread_mutex_destroy(&_mutex);
+	if ((_mutexHandle = CreateMutex(NULL, false, NULL)) == NULL)
+		throw ThreadException(ThreadException::MUTEX, GetLastError(), ThreadException::S_ERROR);
+}
+
+Mutex::~Mutex()
+{
+	if (CloseHandle(_mutexHandle) == false)
+		throw ThreadException(ThreadException::MUTEX, GetLastError(), ThreadException::S_ERROR);
 }
 
 // Private
+
+#endif /* !_WIN32 */

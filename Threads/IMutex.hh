@@ -1,10 +1,6 @@
 #ifndef IMUTEX_H_
 # define IMUTEX_H_
 
-# ifdef __linux__
-#  include <pthread.h>
-# endif /* !__linux__ */
-
 class IMutex
 {
 public:

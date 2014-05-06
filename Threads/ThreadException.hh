@@ -1,7 +1,7 @@
-#ifndef		THREADEXCEPTION_H_
-# define	THREADEXCEPTION_H_
+#ifndef THREADEXCEPTION_H_
+# define THREADEXCEPTION_H_
 
-# include <pthread.h>
+# include <exception>
 # include <iostream>
 # include <map>
 # include <sstream>
