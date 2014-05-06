@@ -27,6 +27,31 @@ void		NetworkBuffer::reset()
   this->_buffer_size = 0;
 }
 
+const char		*NetworkBuffer::getBuffer() const
+{
+  return (this->_buffer);
+}
+
+char			*NetworkBuffer::getBuffer()
+{
+  return (this->_buffer);
+}
+
+unsigned int		NetworkBuffer::getLength() const
+{
+  return (this->_buffer_size);
+}
+
+void			NetworkBuffer::setLength(unsigned int lenght)
+{
+  this->_buffer_size = lenght;
+}
+
+int			NetworkBuffer::getMaxSize() const
+{
+  return (bufferMaxSize);
+}
+
 IBuffer		&NetworkBuffer::operator<<(const int &value)
 {
   this->serialize(value);
@@ -39,6 +64,12 @@ IBuffer		&NetworkBuffer::operator<<(const unsigned int &value)
   return (*this);
 }
 
+IBuffer		&NetworkBuffer::operator<<(const unsigned long &value)
+{
+  this->serialize(value);
+  return (*this);
+}
+
 IBuffer		&NetworkBuffer::operator<<(const float &value)
 {
   this->serialize(value);
@@ -46,12 +77,6 @@ IBuffer		&NetworkBuffer::operator<<(const float &value)
 }
 
 IBuffer		&NetworkBuffer::operator<<(const std::string &value)
-{
-  this->serialize(value);
-  return (*this);
-}
-
-IBuffer		&NetworkBuffer::operator<<(const std::size_t &value)
 {
   this->serialize(value);
   return (*this);
@@ -75,6 +100,12 @@ IBuffer		&NetworkBuffer::operator>>(unsigned int &value)
   return (*this);
 }
 
+IBuffer		&NetworkBuffer::operator>>(unsigned long &value)
+{
+  this->unserialize(value);
+  return (*this);
+}
+
 IBuffer		&NetworkBuffer::operator>>(float &value)
 {
   this->unserialize(value);
@@ -82,12 +113,6 @@ IBuffer		&NetworkBuffer::operator>>(float &value)
 }
 
 IBuffer		&NetworkBuffer::operator>>(std::string &value)
-{
-  this->unserialize(value);
-  return (*this);
-}
-
-IBuffer		&NetworkBuffer::operator>>(std::size_t &value)
 {
   this->unserialize(value);
   return (*this);

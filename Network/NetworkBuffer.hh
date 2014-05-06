@@ -20,21 +20,27 @@ public:
 
   virtual IBuffer	&operator<<(const int &);
   virtual IBuffer	&operator<<(const unsigned int &);
+  virtual IBuffer	&operator<<(const unsigned long &);
   virtual IBuffer	&operator<<(const float &);
   virtual IBuffer	&operator<<(const std::string &);
-  virtual IBuffer	&operator<<(const std::size_t &);
   virtual IBuffer	&operator<<(const char &);
 
   virtual IBuffer	&operator>>(int &);
   virtual IBuffer	&operator>>(unsigned int &);
+  virtual IBuffer	&operator>>(unsigned long &);
   virtual IBuffer	&operator>>(float &);
   virtual IBuffer	&operator>>(std::string &);
-  virtual IBuffer	&operator>>(std::size_t &);
   virtual IBuffer	&operator>>(char &);
 
   virtual bool		end() const;
   virtual void		rewind();
   virtual void		reset();
+  virtual const char	*getBuffer() const;
+  virtual char		*getBuffer();
+  virtual unsigned int	getLength() const;
+  virtual void		setLength(unsigned int);
+  virtual int		getMaxSize() const;
+
 
 protected:
   static const int	bufferMaxSize = 512;
