@@ -3,29 +3,30 @@
 SFMLInputComponent::SFMLInputComponent()
   : AComponent("SFMLInputComponent")
 {
-  this->_inputs[sf::Keyboard::Left] = false;
-  this->_inputs[sf::Keyboard::Right] = false;
-  this->_inputs[sf::Keyboard::Down] = false;
-  this->_inputs[sf::Keyboard::Up] = false;
-  this->_inputs[sf::Keyboard::Space] = false;
+  this->_inputs[sf::Keyboard::Left] = "LEFT";
+  this->_inputs[sf::Keyboard::Right] = "RIGHT";
+  this->_inputs[sf::Keyboard::Down] = "DOWN";
+  this->_inputs[sf::Keyboard::Up] = "UP";
+  this->_inputs[sf::Keyboard::Space] = "FIRE";
 }
 
 SFMLInputComponent::~SFMLInputComponent()
 {}
 
-const std::map<sf::Keyboard::Key, bool> SFMLInputComponent::getInputs() const {
-  return this->_inputs;
+const std::map<sf::Keyboard::Key, std::string>&	SFMLInputComponent::getInputs() const
+{
+  return (this->_inputs);
 }
 
-bool SFMLInputComponent::isActived(const sf::Keyboard::Key key) const {
-  std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
+const std::string&	SFMLInputComponent::getAction(const sf::Keyboard::Key key) const
+{
+  auto it = this->_inputs.find(key);
   if (it != this->_inputs.end())
-    return it->second;
-  return false;
+    return (it->second);
+  return ("");
 }
 
-void SFMLInputComponent::setStatusKey(const sf::Keyboard::Key key, const bool status) {
-  std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
-  if (it != this->_inputs.end())
-    this->_inputs[key] = status;
+void	SFMLInputComponent::setAction(const sf::Keyboard::Key key, const std::string &action)
+{
+  this->_inputs[key] = action;
 }

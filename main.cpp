@@ -9,6 +9,7 @@
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLInputSystem.hh"
 #include	"PlayerMovementSystem.hh"
+#include	"SFMLEventSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -23,6 +24,7 @@
 #include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
 #include	"ImageLoader.hh"
+#include	"ActionComponent.hh"
 
 #ifdef _WIN32
 	#define PATH "Ressources\\Images\\"
@@ -39,11 +41,12 @@ int		main()
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
+  world.addSystem(new SFMLEventSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
+  		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
@@ -51,7 +54,10 @@ int		main()
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
-		  ->addComponent(new MovementSpeedComponent(5)));
+		  ->addComponent(new MovementSpeedComponent(5))
+		  ->addComponent((new ActionComponent())
+				 ->addAction("UP")
+				 ->addAction("RIGHT")));
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))

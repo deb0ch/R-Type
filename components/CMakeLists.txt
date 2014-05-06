@@ -9,7 +9,8 @@ set(HEADER
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
-	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	PARENT_SCOPE
 	)
 
@@ -23,5 +24,6 @@ SET(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	PARENT_SCOPE
 	)

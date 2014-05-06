@@ -16,6 +16,9 @@ public:
   virtual	~EventManager()
   {}
 
+  /**
+   * @todo template
+   */
   void		addHandler(const std::string &type, T *obj, void (T::*e)(IEvent *))
   {
     if (!this->hasHandler(type))

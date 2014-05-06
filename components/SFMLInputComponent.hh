@@ -1,12 +1,12 @@
 #ifndef		SFMLINPUTCOMPONENT_H_
 # define	SFMLINPUTCOMPONENT_H_
 
-#include	<map>
+# include	<map>
+# include	<string>
 
-#include	"SFML/Window/Keyboard.hpp"
-#include	"SFML/Window/Event.hpp"
+# include	"SFML/Window/Keyboard.hpp"
 
-#include	"AComponent.hpp"
+# include	"AComponent.hpp"
 
 /**
  * @todo Repenser la gestion des inputs en faisant un autre component qui contient
@@ -17,14 +17,15 @@
 class		SFMLInputComponent : public AComponent<SFMLInputComponent>
 {
 private:
-  std::map<sf::Keyboard::Key, bool>	_inputs;
+  std::map<sf::Keyboard::Key, std::string>	_inputs;
 
 public:
   SFMLInputComponent();
   virtual ~SFMLInputComponent();
-  const std::map<sf::Keyboard::Key, bool>	getInputs() const;
-  bool						isActived(const sf::Keyboard::Key key) const;
-  void						setStatusKey(const sf::Keyboard::Key key, const bool status);
+
+  const std::map<sf::Keyboard::Key, std::string>&	getInputs() const;
+  const std::string&	getAction(const sf::Keyboard::Key key) const;
+  void			setAction(const sf::Keyboard::Key key, const std::string &action);
 };
 
 #endif /* !SFMLINPUTCOMPONENT_H_ */
