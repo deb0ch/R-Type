@@ -4,6 +4,7 @@
 # include <Windows.h>
 # include <string>
 # include "ISocketTCP.hh"
+# include "IBuffer.hh"
 
 class SocketTCP : public ISocketTCP
 {
@@ -30,7 +31,8 @@ public:
 
 	virtual void connect(const std::string &address, const int port);
 	virtual void connect(const int address, const int port);
-	virtual int send(const void* data, const std::size_t size);
+	virtual int	send(const IBuffer *);
+	//virtual int send(const void* data, const std::size_t size);
 	virtual int receive(void* data, const std::size_t size);
 private:
 	SocketTCP(const SocketTCP &);
