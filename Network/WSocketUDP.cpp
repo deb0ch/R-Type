@@ -168,4 +168,4 @@ const int	SocketUDP::getHandle() const
 	return (this->socket);
 }
 
-#endif
+#endif /* !_WIN32 */

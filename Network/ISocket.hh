@@ -4,7 +4,7 @@
 # include <string>
 # include <iostream>
 
-#define MSG_INVALIDE_SOCKET "The socket is invalide"
+# define MSG_INVALIDE_SOCKET "The socket is invalid"
 
 class ISocket
 {

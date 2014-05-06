@@ -36,8 +36,8 @@ int		main()
 {
   World		world;
 
-  world.addSystem(new MoveSystem());
-  world.addSystem(new Friction2DSystem());
+  world.addSystem(new MoveSystem())
+    ->addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
