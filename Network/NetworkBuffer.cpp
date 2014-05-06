@@ -97,7 +97,6 @@ template <>
 void		NetworkBuffer::serialize<std::string>(const std::string &element)
 {
   this->serialize<unsigned int>(element.length());
-  std::cout << "platypus: " << element.length() << std::endl;
   if (this->_buffer_size + element.length() > bufferMaxSize)
     {
       std::cerr << "Invalid size" << std::endl; // raise exception
@@ -122,7 +121,6 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
       std::cout << "Not enough space" << std::endl; // raise exception
       return ;
     }
-  std::cout << "platypusaa: " << size << std::endl;
   for (unsigned int i = 0; i < size; ++i)
     {
       element += this->_buffer[this->_current_pos];

@@ -45,7 +45,6 @@ void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 	  (component = dynamic_cast<IComponent *>(serializable_component)))
 	{
 	  buffer << static_cast<std::size_t>(hash(component->getType()));
-	  std::cout << "sended: " << hash(component->getType()) << std::endl;
 	  serializable_component->serialize(buffer);
 	}
     }

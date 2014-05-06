@@ -47,7 +47,6 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 	    {
 	      entity = this->_world->createEntity();
 	      entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
-	      std::cout << "-------------------- CREATE ENTITY -----------------------" << std::endl;
 	      this->updateEntity(entity, *buffer);
 	      this->_world->addEntity(entity);
 	      delete buffer;
@@ -83,7 +82,6 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 	    {
 	      if (num_packet > receive_component->getPacketNum())
 		{
-		  std::cout << "-------------------- UPDATING ENTITY -----------------------" << std::endl;
 		  this->updateEntity(entity, *buffer);
 		  receive_component->setPacketNum(num_packet);
 		}
@@ -110,7 +108,6 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 
   buffer >> component_hash;
   new_component = this->_world->createComponent(component_hash);
-  std::cout << "received: " << component_hash << std::endl;
   if (!(serializable_component = dynamic_cast<ISerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;
