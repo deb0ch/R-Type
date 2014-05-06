@@ -53,7 +53,7 @@ IBuffer		&NetworkBuffer::operator<<(const int &value)
   return (*this);
 }
 
-IBuffer		&NetworkBuffer::operator<<(const unsigned int &value)
+IBuffer		&NetworkBuffer::operator<<(const unsigned long &value)
 {
   this->serialize(value);
   return (*this);
@@ -89,7 +89,7 @@ IBuffer		&NetworkBuffer::operator>>(int &value)
   return (*this);
 }
 
-IBuffer		&NetworkBuffer::operator>>(unsigned int &value)
+IBuffer		&NetworkBuffer::operator>>(unsigned long &value)
 {
   this->unserialize(value);
   return (*this);

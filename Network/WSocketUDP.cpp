@@ -53,7 +53,7 @@ void SocketUDP::close()
 void SocketUDP::bind(int port, const std::string &address)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::UDP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	if (address == "")
 		this->clientService.sin_addr.s_addr = ::htonl(INADDR_ANY);
@@ -76,7 +76,7 @@ void SocketUDP::bind(int port, const std::string &address)
 int	SocketUDP::send(const void* data, const size_t size, const std::string & address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::UDP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 
 	hostent* hostinfo = NULL;
@@ -102,7 +102,7 @@ int	SocketUDP::send(const void* data, const size_t size, const std::string & add
 int	SocketUDP::send(const void* data, const size_t size, const int address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::UDP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 
 	sockaddr_in dest;
@@ -128,7 +128,7 @@ int	SocketUDP::receive(void* data, const size_t size,
 {
 
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::UDP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 
 	struct sockaddr_in src;
@@ -150,7 +150,7 @@ void		SocketUDP::setBlocking(const bool block)
 {
 	if (this->socket == INVALID_SOCKET)
 	{
-		throw NetworkException(NetworkException::UDP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
 			NetworkException::SEVERITY::S_WARNING);;
 	}
 	u_long blocking = block ? 0 : 1;

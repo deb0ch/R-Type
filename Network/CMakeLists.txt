@@ -1,7 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-SET(
-  HEADER_FILES
+SET(HEADER_FILES
   ISocketTCP.hh
   USocketTCP.hh
   WSocketTCP.hh
@@ -12,11 +11,9 @@ SET(
   ISocket.hh
   Select.hh
   IBuffer.hh
-  NetworkBuffer.hh
-  )
+  NetworkBuffer.hh)
 
-SET(
-  SOURCES
+SET(SOURCES
   USocketTCP.cpp
   WSocketTCP.cpp
   USocketUDP.cpp

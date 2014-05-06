@@ -34,7 +34,7 @@ const int		SocketTCP::getHandle() const
 int SocketTCP::send(const void* data, const std::size_t size)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	int res = ::send(this->socket, reinterpret_cast<const char *>(data),
 		size, 0);
@@ -49,7 +49,7 @@ int SocketTCP::send(const void* data, const std::size_t size)
 int SocketTCP::receive(void* data, const std::size_t size)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	int received = ::recv(this->socket, reinterpret_cast<char *>(data), size, 0);
 	if (received == SOCKET_ERROR)
@@ -81,7 +81,7 @@ ISocketTCP *SocketTCP::accept()
 	SOCKET		sock;
 
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	sock = WSAAccept(this->socket, reinterpret_cast<SOCKADDR*>(&cs), &lencs, NULL, NULL);
 	if (sock == INVALID_SOCKET)
@@ -95,7 +95,7 @@ ISocketTCP *SocketTCP::accept()
 void SocketTCP::bind(int port, const std::string &address)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	if (address == "")
 		this->clientService.sin_addr.s_addr = ::htonl(INADDR_ANY);
@@ -121,7 +121,7 @@ void SocketTCP::connect(const std::string &address, const int port)
 	sockaddr_in		sock_in;
 
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	hostinfo = ::gethostbyname(address.c_str());
 	if (hostinfo == NULL)
@@ -142,7 +142,7 @@ void SocketTCP::connect(const std::string &address, const int port)
 void SocketTCP::connect(const int address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
 	sockaddr_in clientService;
 	clientService.sin_family = AF_INET;
@@ -183,7 +183,7 @@ void SocketTCP::setBlocking(bool const block)
 {
 	if (this->socket == INVALID_SOCKET)
 	{
-		throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			NetworkException::SEVERITY::S_WARNING);;
 	}
 	u_long blocking = block ? 0 : 1;
