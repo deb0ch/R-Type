@@ -15,24 +15,24 @@ int main()
 {
 	ILibraryLoader<IAnimal> *loader = new LibraryLoader<IAnimal>();
 
-	IAnimal *toto = loader->getInstance("..\\test\\Debug\\platypus.dll");
+	IAnimal *toto = loader->getInstance("test/libplatypus.so");
 	if (toto)
 		toto->scream();
-	loader->clearLibrary("..\\test\\Debug\\platypus.dll");
-	IAnimal *titi = loader->getInstance("..\\test\\Debug\\platypus.dll");
+	loader->clearLibrary("test/libplatypus.so");
+	IAnimal *titi = loader->getInstance("test/libplatypus.so");
 	if (titi)
 		titi->scream();
-	IAnimal *cheval = loader->getInstance("..\\test\\Debug\\platypus.dll");
+	IAnimal *cheval = loader->getInstance("test/libplatypus.so");
 	if (cheval)
 		cheval->scream();
-	IAnimal *tata = loader->getInstance("..\\test\\Debug\\armadillo.dll", "entrypoint");
+	IAnimal *tata = loader->getInstance("test/libarmadillo.so", "entrypoint");
 	if (tata)
 		tata->scream();
 	loader->clearLibraries();
-	IAnimal *poney = loader->getInstance("..\\test\\Debug\\platypus.dll");
+	IAnimal *poney = loader->getInstance("test/libplatypus.so");
 	if (poney)
 		poney->scream();
-	IAnimal *chocolat = loader->getInstance("..\\test\\Debug\\armadillo.dll", "entrypoint");
+	IAnimal *chocolat = loader->getInstance("test/libarmadillo.so", "entrypoint");
 	if (chocolat)
 		chocolat->scream();
 	#if _WIN32

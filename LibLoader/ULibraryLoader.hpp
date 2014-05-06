@@ -1,6 +1,7 @@
 #ifndef _LIBRARYLOADER_H_
 #define _LIBRARYLOADER_H_
 
+#include <dlfcn.h>
 #include <string>
 #include <iostream>
 #include <map>
@@ -10,8 +11,11 @@ template <typename T>
 class LibraryLoader : public ILibraryLoader<T>
 {
 
+public:
+    typedef void * handle;
+
 private:
-  std::map<const std::string, HINSTANCE> libs;
+  std::map<const std::string, handle> libs;
 
 public:
   ~LibraryLoader();
@@ -33,7 +37,8 @@ void		LibraryLoader<T>::clearLibraries()
   auto it = this->libs.begin();
 
   for (it = this->libs.begin(); it != this->libs.end(); ++it)
-    FreeLibrary(it->second);
+    if (dlclose(it->second))
+      throw(1);
   this->libs.clear();
 }
 
@@ -44,35 +49,32 @@ void		LibraryLoader<T>::clearLibrary(const std::string &path)
 
   if (it == this->libs.end())
     return ;
-  FreeLibrary(it->second);
+  if (dlclose(it->second))
+    throw(1);
   this->libs.erase(it);
 }
 
 template <typename T>
 T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &entry)
 {
-  T *(*instancier)();
-  T *res = NULL;
-  HINSTANCE Handle = NULL;
+  T		*(*instancier)();
+  T		*res = NULL;
+  handle	Handle = NULL;
 
   auto it = this->libs.find(path);
   if (it == this->libs.end())
     {
       std::cout << "toto" << std::endl;
-      Handle = LoadLibrary(path.c_str());
+      Handle = dlopen(path.c_str(), RTLD_LAZY);
       this->libs[path] = Handle;
     }
   else
     Handle = it->second;
-  if (Handle == NULL || Handle == INVALID_HANDLE_VALUE)
-    {
-      // Excpetion
-    }
-  instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
+  if (Handle == NULL)
+    throw (1);
+  instancier = reinterpret_cast<T *(*)()>(dlsym(Handle, entry.c_str()));
   if (instancier)
-    {
-      res = instancier();
-    }
+    res = instancier();
   return (res);
 }
 #endif
