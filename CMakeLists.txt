@@ -29,11 +29,8 @@ ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/events")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/utility")
 	
 ADD_SUBDIRECTORY(Network)
-<<<<<<< HEAD
 ADD_SUBDIRECTORY(Threads)
-=======
 ADD_SUBDIRECTORY(LibLoader)
->>>>>>> feature/DllLoader
 ADD_SUBDIRECTORY(ECS)
 
 # INCLUDE .hh / .hpp
@@ -54,12 +51,8 @@ ADD_EXECUTABLE(${SERVER_BIN} ${SOURCE_S} ${HEADER_S})
 ADD_EXECUTABLE(${CLIENT_BIN} ${SOURCE_C} ${HEADER_C})
 
 #RELEASE MODE
-<<<<<<< HEAD
 
 SET(CMAKE_BUILD_TYPE "Release")
-=======
-#SET(CMAKE_BUILD_TYPE "Release")
->>>>>>> feature/DllLoader
 
 # COPY RESSOURCES
 SET(RESSOURCES ${CMAKE_SOURCE_DIR}/Ressources)
@@ -67,7 +60,6 @@ FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR})
 
 # COMPILE WITH SFML
 if (UNIX)
-<<<<<<< HEAD
 	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-window.so.2.1)
 	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-system.so.2.1)
 	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-network.so.2.1)
@@ -75,31 +67,27 @@ if (UNIX)
 	TARGET_LINK_LIBRARIES (RType /usr/lib/libsfml-graphics.so.2.1)
 
 	TARGET_LINK_LIBRARIES (RType pthread)
-=======
+
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-window.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-system.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-audio.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-graphics.so.2.1)
->>>>>>> feature/DllLoader
 endif (UNIX)
 
 if (WIN32)
 	SET(DLL ${CMAKE_SOURCE_DIR}/SFML-src/Release)
 	FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
-<<<<<<< HEAD
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-src/sfml-audio.lib)
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-src/sfml-graphics.lib)
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-src/sfml-network.lib)
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-src/sfml-window.lib)
 	TARGET_LINK_LIBRARIES (RType ${CMAKE_SOURCE_DIR}/SFML-src/sfml-system.lib)
-endif (WIN32)
 
 # INCLUDE LIB
 TARGET_LINK_LIBRARIES (RType Networklib)
 TARGET_LINK_LIBRARIES (RType Threadlib)
 TARGET_LINK_LIBRARIES (RType ECSlib)
-=======
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-W/sfml-audio.lib)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-W/sfml-graphics.lib)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-W/sfml-network.lib)
@@ -113,4 +101,3 @@ TARGET_LINK_LIBRARIES (${SERVER_BIN} ECSlib)
 
 TARGET_LINK_LIBRARIES (${CLIENT_BIN} Networklib)
 TARGET_LINK_LIBRARIES (${CLIENT_BIN} ECSlib)
->>>>>>> feature/DllLoader
