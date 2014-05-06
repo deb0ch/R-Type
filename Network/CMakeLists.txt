@@ -8,6 +8,9 @@ SET(HEADER_FILES
   WSocketUDP.hh
   USocketUDP.hh
   NetworkException.hh
+  TCPException.hh
+  UDPException.hh
+  SelectException.hh
   ISocket.hh
   Select.hh
   IBuffer.hh
@@ -19,6 +22,9 @@ SET(SOURCES
   USocketUDP.cpp
   WSocketUDP.cpp
   NetworkException.cpp
+  TCPException.cpp
+  UDPException.cpp
+  SelectException.cpp
   Select.cpp
   NetworkBuffer.cpp)
 
