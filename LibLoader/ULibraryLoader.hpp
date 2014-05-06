@@ -1,5 +1,5 @@
 #ifndef _LIBRARYLOADER_H_
-#define _LIBRARYLOADER_H_
+# define _LIBRARYLOADER_H_
 
 #include <dlfcn.h>
 #include <string>
@@ -77,4 +77,5 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
     res = instancier();
   return (res);
 }
-#endif
+
+#endif /* !_LIBRARYLOADER_H_ */

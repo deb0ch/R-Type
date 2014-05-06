@@ -35,9 +35,9 @@ int main()
 	IAnimal *chocolat = loader->getInstance("test/libarmadillo.so", "entrypoint");
 	if (chocolat)
 		chocolat->scream();
-	#if _WIN32
+#if _WIN32
 	Sleep(50000);
-	#elif __linux__
+#elif __linux__
 	usleep(50000);
-	#endif
+#endif
 }
