@@ -15,6 +15,9 @@
 *.a
 *.lib
 
+# Core files
+core
+
 # Executables
 RType
 *.exe

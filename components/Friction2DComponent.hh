@@ -16,8 +16,8 @@ public:
   virtual	~Friction2DComponent();
   Friction2DComponent	&operator=(const Friction2DComponent&);
 
-  virtual int	serialize(char *buffer, int lenght) const;
-  virtual int	unserialize(const char *buffer, int lenght);
+  virtual void	serialize(IBuffer &buffer) const;
+  virtual void	unserialize(IBuffer &buffer);
 
 protected:
   float		_frictionCoef;

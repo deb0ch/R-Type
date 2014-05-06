@@ -16,8 +16,8 @@ public:
   virtual	~Speed2DComponent();
   Speed2DComponent	&operator=(const Speed2DComponent&);
 
-  virtual int	serialize(char *buffer, int lenght) const;
-  virtual int	unserialize(const char *buffer, int lenght);
+  virtual void	serialize(IBuffer &buffer) const;
+  virtual void	unserialize(IBuffer &buffer);
 
   float		getVX() const;
   float		getVY() const;

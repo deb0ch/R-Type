@@ -15,8 +15,8 @@ public:
 		SFMLSpriteComponent(const std::string &filename = "");
   virtual	~SFMLSpriteComponent();
 
-  virtual	int serialize(char *buffer, int lenght) const;
-  virtual	int unserialize(const char *buffer, int lenght);
+  virtual	void serialize(IBuffer &buffer) const;
+  virtual	void unserialize(IBuffer &buffer);
 
   sf::Sprite	*getSprite(ImageLoader &imageLoader);
 };

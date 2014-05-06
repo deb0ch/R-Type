@@ -10,7 +10,7 @@
 class		Entity
 {
 public:
-  unsigned long			_id;
+  unsigned int			_id;
   std::vector<IComponent*>	_components;
 
 		Entity();

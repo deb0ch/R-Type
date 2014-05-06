@@ -1,6 +1,5 @@
 #include <iostream>
 #include "SFMLSpriteComponent.hh"
-#include "Serializer.hpp"
 
 //----- ----- Constructors ----- ----- //
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
@@ -24,24 +23,12 @@ sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader) {
   return (sprite);
 }
 
-int		SFMLSpriteComponent::serialize(char *buffer, int lenght) const
+void		SFMLSpriteComponent::serialize(IBuffer &buffer) const
 {
-  int		lenght_written;
-
-  lenght_written = 0;
-  lenght_written += Serializer<std::string>::serialize(buffer + lenght_written,
-						       lenght - lenght_written, this->_filaName);
-  std::cout << "Serializing: " << this->_filaName << " : " << buffer << std::endl;
-  return (lenght_written);
+  buffer << this->_filaName;
 }
 
-int		SFMLSpriteComponent::unserialize(const char *buffer, int lenght)
+void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 {
-  int		lenght_read;
-
-  lenght_read = 0;
-  lenght_read += Serializer<std::string>::unserialize(buffer + lenght_read,
-						      lenght - lenght_read, this->_filaName);
-  std::cout << "Unserializing pozkepoaepkazoepoaze: " << this->_filaName << " : " << buffer << std::endl;
-  return (lenght_read);
+  buffer >> this->_filaName;
 }

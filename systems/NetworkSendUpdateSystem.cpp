@@ -2,8 +2,8 @@
 #include "NetworkSendUpdateSystem.hh"
 #include "ISerializableComponent.hh"
 #include "IComponent.hh"
-#include "Serializer.hpp"
 #include "NetworkSendUpdateComponent.hh"
+#include "NetworkBuffer.hh"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
@@ -24,57 +24,45 @@ bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
 void				NetworkSendUpdateSystem::beforeProcess()
 {
   this->_packets_sended =
-    this->_world->getSharedObject<std::vector< std::pair<const char *, int> > >("LeChevalCestTropGenial");
+    this->_world->getSharedObject< std::vector< NetworkBuffer * > >("LeChevalCestTropGenial");
 }
 
 void				NetworkSendUpdateSystem::start()
 {
-  this->_world->setSharedObject("LeChevalCestTropGenial", new std::vector< std::pair<const char *, int> >());
+  this->_world->setSharedObject("LeChevalCestTropGenial", new std::vector<NetworkBuffer *>());
 }
 
-int				NetworkSendUpdateSystem::serializeComponents(Entity *entity, char *buffer,
-								   int buffer_size)
+void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
+									     NetworkBuffer &buffer)
 {
-  int				lenght_written;
   ISerializableComponent	*serializable_component;
   IComponent			*component;
   std::hash<std::string>	hash;
 
-  lenght_written = 0;
   for (auto it = this->_component_to_send.begin(); it != this->_component_to_send.end(); ++it)
     {
       if ((serializable_component = entity->getComponent<ISerializableComponent>(*it)) &&
 	  (component = dynamic_cast<IComponent *>(serializable_component)))
 	{
-	  lenght_written += Serializer<std::size_t>::serialize(buffer + lenght_written,
-							       buffer_size - lenght_written,
-							       hash(component->getType()));
-	  lenght_written += serializable_component->serialize(buffer + lenght_written,
-							      buffer_size - lenght_written);
+	  buffer << static_cast<std::size_t>(hash(component->getType()));
+	  std::cout << "sended: " << hash(component->getType()) << std::endl;
+	  serializable_component->serialize(buffer);
 	}
     }
-  return (lenght_written);
 }
 
 void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkSendUpdateComponent	*network_component;
-  char				*buffer = new char[this->_buffer_size];
-  int				lenght_written;
+  NetworkBuffer			*buffer = new NetworkBuffer();
 
   network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
-  *buffer = ENTITY_UPDATE;
-  lenght_written = 1;
-  lenght_written += Serializer<unsigned int>::serialize(buffer + lenght_written,
-							this->_buffer_size - lenght_written,
-							entity->_id);
-  lenght_written += Serializer<unsigned int>::serialize(buffer + lenght_written,
-							this->_buffer_size - lenght_written,
-							network_component->getPacketNumber());
-  buffer[lenght_written++] = 1;
-  lenght_written += this->serializeComponents(entity, buffer + lenght_written,
-					      this->_buffer_size - lenght_written);
+  *buffer << static_cast<char>(ENTITY_UPDATE);
+  *buffer << entity->_id;
+  *buffer << network_component->getPacketNumber();
+  *buffer << static_cast<char>(1);
+  this->serializeComponents(entity, *buffer);
   network_component->increasePacketNumber();
-  this->_packets_sended->push_back(std::make_pair(buffer, lenght_written));
+  this->_packets_sended->push_back(buffer);
   // Send buffer here
 }

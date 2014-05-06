@@ -3,6 +3,8 @@
 
 # include "ASystem.hh"
 
+class NetworkBuffer;
+
 class NetworkReceiveUpdateSystem : public ASystem
 {
 public:
@@ -15,14 +17,14 @@ public:
   virtual void	afterProcess();
 
 private:
-  int		unserializeComponent(Entity *, const char *, int);
-  void		updateEntity(Entity *, const char *, int);
-  int		getEntityInfos(const char *buffer, int lenght,
+  void		unserializeComponent(Entity *, NetworkBuffer &buffer);
+  void		updateEntity(Entity *, NetworkBuffer &buffer);
+  void		getEntityInfos(NetworkBuffer &buffer,
 			       unsigned int &id_entity, unsigned int &num_packet);
   bool		remoteEntityExists(unsigned int);
 
 protected:
-  std::vector< std::pair<const char *, int> > *_packets_to_apply;
+  std::vector<NetworkBuffer *> *_packets_to_apply;
 };
 
 #endif /* !NETWORKRECEIVEUPDATESYSTEM_H_ */

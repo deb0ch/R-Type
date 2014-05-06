@@ -3,6 +3,7 @@
 
 # include <string>
 # include "IComponent.hh"
+# include "IBuffer.hh"
 
 class ISerializableComponent
 {
@@ -10,8 +11,8 @@ public:
   virtual ~ISerializableComponent()
   {}
 
-  virtual int serialize(char *buffer, int lenght) const = 0;
-  virtual int unserialize(const char *buffer, int lenght) = 0;
+  virtual void serialize(IBuffer &) const = 0;
+  virtual void unserialize(IBuffer &) = 0;
 protected:
 
 };

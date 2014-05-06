@@ -15,8 +15,8 @@ public:
 		Pos2DComponent(const Pos2DComponent&);
   virtual	~Pos2DComponent();
   Pos2DComponent	&operator=(const Pos2DComponent&);
-  virtual int	serialize(char *buffer, int lenght) const;
-  virtual int	unserialize(const char *buffer, int lenght);
+  virtual void	serialize(IBuffer &) const;
+  virtual void	unserialize(IBuffer &);
 
   float		getX() const;
   float		getY() const;

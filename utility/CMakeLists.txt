@@ -1,6 +1,5 @@
 set(HEADER
   ${HEADER}
-  ${CMAKE_CURRENT_SOURCE_DIR}/Serializer.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.hh
   PARENT_SCOPE
   )

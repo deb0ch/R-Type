@@ -8,6 +8,8 @@ enum PacketType
     ENTITY_UPDATE
   };
 
+class NetworkBuffer;
+
 class NetworkSendUpdateSystem : public ASystem
 {
 public:
@@ -20,11 +22,11 @@ public:
   virtual void	start();
 
 private:
-  int		serializeComponents(Entity *, char *buffer, int buffer_size);
+  void		serializeComponents(Entity *, NetworkBuffer &buffer);
 private:
-  std::vector<std::string> _component_to_send;
-  std::vector< std::pair<const char *, int> > *_packets_sended;
-  static const int _buffer_size = 512;
+  std::vector<std::string>		_component_to_send;
+  std::vector< NetworkBuffer * >	*_packets_sended;
+  static const int			_buffer_size = 512;
 };
 
 #endif /* !NETWORKSENDUPDATESYSTEM_H_ */

@@ -26,6 +26,8 @@
 
 #include	"ImageLoader.hh"
 
+#include	"NetworkBuffer.hh"
+
 #ifdef _WIN32
 #define PATH "sprites\\"
 #elif __linux__
@@ -34,6 +36,28 @@
 
 int		main()
 {
+  NetworkBuffer buffer;
+
+  buffer << (unsigned int) 95;
+  buffer << (char) 65;
+  buffer << std::string("coucou");
+  buffer << (std::size_t) 84;
+
+  unsigned int	a;
+  char		b;
+  std::string	c;
+  std::size_t	d;
+
+  buffer >> a;
+  buffer >> b;
+  buffer >> c;
+  buffer >> d;
+
+  std::cout << a << std::endl;
+  std::cout << b << std::endl;
+  std::cout << c << std::endl;
+  std::cout << d << std::endl;
+
   World		world;
 
   world.addSystem(new MoveSystem());

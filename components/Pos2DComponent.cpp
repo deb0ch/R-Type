@@ -1,5 +1,4 @@
 #include "Pos2DComponent.hh"
-#include "Serializer.hpp"
 
 //----- ----- Constructors ----- ----- //
 Pos2DComponent::Pos2DComponent(float x, float y)
@@ -50,24 +49,14 @@ void	Pos2DComponent::setY(float y)
   this->_y = y;
 }
 
-int		Pos2DComponent::serialize(char *buffer, int lenght) const
+void		Pos2DComponent::serialize(IBuffer &buffer) const
 {
-  int		lenght_written;
-
-  lenght_written = 0;
-  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_x);
-  lenght_written += Serializer<float>::serialize(buffer + lenght_written, lenght - lenght_written, this->_y);
-  std::cout << "Serializing: x: " << _x  << " y: " << _y << std::endl;
-  return (lenght_written);
+  buffer << this->_x;
+  buffer << this->_y;
 }
 
-int		Pos2DComponent::unserialize(const char *buffer, int lenght)
+void		Pos2DComponent::unserialize(IBuffer &buffer)
 {
-  int		lenght_read;
-
-  lenght_read = 0;
-  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_x);
-  lenght_read += Serializer<float>::unserialize(buffer + lenght_read, lenght - lenght_read, this->_y);
-  std::cout << "Unserializing: x: " << _x  << " y: " << _y << std::endl;
-  return (lenght_read);
+  buffer >> this->_x;
+  buffer >> this->_y;
 }

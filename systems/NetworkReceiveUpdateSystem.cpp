@@ -1,8 +1,8 @@
 #include "NetworkReceiveUpdateSystem.hh"
 #include "NetworkReceiveUpdateComponent.hh"
 #include "NetworkSendUpdateSystem.hh"
-#include "Serializer.hpp"
 #include "ISerializableComponent.hh"
+#include "NetworkBuffer.hh"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
 {}
@@ -12,7 +12,7 @@ NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 
 bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("NetworkReceiveUpdateComponent"))
+  if (entity->hasComponent("NetworkReceiveUpdateComponent") && this->_packets_to_apply != NULL)
     return (true);
   return (false);
 }
@@ -20,7 +20,7 @@ bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
 void				NetworkReceiveUpdateSystem::beforeProcess()
 {
   auto				tmp =
-    this->_world->getSharedObject< std::vector< std::pair<const char *, int> > >("LeChevalCestTropGenial");
+    this->_world->getSharedObject< std::vector<NetworkBuffer *> >("LeChevalCestTropGenial");
 
   if (tmp)
     this->_packets_to_apply = tmp;
@@ -31,23 +31,26 @@ void				NetworkReceiveUpdateSystem::afterProcess()
   unsigned int			id_entity;
   unsigned int			num_packet;
   Entity			*entity;
-  int				lenght_read;
+  NetworkBuffer			*buffer;
+  char				packet_type;
 
   auto it = this->_packets_to_apply->begin();
-  while (it != this->_packets_to_apply->end())
+  while (it != this->_packets_to_apply->end()) // setup a try{}catch here for unserialize
     {
-      if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
+      buffer = *it;
+      buffer->rewind();
+      *buffer >> packet_type;
+      if (packet_type == ENTITY_UPDATE)
 	{
-	  lenght_read = 1;
-	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
-					      id_entity, num_packet);
+	  this->getEntityInfos(*buffer, id_entity, num_packet);
 	  if (!this->remoteEntityExists(id_entity))
 	    {
 	      entity = this->_world->createEntity();
 	      entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
 	      std::cout << "-------------------- CREATE ENTITY -----------------------" << std::endl;
-	      this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
+	      this->updateEntity(entity, *buffer);
 	      this->_world->addEntity(entity);
+	      delete buffer;
 	      it = this->_packets_to_apply->erase(it);
 	    }
 	  else
@@ -61,27 +64,30 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkReceiveUpdateComponent	*receive_component;
-  int				lenght_read;
   unsigned int			id_entity;
   unsigned int			num_packet;
+  char				packet_type;
+  NetworkBuffer			*buffer;
 
   receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
   auto it = this->_packets_to_apply->begin();
-  while (it != this->_packets_to_apply->end())
+  while (it != this->_packets_to_apply->end()) // setup a try{}catch here for unserialize
     {
-      if (it->second >= 1 && *it->first == ENTITY_UPDATE) // setup a try{}catch here for unserialize
+      buffer = *it;
+      buffer->rewind();
+      *buffer >> packet_type;
+      if (packet_type == ENTITY_UPDATE)
 	{
-	  lenght_read = 1;
-	  lenght_read += this->getEntityInfos(it->first + lenght_read, it->second - lenght_read,
-					      id_entity, num_packet);
+	  this->getEntityInfos(*buffer, id_entity, num_packet);
 	  if (id_entity == receive_component->getRemoteID())
 	    {
 	      if (num_packet > receive_component->getPacketNum())
 		{
 		  std::cout << "-------------------- UPDATING ENTITY -----------------------" << std::endl;
-		  this->updateEntity(entity, it->first + lenght_read, it->second - lenght_read);
+		  this->updateEntity(entity, *buffer);
 		  receive_component->setPacketNum(num_packet);
 		}
+	      delete buffer;
 	      it = this->_packets_to_apply->erase(it);
 	    }
 	  else
@@ -95,36 +101,28 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 
 // -------------- Private functions --------------
 
-int				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
-										 const char *buffer,
-										 int lenght)
+void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
+										 NetworkBuffer &buffer)
 {
   std::size_t			component_hash;
-  int				lenght_read;
   IComponent			*new_component;
   ISerializableComponent	*serializable_component;
 
-  lenght_read = 0;
-  lenght_read += Serializer<std::size_t>::unserialize(buffer + lenght_read,
-						      lenght - lenght_read, component_hash);
+  buffer >> component_hash;
   new_component = this->_world->createComponent(component_hash);
+  std::cout << "received: " << component_hash << std::endl;
   if (!(serializable_component = dynamic_cast<ISerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;
       throw 1;
     }
-  lenght_read += serializable_component->unserialize(buffer + lenght_read, lenght - lenght_read);
+  serializable_component->unserialize(buffer);
   entity->addComponent(new_component);
-  return (lenght_read);
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
-									 const char *buffer,
-									 int lenght)
+									 NetworkBuffer &buffer)
 {
-  int				lenght_read;
-
-  lenght_read = 0;
   auto it = entity->_components.begin();
   while (it != entity->_components.end())
     {
@@ -136,26 +134,21 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
       else
 	++it;
     }
-  while (lenght_read < lenght)
+  while (!buffer.end())
     {
-      lenght_read += this->unserializeComponent(entity, buffer + lenght_read, lenght - lenght_read);
+      this->unserializeComponent(entity, buffer);
     }
 }
 
-int				NetworkReceiveUpdateSystem::getEntityInfos(const char *buffer,
-									   int lenght,
+void				NetworkReceiveUpdateSystem::getEntityInfos(NetworkBuffer &buffer,
 									   unsigned int &id_entity,
 									   unsigned int &num_packet)
 {
-  int				lenght_read;
+  char				force_byte;
 
-  lenght_read = 0;
-  lenght_read += Serializer<unsigned int>::unserialize(buffer + lenght_read,
-						       lenght - lenght_read, id_entity);
-  lenght_read += Serializer<unsigned int>::unserialize(buffer + lenght_read,
-						       lenght - lenght_read, num_packet);
-  ++lenght_read;	// force byte -- may change
-  return (lenght_read);
+  buffer >> id_entity;
+  buffer >> num_packet;
+  buffer >> force_byte;
 }
 
 bool				NetworkReceiveUpdateSystem::remoteEntityExists(unsigned int id)
