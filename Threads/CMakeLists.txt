@@ -17,7 +17,6 @@ SET(HEADERS
   )
 
 SET(SOURCES
-  main.cpp
   ThreadException.cpp
   UMutex.cpp
   WMutex.cpp
