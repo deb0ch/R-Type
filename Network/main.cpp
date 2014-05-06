@@ -14,8 +14,8 @@
 #include "Select.hh"
 #include "Socket.hh"
 
-#define IPADRESS_CLIENT "10.41.177.15"
-#define IPADRESS_SERVER "10.41.179.57"
+#define IPADRESS_CLIENT "10.41.177.3"
+#define IPADRESS_SERVER "10.41.178.237"
 #define PORT 6667
 
 void testclient()
