@@ -6,6 +6,7 @@
 # include <iostream>
 # include <map>
 # include "ILibraryLoader.hh"
+# include "LibLoaderException.hh"
 
 # pragma comment(lib, "ws2_32.lib")
 
@@ -66,9 +67,7 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	else
 		Handle = it->second;
 	if (Handle == NULL || Handle == INVALID_HANDLE_VALUE)
-	{
-		// Excpetion
-	}
+	  throw LibLoaderException("Cant load " + entry);
 	instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
 	if (instancier)
 	{

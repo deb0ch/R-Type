@@ -5,7 +5,7 @@
 #elif __linux__
 # define _BSD_SOURCE
 #define EXTENSION ".so"
-#define PATHLIB "../Plugin/lib"
+#define PATHLIB "../plugin/lib"
 #include <unistd.h>
 #include "ULibraryLoader.hpp"
 #endif

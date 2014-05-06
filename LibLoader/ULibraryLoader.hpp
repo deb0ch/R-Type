@@ -6,6 +6,7 @@
 #include <iostream>
 #include <map>
 #include "ILibraryLoader.hh"
+#include "LibLoaderException.hh"
 
 template <typename T>
 class LibraryLoader : public ILibraryLoader<T>
@@ -35,10 +36,11 @@ template <typename T>
 void		LibraryLoader<T>::clearLibraries()
 {
   auto it = this->libs.begin();
+  int		r;
 
   for (it = this->libs.begin(); it != this->libs.end(); ++it)
-    if (dlclose(it->second))
-      throw(1);
+    if ((r = dlclose(it->second)))
+      std::cerr << LibLoaderException(r).what() << std::endl;
   this->libs.clear();
 }
 
@@ -46,11 +48,12 @@ template <typename T>
 void		LibraryLoader<T>::clearLibrary(const std::string &path)
 {
   auto it = this->libs.find(path);
+  int		r;
 
   if (it == this->libs.end())
     return ;
-  if (dlclose(it->second))
-    throw(1);
+  if ((r = dlclose(it->second)))
+    std::cerr << LibLoaderException(r).what() << std::endl;
   this->libs.erase(it);
 }
 
@@ -71,7 +74,7 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
   else
     Handle = it->second;
   if (Handle == NULL)
-    throw (1);
+    throw LibLoaderException("Cant load " + entry);
   instancier = reinterpret_cast<T *(*)()>(dlsym(Handle, entry.c_str()));
   if (instancier)
     res = instancier();

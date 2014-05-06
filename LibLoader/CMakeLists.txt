@@ -5,11 +5,13 @@ PROJECT(LibLoader)
 SET(HEADER_FILES
 	ILibraryLoader.hh
 	ULibraryLoader.hpp
-	WLibraryLoader.hpp)
-  
-SET(SOURCES
-	main.cpp)
+	WLibraryLoader.hpp
+	LibLoaderException.hh)
 
+SET(SOURCES
+        main.cpp
+        LibLoaderException.cpp)
+      
 SET (LIB_TYPE STATIC)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/test)
