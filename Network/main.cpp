@@ -37,21 +37,19 @@ void testserver()
 {
 	ISocketTCP *sock = new SocketTCP();
 	ISocketTCP *client;
+	std::string string;
 	char sendmsg[] = "i am the server !";
-	char toto[42];
 
 	sock->init();
 	sock->bind(PORT, IPADRESS_SERVER);
 	sock->listen(10);
 	client = NULL;
 	client = sock->accept();
-	memset(toto, 0, 42);
-	std::size_t res = 0;
-	std::string line;
 	NetworkBuffer test;
-	while (sock->receive(test))
+	while (client->receive(test))
 	{
-		std::cout << test.getBuffer() << std::endl;
+		test >> string;
+		std::cout << " send " << string << std::endl;
 	}
 }
 
@@ -59,16 +57,18 @@ void testrecept()
 {
 	ISocketUDP *sock = new SocketUDP();
 	std::string ipaddress;
+	std::string string;
 	int port;
 	int res;
 	NetworkBuffer test;
 
 	sock->init();
-	sock->bind(PORT, IPADRESS_CLIENT);
+	sock->bind(PORT, IPADRESS_SERVER);
 	res = 1;
 	while (sock->receive(test, ipaddress, port))
 	{
-		std::cout << ipaddress << ":" << port << " send " << test.getBuffer() << std::endl;
+		test >> string;
+		std::cout << ipaddress << ":" << port << " send " << string << std::endl;
 	}
 }
 
@@ -109,11 +109,11 @@ void	selecttest()
 int	main()
 {
 	// TCP
-	//testclient();
+	testclient();
 	//testserver();
 
 	// UDP
-	testrecept();
+	//testrecept();
 	//testsend();
 
 	// SELECT
