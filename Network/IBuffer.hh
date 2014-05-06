@@ -24,6 +24,7 @@ public:
 
   virtual bool end() const = 0;
   virtual void rewind() = 0;
+  virtual void reset() = 0;
 
 protected:
 

@@ -21,6 +21,12 @@ void		NetworkBuffer::rewind()
   this->_current_pos = 0;
 }
 
+void		NetworkBuffer::reset()
+{
+  this->_current_pos = 0;
+  this->_buffer_size = 0;
+}
+
 IBuffer		&NetworkBuffer::operator<<(const int &value)
 {
   this->serialize(value);
