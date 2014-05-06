@@ -73,7 +73,7 @@ void SocketUDP::bind(int port, const std::string &address)
 	}
 }
 
-int	SocketUDP::send(const void* data, const size_t size, const std::string & address, const int port)
+int	SocketUDP::send(const IBuffer &data, const std::string & address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
 		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
@@ -89,8 +89,7 @@ int	SocketUDP::send(const void* data, const size_t size, const std::string & add
 	dest.sin_family = AF_INET;
 	dest.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
 
-	res = sendto(this->socket, reinterpret_cast<const char *>(data), size, 0,
-		reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
+	res = sendto(this->socket, data.getBuffer(), data.getLength(), 0, reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
 	if (res == SOCKET_ERROR)
 	{
 		throw NetworkException(NetworkException::UDP, WSAGetLastError(),
@@ -99,7 +98,7 @@ int	SocketUDP::send(const void* data, const size_t size, const std::string & add
 	return (res);
 }
 
-int	SocketUDP::send(const void* data, const size_t size, const int address, const int port)
+int	SocketUDP::send(const IBuffer &data, const int address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
 		throw NetworkException(NetworkException::UDP, MSG_INVALID_SOCKET,
@@ -113,7 +112,7 @@ int	SocketUDP::send(const void* data, const size_t size, const int address, cons
 	dest.sin_family = AF_INET;
 	dest.sin_addr.s_addr = ::htonl(address);
 
-	res = sendto(this->socket, reinterpret_cast<const char *>(data), size, 0,
+	res = sendto(this->socket, data.getBuffer(), data.getLength(), 0,
 		reinterpret_cast<struct sockaddr *>(&dest), len_sockint);
 	if (res == SOCKET_ERROR)
 	{
@@ -123,8 +122,7 @@ int	SocketUDP::send(const void* data, const size_t size, const int address, cons
 	return (res);
 }
 
-int	SocketUDP::receive(void* data, const size_t size,
-	std::string& address, int& port)
+int	SocketUDP::receive(IBuffer &data, std::string& address, int& port)
 {
 
 	if (this->socket == INVALID_SOCKET)
@@ -134,8 +132,7 @@ int	SocketUDP::receive(void* data, const size_t size,
 	struct sockaddr_in src;
 	int len_sockint = sizeof(src);
 
-	int res = ::recvfrom(this->socket, reinterpret_cast<char *>(data),
-		size, 0, reinterpret_cast<struct sockaddr *>(&src), &len_sockint);
+	int res = ::recvfrom(this->socket, data.getBuffer(), data.getMaxSize(), 0, reinterpret_cast<struct sockaddr *>(&src), &len_sockint);
 	address = inet_ntoa(src.sin_addr);
 	port = ntohs(src.sin_port);
 	if (res == SOCKET_ERROR)
@@ -143,6 +140,7 @@ int	SocketUDP::receive(void* data, const size_t size,
 		throw NetworkException(NetworkException::UDP, WSAGetLastError(),
 			NetworkException::S_ERROR);
 	}
+	data.setLength(res);
 	return (res);
 }
 

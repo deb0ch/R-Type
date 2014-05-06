@@ -10,6 +10,7 @@
 #include <Windows.h>
 #endif
 
+#include "NetworkBuffer.hh"
 #include "Select.hh"
 #include "Socket.hh"
 
@@ -20,17 +21,15 @@
 void testclient()
 {
 	ISocketTCP *sock = new SocketTCP();
+	NetworkBuffer test;
 	char sendmsg[] = "i am the client !";
 	sock->init();
 	sock->connect(IPADRESS_CLIENT, PORT);
-	char toto[42];
-	sock->send(sendmsg, strlen(sendmsg));
-	std::cout << "i send to the server [" << sendmsg << "]" << std::endl;
-	memset(toto, 0, 42);
-	std::size_t res = sock->receive(toto, 42);
-	if (res > 0)
+	std::string line;
+	while (std::getline(std::cin, line))
 	{
-		std::cout << "server send to me [" << toto << "]" << std::endl;
+		test << line;
+		sock->send(test);
 	}
 }
 
@@ -48,32 +47,28 @@ void testserver()
 	client = sock->accept();
 	memset(toto, 0, 42);
 	std::size_t res = 0;
-	while ((res = client->receive(toto, 42)))
+	std::string line;
+	NetworkBuffer test;
+	while (sock->receive(test))
 	{
-		if (res > 0)
-		{
-			std::cout << "server recieve [" << toto << "]" << std::endl;
-			//sock->send(sendmsg, strlen(sendmsg));
-		}
+		std::cout << test.getBuffer() << std::endl;
 	}
 }
 
 void testrecept()
 {
 	ISocketUDP *sock = new SocketUDP();
-	char toto[42];
 	std::string ipaddress;
 	int port;
 	int res;
+	NetworkBuffer test;
 
 	sock->init();
 	sock->bind(PORT, IPADRESS_CLIENT);
 	res = 1;
-	while (res != 0)
+	while (sock->receive(test, ipaddress, port))
 	{
-		memset(toto, 0, 42);
-		res = sock->receive(toto, 42, ipaddress, port);
-		std::cout << ipaddress << " send " << toto << std::endl;
+		std::cout << ipaddress << ":" << port << " send " << test.getBuffer() << std::endl;
 	}
 }
 
@@ -82,12 +77,14 @@ void testsend()
 	ISocketUDP *sock = new SocketUDP();
 	std::string line;
 	int res;
+	NetworkBuffer test;
 
 	sock->init();
 	res = 1;
 	while (std::getline(std::cin, line))
 	{
-		res = sock->send(line.c_str(), 42, IPADRESS_CLIENT, PORT);
+		test << line;
+		res = sock->send(test, IPADRESS_CLIENT, PORT);
 	}
 }
 
@@ -116,11 +113,11 @@ int	main()
 	//testserver();
 
 	// UDP
-	//testrecept();
+	testrecept();
 	//testsend();
 
 	// SELECT
-	selecttest();
+	//selecttest();
 #ifdef __linux__
 	sleep(4);
 #elif _WIN32

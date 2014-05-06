@@ -45,17 +45,18 @@ int SocketTCP::send(const IBuffer &data)
 	return (res);
 }
 
-int SocketTCP::receive(void* data, const std::size_t size)
+int SocketTCP::receive(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
 		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
-	int received = ::recv(this->socket, reinterpret_cast<char *>(data), size, 0);
+	int received = ::recv(this->socket, data.getBuffer(), data.getMaxSize(), 0);
 	if (received == SOCKET_ERROR)
 	{
 		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
 			NetworkException::S_ERROR);
 	}
+	data.setLength(received);
 	return (received);
 }
 

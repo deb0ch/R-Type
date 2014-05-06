@@ -21,13 +21,14 @@ SET(SOURCES
   NetworkException.cpp
   Select.cpp
   NetworkBuffer.cpp
-  )
+  main.cpp)
 
-SET (LIB_TYPE STATIC)
+#SET (LIB_TYPE STATIC)
 
 FILE(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
 
-ADD_LIBRARY(Networklib ${LIB_TYPE} ${SOURCES})
+ADD_EXECUTABLE(Networklib ${SOURCES} ${HEADER_FILES})
+#ADD_LIBRARY(Networklib ${LIB_TYPE} ${SOURCES})
 
 if (UNIX)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
