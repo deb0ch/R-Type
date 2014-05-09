@@ -9,4 +9,7 @@
 	#include "WMutex.hh"
 #endif
 
+#include "ScopedMutex.hh"
+#include "ThreadPool.hh"
+
 #endif /* !THREADS_H_ */

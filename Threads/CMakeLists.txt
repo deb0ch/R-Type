@@ -14,19 +14,25 @@ SET(HEADERS
   UThread.hpp
   WMutex.hh
   WThread.hpp
-  )
+  ThreadPool.hh
+  ScopedMutex.hh
+  Threads.hh
+  TasksFifo.hpp)
 
 SET(SOURCES
   ThreadException.cpp
   UMutex.cpp
   WMutex.cpp
-  )
+  ScopedMutex.cpp
+  ThreadPool.cpp
+  main.cpp)
 
 SET (LIB_TYPE STATIC)
 
-FILE(GLOB_RECURSE ${SOURCES} ${HEADERS})
+#FILE(GLOB_RECURSE ${SOURCES} ${HEADERS})
 	
-ADD_LIBRARY(Threadlib ${LIB_TYPE} ${HEADERS} ${SOURCES})
+#ADD_LIBRARY(Threadlib ${LIB_TYPE} ${HEADERS} ${SOURCES})
+ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
