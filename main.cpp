@@ -57,7 +57,11 @@ int		main()
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
-				 ->addAction("RIGHT")));
+				 ->addAction("RIGHT")
+				 ->addAction("DOWN")
+				 ->addAction("LEFT")
+				 )
+		  );
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
@@ -68,7 +72,14 @@ int		main()
 		  ->addComponent(new NetworkUpdateComponent())
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
-		  ->addComponent(new MovementSpeedComponent(2)));
+		  ->addComponent(new MovementSpeedComponent(2))
+		  ->addComponent((new ActionComponent())
+				 ->addAction("UP")
+				 ->addAction("RIGHT")
+				 ->addAction("DOWN")
+				 ->addAction("LEFT")
+				 )
+		  );
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))
@@ -115,7 +126,6 @@ int		main()
   for (;;)
     {
       world.process(0.16f);
-      std::cout << std::endl;
     }
   world.stop();
 

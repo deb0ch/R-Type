@@ -1,13 +1,14 @@
 #include "SFMLInputComponent.hh"
-
+#include	<iostream>
 SFMLInputComponent::SFMLInputComponent()
   : AComponent("SFMLInputComponent")
 {
-  this->_inputs[sf::Keyboard::Left] = "LEFT";
-  this->_inputs[sf::Keyboard::Right] = "RIGHT";
-  this->_inputs[sf::Keyboard::Down] = "DOWN";
-  this->_inputs[sf::Keyboard::Up] = "UP";
-  this->_inputs[sf::Keyboard::Space] = "FIRE";
+  this->_inputs[sf::Keyboard::Key::Left] = "LEFT";
+  this->_inputs[sf::Keyboard::Key::Right] = "RIGHT";
+  this->_inputs[sf::Keyboard::Key::Down] = "DOWN";
+  this->_inputs[sf::Keyboard::Key::Up] = "UP";
+  this->_inputs[sf::Keyboard::Key::Space] = "UP";
+  this->_inputs[sf::Keyboard::Key::U] = "UP";
 }
 
 SFMLInputComponent::~SFMLInputComponent()

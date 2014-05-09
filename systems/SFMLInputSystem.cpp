@@ -17,11 +17,9 @@ void	SFMLInputSystem::SFMLKeyEventListener(IEvent * ievent)
 {
   SFMLKeyEvent*		event = dynamic_cast<SFMLKeyEvent*>(ievent);
 
-std::cout << "fuck" << std::endl;
   if (!event)
     return ;
 
-std::cout << "hey" << std::endl;
   this->_inputs[event->_key] = event->_active;
 }
 

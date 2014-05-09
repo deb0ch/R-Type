@@ -30,12 +30,10 @@ void	SFMLEventSystem::beforeProcess()
       switch (event.type)
 	{
 	case sf::Event::KeyPressed:
-	  std::cout << "pushed" << std::endl;
 	  this->_world->sendEvent(new SFMLKeyEvent(event.key.code, true));
 	  break;
 
 	case sf::Event::KeyReleased:
-	  std::cout << "released" << std::endl;
 	  this->_world->sendEvent(new SFMLKeyEvent(event.key.code, false));
 	  break;
 
