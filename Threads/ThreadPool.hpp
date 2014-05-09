@@ -25,6 +25,12 @@ public :
 		}
 	}
 
+	void AddThreadToPool(Any arg, T* obj, void (T::*fct)(Any &))
+	{
+		this->pool.push_back(new Thread<T>());
+		this->pool.back()->start(arg, obj, fct);
+	}
+
 	void StartPooling(Any arg, T* obj, void (T::*fct)(Any &))
 	{
 		for (unsigned int i = 0; i < this->pool.size(); i++)
