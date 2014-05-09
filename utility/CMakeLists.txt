@@ -12,6 +12,7 @@ SET(HEADER_C
   ${HEADER_S}
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/INetworkRelay.hh
   PARENT_SCOPE
   )
@@ -20,5 +21,6 @@ SET(SOURCE_C
   ${SOURCE_C}
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.cpp
   PARENT_SCOPE
   )

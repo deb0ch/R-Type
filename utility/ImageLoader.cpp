@@ -1,12 +1,11 @@
 #include "Unistd.hh"
-#include "RTException.hh"
+#include "ImageLoaderException.hh"
 #include "ImageLoader.hh"
 
 static std::string NAME_CLASS = "RT::ImageLoader";
 
 ImageLoader::ImageLoader() {
   this->_images = std::map<std::string, std::pair<sf::Texture *, ImageLoader::InfImg> >();
-  RTException::addClass(NAME_CLASS, "Execption ImageLoader");
 }
 
 ImageLoader::~ImageLoader() {
@@ -24,11 +23,11 @@ void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite n
     sf::Texture	*image = new sf::Texture();
 
     if (access(fileImage.c_str(), R_OK) == -1)
-      throw RTException(NAME_CLASS, errno, RTException::S_ERROR);
+      throw ImageLoaderException(errno);
     if (!image->loadFromFile(fileImage))
-      throw RTException(NAME_CLASS, "loadFromFile failed", RTException::S_ERROR);
+      throw ImageLoaderException("loadFromFile failed");
     if (nbSprite.nbSprintX == 0 || nbSprite.nbSprintY == 0)
-      throw RTException(NAME_CLASS, "Invalide ImageLoader::NbSprite", RTException::S_ERROR);
+      throw ImageLoaderException("Invalide ImageLoader::NbSprite");
     sf::Vector2u v(image->getSize().x / nbSprite.nbSprintX, image->getSize().y / nbSprite.nbSprintY);
     ImageLoader::InfImg infoImg;
     infoImg.nbSprite = nbSprite;
@@ -45,7 +44,7 @@ const std::pair<sf::Texture *, ImageLoader::InfImg> &ImageLoader::getPair(const 
   if (it != this->_images.end()) {
     return ((it->second));
   }
-  throw RTException(NAME_CLASS, "Invalide ImageLoader::NbSprite", RTException::S_WARNING);
+  throw ImageLoaderException("Invalide ImageLoader::NbSprite");
 }
 
 sf::Sprite *ImageLoader::createSprite(const std::string &fileImage,
@@ -53,11 +52,7 @@ sf::Sprite *ImageLoader::createSprite(const std::string &fileImage,
   sf::Sprite *sprite = new sf::Sprite();
   std::pair<sf::Texture *, ImageLoader::InfImg> textureInfo;
 
-  try {
-    textureInfo = this->getPair(fileImage);
-  } catch (RTException e) {
-    throw RTException(NAME_CLASS, e.what(), RTException::S_ERROR);
-  }
+  textureInfo = this->getPair(fileImage);
   sprite->setTexture(*textureInfo.first);
   int x = (numSprite % textureInfo.second.nbSprite.nbSprintX) * textureInfo.second.rect.x;
   int y = (numSprite / textureInfo.second.nbSprite.nbSprintX) * textureInfo.second.rect.y;
