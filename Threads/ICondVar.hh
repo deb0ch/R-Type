@@ -1,7 +1,7 @@
 #ifndef		ICONDVAR_H_
 # define	ICONDVAR_H_
 
-#include "Mutex.hh"
+#include "Threads.hh"
 
 class ICondVar
 {
@@ -11,6 +11,5 @@ public:
   virtual void signal(void) = 0;
   virtual void broadcast(void) = 0;
 };
-
 
 #endif /* !ICONDVAR_H_ */

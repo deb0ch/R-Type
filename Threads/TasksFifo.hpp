@@ -8,8 +8,8 @@ private :
 	TasksFifo() = delete;
 	TasksFifo(const TasksFifo& other) = delete;
 	TasksFifo &operator=(const TasksFifo& other) = delete;
-
 public :
+
 };
 
 #endif /* !TASKSFIFO_H_ */

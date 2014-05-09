@@ -20,7 +20,8 @@ SET(HEADERS
   Threads.hh
   TasksFifo.hpp
   ICondVar.hh
-  UCondVar.hh)
+  UCondVar.hh
+  WCondVar.hh)
 
 SET(SOURCES
   ThreadException.cpp
@@ -29,6 +30,7 @@ SET(SOURCES
   WMutex.cpp
   ScopedMutex.cpp
   UCondVar.cpp
+  WCondVar.cpp
   main.cpp)
 
 SET (LIB_TYPE STATIC)
