@@ -17,11 +17,9 @@ public:
 		_container.obj = obj;
 		_container.fct = fct;
 		_container.arg = arg;
-		if ((_threadHandle = CreateThread(NULL, 0,
-			reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
-			&_container, 0, &_thread))
-			== NULL)
-			throw ThreadException(ThreadException::THREAD, GetLastError(), ThreadException::S_ERROR);
+		if ((_threadHandle = CreateThread(NULL, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
+			&_container, 0, &_thread)) == NULL)
+				throw ThreadException(GetLastError());
 		_status = RUNNING;
 	}
 
@@ -34,7 +32,7 @@ public:
 	virtual void						wait()
 	{
 		if ((_ret = WaitForSingleObject(_threadHandle, INFINITE)) == WAIT_FAILED)
-			throw ThreadException(ThreadException::THREAD, GetLastError(), ThreadException::S_ERROR);
+			throw ThreadException(GetLastError());
 		_status = IThread::DEAD;
 	}
 
@@ -45,12 +43,12 @@ public:
 
 	// Coplien
 public:
-										Thread() { _status = IThread::UNSTARTED; }
+	Thread() { _status = IThread::UNSTARTED; }
 	virtual								~Thread() {}
 
 	// Private
 private:
-										Thread(const Thread &) = delete;
+	Thread(const Thread &) = delete;
 	Thread &							operator=(const Thread &) = delete;
 
 	// Attributes

@@ -27,7 +27,7 @@ void	ClassTest::TestFunction2(Any &arg)
 	std::ostringstream strstream;
 	
 	strstream << *arg.getValue<int>();
-	for (size_t i = 0; i < 1000; i++)
+	for (size_t i = 0; i < 10; i++)
 	{
 		std::cout << "thread [" << strstream.str() << "] ";
 		for (unsigned int i = 0; i < hey.length(); ++i)

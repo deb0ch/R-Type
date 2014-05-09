@@ -18,7 +18,9 @@ SET(HEADERS
   ThreadPool.hpp
   ScopedMutex.hh
   Threads.hh
-  TasksFifo.hpp)
+  TasksFifo.hpp
+  ICondVar.hh
+  UCondVar.hh)
 
 SET(SOURCES
   ThreadException.cpp
@@ -26,6 +28,7 @@ SET(SOURCES
   UMutex.cpp
   WMutex.cpp
   ScopedMutex.cpp
+  UCondVar.cpp
   main.cpp)
 
 SET (LIB_TYPE STATIC)
