@@ -15,7 +15,7 @@ SET(HEADERS
   UThread.hpp
   WMutex.hh
   WThread.hpp
-  ThreadPool.hh
+  ThreadPool.hpp
   ScopedMutex.hh
   Threads.hh
   TasksFifo.hpp)
@@ -26,7 +26,6 @@ SET(SOURCES
   UMutex.cpp
   WMutex.cpp
   ScopedMutex.cpp
-  ThreadPool.cpp
   main.cpp)
 
 SET (LIB_TYPE STATIC)

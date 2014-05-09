@@ -26,7 +26,7 @@ void	ClassTest::TestFunction2(Any &arg)
 	std::string hey = "abcdefghijkabcdefghijkabcdefghijkabcdefghijk\n";
 	for (size_t i = 0; i < 1000; i++)
 	{
-		for (int i = 0; i < hey.length(); ++i)
+		for (unsigned int i = 0; i < hey.length(); ++i)
 		{
 			putchar(hey[i]);
 		}
@@ -44,7 +44,7 @@ void	ClassTest::TestFunction(Any & arg)
 	g_mutex.lock();
 	for (size_t i = 0; i < 1000; i++)
 	{
-		for (int i = 0; i < hey.length(); ++i)
+		for (unsigned int i = 0; i < hey.length(); ++i)
 		{
 			putchar(hey[i]);
 		}
@@ -54,8 +54,7 @@ void	ClassTest::TestFunction(Any & arg)
 
 int	main()
 {
-	ClassTest obj2Merde;
-	ClassTest obj2Merdebis;
+	ClassTest objtest;
 	ThreadPool<ClassTest> *pool = new ThreadPool<ClassTest>(4);
 	Thread<ClassTest>	thread1;
 	Thread<ClassTest>	thread2;
@@ -64,10 +63,10 @@ int	main()
 	int		toto1 = 42;
 	int		toto2 = 84;
 
-	thread1.start(Any(&toto1), &obj2Merde, &ClassTest::TestFunction2);
-	thread2.start(Any(&toto2), &obj2Merdebis, &ClassTest::TestFunction2);
-	thread3.start(Any(&toto1), &obj2Merdebis, &ClassTest::TestFunction2);
-	thread4.start(Any(&toto2), &obj2Merdebis, &ClassTest::TestFunction2);
+	thread1.start(Any(&toto1), &objtest, &ClassTest::TestFunction2);
+	thread2.start(Any(&toto2), &objtest, &ClassTest::TestFunction2);
+	thread3.start(Any(&toto1), &objtest, &ClassTest::TestFunction2);
+	thread4.start(Any(&toto2), &objtest, &ClassTest::TestFunction2);
 	thread1.wait();
 	thread2.wait();
 	thread3.wait();
