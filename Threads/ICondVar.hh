@@ -12,5 +12,4 @@ public:
   virtual void broadcast(void) = 0;
 };
 
-
 #endif /* !ICONDVAR_H_ */

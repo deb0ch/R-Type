@@ -10,9 +10,9 @@
 class Mutex : public IMutex
 {
 public:
-	virtual void		lock();
-	virtual void		trylock();
-	virtual void		unlock();
+	virtual void	lock();
+	virtual void	trylock();
+	virtual void	unlock();
 	virtual STATUS	status() const;
 
 public:
