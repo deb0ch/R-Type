@@ -3,6 +3,7 @@ SET(HEADERS
   AEvent.hh
   ASystem.hh
   Entity.hh
+  Factory.hpp
   IComponent.hh
   IEvent.hh
   ISystem.hh
