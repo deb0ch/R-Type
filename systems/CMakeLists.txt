@@ -20,6 +20,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntityParserSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_C
@@ -34,4 +35,5 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntityParserSystem.cpp
 	PARENT_SCOPE)
