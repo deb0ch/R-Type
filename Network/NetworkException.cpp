@@ -1,3 +1,7 @@
+#ifdef __linux__
+	#define _XOPEN_SOURCE 601
+#endif
+
 #include <sstream>
 #include <cstring>
 #include "NetworkException.hh"
@@ -17,17 +21,27 @@ void NetworkException::addError(const int error)
 #endif
 }
 
-NetworkException::NetworkException(const std::string &info, const int error)
-{
-  this->_info = info;
+/* Public Constructor */
+NetworkException::NetworkException(const int error) {
+  this->_info = "NetworkException : ";
   this->addError(error);
 }
-
-NetworkException::NetworkException(const std::string &info)
-{
+NetworkException::NetworkException(const std::string &info) {
+  this->_info = "NetworkException : ";
   this->_info = info;
 }
 
+/* Protected Constructor */
+NetworkException::NetworkException(const std::string &prefix, const int error) {
+  this->_info = prefix;
+  this->addError(error);
+}
+NetworkException::NetworkException(const std::string &prefix, const std::string &error) {
+  this->_info = prefix;
+  this->_info += error;
+}
+
+/* Methodes */
 const char*   NetworkException::what() const throw() {
   return (this->_info.c_str());
 }
