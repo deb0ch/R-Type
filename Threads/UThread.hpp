@@ -18,7 +18,7 @@ public:
 			       reinterpret_cast<void* (*)(void*)>(_threadEntry),
 			       (void*)&_container))
 	!= 0)
-      throw ThreadException(ThreadException::THREAD, _ret, ThreadException::S_ERROR);
+      throw ThreadException(_ret);
 	_status = IThread<T>::RUNNING;
   }
 
@@ -31,7 +31,7 @@ public:
   virtual void	wait()
   {
     if ((_ret = pthread_join(_thread, NULL)) != 0)
-      throw ThreadException(ThreadException::THREAD, _ret, ThreadException::S_ERROR);
+      throw ThreadException(_ret);
     _status = IThread<T>::DEAD;
   }
 

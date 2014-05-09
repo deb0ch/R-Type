@@ -1,5 +1,5 @@
-#ifndef THREADEXCEPTION_H_
-# define THREADEXCEPTION_H_
+#ifndef MUTEXEXCEPTION_H_
+# define MUTEXEXCEPTION_H_
 
 # include <exception>
 # include <iostream>
@@ -11,12 +11,12 @@
 #  include <cerrno>
 # endif
 
-class ThreadException : public std::exception
+class MutexException : public std::exception
 {
 public:
-  ThreadException(const int error);
-  ThreadException(const std::string &error);
-  ~ThreadException() throw() {}
+  MutexException(const int error);
+  MutexException(const std::string &error);
+  ~MutexException() throw() {}
 
   const char* what() const throw();
 
@@ -26,4 +26,5 @@ private:
 
 };
 
-#endif /* !THREADEXCEPTION_H_ */
+
+#endif /* !MUTEXEXCEPTION_H_ */

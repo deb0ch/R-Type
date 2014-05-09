@@ -1,7 +1,7 @@
 #ifndef UMUTEX_H_
 # define UMUTEX_H_
 
-# include "ThreadException.hh"
+# include "MutexException.hh"
 # include "IMutex.hh"
 
 # include <pthread.h>

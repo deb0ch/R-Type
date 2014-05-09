@@ -10,6 +10,7 @@ SET(HEADERS
   IMutex.hh
   IThread.hpp
   ThreadException.hh
+  MutexException.hh
   UMutex.hh
   UThread.hpp
   WMutex.hh
@@ -21,6 +22,7 @@ SET(HEADERS
 
 SET(SOURCES
   ThreadException.cpp
+  MutexException.cpp
   UMutex.cpp
   WMutex.cpp
   ScopedMutex.cpp
