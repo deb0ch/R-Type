@@ -39,9 +39,9 @@ int		main()
   world.addSystem(new MoveSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
-  world.addSystem(new PlayerMovementSystem());
-  world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLEventSystem());
+  world.addSystem(new SFMLInputSystem());
+  world.addSystem(new PlayerMovementSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 

@@ -1,4 +1,3 @@
-#include	<iostream>
 #include	<map>
 
 #include	"SFMLInputSystem.hh"
@@ -38,9 +37,15 @@ void	SFMLInputSystem::processEntity(Entity *e, const float)
 {
   SFMLInputComponent	*inputComp;
   ActionComponent	*actionComp;
+  bool			tmp;
 
   inputComp = e->getComponent<SFMLInputComponent>("SFMLInputComponent");
   actionComp = e->getComponent<ActionComponent>("ActionComponent");
   for (auto it = inputComp->getInputs().begin() ; it != inputComp->getInputs().end() ; ++it)
-    actionComp->setAction(it->second, this->_inputs[it->first]);
+    {
+      tmp = false;
+      for (auto it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
+	tmp |= this->_inputs[*it2];
+      actionComp->setAction(it->first, tmp);
+    }
 }

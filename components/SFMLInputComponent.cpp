@@ -1,33 +1,24 @@
-#include "SFMLInputComponent.hh"
-#include	<iostream>
+#include	"SFMLInputComponent.hh"
+
 SFMLInputComponent::SFMLInputComponent()
   : AComponent("SFMLInputComponent")
 {
-  this->_inputs[sf::Keyboard::Key::Left] = "LEFT";
-  this->_inputs[sf::Keyboard::Key::Right] = "RIGHT";
-  this->_inputs[sf::Keyboard::Key::Down] = "DOWN";
-  this->_inputs[sf::Keyboard::Key::Up] = "UP";
-  this->_inputs[sf::Keyboard::Key::Space] = "UP";
-  this->_inputs[sf::Keyboard::Key::U] = "UP";
+  this->_inputs["UP"]		= {sf::Keyboard::Key::Up, sf::Keyboard::Key::Z};
+  this->_inputs["LEFT"]		= {sf::Keyboard::Key::Left, sf::Keyboard::Key::Q};
+  this->_inputs["DOWN"]		= {sf::Keyboard::Key::Down, sf::Keyboard::Key::S};
+  this->_inputs["RIGHT"]	= {sf::Keyboard::Key::Right, sf::Keyboard::Key::D};
+  this->_inputs["FIRE"]		= {sf::Keyboard::Key::Space};
 }
 
 SFMLInputComponent::~SFMLInputComponent()
 {}
 
-const std::map<sf::Keyboard::Key, std::string>&	SFMLInputComponent::getInputs() const
+const std::map<std::string, std::vector<sf::Keyboard::Key> >&	SFMLInputComponent::getInputs() const
 {
   return (this->_inputs);
 }
 
-const std::string&	SFMLInputComponent::getAction(const sf::Keyboard::Key key) const
+void	SFMLInputComponent::addInput(const std::string &action, const sf::Keyboard::Key &key)
 {
-  auto it = this->_inputs.find(key);
-  if (it != this->_inputs.end())
-    return (it->second);
-  return ("");
-}
-
-void	SFMLInputComponent::setAction(const sf::Keyboard::Key key, const std::string &action)
-{
-  this->_inputs[key] = action;
+  this->_inputs[action].push_back(key);
 }

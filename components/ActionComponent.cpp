@@ -1,4 +1,4 @@
-#include "ActionComponent.hh"
+#include	"ActionComponent.hh"
 
 ActionComponent::ActionComponent()
   : AComponent("ActionComponent")

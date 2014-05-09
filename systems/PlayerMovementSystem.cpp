@@ -5,10 +5,10 @@
 #include "MovementSpeedComponent.hh"
 
 const std::map<std::string, std::pair<int, int> > PlayerMovementSystem::KeyMovement = {
+  {"UP",	{0, -1}},
   {"LEFT",	{-1, 0}},
-  {"RIGHT",	{1, 0}},
   {"DOWN",	{0, 1}},
-  {"UP",	{0, -1}}
+  {"RIGHT",	{1, 0}}
 };
 
 PlayerMovementSystem::PlayerMovementSystem() : ASystem("PlayerMovementSystem")
@@ -33,12 +33,13 @@ void PlayerMovementSystem::processEntity(Entity *entity, const float)
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   speed = entity->getComponent<Speed2DComponent>("Speed2DComponent");
+  if ((movement = entity->getComponent<MovementSpeedComponent>("MovementSpeedComponent")))
+    mv_speed = movement->getSpeed();
+  else
+    mv_speed = 1.f;
+
   for (auto it = KeyMovement.begin(); it != KeyMovement.end(); ++it)
     {
-      if ((movement = entity->getComponent<MovementSpeedComponent>("MovementSpeedComponent")))
-	mv_speed = movement->getSpeed();
-      else
-	mv_speed = 1.f;
       if (action->isActive(it->first))
 	{
 	  speed->addVX(it->second.first * mv_speed);
