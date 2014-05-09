@@ -4,7 +4,7 @@
 #include "NetworkException.hh"
 #include "USocketTCP.hh"
 
-static const int INVALIDE_SOCKET = -1;
+static const int INVALID_SOCKET = -1;
 
 SocketTCP::SocketTCP() {
   this->_isBlocking = true;
@@ -19,7 +19,7 @@ void SocketTCP::init() {
   int reuseAddr = 1;
 
   this->_socket = ::socket(AF_INET, SOCK_STREAM, 0);
-  if (this->_socket == INVALIDE_SOCKET)
+  if (this->_socket == INVALID_SOCKET)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
   setsockopt(this->_socket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
 }
@@ -31,8 +31,8 @@ const int		SocketTCP::getHandle() const {
 void SocketTCP::setBlocking(bool const blocking) {
   int status;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   status = ::fcntl(this->_socket, F_GETFL);
   if (blocking)
@@ -48,8 +48,8 @@ const bool SocketTCP::isBlocking() const {
 
 void		SocketTCP::listen(const std::size_t block)
 {
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   if (::listen(this->_socket, block) < 0)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_WARNING);
@@ -59,8 +59,8 @@ void		SocketTCP::bind(int port, const std::string & address) {
   struct hostent*    hostinfo = NULL;
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   if (address == "")
     sin.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -82,13 +82,13 @@ ISocketTCP		*SocketTCP::accept() {
   socklen_t		lencs = sizeof(cs);
   int			socket;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   socket = ::accept(this->_socket, reinterpret_cast<struct sockaddr*>(&cs), &lencs);
-  if (socket == INVALIDE_SOCKET)
+  if (socket == INVALID_SOCKET)
     {
-      if (this->_socket == INVALIDE_SOCKET)
+      if (this->_socket == INVALID_SOCKET)
 	throw NetworkException(NetworkException::TCP, errno,
 			       NetworkException::S_ERROR);
     }
@@ -99,8 +99,8 @@ void SocketTCP::connect(const std::string &address, const int port) {
   struct hostent*    hostinfo = NULL;
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   if ((hostinfo = ::gethostbyname(address.c_str())) == NULL)
     throw NetworkException(NetworkException::TCP, "Gethostbyname as failed",
@@ -116,8 +116,8 @@ void SocketTCP::connect(const std::string &address, const int port) {
 void SocketTCP::connect(const int address, const int port) {
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
   sin.sin_addr.s_addr = htonl(address);
   sin.sin_port = htons(port);
@@ -127,25 +127,26 @@ void SocketTCP::connect(const int address, const int port) {
     throw NetworkException(NetworkException::TCP, errno,NetworkException::S_ERROR);
 }
 
-int SocketTCP::send(const void* data, const std::size_t size) {
+int SocketTCP::send(const IBuffer &buffer) {
   int ret;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
-  if ((ret = ::send(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
+  if ((ret = ::send(this->_socket, buffer.getBuffer(), buffer.getLength(), MSG_NOSIGNAL)) == -1)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
   return (ret);
 }
 
-int SocketTCP::receive(void* data, const std::size_t size) {
+int SocketTCP::receive(IBuffer &buffer) {
   int ret;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
+  if (this->_socket == INVALID_SOCKET)
+    throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
-  if ((ret = ::recv(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
+  if ((ret = ::recv(this->_socket, buffer.getBuffer(), buffer.getMaxSize(), MSG_NOSIGNAL)) == -1)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
+  buffer.setLength(ret);
   return (ret);
 }
 
