@@ -6,9 +6,11 @@
 
 # include <pthread.h>
 
+class UCondVar;
 
 class Mutex : public IMutex
 {
+  friend class CondVar;
 public:
   virtual void		lock();
   virtual void		trylock();

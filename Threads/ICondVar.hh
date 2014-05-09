@@ -1,7 +1,13 @@
 #ifndef		ICONDVAR_H_
 # define	ICONDVAR_H_
 
-#include "Threads.hh"
+#ifdef __linux__
+#include "UMutex.hh"
+#elif _WIN32
+#include "WMutex.hh"
+#endif
+
+class Mutex;
 
 class ICondVar
 {

@@ -3,122 +3,84 @@
 
 #include <pthread.h>
 #include <vector>
-#include "Mutex.hh"
-#include "ScopedMutex.hh"
-#include "ISafeQueue.hh"
-#include "CondVar.hh"
-#include "Exception.hh"
+#include "Threads.hh"
 
 template <typename T>
-class SafeFifo : public ISafeQueue<T>
+class SafeFifo
 {
-protected:
-  Mutex mutex;
-  CondVar cond;
-  std::vector<T> fifo;
-
 public:
-  SafeFifo()
-  {
-  }
+  SafeFifo(){}
+  virtual ~SafeFifo() {}
 
-  SafeFifo(const SafeFifo& ref)
-  {
-    this->mutex = ref.mutex;
-    this->cond = ref.cond;
-  }
-
-  ~SafeFifo()
-  {
-  }
-
-  SafeFifo&	operator=(const SafeFifo& ref)
-  {
-    this->mutex = ref.mutex;
-    return (*this);
-  }
-
-  const Mutex &getMutex() const
-  {
-    return (this->mutex);
-  }
-
-  void	setMutex(const Mutex &mutex)
-  {
-    this->mutex = mutex;
-  }
-
-  void	push(const T &value)
-  {
-    ScopedMutex p(&(this->mutex));
+  void	push(const T &value) {
+    ScopedMutex p(&(this->_mutex));
 
     this->fifo.push_back(value);
-    this->cond.signal();
   }
 
-  bool	tryPop(const T &value)
-  {
-    ScopedMutex p(&(this->mutex));
+  bool	tryPop(const T &value) {
+    ScopedMutex p(&(this->_mutex));
 
-    if (this->fifo.front() == value)
-      {
-	this->fifo.erase(this->fifo.begin());
-	return (true);
-      }
+    if (this->fifo.front() == value) {
+      this->fifo.erase(this->fifo.begin());
+      return (true);
+    }
     return (false);
   }
 
-  const T &getNext(void)
-  {
-    ScopedMutex p(&(this->mutex));
+  const T *getNext(void) {
+    ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
-      throw Exception("error, empty fifo");
+      return (NULL);
     return ((this->fifo.front()));
   }
 
-  const T &getNextPop(void)
-  {
-    ScopedMutex p(&(this->mutex));
-
+  const T *getNextPop(void) {
+    ScopedMutex p(&(this->_mutex));
     static T	res;
 
     if (this->fifo.empty())
-      throw Exception("error, empty fifo");
+      return (NULL);
     res = (this->fifo.front());
     this->fifo.erase(this->fifo.begin());
     return (res);
   }
 
-  bool	isFinished(void)
-  {
-    ScopedMutex p(&(this->mutex));
+  bool	isEmpty(void) {
+    ScopedMutex p(&(this->_mutex));
 
     return (this->fifo.empty());
   }
 
-  void	setFinished(void)
-  {
-    ScopedMutex p(&(this->mutex));
+  void	clear(void) {
+    ScopedMutex p(&(this->_mutex));
 
     while (this->fifo.size())
       this->fifo.pop_back();
   }
 
-  unsigned int getSize(void)
-  {
+  unsigned int getSize(void) {
     return (this->fifo.size());
   }
 
-  int	pop(void)
-  {
-    ScopedMutex p(&(this->mutex));
+  bool	pop(void) {
+    ScopedMutex p(&(this->_mutex));
 
-    while (this->fifo.empty())
-      this->cond.wait(&(this->mutex));
+    if (this->fifo.empty())
+      return (false);
     this->fifo.erase(this->fifo.begin());
-    return (0);
+    return (true);
   }
+
+protected:
+  Mutex _mutex;
+  std::vector<T> fifo;
+
+private:
+  SafeFifo(const SafeFifo& ref) = delete;
+  SafeFifo& operator=(const SafeFifo& ref) = delete;
+
 };
 
 #endif /* !SAFEQUEUE_H_ */

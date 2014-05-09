@@ -22,7 +22,7 @@ public:
     this->_status = IThread<T>::RUNNING;
   }
 
-  /* TODO */
+  /* TODO
   virtual void	run(Any arg, T* obj, void (T::*fct)(Any &))
   {
     _container.obj = obj;
@@ -31,6 +31,7 @@ public:
     obj->*(fct)arg;
     this->_status = IThread<T>::RUNNING;
   }
+  */
 
   virtual void	exit()
   {

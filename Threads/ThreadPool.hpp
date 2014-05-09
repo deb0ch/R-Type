@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "IThread.hpp"
-#include "Threads.hh"
+#include "SafeFifo.hpp"
 
 template <typename T>
 class ThreadPool
@@ -19,7 +19,7 @@ public :
     this->StartPooling();
   }
 
-  void StartPooling(Any arg, T* obj, void (T::*fct)(Any &)) {
+  void startPooling(Any arg, T* obj, void (T::*fct)(Any &)) {
     for (unsigned int i = 0; i < this->_pool.size(); i++) {
 	this->_pool[i]->start(i, this, run);
       }

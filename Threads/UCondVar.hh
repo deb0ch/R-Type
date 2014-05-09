@@ -6,22 +6,21 @@
 
 class CondVar : public ICondVar
 {
+private:
+  CondVar& operator=(const CondVar&) = delete;
+  CondVar(const CondVar &) = delete;
+
 protected:
   pthread_cond_t	cond;
   Mutex			mutex;
 
 public:
   CondVar();
-  CondVar(const CondVar&);
-  ~CondVar();
-  CondVar&	operator=(const CondVar&);
+  virtual ~CondVar();
 
-  pthread_cond_t	getCond() const;
-  void	setCond(pthread_cond_t);
-
-  void wait(Mutex *mutex);
-  void signal(void);
-  void broadcast(void);
+  virtual void wait(Mutex *mutex);
+  virtual void signal(void);
+  virtual void broadcast(void);
 };
 
 #endif /* !CONDVAR_H_ */
