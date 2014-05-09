@@ -3,9 +3,9 @@
 #include "ImageLoaderException.hh"
 
 ImageLoaderException::ImageLoaderException(const int error)
-  : RTException(error, "ImageLoaderException : ")
+  : RTException("ImageLoaderException : ", error)
 {}
 
 ImageLoaderException::ImageLoaderException(const std::string &error)
-  : RTException(error, "ImageLoaderException : ")
+  : RTException("ImageLoaderException : ", error)
 {}

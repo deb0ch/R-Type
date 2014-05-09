@@ -14,14 +14,15 @@
 class RTException : public std::exception
 {
 public:
-  RTException(const int error, const std::string &prefix = "RTException : ");
-  RTException(const std::string &error, const std::string &prefix = "RTException : ");
+  RTException(const int error);
+  RTException(const std::string &error);
   ~RTException() throw() {}
 
-  const char* what() const throw();
+protected:
+  RTException(const std::string &prefix, const int error);
+  RTException(const std::string &prefix, const std::string &error);
 
-public:
-  static void addClass(const std::string nameClass, const std::string msg);
+  const char* what() const throw();
 
 private:
   void addError(const int error);

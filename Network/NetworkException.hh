@@ -13,11 +13,14 @@
 
 class NetworkException : public std::exception
 {
-
 public:
-  NetworkException(const std::string &info, const int error);
+  NetworkException(const int error);
   NetworkException(const std::string &error);
   ~NetworkException() throw() {}
+
+protected:
+  NetworkException(const std::string &prefix, const int error);
+  NetworkException(const std::string &prefix, const std::string &error);
 
   const char* what() const throw();
 

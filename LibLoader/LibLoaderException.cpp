@@ -1,3 +1,7 @@
+#ifdef __linux__
+	#define _XOPEN_SOURCE 601
+#endif
+
 #include <sstream>
 #include <cstring>
 #include "LibLoaderException.hh"
