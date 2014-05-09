@@ -29,3 +29,9 @@ void SFMLInputComponent::setStatusKey(const sf::Keyboard::Key key, const bool st
   if (it != this->_inputs.end())
     this->_inputs[key] = status;
 }
+
+void SFMLInputComponent::serialize(IBuffer &) const
+{}
+
+void SFMLInputComponent::unserialize(IBuffer &)
+{}

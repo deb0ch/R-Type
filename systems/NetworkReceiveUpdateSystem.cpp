@@ -2,6 +2,7 @@
 #include "NetworkReceiveUpdateComponent.hh"
 #include "NetworkSendUpdateSystem.hh"
 #include "ISerializableComponent.hh"
+#include "INetworkSerializableComponent.hh"
 #include "NetworkBuffer.hh"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
@@ -104,11 +105,11 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 {
   std::size_t			component_hash;
   IComponent			*new_component;
-  ISerializableComponent	*serializable_component;
+  INetworkSerializableComponent	*serializable_component;
 
   buffer >> component_hash;
   new_component = this->_world->createComponent(component_hash);
-  if (!(serializable_component = dynamic_cast<ISerializableComponent *>(new_component)))
+  if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;
       throw 1;
@@ -123,7 +124,7 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
   auto it = entity->_components.begin();
   while (it != entity->_components.end())
     {
-      if (dynamic_cast<ISerializableComponent *>(*it) != NULL) // We delete all serializable component
+      if (dynamic_cast<INetworkSerializableComponent *>(*it) != NULL) // We delete all serializable component
 	{
 	  delete *it;
 	  it = entity->_components.erase(it);

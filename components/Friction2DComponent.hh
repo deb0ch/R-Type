@@ -3,8 +3,9 @@
 
 # include	"AComponent.hpp"
 # include	"ISerializableComponent.hh"
+# include	"INetworkSerializableComponent.hh"
 
-class		Friction2DComponent : public AComponent<Friction2DComponent>, public ISerializableComponent
+class		Friction2DComponent : public AComponent<Friction2DComponent>, public INetworkSerializableComponent
 {
 public:
   float		getFrictionCoef() const;

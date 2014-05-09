@@ -7,6 +7,7 @@
 #include	"SFML/Window/Event.hpp"
 
 #include	"AComponent.hpp"
+#include	"ISerializableComponent.hh"
 
 /**
  * @todo Repenser la gestion des inputs en faisant un autre component qui contient
@@ -14,7 +15,7 @@
  * C'est cette map d'actions qui serait check par le(s) système(s) de contrôle (ActionSystem).
  * Ce composant serait aussi utilisé pour faire agir les monstre via les Systèmes de comportement (AIMoveAheadSystem, etc...).
  */
-class		SFMLInputComponent : public AComponent<SFMLInputComponent>
+class		SFMLInputComponent : public AComponent<SFMLInputComponent>, public ISerializableComponent
 {
 private:
   std::map<sf::Keyboard::Key, bool>	_inputs;
@@ -25,6 +26,8 @@ public:
   const std::map<sf::Keyboard::Key, bool>	getInputs() const;
   bool						isActived(const sf::Keyboard::Key key) const;
   void						setStatusKey(const sf::Keyboard::Key key, const bool status);
+  virtual void serialize(IBuffer &) const;
+  virtual void unserialize(IBuffer &);
 };
 
 #endif /* !SFMLINPUTCOMPONENT_H_ */
