@@ -4,6 +4,7 @@
 #include "IComponent.hh"
 #include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
+#include "Hash.hh"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
@@ -37,7 +38,7 @@ void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 {
   ISerializableComponent	*serializable_component;
   IComponent			*component;
-  std::hash<std::string>	hash;
+  Hash				hash;
 
   for (auto it = this->_component_to_send.begin(); it != this->_component_to_send.end(); ++it)
     {
