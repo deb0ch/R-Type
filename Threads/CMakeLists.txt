@@ -37,6 +37,8 @@ ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	INCLUDE_DIRECTORIES(/usr/include/)
+	TARGET_LINK_LIBRARIES(Threadlib /usr/lib/x86_64-linux-gnu/libpthread.so)
 endif (UNIX)
 
 #ADD_EXECUTABLE(test main.cpp)
