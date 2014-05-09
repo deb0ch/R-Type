@@ -23,7 +23,6 @@ SocketTCP::SocketTCP(const SOCKET &sock)
 
 SocketTCP::~SocketTCP()
 {
-	WSACleanup();
 }
 
 const int		SocketTCP::getHandle() const
@@ -158,13 +157,7 @@ void SocketTCP::connect(const int address, const int port)
 
 void SocketTCP::init()
 {
-	int iResult = WSAStartup(MAKEWORD(2, 2), &(this->wsaData));
 	int reuseAddr = 1;
-	if (iResult != 0)
-	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::SEVERITY::S_ERROR);
-	}
 	this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->socket == INVALID_SOCKET)
 	{
