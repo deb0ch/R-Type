@@ -3,7 +3,6 @@
 
 #include <pthread.h>
 #include "ICondVar.hh"
-#include "Mutex.hh"
 
 class CondVar : public ICondVar
 {

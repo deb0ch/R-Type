@@ -1,7 +1,7 @@
 #ifndef		ICONDVAR_H_
 # define	ICONDVAR_H_
 
-#include "Mutex.hh"
+#include "Threads.hh"
 
 class ICondVar
 {
