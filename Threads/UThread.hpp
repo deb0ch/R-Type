@@ -9,7 +9,7 @@ template <typename T>
 class Thread : public IThread<T>
 {
 public:
-  virtual void	start(Any arg, T* obj, void (T::*fct)(Any &))
+  virtual void				start(Any arg, T* obj, void (T::*fct)(Any &))
   {
     _container.obj = obj;
     _container.fct = fct;
@@ -19,16 +19,16 @@ public:
 			       (void*)&_container))
 	!= 0)
       throw ThreadException(_ret);
-	_status = IThread<T>::RUNNING;
+    _status = IThread<T>::RUNNING;
   }
 
-  virtual void	exit()
+  virtual void				exit()
   {
     pthread_exit(NULL);
     _status = IThread<T>::DEAD;
   }
 
-  virtual void	wait()
+  virtual void				wait()
   {
     if ((_ret = pthread_join(_thread, NULL)) != 0)
       throw ThreadException(_ret);
@@ -41,11 +41,11 @@ public:
   }
 
 public:
-					Thread() { _status = IThread<T>::UNSTARTED; }
+  Thread() { _status = IThread<T>::UNSTARTED; }
   virtual				~Thread() {}
 
 private:
-  					Thread(const Thread &) = delete;
+  Thread(const Thread &) = delete;
   Thread &				operator=(const Thread &) = delete;
 
 private:
@@ -60,13 +60,15 @@ private:
     void (T::*fct)(Any &);
     Any arg;
   };
-  struct Container				_container;
+
+  struct Container			_container;
+
   static void*				_threadEntry(void* args)
   {
     Thread<T>::Container	*container = reinterpret_cast<Thread<T>::Container*>(args);
 
     (container->obj->*(container->fct))(container->arg);
-	return (NULL);
+    return (NULL);
   }
 };
 

@@ -1,5 +1,5 @@
 #ifdef __linux__
-#include "CondVar.hh"
+# include "CondVar.hh"
 
 //----- ----- Constructors ----- ----- //
 CondVar::CondVar()
@@ -51,4 +51,5 @@ void CondVar::broadcast(void)
 {
   pthread_cond_broadcast(&(this->cond));
 }
-#endif
+
+#endif /* !__linux__ */

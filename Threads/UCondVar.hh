@@ -9,7 +9,7 @@ class CondVar : public ICondVar
 {
 protected:
   pthread_cond_t	cond;
-  Mutex			mutex;
+  //  Mutex			mutex;
 
 public:
   CondVar();

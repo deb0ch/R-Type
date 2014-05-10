@@ -26,5 +26,4 @@ private:
 
 };
 
-
 #endif /* !MUTEXEXCEPTION_H_ */

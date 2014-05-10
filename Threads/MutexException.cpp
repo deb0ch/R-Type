@@ -1,6 +1,6 @@
 #ifdef __linux__
-	#define _XOPEN_SOURCE 601
-#endif
+# define _XOPEN_SOURCE 601
+#endif /* !__linux__ */
 
 #include "MutexException.hh"
 

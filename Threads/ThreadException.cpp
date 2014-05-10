@@ -1,6 +1,6 @@
 #ifdef __linux__
-	#define _XOPEN_SOURCE 601
-#endif
+# define _XOPEN_SOURCE 601
+#endif /* !__linux__ */
 
 #include "ThreadException.hh"
 
@@ -24,6 +24,7 @@ ThreadException::ThreadException(const int error) {
   this->_info = "ThreadException : ";
   this->addError(error);
 }
+
 ThreadException::ThreadException(const std::string &info) {
   this->_info = "ThreadException : ";
   this->_info = info;
