@@ -22,17 +22,6 @@ public:
     this->_status = IThread<T>::RUNNING;
   }
 
-  /* TODO
-  virtual void	run(Any arg, T* obj, void (T::*fct)(Any &))
-  {
-    _container.obj = obj;
-    _container.fct = fct;
-    _container.arg = arg;
-    obj->*(fct)arg;
-    this->_status = IThread<T>::RUNNING;
-  }
-  */
-
   virtual void	exit()
   {
     pthread_exit(NULL);
