@@ -14,12 +14,12 @@ class ThreadPool
 public :
   void			addTask(Any arg, T* obj, void (T::*fct)(Any &))
   {
-    TaskContainer*	container = new TaskContainer();
+    TaskContainer*	task = new TaskContainer();
 
-    container->arg = arg;
-    container->obj = obj;
-    container->fct = fct;
-    this->_task.push(container);
+    task->arg = arg;
+    task->obj = obj;
+    task->fct = fct;
+    this->_task.push(task);
     _condvar.signal();
   }
 
@@ -27,26 +27,24 @@ public :
 
   ThreadPool(unsigned int nbThread)
   {
-    Thread<T> *thread;
-
     this->_status = RUNNING;
     this->_nbThread = nbThread;
     for (unsigned int i = 0; i < nbThread; i++)
       {
-	this->_pool.push_back(new Thread<T>());
-	this->_pool[i]->start(Any(), this, runThread);
+	this->_pool.push_back(new Thread< ThreadPool<T> >());
+	this->_pool[i]->start(Any(), this, &ThreadPool<T>::runThread);
       }
   }
 
   ~ThreadPool()
   {
-    _mutex.lock();		// Is this really necessary ?
+    _mutex.lock();
     _status = STOPPED;
-    _mutex.unlock();		// Is this really necessary ?
+    _mutex.unlock();
     _condvar.broadcast();
     for (auto it = _pool.begin(); it != _pool.end(); ++it)
       {
-	(*it)->wait();		// Is this really necessary ?
+	(*it)->wait();
 	delete *it;
       }
   }
@@ -59,9 +57,9 @@ private :
   ThreadPool &operator=(const ThreadPool & other) = delete;
 
 private :
-  void	runThread(Any)
+  void	runThread(Any &)
   {
-    TaskContainer *toto;
+    TaskContainer *task;
 
     while (42)
       {
@@ -69,10 +67,10 @@ private :
 	  _condvar.wait(&_mutex);
 	if (_status == STOPPED)
 	  return ;
-	if ((toto = this->_task.getNext()) != NULL)
+	if ((task = this->_task.getNext()) != NULL)
 	  {
-	    (toto->obj->*(toto->fct))(toto->arg);
-	    delete toto;
+	    (task->obj->*(task->fct))(task->arg);
+	    delete task;
 	  }
       }
   }
@@ -91,12 +89,12 @@ private:
       STOPPED
     };
 
-  CondVar			_condvar;
-  Mutex				_mutex;
-  e_status			_status;
-  SafeFifo<TaskContainer *>     _task;
-  std::vector<Thread<T> *>	_pool;
-  unsigned int			_nbThread;
+  CondVar				_condvar;
+  Mutex					_mutex;
+  e_status				_status;
+  SafeFifo<TaskContainer*>		_task;
+  std::vector<Thread< ThreadPool<T> >*>	_pool;
+  unsigned int				_nbThread;
 };
 
 #endif /* !THREADPOOL_H_ */

@@ -28,7 +28,7 @@ public:
     return (false);
   }
 
-  const T *getNext(void) {
+  T getNext(void) {
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
