@@ -18,7 +18,7 @@ SET(HEADERS
   ThreadPool.hpp
   ScopedMutex.hh
   Threads.hh
-  TasksFifo.hpp
+  SafeFifo.hpp
   ICondVar.hh
   UCondVar.hh
   WCondVar.hh)

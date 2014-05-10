@@ -10,6 +10,5 @@
 #endif
 
 #include "ScopedMutex.hh"
-#include "ThreadPool.hpp"
 
 #endif /* !THREADS_H_ */

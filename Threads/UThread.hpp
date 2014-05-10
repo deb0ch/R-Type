@@ -14,34 +14,45 @@ public:
     _container.obj = obj;
     _container.fct = fct;
     _container.arg = arg;
-    if ((_ret = pthread_create(&_thread, NULL,
-			       reinterpret_cast<void* (*)(void*)>(_threadEntry),
-			       (void*)&_container))
+    if ((_ret = pthread_create(&this->_thread, NULL,
+			       reinterpret_cast<void* (*)(void*)>(this->_threadEntry),
+			       (void*)&this->_container))
 	!= 0)
       throw ThreadException(_ret);
-    _status = IThread<T>::RUNNING;
+    this->_status = IThread<T>::RUNNING;
   }
 
-  virtual void				exit()
+  /* TODO
+  virtual void	run(Any arg, T* obj, void (T::*fct)(Any &))
+  {
+    _container.obj = obj;
+    _container.fct = fct;
+    _container.arg = arg;
+    obj->*(fct)arg;
+    this->_status = IThread<T>::RUNNING;
+  }
+  */
+
+  virtual void	exit()
   {
     pthread_exit(NULL);
-    _status = IThread<T>::DEAD;
+    this->_status = IThread<T>::DEAD;
   }
 
   virtual void				wait()
   {
-    if ((_ret = pthread_join(_thread, NULL)) != 0)
+    if ((this->_ret = pthread_join(this->_thread, NULL)) != 0)
       throw ThreadException(_ret);
-    _status = IThread<T>::DEAD;
+    this->_status = IThread<T>::DEAD;
   }
 
   virtual typename IThread<T>::STATUS	status() const
   {
-    return (_status);
+    return (this->_status);
   }
 
 public:
-  Thread() { _status = IThread<T>::UNSTARTED; }
+  Thread() { this->_status = IThread<T>::UNSTARTED; }
   virtual				~Thread() {}
 
 private:
