@@ -72,7 +72,8 @@ public:
   bool		hasEventHandler(const std::string &type) const;
   void		sendEvent(IEvent *event);
 
-  std::vector<Entity *> &getEntities();
+  std::vector<Entity *>	&getEntities();
+  Entity	*getEntity(unsigned long id);
 
   void		process(const float delta);
   /** @brief Init all the systems. */

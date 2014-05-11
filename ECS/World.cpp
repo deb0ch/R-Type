@@ -123,6 +123,19 @@ std::vector<Entity *> &World::getEntities()
   return (this->_entities);
 }
 
+Entity		*World::getEntity(unsigned long id)
+{
+  auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
+			 [id] (Entity *entity) -> bool {
+			   return (entity->_id == id);
+			 });
+
+  if (it == this->_entities.end())
+    return (NULL);
+
+  return (*it);
+}
+
 //----- ----- Methods ----- ----- //
 
 /**
