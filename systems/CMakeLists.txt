@@ -21,6 +21,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.hh
 	PARENT_SCOPE
 )
 
@@ -37,5 +38,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.cpp
 	PARENT_SCOPE
 )
