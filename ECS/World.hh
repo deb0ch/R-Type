@@ -26,6 +26,7 @@ private:
   /** An event manager that allows systems to comunicate together. */
   EventManager<ISystem>			_event_manager;
   Factory<IComponent, std::size_t>	_component_factory;
+  bool					_initialized;
 
 public:
 

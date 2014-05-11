@@ -9,7 +9,7 @@ SET(SOURCE_S
 
 
 set(HEADER_C
-   ${HEADER_C}
+	${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
@@ -20,7 +20,9 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
-	PARENT_SCOPE)
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
+	PARENT_SCOPE
+)
 
 SET(SOURCE_C
 	${SOURCE_C}
@@ -34,4 +36,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
-	PARENT_SCOPE)
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
+	PARENT_SCOPE
+)

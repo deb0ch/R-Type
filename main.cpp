@@ -13,7 +13,7 @@
 #include	"OutOfBoundsSystem.hh"
 #include	"NetworkSendUpdateSystem.hh"
 #include	"NetworkReceiveUpdateSystem.hh"
-#include	"MoveSystem.hh"
+#include	"SFMLEventSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -27,6 +27,7 @@
 #include	"NetworkReceiveUpdateComponent.hh"
 
 #include	"ImageLoader.hh"
+#include	"ActionComponent.hh"
 
 #include	"NetworkBuffer.hh"
 
@@ -40,25 +41,33 @@ int		main()
 {
   World		world;
 
-  world.addSystem(new MoveSystem())
-    ->addSystem(new Friction2DSystem());
+  world.addSystem(new MoveSystem());
+  world.addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
-  world.addSystem(new PlayerMovementSystem());
+  world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new OutOfBoundsSystem());
+  world.addSystem(new PlayerMovementSystem());
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
-		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+  		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
+  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
-		  ->addComponent(new MovementSpeedComponent(5)));
+		  ->addComponent(new MovementSpeedComponent(5))
+		  ->addComponent((new ActionComponent())
+				 ->addAction("UP")
+				 ->addAction("RIGHT")
+				 ->addAction("DOWN")
+				 ->addAction("LEFT")
+				 )
+		  );
 
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
@@ -69,7 +78,14 @@ int		main()
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
-		  ->addComponent(new MovementSpeedComponent(2)));
+		  ->addComponent(new MovementSpeedComponent(2))
+		  ->addComponent((new ActionComponent())
+				 ->addAction("UP")
+				 ->addAction("RIGHT")
+				 ->addAction("DOWN")
+				 ->addAction("LEFT")
+				 )
+		  );
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 600.0f))

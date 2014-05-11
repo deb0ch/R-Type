@@ -1,47 +1,51 @@
-#include	<iostream>
 #include	<map>
 
 #include	"SFMLInputSystem.hh"
 #include	"SFMLInputComponent.hh"
-
+#include	"SFMLKeyEvent.hh"
+#include	"ActionComponent.hh"
 
 SFMLInputSystem::SFMLInputSystem()
   : ASystem("SFMLInputSystem")
-{
-  this->_inputs[sf::Keyboard::Left] = false;
-  this->_inputs[sf::Keyboard::Right] = false;
-  this->_inputs[sf::Keyboard::Down] = false;
-  this->_inputs[sf::Keyboard::Up] = false;
-  this->_inputs[sf::Keyboard::Space] = false;
-}
+{}
 
 SFMLInputSystem::~SFMLInputSystem()
 {}
 
+void	SFMLInputSystem::SFMLKeyEventListener(IEvent * ievent)
+{
+  SFMLKeyEvent*		event = dynamic_cast<SFMLKeyEvent*>(ievent);
+
+  if (!event)
+    return ;
+
+  this->_inputs[event->_key] = event->_active;
+}
+
+void	SFMLInputSystem::init()
+{
+  this->_world->addEventHandler("SFMLKeyEvent", this, &SFMLInputSystem::SFMLKeyEventListener);
+}
+
 bool	SFMLInputSystem::canProcess(Entity *e) {
-  if (e->hasComponent("SFMLInputComponent"))
+  if (e->hasComponent("SFMLInputComponent") && e->hasComponent("ActionComponent"))
     return (true);
   return (false);
 }
 
-void	SFMLInputSystem::beforeProcess()
-{
-  for (auto it = this->_inputs.begin(); it != this->_inputs.end(); ++it)
-    if (sf::Keyboard::isKeyPressed(it->first))
-      this->_inputs[it->first] = true;
-    else
-      this->_inputs[it->first] = false;
-}
-
-/**
- * @todo Send event to say an entity is moving
- */
 void	SFMLInputSystem::processEntity(Entity *e, const float)
 {
-  SFMLInputComponent *inputComp;
+  SFMLInputComponent	*inputComp;
+  ActionComponent	*actionComp;
+  bool			tmp;
 
-  if (!(inputComp = e->getComponent<SFMLInputComponent>("SFMLInputComponent")))
-    return ;
-  for (auto it = this->_inputs.begin(); it != this->_inputs.end(); ++it)
-    inputComp->setStatusKey(it->first, it->second);
+  inputComp = e->getComponent<SFMLInputComponent>("SFMLInputComponent");
+  actionComp = e->getComponent<ActionComponent>("ActionComponent");
+  for (auto it = inputComp->getInputs().begin() ; it != inputComp->getInputs().end() ; ++it)
+    {
+      tmp = false;
+      for (auto it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
+	tmp |= this->_inputs[*it2];
+      actionComp->setAction(it->first, tmp);
+    }
 }
