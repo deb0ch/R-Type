@@ -33,6 +33,4 @@ void			MoveSystem::processEntity(Entity *e, const float)
     return ;
   pos->setY(pos->getY() + speed->getVY());
   pos->setX(pos->getX() + speed->getVX());
-  /*  tests */
-  std::cout << "y = " << pos->getY() << " et x = " << pos->getX() << std::endl;
 }

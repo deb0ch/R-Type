@@ -58,3 +58,15 @@ void	Speed2DComponent::addVY(float y)
 {
   this->_vY += y;
 }
+
+void	Speed2DComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_vX;
+  buffer << this->_vY;
+}
+
+void	Speed2DComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_vX;
+  buffer >> this->_vY;
+}

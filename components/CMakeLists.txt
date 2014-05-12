@@ -13,21 +13,24 @@ SET(HEADER_C
    	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
-	PARENT_SCOPE)
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	PARENT_SCOPE
+)
 
 SET(SOURCE_C
 	${SOURCE_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
@@ -43,7 +46,7 @@ SET (LIB_TYPE SHARED)
 ADD_LIBRARY(Speed2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp)
 #ADD_LIBRARY(SFMLSpriteComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp)
 ADD_LIBRARY(Pos2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp)
-ADD_LIBRARY(NetworkUpdateComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp)
+#ADD_LIBRARY(NetworkUpdateComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp)
 ADD_LIBRARY(Box2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp)
 ADD_LIBRARY(Friction2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp)
 ADD_LIBRARY(SFMLInputComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp)

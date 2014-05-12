@@ -9,27 +9,35 @@ SET(SOURCE_S
 
 
 set(HEADER_C
-   ${HEADER_C}
+	${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
-	PARENT_SCOPE)
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.hh
+	PARENT_SCOPE
+)
 
 SET(SOURCE_C
 	${SOURCE_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
-	PARENT_SCOPE)
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.cpp
+	PARENT_SCOPE
+)

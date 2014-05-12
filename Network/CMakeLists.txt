@@ -1,7 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-SET(
-  HEADER_FILES
+SET(HEADER_FILES
   ISocketTCP.hh
   USocketTCP.hh
   WSocketTCP.hh
@@ -9,19 +8,25 @@ SET(
   WSocketUDP.hh
   USocketUDP.hh
   NetworkException.hh
+  TCPException.hh
+  UDPException.hh
+  SelectException.hh
   ISocket.hh
   Select.hh
-  )
+  IBuffer.hh
+  NetworkBuffer.hh)
 
-SET(
-  SOURCES
+SET(SOURCES
   USocketTCP.cpp
   WSocketTCP.cpp
   USocketUDP.cpp
   WSocketUDP.cpp
   NetworkException.cpp
+  TCPException.cpp
+  UDPException.cpp
+  SelectException.cpp
   Select.cpp
-  main.cpp)
+  NetworkBuffer.cpp)
 
 SET (LIB_TYPE STATIC)
 

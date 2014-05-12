@@ -1,6 +1,6 @@
 #include <errno.h>
 
-#include "NetworkException.hh"
+#include "SelectException.hh"
 #include "Select.hh"
 
 Select::Select(const int to)
@@ -24,8 +24,7 @@ void	Select::doSelect()
   while ((ret = select(this->maxFd + 1, this->_reads, this->_writes, NULL, this->_to)) == -1 &&
 	 errno == EINTR)
     if (ret == -1 && errno != EINTR)
-      throw NetworkException(NetworkException::SELECT, "Function select failed",
-			     NetworkException::S_FATAL);
+      throw SelectException("Function select failed");
 }
 
 bool	Select::issetReads(const int fd)

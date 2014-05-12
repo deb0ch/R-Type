@@ -16,6 +16,9 @@ public:
   virtual	~EventManager()
   {}
 
+  /**
+   * @todo template
+   */
   void		addHandler(const std::string &type, T *obj, void (T::*e)(IEvent *))
   {
     if (!this->hasHandler(type))
@@ -40,10 +43,10 @@ public:
 	it = std::find_if(it, this->_event_handlers.end(),
 			  [event] (std::pair<std::string,
 				   std::pair<T *, void (T::*)(IEvent *)> > value) -> bool {
-	    if (value.first == event->getType())
-	      return (true);
-	    return (false);
-	  });
+			    if (value.first == event->getType())
+			      return (true);
+			    return (false);
+			  });
 
 	if (it != this->_event_handlers.end())
 	  {

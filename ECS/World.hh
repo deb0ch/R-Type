@@ -17,15 +17,16 @@
 class		World
 {
 private:
-  std::vector<Entity*>		_entities;
-  std::vector<ISystem*>		_systems;
+  std::vector<Entity*>			_entities;
+  std::vector<ISystem*>			_systems;
   /** @brief A map of object pointers that can be shared between systems. */
-  std::map<std::string, Any>	_shared_objs;
+  std::map<std::string, Any>		_shared_objs;
   /** @brief The next Entity::_id that will be attributed when calling createEntity(). */
-  unsigned long			_nextEntityID;
+  unsigned long				_nextEntityID;
   /** An event manager that allows systems to comunicate together. */
-  EventManager<ISystem>		_event_manager;
-  Factory<IComponent>		_component_factory;
+  EventManager<ISystem>			_event_manager;
+  Factory<IComponent, std::size_t>	_component_factory;
+  bool					_initialized;
 
 public:
 
@@ -71,7 +72,8 @@ public:
   bool		hasEventHandler(const std::string &type) const;
   void		sendEvent(IEvent *event);
 
-  std::vector<Entity *> &getEntities();
+  std::vector<Entity *>	&getEntities();
+  Entity	*getEntity(unsigned long id);
 
   void		process(const float delta);
   /** @brief Init all the systems. */
@@ -108,6 +110,7 @@ public:
     return (it->second.getValue<T>());
   }
 
+  IComponent	*createComponent(std::size_t type) const;
   IComponent	*createComponent(const std::string &type) const;
   void		registerComponent(const IComponent *component);
 };

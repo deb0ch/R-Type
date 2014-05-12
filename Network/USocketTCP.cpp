@@ -1,10 +1,10 @@
 #ifdef __linux__
 
 #include <fcntl.h>
-#include "NetworkException.hh"
+#include "TCPException.hh"
 #include "USocketTCP.hh"
 
-static const int INVALIDE_SOCKET = -1;
+static const int INVALID_SOCKET = -1;
 
 SocketTCP::SocketTCP() {
   this->_isBlocking = true;
@@ -19,8 +19,8 @@ void SocketTCP::init() {
   int reuseAddr = 1;
 
   this->_socket = ::socket(AF_INET, SOCK_STREAM, 0);
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(errno);
   setsockopt(this->_socket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
 }
 
@@ -31,9 +31,8 @@ const int		SocketTCP::getHandle() const {
 void SocketTCP::setBlocking(bool const blocking) {
   int status;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   status = ::fcntl(this->_socket, F_GETFL);
   if (blocking)
     ::fcntl(this->_socket, F_SETFL, status & ~O_NONBLOCK);
@@ -48,33 +47,30 @@ const bool SocketTCP::isBlocking() const {
 
 void		SocketTCP::listen(const std::size_t block)
 {
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   if (::listen(this->_socket, block) < 0)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_WARNING);
+    throw TCPException(errno);
 }
 
 void		SocketTCP::bind(int port, const std::string & address) {
   struct hostent*    hostinfo = NULL;
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   if (address == "")
     sin.sin_addr.s_addr = htonl(INADDR_ANY);
   else
     {
       if ((hostinfo = ::gethostbyname(address.c_str())) == NULL)
-	throw NetworkException(NetworkException::TCP, "Gethostbyname as failed",
-			   NetworkException::S_ERROR);
+	throw TCPException("Gethostbyname as failed");
       sin.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
     }
   sin.sin_family = AF_INET;
   sin.sin_port = htons(port);
   if (::bind(this->_socket, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)))
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
+    throw TCPException(errno);
 }
 
 ISocketTCP		*SocketTCP::accept() {
@@ -82,15 +78,13 @@ ISocketTCP		*SocketTCP::accept() {
   socklen_t		lencs = sizeof(cs);
   int			socket;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   socket = ::accept(this->_socket, reinterpret_cast<struct sockaddr*>(&cs), &lencs);
-  if (socket == INVALIDE_SOCKET)
+  if (socket == INVALID_SOCKET)
     {
-      if (this->_socket == INVALIDE_SOCKET)
-	throw NetworkException(NetworkException::TCP, errno,
-			       NetworkException::S_ERROR);
+      if (this->_socket == INVALID_SOCKET)
+	throw TCPException(errno);
     }
   return (new SocketTCP(socket));
 }
@@ -99,53 +93,49 @@ void SocketTCP::connect(const std::string &address, const int port) {
   struct hostent*    hostinfo = NULL;
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   if ((hostinfo = ::gethostbyname(address.c_str())) == NULL)
-    throw NetworkException(NetworkException::TCP, "Gethostbyname as failed",
-			   NetworkException::S_ERROR);
+    throw TCPException("Gethostbyname as failed");
   sin.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
   sin.sin_port = htons(port);
   sin.sin_family = AF_INET;
   if (::connect(this->_socket, reinterpret_cast<struct sockaddr*>(&sin),
 		sizeof(struct sockaddr)) < 0)
-    throw NetworkException(NetworkException::TCP, errno,NetworkException::S_ERROR);
+    throw TCPException(errno);
 }
 
 void SocketTCP::connect(const int address, const int port) {
   struct sockaddr_in sin;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
   sin.sin_addr.s_addr = htonl(address);
   sin.sin_port = htons(port);
   sin.sin_family = AF_INET;
   if (::connect(this->_socket, reinterpret_cast<struct sockaddr*>(&sin),
 		sizeof(struct sockaddr)) < 0)
-    throw NetworkException(NetworkException::TCP, errno,NetworkException::S_ERROR);
+    throw TCPException(errno);
 }
 
-int SocketTCP::send(const void* data, const std::size_t size) {
+int SocketTCP::send(const IBuffer &buffer) {
   int ret;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
-  if ((ret = ::send(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
+  if ((ret = ::send(this->_socket, buffer.getBuffer(), buffer.getLength(), MSG_NOSIGNAL)) == -1)
+    throw TCPException(errno);
   return (ret);
 }
 
-int SocketTCP::receive(void* data, const std::size_t size) {
+int SocketTCP::receive(IBuffer &buffer) {
   int ret;
 
-  if (this->_socket == INVALIDE_SOCKET)
-    throw NetworkException(NetworkException::TCP, MSG_INVALIDE_SOCKET,
-			   NetworkException::S_WARNING);
-  if ((ret = ::recv(this->_socket, data, size, MSG_NOSIGNAL)) == -1)
-    throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
+  if (this->_socket == INVALID_SOCKET)
+    throw TCPException(MSG_INVALID_SOCKET);
+  if ((ret = ::recv(this->_socket, buffer.getBuffer(), buffer.getMaxSize(), MSG_NOSIGNAL)) == -1)
+    throw TCPException(errno);
+  buffer.setLength(ret);
   return (ret);
 }
 
