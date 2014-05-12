@@ -10,6 +10,7 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/plugin)
 
 SET(HEADER_C
    ${HEADER_C}
+   	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
    	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
@@ -17,7 +18,6 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
@@ -28,6 +28,7 @@ SET(HEADER_C
 
 SET(SOURCE_C
 	${SOURCE_C}
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
@@ -35,11 +36,16 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
 	PARENT_SCOPE)
 	
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ECS)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/utility)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Network)
 
 SET (LIB_TYPE SHARED)
 
@@ -50,5 +56,4 @@ ADD_LIBRARY(Pos2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponen
 ADD_LIBRARY(Box2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp)
 ADD_LIBRARY(Friction2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp)
 ADD_LIBRARY(SFMLInputComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp)
-#ADD_LIBRARY(PlayerMovementComponent ${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh)
 ADD_LIBRARY(MovementSpeedComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp)

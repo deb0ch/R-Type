@@ -1,5 +1,4 @@
 #include	<iostream>
-#include <unistd.h>
 
 
 #include	"World.hh"
@@ -41,9 +40,10 @@
 	#define PATHLIB "..\\plugin\\Debug\\"
 	#define EXTENSION ".dll"
 #elif __linux__
+	#include <unistd.h>
 	#include "ULibraryLoader.hpp"
 	#define PATH "Ressources/Images/"
-	#define PATHLIB "../plugin/lib"
+	#define PATHLIB "plugin/lib"
 	#define EXTENSION ".so"
 #endif
 
@@ -88,8 +88,6 @@ int		main()
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(input)
-		  //		  ->addComponent(new SFMLInputComponent())
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent((new ActionComponent())
@@ -107,7 +105,6 @@ int		main()
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new SFMLInputComponent())
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(2))
 		  ->addComponent((new ActionComponent())
@@ -124,7 +121,6 @@ int		main()
 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new MovementSpeedComponent(0.3f))
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MoveFollowComponent(world.getEntity(1)))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
