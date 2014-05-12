@@ -58,5 +58,5 @@ bool	CollisionSystem::isColliding(const Pos2DComponent &pos1, const Box2DCompone
 
 void	CollisionSystem::collision_event(IEvent *)
 {
-  std::cout << "HohoHo!" << std::endl;
+  std::cout << "Collision!" << std::endl;
 }
