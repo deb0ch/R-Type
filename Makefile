@@ -1,23 +1,22 @@
 RM	=	rm -f
 
-NAME	=	RType
+NAME_C	=	RType_Client
+NAME_S	=	RType_Server
 
-NAME_CLIENT	=	RType_Client
+all:		$(NAME_C) $(NAME_S)
 
-all:		$(NAME)
-
-$(NAME):
 		mkdir -p build
 		cd build && cmake ..
 		$(MAKE) -C build
-		mv build/$(NAME) .
-		mv build/$(NAME_CLIENT) .
+		ln -sf build/$(NAME_C) .
+		ln -sf build/$(NAME_S) .
 
 clean:
 		$(MAKE) clean -C build
 
 fclean:		clean
-		$(RM) $(NAME)
+		$(RM) $(NAME_C)
+		$(RM) $(NAME_S)
 
 sfml:
 		mkdir -p SFML-src/build
@@ -30,13 +29,13 @@ installsfml:	sfml
 
 re:		fclean all
 
-run:		$(NAME)
-		./$(NAME) $(PARAMS)
+run:		$(NAME_C)
+		./$(NAME_C) $(PARAMS)
 
-debug:		$(NAME)
-		valgrind --track-origins=yes $(OPTIONS) ./$(NAME) $(PARAMS)
+debug:		$(NAME_C)
+		valgrind --track-origins=yes $(OPTIONS) ./$(NAME_C) $(PARAMS)
 
 doc:
 		doxygen doxygen.cfg
 
-.PHONY:		$(NAME) all clean fclean re run debug doc
+.PHONY:		$(NAME_C) $(NAME_S) all clean fclean re run debug doc

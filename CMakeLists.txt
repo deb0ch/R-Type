@@ -17,10 +17,10 @@ SET(HEADER_S)
 SET(HEADER_C)
 
 SET(SOURCE_S
-	toto.cpp)
+	main_server.cpp)
 
 SET(SOURCE_C
-	main.cpp)
+	main_client.cpp)
 	
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")

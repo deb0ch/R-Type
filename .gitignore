@@ -19,7 +19,8 @@
 core
 
 # Executables
-RType
+RType_Client
+RType_Server
 *.exe
 *.out
 *.app
