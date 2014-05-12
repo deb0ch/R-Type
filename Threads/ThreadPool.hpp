@@ -3,47 +3,53 @@
 
 # include <vector>
 # include "IThread.hpp"
+# include "Mutex.hh"
+# include "CondVar.hh"
 # include "SafeFifo.hpp"
 
 template <typename T>
 class ThreadPool
 {
+  // Public
 public :
+  void			addTask(Any arg, T* obj, void (T::*fct)(Any &))
+  {
+    TaskContainer*	task = new TaskContainer();
+
+    task->arg = arg;
+    task->obj = obj;
+    task->fct = fct;
+    this->_task.push(task);
+    _condvar.signal();
+  }
+
+  // Coplien
 
   ThreadPool(unsigned int nbThread)
   {
-    Thread<T> *thread;
+    this->_status = RUNNING;
     this->_nbThread = nbThread;
     for (unsigned int i = 0; i < nbThread; i++)
       {
-	this->_pool.push_back(new Thread<T>());
+	this->_pool.push_back(new Thread< ThreadPool<T> >());
+	this->_pool[i]->start(Any(), this, &ThreadPool<T>::runThread);
       }
-    this->StartPooling();
   }
 
-  void addTask(Any arg, T* obj, void (T::*fct)(Any &))
+  ~ThreadPool()
   {
-    Container *container = new Container();
-    container->arg = arg;
-    container->obj = obj;
-    container->fct = fct;
-    this->_task.push(container);
-    //Envoi broacast a tous les thread via les variable conditionnelle
-  }
-
-  void	run(unsigned int count)
-  {
-    Container *toto;
-
-    while (42)
+    _mutex.lock();
+    _status = STOPPED;
+    _mutex.unlock();
+    _condvar.broadcast();
+    for (auto it = _pool.begin(); it != _pool.end(); ++it)
       {
-	// cond var wait
-	if ((toto = this->_task.getNext()) != NULL)
-	  {
-	    this->_pool[count]->start(toto);
-	  }
+	(*it)->wait();
+	delete *it;
       }
   }
+
+  // Private
 
 private :
   ThreadPool() = delete;
@@ -51,25 +57,44 @@ private :
   ThreadPool &operator=(const ThreadPool & other) = delete;
 
 private :
-  struct Container
+  void	runThread(Any &)
+  {
+    TaskContainer *task;
+
+    while (42)
+      {
+	while (_task.isEmpty() && _status == RUNNING)
+	  _condvar.wait(&_mutex);
+	if (_status == STOPPED)
+	  return ;
+	if ((task = this->_task.getNext()) != NULL)
+	  {
+	    (task->obj->*(task->fct))(task->arg);
+	    delete task;
+	  }
+      }
+  }
+
+private:
+  struct TaskContainer
   {
     T *obj;
     void (T::*fct)(Any &);
     Any arg;
   };
 
-  SafeFifo<Container *>		_task;
-  std::vector<Thread<T> *>	_pool;
-  unsigned int			_nbThread;
+  enum	e_status
+    {
+      RUNNING,
+      STOPPED
+    };
 
-private:
-  void				startPooling(Any arg, T* obj, void (T::*fct)(Any &))
-  {
-    for (unsigned int i = 0; i < this->_pool.size(); i++)
-      {
-	this->_pool[i]->start(i, this, run);
-      }
-  }
+  CondVar				_condvar;
+  Mutex					_mutex;
+  e_status				_status;
+  SafeFifo<TaskContainer*>		_task;
+  std::vector<Thread< ThreadPool<T> >*>	_pool;
+  unsigned int				_nbThread;
 };
 
 #endif /* !THREADPOOL_H_ */

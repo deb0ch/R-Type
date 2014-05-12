@@ -1,5 +1,5 @@
-#ifndef CONDVAR_H_
-# define CONDVAR_H_
+#ifndef UCONDVAR_H_
+# define UCONDVAR_H_
 
 #include <pthread.h>
 #include "ICondVar.hh"
@@ -23,4 +23,4 @@ public:
   virtual void broadcast(void);
 };
 
-#endif /* !CONDVAR_H_ */
+#endif /* !UCONDVAR_H_ */

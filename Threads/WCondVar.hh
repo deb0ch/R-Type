@@ -1,5 +1,5 @@
-#ifndef CONDVAR_H_
-# define CONDVAR_H_
+#ifndef WCONDVAR_H_
+# define WCONDVAR_H_
 
 #include "ICondVar.hh"
 
@@ -20,4 +20,4 @@ public:
 	void broadcast(void);
 };
 
-#endif /* !CONDVAR_H_ */
+#endif /* !WCONDVAR_H_ */

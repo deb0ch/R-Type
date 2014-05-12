@@ -14,26 +14,16 @@ public:
     _container.obj = obj;
     _container.fct = fct;
     _container.arg = arg;
-    if ((_ret = pthread_create(&this->_thread, NULL,
-			       reinterpret_cast<void* (*)(void*)>(this->_threadEntry),
-			       (void*)&this->_container))
+    if ((_ret = pthread_create(&this->_thread,
+			       NULL,
+			       static_cast<void* (*)(void*)>(this->_threadEntry),
+			       static_cast<void*>(&this->_container)))
 	!= 0)
       throw ThreadException(_ret);
     this->_status = IThread<T>::RUNNING;
   }
 
-  /* TODO
-  virtual void	run(Any arg, T* obj, void (T::*fct)(Any &))
-  {
-    _container.obj = obj;
-    _container.fct = fct;
-    _container.arg = arg;
-    obj->*(fct)arg;
-    this->_status = IThread<T>::RUNNING;
-  }
-  */
-
-  virtual void	exit()
+  virtual void				exit()
   {
     pthread_exit(NULL);
     this->_status = IThread<T>::DEAD;
@@ -52,7 +42,8 @@ public:
   }
 
 public:
-  Thread() { this->_status = IThread<T>::UNSTARTED; }
+					Thread() { this->_status = IThread<T>::UNSTARTED; }
+
   virtual				~Thread() {}
 
 private:
@@ -65,18 +56,18 @@ private:
   typename IThread<T>::STATUS		_status;
 
 private:
-  struct Container
+  struct	Container
   {
-    T *obj;
-    void (T::*fct)(Any &);
-    Any arg;
+    T*		obj;
+    void	(T::*fct)(Any &);
+    Any		arg;
   };
 
   struct Container			_container;
 
   static void*				_threadEntry(void* args)
   {
-    Thread<T>::Container	*container = reinterpret_cast<Thread<T>::Container*>(args);
+    Thread<T>::Container*	container = reinterpret_cast<Thread<T>::Container*>(args);
 
     (container->obj->*(container->fct))(container->arg);
     return (NULL);
