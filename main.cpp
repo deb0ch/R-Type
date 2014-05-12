@@ -55,8 +55,8 @@ int		main()
   world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
-  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
