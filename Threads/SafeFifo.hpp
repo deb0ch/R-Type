@@ -1,5 +1,5 @@
-#ifndef		SAFEQUEUE_H_
-# define	SAFEQUEUE_H_
+#ifndef		SAFEFIFO_H_
+# define	SAFEFIFO_H_
 
 #include <pthread.h>
 #include <vector>
@@ -28,7 +28,7 @@ public:
     return (false);
   }
 
-  T getNext(void) {
+  const T getNext(void) {	// TODO: const vraiment approprié ?
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
@@ -36,7 +36,7 @@ public:
     return ((this->fifo.front()));
   }
 
-  const T *getNextPop(void) {
+  const T getNextPop(void) {	// TODO: const vraiment approprié ?
     ScopedMutex p(&(this->_mutex));
     static T	res;
 
@@ -83,4 +83,4 @@ private:
 
 };
 
-#endif /* !SAFEQUEUE_H_ */
+#endif /* !SAFEFIFO_H_ */

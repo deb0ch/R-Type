@@ -21,12 +21,13 @@ public:
     };
 
 public:
-	virtual void		start(Any arg, T* obj, void (T::*fct)(Any &)) = 0;
-	virtual void		exit() = 0;
-	virtual void		wait() = 0;
-	virtual STATUS		status() const = 0;
+  virtual void		start(T* obj, void* (T::*fct)(Any), Any arg) = 0;
+  virtual void		start(void* (*fct)(void*), void* arg) = 0;
+  virtual void		exit() = 0;
+  virtual void		wait() = 0;
+  virtual STATUS	status() const = 0;
 
-	virtual			~IThread() {}
+  virtual		~IThread() {}
 };
 
 #endif /* !ITHREAD_H_ */

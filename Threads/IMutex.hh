@@ -14,6 +14,7 @@ public:
   virtual void		trylock() = 0;
   virtual void		unlock() = 0;
   virtual STATUS	status() const = 0;
+
   virtual		~IMutex() {}
 };
 

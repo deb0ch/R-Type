@@ -1,11 +1,7 @@
 #ifndef ICONDVAR_H_
 # define ICONDVAR_H_
 
-#ifdef __linux__
-#include "UMutex.hh"
-#elif _WIN32
-#include "WMutex.hh"
-#endif
+# include "Mutex.hh"
 
 class Mutex;
 

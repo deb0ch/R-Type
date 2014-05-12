@@ -12,7 +12,7 @@ class Thread : public IThread<T>
 {
 	// Public
 public:
-	virtual void						start(Any arg, T* obj, void (T::*fct)(Any &))
+  virtual void						start(T* obj, void* (T::*fct)(Any &), Any arg)
 	{
 		_container.obj = obj;
 		_container.fct = fct;
@@ -22,6 +22,13 @@ public:
 				throw ThreadException(GetLastError());
 		_status = RUNNING;
 	}
+
+  virtual void				start(void* (*fct)(void*), void* arg)
+  {
+    if ((_ret = pthread_create(&this->_thread, NULL, fct, arg)) != 0)
+      throw ThreadException(_ret);
+    this->_status = IThread<T>::RUNNING;
+  }
 
 	virtual void						exit()
 	{
