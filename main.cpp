@@ -1,4 +1,6 @@
 #include	<iostream>
+#include <unistd.h>
+
 
 #include	"World.hh"
 #include	"Entity.hh"
@@ -44,7 +46,7 @@ int		main()
 
   world.addSystem(new MoveSystem());
   world.addSystem(new Friction2DSystem());
-  world.addSystem(new SFMLRenderSystemT());
+  world.addSystem(new SFMLRenderSystem());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new OutOfBoundsSystem());
@@ -59,13 +61,13 @@ int		main()
   catch (const LibLoaderException &e)
   {
 	  std::cout << e.what() << std::endl;
-	  Sleep(5000);
+	  usleep(5000000);
   }
 
   if (input == NULL)
   {
 	  std::cout << "NULL" << std::endl;
-	  Sleep(5000);
+	  usleep(5000000);
   }
 
   world.setSharedObject("imageLoader", new ImageLoader());
