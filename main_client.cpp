@@ -22,7 +22,6 @@
 #include	"Box2DComponent.hh"
 #include	"SFMLSpriteComponent.hh"
 #include	"SFMLInputComponent.hh"
-#include	"PlayerMovementComponent.hh"
 #include	"MovementSpeedComponent.hh"
 #include	"NetworkSendUpdateComponent.hh"
 #include	"NetworkReceiveUpdateComponent.hh"
@@ -90,7 +89,6 @@ void		addEntities(World &world)
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new SFMLInputComponent())
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent((new ActionComponent())
@@ -108,7 +106,6 @@ void		addEntities(World &world)
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new SFMLInputComponent())
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new NetworkSendUpdateComponent())
 		  ->addComponent(new MovementSpeedComponent(2))
 		  ->addComponent((new ActionComponent())
@@ -125,7 +122,6 @@ void		addEntities(World &world)
 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new MovementSpeedComponent(0.3f))
-		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MoveFollowComponent(world.getEntity(1)))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
