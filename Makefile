@@ -1,6 +1,8 @@
-RM	=	rm -f
+RM		=	rm -f
 
-NAME	=	RType
+NAME		=	RType
+
+NAME_CLIENT	=	RType_Client
 
 all:		$(NAME)
 
@@ -9,6 +11,7 @@ $(NAME):
 		cd build && cmake ..
 		$(MAKE) -C build
 		mv build/$(NAME) .
+		mv build/$(NAME_CLIENT) ..
 
 clean:
 		$(MAKE) clean -C build

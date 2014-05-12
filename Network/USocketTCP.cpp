@@ -127,15 +127,17 @@ void SocketTCP::connect(const int address, const int port) {
     throw NetworkException(NetworkException::TCP, errno,NetworkException::S_ERROR);
 }
 
-int SocketTCP::send(const IBuffer &buffer) {
+bool SocketTCP::send(IBuffer &buffer) {
   int ret;
 
   if (this->_socket == INVALID_SOCKET)
     throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
-  if ((ret = ::send(this->_socket, buffer.getBuffer(), buffer.getLength(), MSG_NOSIGNAL)) == -1)
+  if ((ret = ::send(this->_socket, buffer.getBuffer() + buffer.getPosition(),
+		    buffer.getLength() - buffer.getPosition(), MSG_NOSIGNAL)) == -1)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
-  return (ret);
+  buffer.setPosition(buffer.getPosition() + ret);
+  return (buffer.end());
 }
 
 int SocketTCP::receive(IBuffer &buffer) {
@@ -144,9 +146,11 @@ int SocketTCP::receive(IBuffer &buffer) {
   if (this->_socket == INVALID_SOCKET)
     throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 			   NetworkException::S_WARNING);
-  if ((ret = ::recv(this->_socket, buffer.getBuffer(), buffer.getMaxSize(), MSG_NOSIGNAL)) == -1)
+  if ((ret = ::recv(this->_socket, buffer.getBuffer() + buffer.getPosition(),
+		    buffer.getMaxSize() - buffer.getPosition(), MSG_NOSIGNAL)) == -1)
     throw NetworkException(NetworkException::TCP, errno, NetworkException::S_ERROR);
-  buffer.setLength(ret);
+  buffer.setLength(buffer.getLength() + ret);
+  buffer.setPosition(buffer.getLength());
   return (ret);
 }
 

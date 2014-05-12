@@ -31,18 +31,20 @@ const int		SocketTCP::getHandle() const
 	return (this->socket);
 }
 
-int SocketTCP::send(const IBuffer &data)
+bool SocketTCP::send(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
 		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
-	int res = ::send(this->socket, data.getBuffer(), data.getLength(), 0);
+	int res = ::send(this->socket, data.getBuffer() + data.getPosition(),
+			 data.getLength() - data.getPosition(), 0);
 	if (res == SOCKET_ERROR)
 	{
 		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
 			NetworkException::S_ERROR);
 	}
-	return (res);
+	data.setPosition(data.getPosition() + res);
+	return (data.end());
 }
 
 int SocketTCP::receive(IBuffer &data)
@@ -50,13 +52,15 @@ int SocketTCP::receive(IBuffer &data)
 	if (this->socket == INVALID_SOCKET)
 		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
 		NetworkException::S_WARNING);
-	int received = ::recv(this->socket, data.getBuffer(), data.getMaxSize(), 0);
+	int received = ::recv(this->socket, data.getBuffer() + data.getPosition(),
+			      data.getMaxSize() - data.getPosition(), 0);
 	if (received == SOCKET_ERROR)
 	{
 		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
 			NetworkException::S_ERROR);
 	}
-	data.setLength(received);
+	data.setLength(data.getLength() + ret);
+	data.setPosition(data.getLength());
 	return (received);
 }
 
