@@ -47,10 +47,16 @@
 #define EXTENSION ".so"
 #endif
 
-int		main()
+void		registerComponents(World &world)
 {
-  World		world;
+  world.registerComponent(new Pos2DComponent());
+  world.registerComponent(new SFMLSpriteComponent());
+  world.registerComponent(new Speed2DComponent());
+  world.registerComponent(new Friction2DComponent());
+}
 
+void		addSystems(World &world)
+{
   world.addSystem(new MoveSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new SFMLRenderSystem());
@@ -59,7 +65,6 @@ int		main()
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new PlayerMovementSystem());
-
 
   IComponent *input = NULL;
   IComponent *azert = NULL;
@@ -81,8 +86,31 @@ int		main()
       usleep(5000000);
     }
 
-  world.setSharedObject("imageLoader", new ImageLoader());
+  CollisionSystem *collision;
+  collision = new CollisionSystem();
+  world.addSystem(collision);
+  world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 
+  EntityDeleterSystem *entityDeleterSystem;
+  entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
+
+  NetworkSendUpdateSystem *network;
+  std::vector<std::string> arg = {"Pos2DComponent", "SFMLSpriteComponent", "Speed2DComponent", "Friction2DComponent"};
+  network = new NetworkSendUpdateSystem(arg);
+  world.addSystem(network);
+  world.addSystem(new NetworkReceiveUpdateSystem());
+}
+
+void		addSharedObjetcs(World &world)
+{
+  world.setSharedObject("imageLoader", new ImageLoader());
+}
+
+void		addEntities(World &world)
+{
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -143,48 +171,16 @@ int		main()
 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+}
 
-  Entity *update_entity;
+int		main()
+{
+  World		world;
 
-  update_entity = world.createEntity();
-  update_entity->addComponent(new Pos2DComponent(100.0f, 0.f))
-    ->addComponent(new Speed2DComponent(2.f, 2.f))
-    ->addComponent(new NetworkSendUpdateComponent())
-    ->addComponent(new NetworkReceiveUpdateComponent(update_entity->_id))
-    ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")));
-  world.addEntity(update_entity);
-
-  /* add EventHandler */
-
-  CollisionSystem *collision;
-  collision = new CollisionSystem();
-  world.addSystem(collision);
-  world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
-
-  EntityDeleterSystem *entityDeleterSystem;
-  entityDeleterSystem = new EntityDeleterSystem();
-  world.addSystem(entityDeleterSystem);
-  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-			&EntityDeleterSystem::addEntityToDelete);
-  /* END add EventHandler */
-
-  NetworkSendUpdateSystem *network;
-  std::vector<std::string> arg = {"Pos2DComponent", "SFMLSpriteComponent", "Speed2DComponent", "Friction2DComponent"};
-
-  network = new NetworkSendUpdateSystem(arg);
-  world.addSystem(network);
-  world.addSystem(new NetworkReceiveUpdateSystem());
-
-  std::string test("Les pigouins ça glisse!");
-  world.setSharedObject<std::string>("Test", &test);
-  std::cout << *world.getSharedObject<std::string>("Test") << std::endl;
-  std::cout << world.getSharedObject<ASystem>("NO-K") << std::endl;
-
-  world.registerComponent(new Pos2DComponent());
-  world.registerComponent(new SFMLSpriteComponent());
-  world.registerComponent(new Speed2DComponent());
-  world.registerComponent(new Friction2DComponent());
-  std::cout << world.createComponent("Pos2DComponent")->getType() << std::endl;
+  registerComponents(world);
+  addSystems(world);
+  addSharedObjetcs(world);
+  addEntities(world);
 
   world.start();
   for (;;)

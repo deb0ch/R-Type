@@ -31,7 +31,7 @@ public:
 
 	virtual void connect(const std::string &address, const int port);
 	virtual void connect(const int address, const int port);
-	virtual int	send(const IBuffer &);
+	virtual bool	send(IBuffer &);
 	virtual int receive(IBuffer &);
 private:
 	SocketTCP(const SocketTCP &);

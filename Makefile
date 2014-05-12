@@ -1,4 +1,4 @@
-RM	=	rm -f
+RM		=	rm -f
 
 NAME_C	=	RType_Client
 NAME_S	=	RType_Server

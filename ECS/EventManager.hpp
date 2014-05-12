@@ -57,6 +57,42 @@ public:
       } while (it != this->_event_handlers.end());
   }
 
+  void		removeHandler(T *obj)
+  {
+    removeHandler([obj] (std::pair<std::string,
+			 std::pair<T *, void (T::*)(IEvent *)> > value) -> bool {
+		    if (value.second.first == obj)
+		      return (true);
+		    return (false);
+		  });
+  }
+
+  void		removeHandler(T *obj, const std::string &type)
+  {
+    removeHandler([obj, type] (std::pair<std::string,
+			 std::pair<T *, void (T::*)(IEvent *)> > value) -> bool {
+		    if (value.second.first == obj && value.first == type)
+		      return (true);
+		    return (false);
+		  });
+  }
+
+private:
+  template <typename U>
+  void		removeHandler(U cond)
+  {
+    auto it = this->_event_handlers.begin();
+
+    do
+      {
+	it = std::find_if(it, this->_event_handlers.end(), cond);
+
+	if (it != this->_event_handlers.end())
+	  it = this->_event_handlers.erase(it);
+
+      } while (it != this->_event_handlers.end());
+  }
+
 protected:
   std::map<std::string, std::pair<T *, void (T::*)(IEvent *)> >	_event_handlers;
 };

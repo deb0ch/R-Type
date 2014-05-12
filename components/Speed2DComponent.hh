@@ -3,8 +3,9 @@
 
 # include	"AComponent.hpp"
 # include	"ISerializableComponent.hh"
+# include	"INetworkSerializableComponent.hh"
 
-class		Speed2DComponent : public AComponent<Speed2DComponent>, public ISerializableComponent
+class		Speed2DComponent : public AComponent<Speed2DComponent>, public INetworkSerializableComponent
 {
 protected:
   float		_vX;
