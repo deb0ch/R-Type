@@ -17,3 +17,9 @@ void	NetworkSendUpdateComponent::increasePacketNumber()
 {
   ++this->_packet_number;
 }
+
+void NetworkSendUpdateComponent::serialize(IBuffer &) const
+{}
+
+void NetworkSendUpdateComponent::unserialize(IBuffer &)
+{}

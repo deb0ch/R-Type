@@ -2,6 +2,7 @@
 # define NETWORKRECEIVEUPDATECOMPONENT_H_
 
 # include "AComponent.hpp"
+# include "ISerializableComponent.hh"
 
 class NetworkReceiveUpdateComponent : public AComponent<NetworkReceiveUpdateComponent>
 {

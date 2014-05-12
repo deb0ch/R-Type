@@ -5,8 +5,9 @@
 # include "AComponent.hpp"
 # include "ImageLoader.hh"
 # include "ISerializableComponent.hh"
+# include "INetworkSerializableComponent.hh"
 
-class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>, public ISerializableComponent
+class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>, public INetworkSerializableComponent
 {
 protected:
   std::string	_filaName;

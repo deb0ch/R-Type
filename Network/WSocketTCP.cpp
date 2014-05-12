@@ -31,28 +31,32 @@ const int		SocketTCP::getHandle() const
 	return (this->socket);
 }
 
-int SocketTCP::send(const IBuffer &data)
+bool SocketTCP::send(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw TCPException(MSG_INVALID_SOCKET);
-	int res = ::send(this->socket, data.getBuffer(), data.getLength(), 0);
+	  throw TCPException(MSG_INVALID_SOCKET);
+	int res = ::send(this->socket, data.getBuffer() + data.getPosition(),
+			 data.getLength() - data.getPosition(), 0);
 	if (res == SOCKET_ERROR)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	return (res);
+	data.setPosition(data.getPosition() + res);
+	return (data.end());
 }
 
 int SocketTCP::receive(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw TCPException(MSG_INVALID_SOCKET);
-	int received = ::recv(this->socket, data.getBuffer(), data.getMaxSize(), 0);
+	  throw TCPException(MSG_INVALID_SOCKET);
+	int received = ::recv(this->socket, data.getBuffer() + data.getPosition(),
+			      data.getMaxSize() - data.getPosition(), 0);
 	if (received == SOCKET_ERROR)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	data.setLength(received);
+	data.setLength(data.getLength() + ret);
+	data.setPosition(data.getLength());
 	return (received);
 }
 

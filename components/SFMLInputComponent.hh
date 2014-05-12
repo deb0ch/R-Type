@@ -6,10 +6,10 @@
 # include	<vector>
 
 # include	"SFML/Window/Keyboard.hpp"
-
 # include	"AComponent.hpp"
+# include	"ISerializableComponent.hh"
 
-class		SFMLInputComponent : public AComponent<SFMLInputComponent>
+class		SFMLInputComponent : public AComponent<SFMLInputComponent>, public ISerializableComponent
 {
 private:
   std::map<std::string, std::vector<sf::Keyboard::Key> >	_inputs;
@@ -20,6 +20,8 @@ public:
 
   const std::map<std::string, std::vector<sf::Keyboard::Key> >&	getInputs() const;
   void			addInput(const std::string &action, const sf::Keyboard::Key &key);
+  virtual void serialize(IBuffer &) const;
+  virtual void unserialize(IBuffer &);
 };
 
 #endif /* !SFMLINPUTCOMPONENT_H_ */

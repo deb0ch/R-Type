@@ -22,3 +22,9 @@ void	SFMLInputComponent::addInput(const std::string &action, const sf::Keyboard:
 {
   this->_inputs[action].push_back(key);
 }
+
+void SFMLInputComponent::serialize(IBuffer &) const
+{}
+
+void SFMLInputComponent::unserialize(IBuffer &)
+{}

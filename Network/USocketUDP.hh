@@ -27,6 +27,7 @@ public:
   virtual int	send(const IBuffer &, const int address, const int port);
   virtual int	send(const IBuffer &, const std::string & address, const int port);
   virtual int	receive(IBuffer &, std::string& address, int& port);
+
   virtual void	close();
   virtual void	init();
 

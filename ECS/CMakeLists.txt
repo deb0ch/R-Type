@@ -8,13 +8,15 @@ SET(HEADERS
   IEvent.hh
   ISystem.hh
   VectorDeleter.hpp
-  World.hh)
+  World.hh
+  Hash.hh)
 
 SET(SOURCES
   AEvent.cpp
   ASystem.cpp
   Entity.cpp
-  World.cpp)
+  World.cpp
+  Hash.cpp)
 
 SET(LIB_TYPE STATIC)
 

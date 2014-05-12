@@ -1,9 +1,11 @@
 #include <iostream>
 #include "NetworkSendUpdateSystem.hh"
 #include "ISerializableComponent.hh"
+#include "INetworkSerializableComponent.hh"
 #include "IComponent.hh"
 #include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
+#include "Hash.hh"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
@@ -35,13 +37,13 @@ void				NetworkSendUpdateSystem::start()
 void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 									     NetworkBuffer &buffer)
 {
-  ISerializableComponent	*serializable_component;
+  INetworkSerializableComponent	*serializable_component;
   IComponent			*component;
-  std::hash<std::string>	hash;
+  Hash				hash;
 
   for (auto it = this->_component_to_send.begin(); it != this->_component_to_send.end(); ++it)
     {
-      if ((serializable_component = entity->getComponent<ISerializableComponent>(*it)) &&
+      if ((serializable_component = entity->getComponent<INetworkSerializableComponent>(*it)) &&
 	  (component = dynamic_cast<IComponent *>(serializable_component)))
 	{
 	  buffer << static_cast<std::size_t>(hash(component->getType()));
@@ -62,6 +64,6 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   *buffer << static_cast<char>(1);
   this->serializeComponents(entity, *buffer);
   network_component->increasePacketNumber();
-  this->_packets_sended->push_back(buffer);
   // Send buffer here
+  this->_packets_sended->push_back(buffer);
 }
