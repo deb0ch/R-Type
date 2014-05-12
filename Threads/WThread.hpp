@@ -12,7 +12,7 @@ class Thread : public IThread<T>
 {
 	// Public
 public:
-  virtual void						start(T* obj, void* (T::*fct)(Any &), Any arg)
+  virtual void						start(T* obj, void (T::*fct)(Any), Any arg)
 	{
 		_container.obj = obj;
 		_container.fct = fct;
@@ -69,7 +69,7 @@ private:
 	struct		Container
 	{
 		T*		obj;
-		void	(T::*fct)(Any &);
+		void	(T::*fct)(Any);
 		Any		arg;
 	};
 	struct Container					_container;

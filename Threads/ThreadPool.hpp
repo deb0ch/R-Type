@@ -9,13 +9,6 @@
 # include "SafeFifo.hpp"
 # include "Task.hpp"
 
-// TODO: ajouter methode wait();
-
-extern "C"
-{
-  void *	threadEntryPoint(void * threadPoolPtr);
-}
-
 class ThreadPool
 {
   // Public
@@ -29,8 +22,7 @@ public :
   void			addTask(ITask * task)
   {
     this->_tasks.push(task);
-    _condvar.signal();
-    _condvar2.wait(&_mutex);
+    _condvar.broadcast();
   }
 
   eStatus		getStatus() const
@@ -46,8 +38,7 @@ public :
     for (unsigned int i = 0; i < nbThread; i++)
       {
 	this->_pool.push_back(new Thread< ThreadPool >());
-	this->_pool[i]->start(&threadEntryPoint, static_cast<void *>(this));
-	// this->_pool[i]->start(this, &ThreadPool::runThread, Any());
+	this->_pool[i]->start(this, &ThreadPool::runThread, Any());
       }
   }
 
@@ -59,17 +50,15 @@ public :
     _condvar.broadcast();
     for (auto it = _pool.begin(); it != _pool.end(); ++it)
       {
-	(*it)->wait();
 	delete *it;
 	_condvar.broadcast();
       }
   }
 
-  void*	runThread()
+  void			runThread(Any)
   {
     ITask *	task;
 
-    _condvar2.signal();
     if (_status == STOPPED)
       {
 	std::cout << "Catastrophe2 !!!" << std::endl;
@@ -79,14 +68,13 @@ public :
 	while (_tasks.isEmpty() && _status == RUNNING)
 	  _condvar.wait(&_mutex);
 	if (_status == STOPPED)
-	  return (NULL);
+	  return ;
 	if ((task = this->_tasks.getNextPop()) != NULL)
 	  {
 	    (*task)();
 	    delete task;
 	  }
       }
-    return (NULL);
   }
 
   // Private
@@ -100,19 +88,9 @@ private:
   const unsigned int			_nbThread;
   volatile eStatus			_status;
   CondVar				_condvar;
-  CondVar				_condvar2;
   Mutex					_mutex;
   SafeFifo<ITask *>			_tasks;
   std::vector<Thread< ThreadPool > *>	_pool;
 };
-
-extern "C"
-{
-  void *	threadEntryPoint(void * threadPoolPtr)
-  {
-    static_cast<ThreadPool *>(threadPoolPtr)->runThread();
-    return (NULL);
-  }
-}
 
 #endif /* !THREADPOOL_H_ */

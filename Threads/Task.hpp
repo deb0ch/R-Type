@@ -10,7 +10,7 @@ public:
   virtual void	run() { (_obj->*(_fct))(_arg); }
   virtual void	operator()() { (_obj->*(_fct))(_arg); }
 
-		Task(T* obj, void * (T::*fct)(Any), Any arg) : _obj(obj), _fct(fct), _arg(arg) {}
+		Task(T* obj, void (T::*fct)(Any), Any arg) : _obj(obj), _fct(fct), _arg(arg) {}
   virtual	~Task() {}
 
 private:
@@ -19,7 +19,7 @@ private:
 
 protected:
   T *		_obj;
-  void *	(T::*_fct)(Any);
+  void		(T::*_fct)(Any);
   Any		_arg;
 };
 

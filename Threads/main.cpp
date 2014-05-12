@@ -1,4 +1,3 @@
-
 #include <unistd.h>
 #include <ostream>
 #include "Threads.hh"
@@ -9,8 +8,8 @@ Mutex	g_mutex;
 class ClassTest
 {
 public:
-  void *	TestFunction(Any arg);
-  void *	TestFunction2(Any arg);
+  void 	TestFunction(Any arg);
+  void 	TestFunction2(Any arg);
 public:
   ClassTest() {}
   virtual ~ClassTest() {}
@@ -22,9 +21,9 @@ protected:
   int	_arg;
 };
 
-void *	ClassTest::TestFunction2(Any arg)
+void 	ClassTest::TestFunction2(Any arg)
 {
-  ScopedMutex toto(&g_mutex);
+  ScopedMutex p(&g_mutex);
   std::string hey = "abcdefghijkabcdefghijkabcdefghijkabcdefghijk\n";
   std::ostringstream strstream;
 
@@ -37,18 +36,12 @@ void *	ClassTest::TestFunction2(Any arg)
     }
 }
 
-void *	ClassTest::TestFunction(Any arg)
+void 	ClassTest::TestFunction(Any arg)
 {
+  ScopedMutex p(&g_mutex);
   std::ostringstream strstream;
 
   std::string	hey = "Hey ! Je suis le thread ";
-  // sleep(0);
-  std::cout << "Bouclinf !" << std::endl;
-  while (42)
-    {
-      ;
-    }
-  std::cout << "Fin bounclinf" << std::endl;
   _arg = *arg.getValue<int>();
   strstream << hey << _arg << std::endl;
   hey = strstream.str();
@@ -67,7 +60,7 @@ int	main()
 {
   ClassTest objTest;
 
-  // ThreadPool	*pool = new ThreadPool(1);
+  ThreadPool	*pool = new ThreadPool(5);
 
   Thread<ClassTest> *thread = new Thread<ClassTest>;
 
@@ -76,20 +69,18 @@ int	main()
   int		toto3 = 3;
   int		toto4 = 4;
 
-  thread->start(&objTest, &ClassTest::TestFunction, Any(&toto4));
+  // thread->start(&objTest, &ClassTest::TestFunction, Any(&toto4));
   // thread.wait();
-  // pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
-  // pool.addTask(new TTask<ClassTest>(&objTest, &ClassTest::TestFunction, Any(toto2)));
-  // pool.addTask(new TTask<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(toto3)));
-  // pool.addTask(new TTask<ClassTest>(&objTest, &ClassTest::TestFunction, Any(toto4)));
-  // pool.addTask(new TTask<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(toto1)));
-  // pool.addTask(new TTask<ClassTest>(&objTest, &ClassTest::TestFunction, Any(toto2)));
-  // pool->addTask(Any(&toto2), &objTest, &ClassTest::TestFunction2);
-  // pool->addTask(Any(&toto3), &objTest, &ClassTest::TestFunction);
-  // pool->addTask(Any(&toto4), &objTest, &ClassTest::TestFunction2);
-  getchar();
-  delete thread;
-  std::cout << "delete on thread" << std::endl;
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
   getchar();
   return (0);
 }

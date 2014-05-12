@@ -20,7 +20,7 @@ SET(SOURCE_S
 	toto.cpp)
 
 SET(SOURCE_C
-	main.cpp)
+  main.cpp)
 	
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")

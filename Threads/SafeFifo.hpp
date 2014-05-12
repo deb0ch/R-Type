@@ -28,7 +28,7 @@ public:
     return (false);
   }
 
-  const T getNext(void) {	// TODO: const vraiment approprié ?
+  T &getNext(void) {
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
@@ -36,12 +36,12 @@ public:
     return ((this->fifo.front()));
   }
 
-  const T getNextPop(void) {	// TODO: const vraiment approprié ?
+  T &getNextPop(void) {
     ScopedMutex p(&(this->_mutex));
     static T	res;
 
     if (this->fifo.empty())
-      return (NULL);
+      throw std::exception();
     res = (this->fifo.front());
     this->fifo.erase(this->fifo.begin());
     return (res);
