@@ -5,8 +5,6 @@
 ServerRelay::ServerRelay(int port, int nb_pending_connection)
 {
   srand(time(NULL));
-  this->_server_socket_tcp.init();
-  this->_server_socket_udp.init();
   this->_server_socket_tcp.bind(port);
   this->_server_socket_tcp.listen(nb_pending_connection);
   this->_server_socket_udp.bind(port);
@@ -136,6 +134,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
   IBuffer *buffer;
 
   buffer = new NetworkBuffer;
+  buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
 
