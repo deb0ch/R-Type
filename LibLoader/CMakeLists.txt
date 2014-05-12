@@ -9,7 +9,6 @@ SET(HEADER_FILES
 	LibLoaderException.hh)
 
 SET(SOURCES
-	#main.cpp
 	LibLoaderException.cpp)
       
 SET (LIB_TYPE STATIC)

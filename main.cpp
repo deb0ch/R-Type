@@ -27,9 +27,15 @@
 #include	"ImageLoader.hh"
 
 #ifdef _WIN32
+#include "WLibraryLoader.hpp"
 	#define PATH "Ressources\\Images\\"
+	#define PATHLIB "..\\plugin\\Debug\\"
+	#define EXTENSION ".dll"
 #elif __linux__
+	#include "ULibraryLoader.hpp"
 	#define PATH "Ressources/Images/"
+	#define PATHLIB "../plugin/lib"
+	#define EXTENSION ".so"
 #endif
 
 int		main()
@@ -38,10 +44,29 @@ int		main()
 
   world.addSystem(new MoveSystem());
   world.addSystem(new Friction2DSystem());
-  world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new SFMLRenderSystemT());
   world.addSystem(new PlayerMovementSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new OutOfBoundsSystem());
+
+
+  IComponent *input;
+  LibraryLoader<IComponent> loaderlib;
+  try
+  {
+	  input = loaderlib.getInstance(PATHLIB + std::string("SFMLInputComponent") + EXTENSION, "getInstance");
+  }
+  catch (const LibLoaderException &e)
+  {
+	  std::cout << e.what() << std::endl;
+	  Sleep(5000);
+  }
+
+  if (input == NULL)
+  {
+	  std::cout << "NULL" << std::endl;
+	  Sleep(5000);
+  }
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
@@ -52,7 +77,7 @@ int		main()
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		  ->addComponent(new NetworkUpdateComponent())
-		  ->addComponent(new SFMLInputComponent())
+		  ->addComponent(input)
 		  ->addComponent(new PlayerMovementComponent())
 		  ->addComponent(new MovementSpeedComponent(5)));
 

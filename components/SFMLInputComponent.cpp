@@ -29,3 +29,11 @@ void SFMLInputComponent::setStatusKey(const sf::Keyboard::Key key, const bool st
   if (it != this->_inputs.end())
     this->_inputs[key] = status;
 }
+
+extern "C"
+{
+	DECLSPEC SFMLInputComponent *getInstance()
+	{
+		return new SFMLInputComponent();
+	}
+}
