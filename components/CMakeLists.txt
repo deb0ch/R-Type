@@ -18,6 +18,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
@@ -49,6 +50,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Network)
 
 SET (LIB_TYPE SHARED)
 
+ADD_LIBRARY(ActionComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp)
 ADD_LIBRARY(Speed2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp)
 #ADD_LIBRARY(SFMLSpriteComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp)
 ADD_LIBRARY(Pos2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp)

@@ -36,15 +36,15 @@
 
 #ifdef _WIN32
 #include "WLibraryLoader.hpp"
-	#define PATH "Ressources\\Images\\"
-	#define PATHLIB "..\\plugin\\Debug\\"
-	#define EXTENSION ".dll"
+#define PATH "Ressources\\Images\\"
+#define PATHLIB "..\\plugin\\Debug\\"
+#define EXTENSION ".dll"
 #elif __linux__
-	#include <unistd.h>
-	#include "ULibraryLoader.hpp"
-	#define PATH "Ressources/Images/"
-	#define PATHLIB "plugin/lib"
-	#define EXTENSION ".so"
+#include <unistd.h>
+#include "ULibraryLoader.hpp"
+#define PATH "Ressources/Images/"
+#define PATHLIB "plugin/lib"
+#define EXTENSION ".so"
 #endif
 
 int		main()
@@ -61,29 +61,31 @@ int		main()
   world.addSystem(new PlayerMovementSystem());
 
 
-  IComponent *input;
+  IComponent *input = NULL;
+  IComponent *azert = NULL;
   LibraryLoader<IComponent> loaderlib;
   try
-  {
-	  input = loaderlib.getInstance(PATHLIB + std::string("SFMLInputComponent") + EXTENSION, "getInstance");
-  }
+    {
+      input = loaderlib.getInstance(PATHLIB + std::string("SFMLInputComponent") + EXTENSION, "getInstance");
+      azert = loaderlib.getInstance(PATHLIB + std::string("ActionComponent") + EXTENSION, "getInstance");
+    }
   catch (const LibLoaderException &e)
-  {
-	  std::cout << e.what() << std::endl;
-	  usleep(5000000);
-  }
+    {
+      std::cout << e.what() << std::endl;
+      usleep(5000000);
+    }
 
-  if (input == NULL)
-  {
-	  std::cout << "NULL" << std::endl;
-	  usleep(5000000);
-  }
+  if (input == NULL || azert == NULL)
+    {
+      std::cout << "NULL" << std::endl;
+      usleep(5000000);
+    }
 
   world.setSharedObject("imageLoader", new ImageLoader());
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
-  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
@@ -116,8 +118,8 @@ int		main()
 		  );
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new MovementSpeedComponent(0.3f))
@@ -131,14 +133,14 @@ int		main()
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
-  		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 

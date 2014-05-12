@@ -29,6 +29,8 @@ public:
     return it->second->clone();
   }
 
+  virtual void init() = 0;
+
 protected:
   std::map<Key, const U *> _types;
 };
