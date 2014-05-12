@@ -220,7 +220,6 @@ IComponent	*World::createComponent(const std::string &type) const
 {
   std::hash<std::string> hash;
 
-  std::cout << "alzejazlje: " << hash(type) << std::endl;
   return (this->_component_factory.create(hash(type)));
 }
 

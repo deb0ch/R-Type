@@ -33,7 +33,6 @@ void MoveFollowSystem::processEntity(Entity *entity, const float)
   action->setAction("DOWN", false);
   action->setAction("RIGHT", false);
 
-  std::cout << "EYADHAI9UDHIUEFH" << std::endl;
   if (pos->getX() < target->getX())
     action->setAction("RIGHT", true);
   if (pos->getX() > target->getX())
