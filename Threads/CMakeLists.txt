@@ -7,6 +7,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ECS)
 
 SET(HEADERS
+  Any.hpp
   IMutex.hh
   IThread.hpp
   ThreadException.hh
@@ -41,7 +42,7 @@ SET (LIB_TYPE STATIC)
 ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0")
 	INCLUDE_DIRECTORIES(/usr/include/)
 	TARGET_LINK_LIBRARIES(Threadlib /usr/lib/x86_64-linux-gnu/libpthread.so)
 endif (UNIX)

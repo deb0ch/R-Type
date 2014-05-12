@@ -20,31 +20,26 @@ public :
     task->obj = obj;
     task->fct = fct;
     this->_task.push(task);
-    _condvar.signal();
+    _condvar.broadcast();
   }
 
   // Coplien
 
   ThreadPool(unsigned int nbThread)
   {
-    this->_status = RUNNING;
+    int a;
     this->_nbThread = nbThread;
     for (unsigned int i = 0; i < nbThread; i++)
       {
 	this->_pool.push_back(new Thread< ThreadPool<T> >());
-	this->_pool[i]->start(Any(), this, &ThreadPool<T>::runThread);
+	this->_pool[i]->start(&a, this, &ThreadPool<T>::runThread);
       }
   }
 
   ~ThreadPool()
   {
-    _mutex.lock();
-    _status = STOPPED;
-    _mutex.unlock();
-    _condvar.broadcast();
     for (auto it = _pool.begin(); it != _pool.end(); ++it)
       {
-	(*it)->wait();
 	delete *it;
       }
   }
@@ -63,15 +58,13 @@ private :
 
     while (42)
       {
-	while (_task.isEmpty() && _status == RUNNING)
+	if (_task.isEmpty())
 	  _condvar.wait(&_mutex);
-	if (_status == STOPPED)
-	  return ;
-	if ((task = this->_task.getNext()) != NULL)
-	  {
-	    (task->obj->*(task->fct))(task->arg);
-	    delete task;
-	  }
+	try {
+	  task = this->_task.getNextPop();
+	  (task->obj->*(task->fct))(task->arg);
+	  delete task;
+	} catch (std::exception e) {}
       }
   }
 
@@ -83,15 +76,8 @@ private:
     Any arg;
   };
 
-  enum	e_status
-    {
-      RUNNING,
-      STOPPED
-    };
-
   CondVar				_condvar;
   Mutex					_mutex;
-  e_status				_status;
   SafeFifo<TaskContainer*>		_task;
   std::vector<Thread< ThreadPool<T> >*>	_pool;
   unsigned int				_nbThread;
