@@ -2,6 +2,7 @@
 
 #include	"VectorDeleter.hpp"
 #include	"World.hh"
+#include	"Hash.hh"
 
 //----- ----- Constructors ----- ----- //
 World::World()
@@ -218,7 +219,7 @@ IComponent	*World::createComponent(std::size_t type) const
 
 IComponent	*World::createComponent(const std::string &type) const
 {
-  std::hash<std::string> hash;
+  Hash		hash;
 
   std::cout << "alzejazlje: " << hash(type) << std::endl;
   return (this->_component_factory.create(hash(type)));
@@ -226,7 +227,7 @@ IComponent	*World::createComponent(const std::string &type) const
 
 void		World::registerComponent(const IComponent *component)
 {
-  std::hash<std::string> hash;
+  Hash		hash;
 
   if (!component)
     return ;
