@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "WSocketTCP.hh"
-#include "NetworkException.hh"
+#include "TCPException.hh"
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -34,14 +34,12 @@ const int		SocketTCP::getHandle() const
 bool SocketTCP::send(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+	  throw TCPException(MSG_INVALID_SOCKET);
 	int res = ::send(this->socket, data.getBuffer() + data.getPosition(),
 			 data.getLength() - data.getPosition(), 0);
 	if (res == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 	data.setPosition(data.getPosition() + res);
 	return (data.end());
@@ -50,14 +48,12 @@ bool SocketTCP::send(IBuffer &data)
 int SocketTCP::receive(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+	  throw TCPException(MSG_INVALID_SOCKET);
 	int received = ::recv(this->socket, data.getBuffer() + data.getPosition(),
 			      data.getMaxSize() - data.getPosition(), 0);
 	if (received == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 	data.setLength(data.getLength() + ret);
 	data.setPosition(data.getLength());
@@ -68,8 +64,7 @@ void SocketTCP::listen(const std::size_t block)
 {
 	if (::listen(this->socket, block) == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, " listen failed",
-			NetworkException::SEVERITY::S_WARNING);;
+		throw TCPException(" listen failed");
 	}
 }
 
@@ -85,13 +80,11 @@ ISocketTCP *SocketTCP::accept()
 	SOCKET		sock;
 
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+		throw TCPException(MSG_INVALID_SOCKET);
 	sock = WSAAccept(this->socket, reinterpret_cast<SOCKADDR*>(&cs), &lencs, NULL, NULL);
 	if (sock == INVALID_SOCKET)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 	return (new SocketTCP(sock));
 }
@@ -99,8 +92,7 @@ ISocketTCP *SocketTCP::accept()
 void SocketTCP::bind(int port, const std::string &address)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+		throw TCPException(MSG_INVALID_SOCKET);
 	if (address == "")
 		this->clientService.sin_addr.s_addr = ::htonl(INADDR_ANY);
 	else
@@ -108,14 +100,12 @@ void SocketTCP::bind(int port, const std::string &address)
 	this->clientService.sin_family = AF_INET;
 	if (WSAHtons(this->socket, port, &clientService.sin_port) != 0)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 	if (::bind(this->socket, reinterpret_cast<sockaddr *>(&this->clientService),
 		sizeof(this->clientService)) == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, "bind failed",
-			NetworkException::S_ERROR);
+		throw TCPException("bind failed");
 	}
 }
 
@@ -125,29 +115,24 @@ void SocketTCP::connect(const std::string &address, const int port)
 	sockaddr_in		sock_in;
 
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+		throw TCPException(MSG_INVALID_SOCKET);
 	hostinfo = ::gethostbyname(address.c_str());
 	if (hostinfo == NULL)
-		throw NetworkException(NetworkException::TCP, "gethostbyname failed",
-		NetworkException::S_ERROR);
+		throw TCPException("gethostbyname failed");
 	sock_in.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
 	sock_in.sin_family = AF_INET;
 	if (WSAHtons(this->socket, port, &sock_in.sin_port) != 0)
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-		NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	if (::connect(this->socket, reinterpret_cast<struct sockaddr*>(&sock_in), sizeof(struct sockaddr)) == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 }
 
 void SocketTCP::connect(const int address, const int port)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-		NetworkException::S_WARNING);
+		throw TCPException(MSG_INVALID_SOCKET);
 	sockaddr_in clientService;
 	clientService.sin_family = AF_INET;
 	clientService.sin_addr.s_addr = ::htonl(address);
@@ -155,8 +140,7 @@ void SocketTCP::connect(const int address, const int port)
 	if (::connect(this->socket, reinterpret_cast<SOCKADDR *>(&clientService),
 		sizeof(clientService)) == SOCKET_ERROR)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 }
 
@@ -166,14 +150,12 @@ void SocketTCP::init()
 	int reuseAddr = 1;
 	if (iResult != 0)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::SEVERITY::S_ERROR);
+		throw TCPException(WSAGetLastError());
 	}
 	this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->socket == INVALID_SOCKET)
 	{
-		throw NetworkException(NetworkException::TCP, WSAGetLastError(),
-			NetworkException::SEVERITY::S_ERROR);;
+		throw TCPException(WSAGetLastError());
 	}
 	//::setsockopt(this->socket, SOL_SOCKET, SO_REUSEADDR &reuseAddr, sizeof(reuseAddr));
 }
@@ -187,8 +169,7 @@ void SocketTCP::setBlocking(bool const block)
 {
 	if (this->socket == INVALID_SOCKET)
 	{
-		throw NetworkException(NetworkException::TCP, MSG_INVALID_SOCKET,
-			NetworkException::SEVERITY::S_WARNING);;
+		throw TCPException(MSG_INVALID_SOCKET);;
 	}
 	u_long blocking = block ? 0 : 1;
 	this->blockingSocket = block;

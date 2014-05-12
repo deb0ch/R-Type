@@ -26,6 +26,7 @@ private:
   /** An event manager that allows systems to comunicate together. */
   EventManager<ISystem>			_event_manager;
   Factory<IComponent, std::size_t>	_component_factory;
+  bool					_initialized;
 
 public:
 
@@ -71,7 +72,8 @@ public:
   bool		hasEventHandler(const std::string &type) const;
   void		sendEvent(IEvent *event);
 
-  std::vector<Entity *> &getEntities();
+  std::vector<Entity *>	&getEntities();
+  Entity	*getEntity(unsigned long id);
 
   void		process(const float delta);
   /** @brief Init all the systems. */

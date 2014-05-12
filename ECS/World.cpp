@@ -8,12 +8,14 @@
 World::World()
 {
   this->_nextEntityID = 1;
+  this->_initialized = false;
 }
 
 World::World(const World& ref)
 {
   this->_entities = ref._entities;
   this->_systems = ref._systems;
+  this->_initialized = ref._initialized;
 }
 
 //----- ----- Destructor ----- ----- //
@@ -122,6 +124,19 @@ std::vector<Entity *> &World::getEntities()
   return (this->_entities);
 }
 
+Entity		*World::getEntity(unsigned long id)
+{
+  auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
+			 [id] (Entity *entity) -> bool {
+			   return (entity->_id == id);
+			 });
+
+  if (it == this->_entities.end())
+    return (NULL);
+
+  return (*it);
+}
+
 //----- ----- Methods ----- ----- //
 
 /**
@@ -130,6 +145,8 @@ std::vector<Entity *> &World::getEntities()
  */
 void	World::process(const float delta)
 {
+  if (!this->_initialized)
+    this->init();
   std::for_each(this->_systems.begin(), this->_systems.end(), [this, delta] (ISystem *system) -> void {
       system->process(this->_entities, delta);
     });
@@ -140,7 +157,9 @@ void	World::process(const float delta)
  */
 void	World::init()
 {
-
+  std::for_each(this->_systems.begin(), this->_systems.end(), [] (ISystem *system) -> void {
+      system->init();
+    });
 }
 
 /**

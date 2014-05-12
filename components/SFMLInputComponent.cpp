@@ -1,33 +1,26 @@
-#include "SFMLInputComponent.hh"
+#include	"SFMLInputComponent.hh"
 
 SFMLInputComponent::SFMLInputComponent()
   : AComponent("SFMLInputComponent")
 {
-  this->_inputs[sf::Keyboard::Left] = false;
-  this->_inputs[sf::Keyboard::Right] = false;
-  this->_inputs[sf::Keyboard::Down] = false;
-  this->_inputs[sf::Keyboard::Up] = false;
-  this->_inputs[sf::Keyboard::Space] = false;
+  this->_inputs["UP"]		= {sf::Keyboard::Key::Up, sf::Keyboard::Key::Z};
+  this->_inputs["LEFT"]		= {sf::Keyboard::Key::Left, sf::Keyboard::Key::Q};
+  this->_inputs["DOWN"]		= {sf::Keyboard::Key::Down, sf::Keyboard::Key::S};
+  this->_inputs["RIGHT"]	= {sf::Keyboard::Key::Right, sf::Keyboard::Key::D};
+  this->_inputs["FIRE"]		= {sf::Keyboard::Key::Space};
 }
 
 SFMLInputComponent::~SFMLInputComponent()
 {}
 
-const std::map<sf::Keyboard::Key, bool> SFMLInputComponent::getInputs() const {
-  return this->_inputs;
+const std::map<std::string, std::vector<sf::Keyboard::Key> >&	SFMLInputComponent::getInputs() const
+{
+  return (this->_inputs);
 }
 
-bool SFMLInputComponent::isActived(const sf::Keyboard::Key key) const {
-  std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
-  if (it != this->_inputs.end())
-    return it->second;
-  return false;
-}
-
-void SFMLInputComponent::setStatusKey(const sf::Keyboard::Key key, const bool status) {
-  std::map<sf::Keyboard::Key, bool>::const_iterator it = this->_inputs.find(key);
-  if (it != this->_inputs.end())
-    this->_inputs[key] = status;
+void	SFMLInputComponent::addInput(const std::string &action, const sf::Keyboard::Key &key)
+{
+  this->_inputs[action].push_back(key);
 }
 
 void SFMLInputComponent::serialize(IBuffer &) const
