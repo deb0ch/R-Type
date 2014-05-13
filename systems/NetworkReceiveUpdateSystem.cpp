@@ -113,6 +113,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   /*
   VOIR AVEC ROMAIN ICI FACTORY
   */
+  std::cout << component_hash << std::endl;
   ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
   new_component = test->create(component_hash);
   if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
