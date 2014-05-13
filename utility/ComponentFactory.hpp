@@ -1,8 +1,13 @@
 #ifndef COMPONENTFACTORY_H_
 # define COMPONENTFACTORY_H_
 
+# include <string>
 # include "Factory.hpp"
 # include "SFMLInputComponent.hh"
+# include "Friction2DComponent.hh"
+# include "Box2DComponent.hh"
+# include "Pos2DComponent.hh"
+# include "Speed2DComponent.hh"
 # include "IComponent.hh"
 # include "Hash.hh"
 
@@ -17,19 +22,25 @@ public :
 
 	virtual void init()
 	{
-		/*
 		IComponent *input = new SFMLInputComponent();
+		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
 
-		input = new Pos2DComponent(0.0f, 100.0f);
+		input = new Pos2DComponent(400.0f, 300.0f);
+		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
 
 		input = new Friction2DComponent(0.5f);
+		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
 
 		input = new Box2DComponent(50.0f, 50.0f);
+		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
-		*/
+
+		input = new Speed2DComponent(5.0f, 5.0f);
+		std::cout << input->getType() << std::endl;
+		this->add(Hash()(input->getType()), input);
 	}
 };
 
