@@ -33,6 +33,8 @@
 
 #include	"NetworkBuffer.hh"
 
+#include	"ComponentFactory.hpp"
+
 #ifdef _WIN32
 	#define PATH "Ressources\\Images\\"
 #elif __linux__
@@ -41,10 +43,12 @@
 
 void		registerComponents(World &world)
 {
+	/*
   world.registerComponent(new Pos2DComponent());
   world.registerComponent(new SFMLSpriteComponent());
   world.registerComponent(new Speed2DComponent());
   world.registerComponent(new Friction2DComponent());
+  */
 }
 
 void		addSystems(World &world)
