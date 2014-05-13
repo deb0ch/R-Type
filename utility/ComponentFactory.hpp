@@ -8,7 +8,10 @@
 # include "Box2DComponent.hh"
 # include "Pos2DComponent.hh"
 # include "Speed2DComponent.hh"
-# include "IComponent.hh"
+# include "MovementSpeedComponent.hh"
+# include "SFMLSpriteComponent.hh"
+# include "NetworkSendUpdateComponent.hh"
+# include "ActionComponent.hh"
 # include "Hash.hh"
 
 class ComponentFactory : public Factory<IComponent, unsigned long>
@@ -39,6 +42,26 @@ public :
 		this->add(Hash()(input->getType()), input);
 
 		input = new Speed2DComponent(5.0f, 5.0f);
+		std::cout << input->getType() << std::endl;
+		this->add(Hash()(input->getType()), input);
+
+		input = new MovementSpeedComponent(5);
+		std::cout << input->getType() << std::endl;
+		this->add(Hash()(input->getType()), input);
+
+		input = new SFMLSpriteComponent(std::string("Ressources\\Images\\players.png"));
+		std::cout << input->getType() << std::endl;
+		this->add(Hash()(input->getType()), input);
+
+		input = new NetworkSendUpdateComponent();
+		std::cout << input->getType() << std::endl;
+		this->add(Hash()(input->getType()), input);
+
+		input = ((new ActionComponent())
+			->addAction("UP")
+			->addAction("RIGHT")
+			->addAction("DOWN")
+			->addAction("LEFT"));
 		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
 	}
