@@ -112,6 +112,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   VOIR AVEC ROMAIN ICI FACTORY
   */
   //new_component = this->_world->createComponent(component_hash);
+  new_component = NULL;
   if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;
