@@ -24,6 +24,8 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
 	PARENT_SCOPE
 )
 
@@ -42,5 +44,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
 	PARENT_SCOPE
 )
