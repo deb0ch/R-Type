@@ -8,21 +8,21 @@
 class		MoveFollowComponent : public AComponent<MoveFollowComponent>
 {
 protected:
-  Entity *_entity;
+  unsigned long _idToFollow;
 
 public:
-		MoveFollowComponent(Entity *);
+		MoveFollowComponent(const unsigned long idToFollow = 0);
 		MoveFollowComponent(const MoveFollowComponent&);
   virtual	~MoveFollowComponent();
   MoveFollowComponent	&operator=(const MoveFollowComponent&);
 
+  /*
   float		getX() const;
   float		getY() const;
+  */
 
-  /*
   unsigned long	getIdToFollow() const;
   void		setIdToFollow(const unsigned long idToFollow);
-  */
 
 };
 

@@ -93,6 +93,7 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
+
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -108,7 +109,6 @@ void		addEntities(World &world)
 				 ->addAction("LEFT")
 				 )
 		  );
-
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -124,7 +124,6 @@ void		addEntities(World &world)
 				 ->addAction("LEFT")
 				 )
 		  );
-
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
