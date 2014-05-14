@@ -1,12 +1,22 @@
-#include <iostream>
-#ifdef _WIN32
-	#include "WSocketTCP.hh"
-#elif __linux__
-	#include "USocketTCP.hh"
-#endif
+#include <algorithm>
+#include "ServerRelay.hh"
+#include "Threads/Threads.hh"
+#include "TCPException.hh"
 
-int main()
+int	main()
 {
-	std::cout << "toto" << std::endl;
-	ISocket *toto = new SocketTCP();
+  Thread<ServerRelay> thread;
+  Any b;
+
+  ServerRelay a(6667, 42);
+  thread.start(&a, &ServerRelay::start, b);
+  while (1)
+    {
+      // std::vector<Remote *> c = a.getRemotes("default");
+      // std::for_each(c.begin(), c.end(), [] (Remote *remote) -> void {
+      // 	  std::cout << remote->getPrivateHash() << std::endl;
+      // 	  remote->unlock();
+      // 	});
+    }
+  return (0);
 }

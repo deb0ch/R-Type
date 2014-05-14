@@ -20,45 +20,59 @@ ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializ
 ClientRelay::~ClientRelay()
 {
   this->_socket_udp.close();
-  this->_socket_tcp.close();
   delete this->_remote;
 }
 
 void			ClientRelay::waitForEvent()
 {
-  this->_select.resetWrites();
-  if (!this->_remote.getSendBufferTCP().isEmpty())
-    this->_select.addWrite(this->_remote.getTCPSocket().getHandle());
-  if (!this->_remote.getSendBufferUDP().isEmpty())
+  this->_select.reset();
+  this->_select.addRead(this->_remote->getTCPSocket().getHandle());
+  this->_select.addRead(this->_socket_udp.getHandle());
+  if (!this->_remote->getSendBufferTCP().isEmpty())
+    this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
+  if (!this->_remote->getSendBufferUDP().isEmpty())
     this->_select.addRead(this->_socket_udp.getHandle());
   this->_select.doSelect();
 }
 
+void			ClientRelay::start(Any)
+{
+  this->start();
+}
+
 void			ClientRelay::start()
 {
-  while (1)
+  bool			disconnect;
+
+  disconnect = false;
+  while (!disconnect)
     {
       this->waitForEvent();
+      std::cout << "Something happens" << std::endl;
 
       if (this->_select.issetReads(this->_socket_udp.getHandle()))
 	{
 	  IBuffer *buffer = this->getUDPBuffer();
 	  std::string ip;
 	  int port;
-	  this->_server_socket_udp.receive(*buffer, ip, port);
+	  this->_socket_udp.receive(*buffer, ip, port);
 	  Remote *remote = this->getRemote(ip, port);
+	  std::cout << "Received UDP" << std::endl;
 	  if (remote)
-	    remote->getRecvBufferUDP().push_back(buffer);
+	    remote->getRecvBufferUDP().push(buffer);
 	}
 
-      if (this->_select.issetReads(this->_remote->getTCPSocket().getHandle()))
-	this->_remote->networkReceiveTCP(*this);
+      if (this->_select.issetWrites(this->_socket_udp.getHandle()))
+	this->_remote->networkSendUDP(*this, this->_socket_udp);
 
       if (this->_select.issetWrites(this->_remote->getTCPSocket().getHandle()))
-	this->_remote->networkSendTCP();
+	this->_remote->networkSendTCP(*this);
 
-      if (this->_select.issetWrites(this->_socket_udp.getHandle()))
-	this->_remote->networkSendUDP(this->_socket_udp);
+      if (this->_select.issetReads(this->_remote->getTCPSocket().getHandle()))
+	{
+	  if (!this->_remote->networkReceiveTCP(*this))
+	    disconnect = true;
+	}
     }
 }
 
@@ -73,12 +87,14 @@ std::vector<Remote *>	ClientRelay::getRemotes(const std::string &room_name)
 
 void			ClientRelay::sendBroadcastUDP(const std::string &, IBuffer &buffer)
 {
-  this->_remote->sendUDP(buffer);
+  this->_remote->sendUDP(&buffer);
+  this->disposeUDPBuffer(&buffer);
 }
 
 void			ClientRelay::sendBroadcastTCP(const std::string &, IBuffer &buffer)
 {
-  this->_remote->sendTCP(buffer);
+  this->_remote->sendTCP(&buffer);
+  this->disposeTCPBuffer(&buffer);
 }
 
 IBuffer			*ClientRelay::getTCPBuffer()

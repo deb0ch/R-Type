@@ -34,7 +34,7 @@ public:
   void				setRoom(const std::string &);
 
   void				networkSendTCP(INetworkRelay &network);
-  void				networkReceiveTCP(INetworkRelay &network);
+  bool				networkReceiveTCP(INetworkRelay &network);
   void				networkSendUDP(INetworkRelay &network, SocketUDP &udp);
 
   void				lock();

@@ -9,6 +9,7 @@ NetworkBuffer::NetworkBuffer(unsigned int size) : bufferMaxSize(size)
 
 NetworkBuffer::~NetworkBuffer()
 {
+  std::cout << "deleting: " << this << std::endl;
   delete this->_buffer;
 }
 
@@ -34,6 +35,8 @@ IBuffer		&NetworkBuffer::operator=(const IBuffer &buffer)
     {
       this->_buffer_size = buffer.getLength();
       this->_current_pos = buffer.getPosition();
+      if (this->_buffer)
+	delete this->_buffer;
       this->_buffer = new char[bufferMaxSize];
       cpy = buffer.getBuffer();
       for (unsigned int i = 0; i < this->_buffer_size; ++i)
@@ -181,8 +184,9 @@ void		NetworkBuffer::serialize<std::string>(const std::string &element)
     }
   for (auto it = element.begin(); it != element.end(); ++it)
     {
-      this->_buffer[this->_buffer_size] = *it;
+      this->_buffer[this->_current_pos] = *it;
       ++this->_buffer_size;
+      ++this->_current_pos;
     }
 }
 
@@ -195,7 +199,7 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
   this->unserialize<unsigned int>(size);
   if (this->_buffer_size - this->_current_pos < size)
     {
-      //std::cout << "Not enough space" << std::endl; // raise exception
+      // std::cout << "Not enough space" << std::endl; // raise exception
       return ;
     }
   for (unsigned int i = 0; i < size; ++i)

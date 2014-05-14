@@ -15,6 +15,7 @@ public:
   ServerRelay(int port = 4011, int nb_pending_connection = 42);
   virtual				~ServerRelay();
   virtual void				start();
+  virtual void				start(Any);
   virtual std::vector<Remote *>		getRemotes(const std::string &room_name);
   virtual void				sendBroadcastUDP(const std::string &room_name,
 							 IBuffer &buffer);
@@ -32,6 +33,8 @@ private:
   void					addClient();
   unsigned int				generateHash();
   void					receiveUDP();
+  void					removeRemote(Remote *remote);
+  void					manageRemotes();
 protected:
   NetworkInitializer			_network_initializer;
   SocketTCP				_server_socket_tcp;

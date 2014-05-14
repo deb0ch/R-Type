@@ -3,6 +3,7 @@
 
 # include "Socket.hh"
 # include "Select.hh"
+# include "NetworkInitializer.hh"
 # include "INetworkRelay.hh"
 # include "Remote.hh"
 
@@ -12,6 +13,7 @@ public:
   ClientRelay(const std::string &ip, const int port = 42);
   virtual				~ClientRelay();
   virtual void				start();
+  virtual void				start(Any);
   virtual std::vector<Remote *>		getRemotes(const std::string &room_name);
   virtual void				sendBroadcastUDP(const std::string &room_name,
 							 IBuffer &buffer);

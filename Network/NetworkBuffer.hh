@@ -71,12 +71,13 @@ private:
       i = sizeof(T) - 1;
     while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
       {
-	this->_buffer[this->_buffer_size] = tab[i];
+	this->_buffer[this->_current_pos] = tab[i];
 	if (isBigEndian())
 	  ++i;
 	else
 	  --i;
 	++this->_buffer_size;
+	++this->_current_pos;
       }
   };
 

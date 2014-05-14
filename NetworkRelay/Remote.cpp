@@ -13,6 +13,8 @@ Remote::Remote(ISocketTCP &socket, unsigned int hash)
 Remote::~Remote()
 {
   this->_mutex.lock();
+  if (this->_tcp)
+    this->_tcp->close();
   delete this->_tcp;
 }
 
@@ -70,7 +72,9 @@ void			Remote::sendTCP(IBuffer *buffer)
 {
   unsigned int		size;
 
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   size = buffer->getLength();
+  std::cout << "sending size: " << size << std::endl;
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
@@ -79,6 +83,7 @@ void			Remote::sendTCP(IBuffer *buffer)
 
 void			Remote::sendUDP(IBuffer *buffer)
 {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   buffer->rewind();
   *buffer << this->_private_hash;
   buffer->rewind();
@@ -109,32 +114,40 @@ void			Remote::networkSendTCP(INetworkRelay &network)
 {
   IBuffer		*buffer;
 
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_send_buffer_tcp.isEmpty())
     return ;
   buffer = this->_send_buffer_tcp.getNext();
+  std::cout << "sending: " << buffer << std::endl;
   if (this->_tcp->send(*buffer))
-    network.disposeTCPBuffer(buffer);
+    {
+      network.disposeTCPBuffer(buffer);
+      this->_send_buffer_tcp.pop();
+    }
 }
 
 # include <stdexcept>
 
-void			Remote::networkReceiveTCP(INetworkRelay &network)
+bool			Remote::networkReceiveTCP(INetworkRelay &network)
 {
   unsigned int		size;
+  unsigned int		size_read;
   IBuffer		*buffer;
 
-  this->_tcp->receive(this->_temporary_tcp_buffer);
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
   if (this->_temporary_tcp_buffer.getLength() >= sizeof(unsigned int))
     {
       this->_temporary_tcp_buffer.rewind();
       this->_temporary_tcp_buffer >> size;
-      if (size >= this->_temporary_tcp_buffer.getLength())
+      std::cout << "Received packet size: " << size << std::endl;
+      if (size >= this->_temporary_tcp_buffer.getLength()) // need redo, wrong condition
 	{
 	  /**
 	   * @todo copy the surplus of data we read into the begining of this->_temporary_tcp_buffer,
 	   * add set its position to the end of the message
 	   */
-	  if (size > this->_temporary_tcp_buffer.getLength())
+	  if (size > this->_temporary_tcp_buffer.getLength()) // need redo, wrong condition
 	    throw std::logic_error("NOT IMPLEMENTED");
 	  buffer = network.getTCPBuffer();
 	  buffer->rewind();
@@ -143,6 +156,7 @@ void			Remote::networkReceiveTCP(INetworkRelay &network)
 		 size - sizeof(unsigned int)); // Change this
 	  buffer->setLength(size - sizeof(unsigned int));
 	  buffer->rewind();
+	  std::cout << "received buffer: " << buffer->getBuffer() << std::endl;
 	  if (this->_private_hash == 0)
 	    {
 	      *buffer >> this->_private_hash;
@@ -153,18 +167,21 @@ void			Remote::networkReceiveTCP(INetworkRelay &network)
 	}
       this->_temporary_tcp_buffer.rewind();
     }
+  return (size_read > 0);
 }
 
 void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 {
   IBuffer	*buffer;
 
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_send_buffer_udp.isEmpty())
     return ;
   buffer = this->_send_buffer_udp.getNext();
   udp.send(*buffer,
 	   this->_ip, this->_port);
   network.disposeUDPBuffer(buffer);
+  this->_send_buffer_udp.pop();
 }
 
 void		Remote::lock()

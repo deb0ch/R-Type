@@ -12,8 +12,6 @@ ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initial
   this->_server_socket_udp.bind(port);
   this->_select.initReads();
   this->_select.initWrites();
-  this->_select.addRead(this->_server_socket_tcp.getHandle());
-  this->_select.addRead(this->_server_socket_udp.getHandle());
 }
 
 ServerRelay::~ServerRelay()
@@ -22,22 +20,39 @@ ServerRelay::~ServerRelay()
   this->_server_socket_tcp.close();
   std::for_each(this->_remotes.begin(), this->_remotes.end(),
 		[] (Remote *remote) -> void {
-		  remote->getTCPSocket().close();
 		  delete remote;
 		});
 }
 
 void	ServerRelay::waitForEvent()
 {
-  this->_select.resetWrites();
+  this->_select.reset();
+  this->_select.addRead(this->_server_socket_tcp.getHandle());
+  this->_select.addRead(this->_server_socket_udp.getHandle());
   std::for_each(this->_remotes.begin(), this->_remotes.end(),
 		[this] (Remote *remote) -> void {
+
+		  this->_select.addRead(remote->getTCPSocket().getHandle());
+
 		  if (!remote->getSendBufferUDP().isEmpty())
-		    this->_select.addWrite(this->_server_socket_udp.getHandle());
+		    {
+		      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle() << std::endl;
+		      this->_select.addWrite(this->_server_socket_udp.getHandle());
+		    }
 		  if (!remote->getSendBufferTCP().isEmpty())
-		    this->_select.addWrite(remote->getTCPSocket().getHandle());
+		    {
+		      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle() << std::endl;
+		      this->_select.addWrite(remote->getTCPSocket().getHandle());
+		    }
+
 		});
+  std::cout << "Waiting.." << std::endl;
   this->_select.doSelect();
+}
+
+void	ServerRelay::start(Any)
+{
+  this->start();
 }
 
 void	ServerRelay::start()
@@ -45,28 +60,55 @@ void	ServerRelay::start()
   while (1)
     {
       this->waitForEvent();
-      if (this->_select.issetReads(this->_server_socket_tcp.getHandle()))
-	this->addClient();
+      std::cout << "Something happens" << std::endl;
 
-      std::for_each(this->_remotes.begin(), this->_remotes.end(), [this] (Remote *remote) -> void {
-
-	  if (this->_select.issetReads(remote->getTCPSocket().getHandle()))
-	    remote->networkReceiveTCP(*this);
-
-	  if (this->_select.issetWrites(remote->getTCPSocket().getHandle()))
-	    remote->networkSendTCP(*this);
-
-	  if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
-	    remote->networkSendUDP(*this, this->_server_socket_udp);
-	});
+      this->manageRemotes();
 
       if (this->_select.issetReads(this->_server_socket_udp.getHandle()))
 	this->receiveUDP();
+
+      if (this->_select.issetReads(this->_server_socket_tcp.getHandle()))
+	this->addClient();
     }
 }
 
+void		ServerRelay::manageRemotes()
+{
+  auto		it = this->_remotes.begin();
+
+  while (it != this->_remotes.end())
+    {
+      if (this->_select.issetWrites((*it)->getTCPSocket().getHandle()))
+	(*it)->networkSendTCP(*this);
+
+      if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
+	(*it)->networkSendUDP(*this, this->_server_socket_udp);
+
+      if (this->_select.issetReads((*it)->getTCPSocket().getHandle()))
+	{
+	  if (!(*it)->networkReceiveTCP(*this))
+	    {
+	      this->removeRemote(*it);
+	      it = this->_remotes.erase(it);
+	    }
+	  else
+	    ++it;
+	}
+      else
+	++it;
+    }
+}
+
+void		ServerRelay::removeRemote(Remote *remote)
+{
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  this->_select.removeRead(remote->getTCPSocket().getHandle());
+  this->_select.removeWrite(remote->getTCPSocket().getHandle());
+  delete remote;
+}
+
 /**
- * @todo Add more verification than only id (like Port and IP) to know which client is talking
+ * @todo Add more verifications than only id (like Port and IP) to know which client is talking
  */
 void		ServerRelay::receiveUDP()
 {
@@ -76,9 +118,10 @@ void		ServerRelay::receiveUDP()
   unsigned int id;
   Remote *remote;
 
+  std::cout << "Receiving UDP" << std::endl;
   this->_server_socket_udp.receive(*buffer, ip, port);
   *buffer >> id;
-  this->getRemote(id);
+  remote = this->getRemote(id);
   if (remote)
     remote->getRecvBufferUDP().push(buffer);
 }
@@ -90,12 +133,12 @@ void		ServerRelay::addClient()
   IBuffer	*buffer;
   unsigned int	hash;
 
+  std::cout << "Adding client" << std::endl;
   new_client = this->_server_socket_tcp.accept();
   hash = this->generateHash();
   remote = new Remote(*new_client, hash);
   remote->setRoom("default");
   this->_remotes.push_back(remote);
-  this->_select.addRead(new_client->getHandle());
   buffer = this->getTCPBuffer();
   *buffer << hash;
   remote->sendTCP(buffer);
@@ -140,7 +183,12 @@ Remote		*ServerRelay::getRemote(const std::string &ip, const int port)
 
 IBuffer			*ServerRelay::getTCPBuffer()
 {
-  return (new NetworkBuffer(4096));
+  IBuffer *buffer;
+
+  buffer = new NetworkBuffer(4096);
+  buffer->setPosition(sizeof(unsigned int));
+  std::cout << "creating: " << buffer << std::endl;
+  return (buffer);
 }
 
 IBuffer			*ServerRelay::getUDPBuffer()
@@ -149,6 +197,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 
   buffer = new NetworkBuffer;
   buffer->setPosition(sizeof(unsigned int));
+  std::cout << "creating: " << buffer << std::endl;
   return (buffer);
 }
 

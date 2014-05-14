@@ -21,7 +21,8 @@ private:
 
 public:
 
-  Select(const int to = 1);
+  Select(const int to);
+  Select();
   ~Select() {}
 
   template <typename T>
@@ -64,8 +65,7 @@ public:
   void	removeRead(int);
   void	removeWrite(int);
 
-  void	resetReads();
-  void	resetWrites();
+  void	reset();
 
   void	setTimeOut(const int);
   void	doSelect();
