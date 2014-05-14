@@ -27,6 +27,11 @@ Entity&		Entity::operator=(const Entity& ref)
 }
 
 //----- ----- Getters ----- ----- //
+unsigned int	Entity::getId() const
+{
+  return (this->_id);
+}
+
 //----- ----- Setters ----- ----- //
 /**
  * @todo Throw an exception if the component already exists in the Entity.

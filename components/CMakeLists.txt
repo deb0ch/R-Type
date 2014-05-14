@@ -21,6 +21,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
 	PARENT_SCOPE
 )
 
@@ -36,5 +37,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
 	PARENT_SCOPE
 )

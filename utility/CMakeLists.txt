@@ -14,6 +14,9 @@ SET(HEADER_C
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/INetworkRelay.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp
   PARENT_SCOPE
   )
 

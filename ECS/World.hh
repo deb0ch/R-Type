@@ -7,7 +7,6 @@
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
 # include	"Any.hpp"
-# include	"Factory.hpp"
 
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
@@ -25,7 +24,7 @@ private:
   unsigned long				_nextEntityID;
   /** An event manager that allows systems to comunicate together. */
   EventManager<ISystem>			_event_manager;
-  Factory<IComponent, std::size_t>	_component_factory;
+  //Factory<IComponent, std::size_t>	_component_factory;
   bool					_initialized;
 
 public:
@@ -72,7 +71,8 @@ public:
   bool		hasEventHandler(const std::string &type) const;
   void		sendEvent(IEvent *event);
 
-  std::vector<Entity *> &getEntities();
+  std::vector<Entity *>	&getEntities();
+  Entity	*getEntity(unsigned long id);
 
   void		process(const float delta);
   /** @brief Init all the systems. */
@@ -108,10 +108,6 @@ public:
       return (NULL);
     return (it->second.getValue<T>());
   }
-
-  IComponent	*createComponent(std::size_t type) const;
-  IComponent	*createComponent(const std::string &type) const;
-  void		registerComponent(const IComponent *component);
 };
 
 #endif /* !WORLD_H_ */

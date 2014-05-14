@@ -14,7 +14,8 @@ SET(HEADER_FILES
   ISocket.hh
   Select.hh
   IBuffer.hh
-  NetworkBuffer.hh)
+  NetworkBuffer.hh
+  NetworkInitializer.hh)
 
 SET(SOURCES
   USocketTCP.cpp
@@ -26,7 +27,9 @@ SET(SOURCES
   UDPException.cpp
   SelectException.cpp
   Select.cpp
-  NetworkBuffer.cpp)
+  NetworkBuffer.cpp
+  WNetworkInitializer.cpp
+  UNetworkInitializer.cpp)
 
 SET (LIB_TYPE STATIC)
 

@@ -36,3 +36,15 @@ float		Box2DComponent::getHeight() const
 {
   return (this->_height);
 }
+
+void	Box2DComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_width;
+  buffer << this->_height;
+}
+
+void	Box2DComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_width;
+  buffer >> this->_height;
+}

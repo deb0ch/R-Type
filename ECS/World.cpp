@@ -2,6 +2,7 @@
 
 #include	"VectorDeleter.hpp"
 #include	"World.hh"
+#include	"Hash.hh"
 
 //----- ----- Constructors ----- ----- //
 World::World()
@@ -123,6 +124,19 @@ std::vector<Entity *> &World::getEntities()
   return (this->_entities);
 }
 
+Entity		*World::getEntity(unsigned long id)
+{
+  auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
+			 [id] (Entity *entity) -> bool {
+			   return (entity->_id == id);
+			 });
+
+  if (it == this->_entities.end())
+    return (NULL);
+
+  return (*it);
+}
+
 //----- ----- Methods ----- ----- //
 
 /**
@@ -196,26 +210,4 @@ void		World::sendEvent(IEvent *event)
 bool		World::hasEventHandler(const std::string &type) const
 {
   return (this->_event_manager.hasHandler(type));
-}
-
-IComponent	*World::createComponent(std::size_t type) const
-{
-  return (this->_component_factory.create(type));
-}
-
-IComponent	*World::createComponent(const std::string &type) const
-{
-  std::hash<std::string> hash;
-
-  std::cout << "alzejazlje: " << hash(type) << std::endl;
-  return (this->_component_factory.create(hash(type)));
-}
-
-void		World::registerComponent(const IComponent *component)
-{
-  std::hash<std::string> hash;
-
-  if (!component)
-    return ;
-  this->_component_factory.add(hash(component->getType()), component);
 }

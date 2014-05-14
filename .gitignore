@@ -3,6 +3,7 @@
 *.lo
 *.o
 *.obj
+*.gch
 
 # Compiled Dynamic libraries
 *.so
@@ -19,7 +20,8 @@
 core
 
 # Executables
-RType
+RType_Client
+RType_Server
 *.exe
 *.out
 *.app

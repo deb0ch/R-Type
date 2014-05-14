@@ -33,7 +33,7 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
       world_entity_box = (*it)->getComponent<Box2DComponent>("Box2DComponent");
       if (world_entity_pos && world_entity_box && *it != entity &&
 	  isColliding(*entity_pos, *entity_box, *world_entity_pos, *world_entity_box))
-	this->_world->sendEvent(new CollisionEvent());
+	this->_world->sendEvent(new CollisionEvent(entity, *it));
     }
 }
 
@@ -56,7 +56,8 @@ bool	CollisionSystem::isColliding(const Pos2DComponent &pos1, const Box2DCompone
   return ((inner_left < inner_right) && (inner_top < inner_bot));
 }
 
-void	CollisionSystem::collision_event(IEvent *)
+void	CollisionSystem::collision_event(IEvent *e)
 {
-  std::cout << "HohoHo!" << std::endl;
+  CollisionEvent*	event = dynamic_cast<CollisionEvent*>(e);
+  std::cout << "Collision entre " <<   event->getEntity1()->getId() << " et " <<   event->getEntity2()->getId() << std::endl;
 }

@@ -10,26 +10,40 @@ SET(HEADERS
   IMutex.hh
   IThread.hpp
   ThreadException.hh
+  MutexException.hh
   UMutex.hh
   UThread.hpp
   WMutex.hh
   WThread.hpp
-  )
+  ThreadPool.hpp
+  ScopedMutex.hh
+  Threads.hh
+  SafeFifo.hpp
+  ICondVar.hh
+  UCondVar.hh
+  WCondVar.hh)
 
 SET(SOURCES
   ThreadException.cpp
+  MutexException.cpp
   UMutex.cpp
   WMutex.cpp
-  )
+  ScopedMutex.cpp
+  UCondVar.cpp
+  WCondVar.cpp
+  main.cpp)
 
 SET (LIB_TYPE STATIC)
 
-FILE(GLOB_RECURSE ${SOURCES} ${HEADERS})
+#FILE(GLOB_RECURSE ${SOURCES} ${HEADERS})
 	
-ADD_LIBRARY(Threadlib ${LIB_TYPE} ${HEADERS} ${SOURCES})
+#ADD_LIBRARY(Threadlib ${LIB_TYPE} ${HEADERS} ${SOURCES})
+ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	INCLUDE_DIRECTORIES(/usr/include/)
+	TARGET_LINK_LIBRARIES(Threadlib -pthread)
 endif (UNIX)
 
 #ADD_EXECUTABLE(test main.cpp)
