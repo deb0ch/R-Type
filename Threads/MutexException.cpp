@@ -2,9 +2,9 @@
 # define _XOPEN_SOURCE 601
 #endif /* !__linux__ */
 
-#include "ThreadException.hh"
+#include "MutexException.hh"
 
-void ThreadException::addError(const int error)
+void MutexException::addError(const int error)
 {
   char buffer[512];
   std::string res;
@@ -20,17 +20,16 @@ void ThreadException::addError(const int error)
 }
 
 /* Public Constructor */
-ThreadException::ThreadException(const int error) {
-  this->_info = "ThreadException : ";
+MutexException::MutexException(const int error) {
+  this->_info = "MutexException : ";
   this->addError(error);
 }
-
-ThreadException::ThreadException(const std::string &info) {
-  this->_info = "ThreadException : ";
+MutexException::MutexException(const std::string &info) {
+  this->_info = "MutexException : ";
   this->_info = info;
 }
 
 /* Methodes */
-const char*   ThreadException::what() const throw() {
+const char*   MutexException::what() const throw() {
   return (this->_info.c_str());
 }
