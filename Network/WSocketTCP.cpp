@@ -54,7 +54,7 @@ int SocketTCP::receive(IBuffer &data)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	data.setLength(data.getLength() + ret);
+	data.setLength(data.getLength() + received);
 	data.setPosition(data.getLength());
 	return (received);
 }

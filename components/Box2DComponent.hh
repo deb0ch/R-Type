@@ -7,7 +7,7 @@
 class Box2DComponent : public AComponent<Box2DComponent>, public INetworkSerializableComponent
 {
 public:
-  Box2DComponent(float width, float height);
+  Box2DComponent(float width = 0.0f, float height = 0.0f);
   virtual	~Box2DComponent();
   		Box2DComponent(const Box2DComponent&);
   Box2DComponent	&operator=(const Box2DComponent&);

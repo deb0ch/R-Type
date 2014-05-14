@@ -4,7 +4,7 @@
 
 ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer()
 {
-  srand(time(NULL));
+  srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
   this->_server_socket_udp.init();
   this->_server_socket_tcp.bind(port);
