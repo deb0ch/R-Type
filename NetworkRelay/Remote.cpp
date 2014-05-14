@@ -12,6 +12,7 @@ Remote::Remote(ISocketTCP &socket, unsigned int hash)
 
 Remote::~Remote()
 {
+  this->_mutex.lock();
   delete this->_tcp;
 }
 
@@ -55,12 +56,12 @@ void			Remote::setPrivateHash(const unsigned int hash)
   this->_private_hash = hash;
 }
 
-std::vector<IBuffer *>	&Remote::getSendBufferUDP()
+SafeFifo<IBuffer *>	&Remote::getSendBufferUDP()
 {
   return (this->_send_buffer_udp);
 }
 
-std::vector<IBuffer *>	&Remote::getSendBufferTCP()
+SafeFifo<IBuffer *>	&Remote::getSendBufferTCP()
 {
   return (this->_send_buffer_tcp);
 }
@@ -73,7 +74,7 @@ void			Remote::sendTCP(IBuffer *buffer)
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
-  this->_send_buffer_tcp.push_back(buffer);
+  this->_send_buffer_tcp.push(buffer);
 }
 
 void			Remote::sendUDP(IBuffer *buffer)
@@ -81,15 +82,15 @@ void			Remote::sendUDP(IBuffer *buffer)
   buffer->rewind();
   *buffer << this->_private_hash;
   buffer->rewind();
-  this->_send_buffer_udp.push_back(buffer);
+  this->_send_buffer_udp.push(buffer);
 }
 
-std::vector<IBuffer *>	&Remote::getRecvBufferUDP()
+SafeFifo<IBuffer *>	&Remote::getRecvBufferUDP()
 {
   return (this->_recv_buffer_udp);
 }
 
-std::vector<IBuffer *>	&Remote::getRecvBufferTCP()
+SafeFifo<IBuffer *>	&Remote::getRecvBufferTCP()
 {
   return (this->_recv_buffer_tcp);
 }
@@ -106,10 +107,10 @@ void			Remote::setRoom(const std::string &room)
 
 void			Remote::networkSendTCP()
 {
-  if (this->_send_buffer_tcp.empty())
+  if (this->_send_buffer_tcp.isEmpty())
     return ;
-  if (this->_tcp->send(*this->_send_buffer_tcp.front()))
-    this->_send_buffer_tcp.erase(this->_send_buffer_tcp.begin());
+  if (this->_tcp->send(*this->_send_buffer_tcp.getNext()))
+    this->_send_buffer_tcp.pop();
 }
 
 # include <stdexcept>
@@ -140,7 +141,7 @@ void			Remote::networkReceiveTCP(INetworkRelay &network)
 		 size - sizeof(unsigned int)); // Change this
 	  buffer->setLength(size);
 	  buffer->rewind();
-	  this->_recv_buffer_tcp.push_back(buffer);
+	  this->_recv_buffer_tcp.push(buffer);
 	}
       this->_temporary_tcp_buffer.rewind();
     }
@@ -148,9 +149,23 @@ void			Remote::networkReceiveTCP(INetworkRelay &network)
 
 void		Remote::networkSendUDP(SocketUDP &udp)
 {
-  if (this->_send_buffer_udp.empty())
+  if (this->_send_buffer_udp.isEmpty())
     return ;
-  udp.send(*this->_send_buffer_udp.front(),
+  udp.send(*this->_send_buffer_udp.getNextPop(),
 	   this->_ip, this->_port);
-  this->_send_buffer_udp.erase(this->_send_buffer_udp.begin());
+}
+
+void		Remote::lock()
+{
+  this->_mutex.lock();
+}
+
+void		Remote::unlock()
+{
+  this->_mutex.unlock();
+}
+
+bool		Remote::isUnLocked()
+{
+  return (this->_mutex.status() == IMutex::UNLOCKED);
 }

@@ -19,8 +19,6 @@ public:
 							 IBuffer &buffer);
   virtual IBuffer			*getTCPBuffer();
   virtual IBuffer			*getUDPBuffer();
-  virtual void				clearRecvBufferUDP(Remote &);
-  virtual void				clearRecvBufferTCP(Remote &);
   virtual Remote			*getRemote(unsigned int);
   virtual Remote			*getRemote(const std::string &ip, const int port);
   virtual void				disposeUDPBuffer(IBuffer *);

@@ -32,7 +32,7 @@ public:
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
-      return (NULL);
+      throw std::exception();
     return ((this->fifo.front()));
   }
 

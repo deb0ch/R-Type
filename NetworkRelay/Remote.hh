@@ -7,6 +7,7 @@
 # include "IBuffer.hh"
 # include "NetworkBuffer.hh"
 # include "INetworkRelay.hh"
+# include "SafeFifo.hpp"
 
 class Remote
 {
@@ -21,13 +22,13 @@ public:
   void				setIP(const std::string &ip);
   void				setPort(const int);
   void				setPrivateHash(const unsigned int);
-  std::vector<IBuffer *>	&getSendBufferUDP();
-  std::vector<IBuffer *>	&getSendBufferTCP();
+  SafeFifo<IBuffer *>		&getSendBufferUDP();
+  SafeFifo<IBuffer *>		&getSendBufferTCP();
   // TODO:
   void				sendTCP(IBuffer *);
   void				sendUDP(IBuffer *);
-  std::vector<IBuffer *>	&getRecvBufferUDP();
-  std::vector<IBuffer *>	&getRecvBufferTCP();
+  SafeFifo<IBuffer *>		&getRecvBufferUDP();
+  SafeFifo<IBuffer *>		&getRecvBufferTCP();
 
   const std::string		&getRoom() const;
   void				setRoom(const std::string &);
@@ -36,17 +37,22 @@ public:
   void				networkReceiveTCP(INetworkRelay &network);
   void				networkSendUDP(SocketUDP &udp);
 
+  void				lock();
+  void				unlock();
+  bool				isUnLocked();
+
 protected:
   ISocketTCP			*_tcp;
   std::string			_ip;
   std::string			_room;
   int				_port;
   unsigned int			_private_hash;
-  std::vector<IBuffer *>	_send_buffer_tcp;
-  std::vector<IBuffer *>	_send_buffer_udp;
+  SafeFifo<IBuffer *>		_send_buffer_tcp;
+  SafeFifo<IBuffer *>		_send_buffer_udp;
   NetworkBuffer			_temporary_tcp_buffer;
-  std::vector<IBuffer *>	_recv_buffer_tcp;
-  std::vector<IBuffer *>	_recv_buffer_udp;
+  SafeFifo<IBuffer *>		_recv_buffer_tcp;
+  SafeFifo<IBuffer *>		_recv_buffer_udp;
+  Mutex				_mutex;
 };
 
 #endif /* !REMOTE_H_ */

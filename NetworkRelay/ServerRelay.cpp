@@ -32,9 +32,9 @@ void	ServerRelay::waitForEvent()
   this->_select.resetWrites();
   std::for_each(this->_remotes.begin(), this->_remotes.end(),
 		[this] (Remote *remote) -> void {
-		  if (!remote->getSendBufferUDP().empty())
+		  if (!remote->getSendBufferUDP().isEmpty())
 		    this->_select.addWrite(this->_server_socket_udp.getHandle());
-		  if (!remote->getSendBufferTCP().empty())
+		  if (!remote->getSendBufferTCP().isEmpty())
 		    this->_select.addWrite(remote->getTCPSocket().getHandle());
 		});
   this->_select.doSelect();
@@ -47,6 +47,7 @@ void	ServerRelay::start()
       this->waitForEvent();
       if (this->_select.issetReads(this->_server_socket_tcp.getHandle()))
 	this->addClient();
+
       std::for_each(this->_remotes.begin(), this->_remotes.end(), [this] (Remote *remote) -> void {
 
 	  if (this->_select.issetReads(remote->getTCPSocket().getHandle()))
@@ -58,6 +59,7 @@ void	ServerRelay::start()
 	  if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
 	    remote->networkSendUDP(this->_server_socket_udp);
 	});
+
       if (this->_select.issetReads(this->_server_socket_udp.getHandle()))
 	{
 	  IBuffer *buffer = this->getUDPBuffer();
@@ -68,7 +70,7 @@ void	ServerRelay::start()
 	  *buffer >> id;
 	  Remote *remote = this->getRemote(id);
 	  if (remote)
-	    remote->getRecvBufferUDP().push_back(buffer);
+	    remote->getRecvBufferUDP().push(buffer);
 	}
     }
 }
@@ -158,7 +160,10 @@ std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
 
   std::for_each(this->_remotes.begin(), this->_remotes.end(), [&ret, &room_name] (Remote *remote) -> void {
       if (remote->getRoom() == room_name)
-	ret.push_back(remote);
+	{
+	  remote->lock();
+	  ret.push_back(remote);
+	}
     });
   return (ret);
 }
