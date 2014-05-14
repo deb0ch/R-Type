@@ -17,6 +17,7 @@ SET(HEADER_C
   ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
   PARENT_SCOPE
   )
 
