@@ -17,28 +17,34 @@ bool MoveFollowSystem::canProcess(Entity *entity)
     return (true);
   return (false);
 }
-#include	<iostream>
+
 void MoveFollowSystem::processEntity(Entity *entity, const float)
 {
   ActionComponent		*action;
   MoveFollowComponent		*target;
-  Pos2DComponent		*pos;
+  Entity			*entityToFollow;
+  Pos2DComponent		*posEntity;
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   target = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
-  pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
+  posEntity = entity->getComponent<Pos2DComponent>("Pos2DComponent");
 
   action->setAction("UP", false);
   action->setAction("LEFT", false);
   action->setAction("DOWN", false);
   action->setAction("RIGHT", false);
-
-  if (pos->getX() < target->getX())
-    action->setAction("RIGHT", true);
-  if (pos->getX() > target->getX())
-    action->setAction("LEFT", true);
-  if (pos->getY() < target->getY())
-    action->setAction("DOWN", true);
-  if (pos->getY() > target->getY())
-    action->setAction("UP", true);
+  if ((entityToFollow = this->_world->getEntity(target->getIdToFollow())) != NULL)
+    {
+      auto posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
+      if (!posToFollow)
+	return ;
+      if (posEntity->getX() < posToFollow->getX())
+	action->setAction("RIGHT", true);
+      if (posEntity->getX() > posToFollow->getX())
+	action->setAction("LEFT", true);
+      if (posEntity->getY() < posToFollow->getY())
+	action->setAction("DOWN", true);
+      if (posEntity->getY() > posToFollow->getY())
+	action->setAction("UP", true);
+    }
 }

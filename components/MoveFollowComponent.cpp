@@ -2,16 +2,16 @@
 #include	"Pos2DComponent.hh"
 
 //----- ----- Constructors ----- ----- //
-MoveFollowComponent::MoveFollowComponent(Entity *target)
+MoveFollowComponent::MoveFollowComponent(const unsigned long idToFollow)
   : AComponent("MoveFollowComponent")
 {
-  this->_target = target;
+  this->_idToFollow = idToFollow;
 }
 
 MoveFollowComponent::MoveFollowComponent(const MoveFollowComponent &ref)
   : AComponent("MoveFollowComponent")
 {
-  this->_target = ref._target;
+  this->_idToFollow = ref._idToFollow;
 }
 
 //----- ----- Destructor ----- ----- //
@@ -21,25 +21,13 @@ MoveFollowComponent::~MoveFollowComponent()
 //----- ----- Operators ----- ----- //
 MoveFollowComponent	&MoveFollowComponent::operator=(const MoveFollowComponent &ref)
 {
-  this->_target = ref._target;
+  this->_idToFollow = ref._idToFollow;
   return (*this);
 }
 
-//----- ----- Getters ----- ----- //
-float	MoveFollowComponent::getX() const
-{
-  auto	pos = this->_target->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!pos)
-    return (0);
-  return (pos->getX());
+unsigned long	MoveFollowComponent::getIdToFollow() const {
+  return this->_idToFollow;
 }
-
-float	MoveFollowComponent::getY() const
-{
-  auto	pos = this->_target->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!pos)
-    return (0);
-  return (pos->getY());
+void		MoveFollowComponent::setIdToFollow(const unsigned long idToFollow) {
+    this->_idToFollow = idToFollow;
 }
-
-//----- ----- Setters ----- ----- //
