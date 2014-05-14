@@ -1,13 +1,19 @@
+#include "EntityDeletedEvent.hh"
 #include "MoveFollowSystem.hh"
 #include "MoveFollowComponent.hh"
 #include "ActionComponent.hh"
 #include "Pos2DComponent.hh"
 
-MoveFollowSystem::MoveFollowSystem() : ASystem("MoveFollowSystem")
-{}
+MoveFollowSystem::MoveFollowSystem() : ASystem("MoveFollowSystem") {
+}
 
 MoveFollowSystem::~MoveFollowSystem()
 {}
+
+void MoveFollowSystem::init() {
+  this->_world->addEventHandler("EntityDeletedEvent", this,
+				&MoveFollowSystem::removeMoveFollowSystem);
+}
 
 bool MoveFollowSystem::canProcess(Entity *entity)
 {
@@ -18,12 +24,21 @@ bool MoveFollowSystem::canProcess(Entity *entity)
   return (false);
 }
 
+void MoveFollowSystem::removeMoveFollowSystem(IEvent *event) {
+  EntityDeletedEvent *entityDeletedEvent = dynamic_cast<EntityDeletedEvent *>(event);
+
+  if (entityDeletedEvent) {
+    if (Entity *entity = entityDeletedEvent->getEntity()) {
+      entity->removeComponent(entity->getComponent<MoveFollowComponent>("MoveFollowComponent"));
+    }
+  }
+}
+
 void MoveFollowSystem::processEntity(Entity *entity, const float)
 {
-  ActionComponent		*action;
-  MoveFollowComponent		*target;
-  Entity			*entityToFollow;
-  Pos2DComponent		*posEntity;
+  ActionComponent		*action = NULL;
+  MoveFollowComponent		*target = NULL;
+  Pos2DComponent		*posEntity = NULL;
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   target = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
@@ -33,18 +48,15 @@ void MoveFollowSystem::processEntity(Entity *entity, const float)
   action->setAction("LEFT", false);
   action->setAction("DOWN", false);
   action->setAction("RIGHT", false);
-  if ((entityToFollow = this->_world->getEntity(target->getIdToFollow())) != NULL)
-    {
-      auto posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
-      if (!posToFollow)
-	return ;
-      if (posEntity->getX() < posToFollow->getX())
-	action->setAction("RIGHT", true);
-      if (posEntity->getX() > posToFollow->getX())
-	action->setAction("LEFT", true);
-      if (posEntity->getY() < posToFollow->getY())
-	action->setAction("DOWN", true);
-      if (posEntity->getY() > posToFollow->getY())
-	action->setAction("UP", true);
-    }
+
+  if (posEntity->getX() < target->getX())
+    action->setAction("RIGHT", true);
+  /*
+  if (posEntity->getX() > target->getX())
+    action->setAction("LEFT", true);
+  if (posEntity->getY() < target->getY())
+    action->setAction("DOWN", true);
+  if (posEntity->getY() > target->getY())
+    action->setAction("UP", true);
+  */
 }
