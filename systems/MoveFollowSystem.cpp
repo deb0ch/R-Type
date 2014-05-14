@@ -11,40 +11,36 @@ MoveFollowSystem::~MoveFollowSystem()
 
 bool MoveFollowSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("MoveFollowComponent") &&
-      entity->hasComponent("ActionComponent") &&
-      entity->hasComponent("Pos2DComponent"))
-    return (true);
-  return (false);
+	if (entity->hasComponent("MoveFollowComponent") &&
+		entity->hasComponent("ActionComponent") &&
+		entity->hasComponent("Pos2DComponent"))
+		return (true);
+	return (false);
 }
 
 void MoveFollowSystem::processEntity(Entity *entity, const float)
 {
-  ActionComponent		*action;
-  MoveFollowComponent		*target;
-  Entity			*entityToFollow;
-  Pos2DComponent		*posEntity;
+	ActionComponent		*action;
+	MoveFollowComponent		*target;
+	Entity			*entityToFollow;
+	Pos2DComponent		*posEntity;
 
-  action = entity->getComponent<ActionComponent>("ActionComponent");
-  target = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
-  posEntity = entity->getComponent<Pos2DComponent>("Pos2DComponent");
+	action = entity->getComponent<ActionComponent>("ActionComponent");
+	target = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
+	posEntity = entity->getComponent<Pos2DComponent>("Pos2DComponent");
 
-  action->setAction("UP", false);
-  action->setAction("LEFT", false);
-  action->setAction("DOWN", false);
-  action->setAction("RIGHT", false);
-  if ((entityToFollow = this->_world->getEntity(target->getIdToFollow())) != NULL)
-    {
-      auto posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
-      if (!posToFollow)
-	return ;
-      if (posEntity->getX() < posToFollow->getX())
-	action->setAction("RIGHT", true);
-      if (posEntity->getX() > posToFollow->getX())
-	action->setAction("LEFT", true);
-      if (posEntity->getY() < posToFollow->getY())
-	action->setAction("DOWN", true);
-      if (posEntity->getY() > posToFollow->getY())
-	action->setAction("UP", true);
-    }
+	if ((entityToFollow = this->_world->getEntity(target->getIdToFollow())) != NULL)
+	{
+		auto posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
+		if (!posToFollow)
+			return;
+		if (posEntity->getX() < posToFollow->getX())
+			action->setAction("RIGHT", true);
+		if (posEntity->getX() > posToFollow->getX())
+			action->setAction("LEFT", true);
+		if (posEntity->getY() < posToFollow->getY())
+			action->setAction("DOWN", true);
+		if (posEntity->getY() > posToFollow->getY())
+			action->setAction("UP", true);
+	}
 }

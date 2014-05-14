@@ -17,11 +17,13 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
-	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
 	PARENT_SCOPE
 )
 
@@ -38,5 +40,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
 	PARENT_SCOPE
 )

@@ -1,15 +1,15 @@
-#ifndef PLAYERMOVEMENTSYSTEM_H_
-# define PLAYERMOVEMENTSYSTEM_H_
+#ifndef ACTIONMOVEMENTSYSTEM_H_
+# define ACTIONMOVEMENTSYSTEM_H_
 
 # include <map>
 # include "ASystem.hh"
 # include "SFML/Window/Keyboard.hpp"
 
-class PlayerMovementSystem : public ASystem
+class ActionMovementSystem : public ASystem
 {
 public:
-  PlayerMovementSystem();
-  virtual ~PlayerMovementSystem();
+	ActionMovementSystem();
+	virtual ~ActionMovementSystem();
   virtual bool canProcess(Entity *);
   virtual void processEntity(Entity *, const float);
 protected:
