@@ -17,11 +17,14 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.hh
 	PARENT_SCOPE
 )
 
@@ -34,10 +37,13 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeleterSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.cpp
 	PARENT_SCOPE
 )
