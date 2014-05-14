@@ -9,4 +9,6 @@
 	#include "WMutex.hh"
 #endif
 
+#include "ScopedMutex.hh"
+
 #endif /* !THREADS_H_ */

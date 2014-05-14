@@ -6,7 +6,6 @@
 class Any
 {
 private:
-
   class IContainer
   {
     public:
@@ -35,7 +34,6 @@ private:
 
     T *_value;
   };
-
 public:
   Any()
   {
@@ -63,7 +61,7 @@ public:
       {
 	if (!(tmp = dynamic_cast<const Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // TODO: Raise exception
+	    std::cerr << "Bad type" << std::endl; // Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);
@@ -80,7 +78,7 @@ public:
       {
 	if (!(tmp = dynamic_cast< Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // TODO: Raise exception
+	    std::cerr << "Bad type" << std::endl; // Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);
@@ -99,17 +97,20 @@ public:
 
   Any(const Any &other)
   {
-    this->_container = other._container->clone();
+    if (other._container)
+      this->_container = other._container->clone();
+    else
+      this->_container = NULL;
   }
 
   Any &operator=(const Any &other)
   {
-    std::cout << "Trolo" << std::endl;
     if (this->_container)
       delete this->_container;
-    std::cout << "Trolo" << std::endl;
-    this->_container = other._container->clone();
-    std::cout << "Trolo" << std::endl;
+    if (other._container)
+      this->_container = other._container->clone();
+    else
+      this->_container = NULL;
     return (*this);
   }
 
