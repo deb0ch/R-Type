@@ -54,25 +54,33 @@ void	ServerRelay::start()
 	    remote->networkReceiveTCP(*this);
 
 	  if (this->_select.issetWrites(remote->getTCPSocket().getHandle()))
-	    remote->networkSendTCP();
+	    remote->networkSendTCP(*this);
 
 	  if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
-	    remote->networkSendUDP(this->_server_socket_udp);
+	    remote->networkSendUDP(*this, this->_server_socket_udp);
 	});
 
       if (this->_select.issetReads(this->_server_socket_udp.getHandle()))
-	{
-	  IBuffer *buffer = this->getUDPBuffer();
-	  std::string ip;
-	  int port;
-	  unsigned int id;
-	  this->_server_socket_udp.receive(*buffer, ip, port);
-	  *buffer >> id;
-	  Remote *remote = this->getRemote(id);
-	  if (remote)
-	    remote->getRecvBufferUDP().push(buffer);
-	}
+	this->receiveUDP();
     }
+}
+
+/**
+ * @todo Add more verification than only id (like Port and IP) to know which client is talking
+ */
+void		ServerRelay::receiveUDP()
+{
+  IBuffer *buffer = this->getUDPBuffer();
+  std::string ip;
+  int port;
+  unsigned int id;
+  Remote *remote;
+
+  this->_server_socket_udp.receive(*buffer, ip, port);
+  *buffer >> id;
+  this->getRemote(id);
+  if (remote)
+    remote->getRecvBufferUDP().push(buffer);
 }
 
 void		ServerRelay::addClient()
@@ -100,7 +108,7 @@ unsigned int	ServerRelay::generateHash()
   do
     {
       hash = rand();
-    } while (this->getRemote(hash) != NULL);
+    } while (this->getRemote(hash) != NULL || hash == 0);
   return (hash);
 }
 

@@ -105,12 +105,15 @@ void			Remote::setRoom(const std::string &room)
   this->_room = room;
 }
 
-void			Remote::networkSendTCP()
+void			Remote::networkSendTCP(INetworkRelay &network)
 {
+  IBuffer		*buffer;
+
   if (this->_send_buffer_tcp.isEmpty())
     return ;
-  if (this->_tcp->send(*this->_send_buffer_tcp.getNext()))
-    this->_send_buffer_tcp.pop();
+  buffer = this->_send_buffer_tcp.getNext();
+  if (this->_tcp->send(*buffer))
+    network.disposeTCPBuffer(buffer);
 }
 
 # include <stdexcept>
@@ -135,24 +138,33 @@ void			Remote::networkReceiveTCP(INetworkRelay &network)
 	    throw std::logic_error("NOT IMPLEMENTED");
 	  buffer = network.getTCPBuffer();
 	  buffer->rewind();
-	  *buffer << size;
-	  memcpy(buffer->getBuffer() + sizeof(unsigned int),
+	  memcpy(buffer->getBuffer(),
 		 this->_temporary_tcp_buffer.getBuffer() + sizeof(unsigned int),
 		 size - sizeof(unsigned int)); // Change this
-	  buffer->setLength(size);
+	  buffer->setLength(size - sizeof(unsigned int));
 	  buffer->rewind();
-	  this->_recv_buffer_tcp.push(buffer);
+	  if (this->_private_hash == 0)
+	    {
+	      *buffer >> this->_private_hash;
+	      network.disposeTCPBuffer(buffer);
+	    }
+	  else
+	    this->_recv_buffer_tcp.push(buffer);
 	}
       this->_temporary_tcp_buffer.rewind();
     }
 }
 
-void		Remote::networkSendUDP(SocketUDP &udp)
+void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 {
+  IBuffer	*buffer;
+
   if (this->_send_buffer_udp.isEmpty())
     return ;
-  udp.send(*this->_send_buffer_udp.getNextPop(),
+  buffer = this->_send_buffer_udp.getNext();
+  udp.send(*buffer,
 	   this->_ip, this->_port);
+  network.disposeUDPBuffer(buffer);
 }
 
 void		Remote::lock()

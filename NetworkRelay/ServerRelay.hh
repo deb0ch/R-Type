@@ -31,6 +31,7 @@ private:
   void					waitForEvent();
   void					addClient();
   unsigned int				generateHash();
+  void					receiveUDP();
 protected:
   NetworkInitializer			_network_initializer;
   SocketTCP				_server_socket_tcp;

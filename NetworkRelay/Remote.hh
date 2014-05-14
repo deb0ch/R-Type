@@ -33,9 +33,9 @@ public:
   const std::string		&getRoom() const;
   void				setRoom(const std::string &);
 
-  void				networkSendTCP();
+  void				networkSendTCP(INetworkRelay &network);
   void				networkReceiveTCP(INetworkRelay &network);
-  void				networkSendUDP(SocketUDP &udp);
+  void				networkSendUDP(INetworkRelay &network, SocketUDP &udp);
 
   void				lock();
   void				unlock();
