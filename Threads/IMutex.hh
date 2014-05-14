@@ -10,7 +10,6 @@ public:
       UNLOCKED
     };
 
-public:
   virtual void		lock() = 0;
   virtual void		trylock() = 0;
   virtual void		unlock() = 0;
