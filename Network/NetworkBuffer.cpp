@@ -195,7 +195,7 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
   this->unserialize<unsigned int>(size);
   if (this->_buffer_size - this->_current_pos < size)
     {
-      std::cout << "Not enough space" << std::endl; // raise exception
+      //std::cout << "Not enough space" << std::endl; // raise exception
       return ;
     }
   for (unsigned int i = 0; i < size; ++i)

@@ -23,7 +23,6 @@ SocketTCP::SocketTCP(const SOCKET &sock)
 
 SocketTCP::~SocketTCP()
 {
-	WSACleanup();
 }
 
 const int		SocketTCP::getHandle() const
@@ -55,7 +54,7 @@ int SocketTCP::receive(IBuffer &data)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	data.setLength(data.getLength() + ret);
+	data.setLength(data.getLength() + received);
 	data.setPosition(data.getLength());
 	return (received);
 }
@@ -146,12 +145,7 @@ void SocketTCP::connect(const int address, const int port)
 
 void SocketTCP::init()
 {
-	int iResult = WSAStartup(MAKEWORD(2, 2), &(this->wsaData));
 	int reuseAddr = 1;
-	if (iResult != 0)
-	{
-		throw TCPException(WSAGetLastError());
-	}
 	this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->socket == INVALID_SOCKET)
 	{

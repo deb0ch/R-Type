@@ -4,6 +4,7 @@
 #include "ISerializableComponent.hh"
 #include "INetworkSerializableComponent.hh"
 #include "NetworkBuffer.hh"
+#include "ComponentFactory.hpp"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
 {}
@@ -107,8 +108,14 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   IComponent			*new_component;
   INetworkSerializableComponent	*serializable_component;
 
+  return;
   buffer >> component_hash;
-  new_component = this->_world->createComponent(component_hash);
+  /*
+  VOIR AVEC ROMAIN ICI FACTORY
+  */
+  std::cout << component_hash << std::endl;
+  ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
+  new_component = test->create(component_hash);
   if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;

@@ -211,24 +211,3 @@ bool		World::hasEventHandler(const std::string &type) const
 {
   return (this->_event_manager.hasHandler(type));
 }
-
-IComponent	*World::createComponent(std::size_t type) const
-{
-  return (this->_component_factory.create(type));
-}
-
-IComponent	*World::createComponent(const std::string &type) const
-{
-  Hash		hash;
-
-  return (this->_component_factory.create(hash(type)));
-}
-
-void		World::registerComponent(const IComponent *component)
-{
-  Hash		hash;
-
-  if (!component)
-    return ;
-  this->_component_factory.add(hash(component->getType()), component);
-}
