@@ -23,6 +23,7 @@ public:
   virtual Remote			*getRemote(const std::string &ip, const int port);
   virtual void				disposeUDPBuffer(IBuffer *);
   virtual void				disposeTCPBuffer(IBuffer *);
+  virtual bool				isReady() const;
 
 private:
   void					waitForEvent();

@@ -114,3 +114,8 @@ void			ClientRelay::disposeTCPBuffer(IBuffer *buffer)
 {
   delete buffer;
 }
+
+bool			ClientRelay::isReady() const
+{
+  return (this->_remote->getPrivateHash() != 0);
+}

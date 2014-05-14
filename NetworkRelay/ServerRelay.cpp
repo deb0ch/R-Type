@@ -191,3 +191,8 @@ void				ServerRelay::sendBroadcastTCP(const std::string &room_name, IBuffer &buf
 	}
     });
 }
+
+bool				ServerRelay::isReady() const
+{
+  return (true);
+}
