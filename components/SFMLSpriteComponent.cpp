@@ -1,9 +1,15 @@
 #include <iostream>
 #include "SFMLSpriteComponent.hh"
 
+#ifdef _WIN32
+# define PATH "Ressources\\Images\\"
+#elif __linux__
+# define PATH "Ressources/Images/"
+#endif
+
 //----- ----- Constructors ----- ----- //
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
-  : AComponent("SFMLSpriteComponent"), _filaName(filename)
+  : AComponent("SFMLSpriteComponent"), _filaName(PATH + filename)
 {}
 
 //----- ----- Destructor ----- ----- //

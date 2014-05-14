@@ -33,22 +33,7 @@
 #include	"NetworkBuffer.hh"
 
 #include	"ComponentFactory.hpp"
-
-#ifdef _WIN32
-#define PATH "Ressources\\Images\\"
-#elif __linux__
-#define PATH "Ressources/Images/"
-#endif
-
-void		registerComponents(World &world)
-{
-	/*
-	world.registerComponent(new Pos2DComponent());
-	world.registerComponent(new SFMLSpriteComponent());
-	world.registerComponent(new Speed2DComponent());
-	world.registerComponent(new Friction2DComponent());
-	*/
-}
+#include	"EntityFactory.hpp"
 
 void		addSystems(World &world)
 {
@@ -87,8 +72,11 @@ void		addSharedObjetcs(World &world)
 {
 	ComponentFactory *compos = new ComponentFactory();
 	compos->init();
+	EntityFactory *entityFactory = new EntityFactory();
+	entityFactory->init();
 	world.setSharedObject("imageLoader", new ImageLoader());
 	world.setSharedObject("componentFactory", compos);
+	world.setSharedObject("entityFactory", entityFactory);
 }
 
 void		addEntities(World &world)
@@ -98,7 +86,7 @@ void		addEntities(World &world)
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent((new ActionComponent())
@@ -114,7 +102,7 @@ void		addEntities(World &world)
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new MovementSpeedComponent(2))
 		  ->addComponent((new ActionComponent())
@@ -138,19 +126,19 @@ void		addEntities(World &world)
 				 ->addAction("DOWN")
 				 ->addAction("LEFT")
 				 )
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 
   ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
@@ -158,7 +146,7 @@ void		addEntities(World &world)
 		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.1f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new MovementSpeedComponent(1))
 		  ->addComponent(new PlayerMovementComponent())
@@ -177,7 +165,7 @@ void		addEntities(World &world)
 		  ->addComponent(test->create(Hash()("SFMLInputComponent"))->clone())
 		  ->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
 		  ->addComponent(test->create(Hash()("ActionComponent"))->clone())
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  );
 
   world.addEntity(world.createEntity()
@@ -194,26 +182,25 @@ void		addEntities(World &world)
 				 ->addAction("DOWN")
 				 ->addAction("LEFT")
 				 )
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
-		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		  ->addComponent(new SFMLSpriteComponent("players.png")));
 }
 
 int			main()
 {
 	World		world;
 
-	registerComponents(world);
 	addSystems(world);
 	addSharedObjetcs(world);
 	addEntities(world);
