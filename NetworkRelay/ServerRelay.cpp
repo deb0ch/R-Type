@@ -2,9 +2,11 @@
 #include "ServerRelay.hh"
 #include "NetworkBuffer.hh"
 
-ServerRelay::ServerRelay(int port, int nb_pending_connection)
+ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer()
 {
   srand(time(NULL));
+  this->_server_socket_tcp.init();
+  this->_server_socket_udp.init();
   this->_server_socket_tcp.bind(port);
   this->_server_socket_tcp.listen(nb_pending_connection);
   this->_server_socket_udp.bind(port);
@@ -61,8 +63,10 @@ void	ServerRelay::start()
 	  IBuffer *buffer = this->getUDPBuffer();
 	  std::string ip;
 	  int port;
+	  unsigned int id;
 	  this->_server_socket_udp.receive(*buffer, ip, port);
-	  Remote *remote = this->getRemote(ip, port);
+	  *buffer >> id;
+	  Remote *remote = this->getRemote(id);
 	  if (remote)
 	    remote->getRecvBufferUDP().push_back(buffer);
 	}

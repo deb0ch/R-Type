@@ -5,7 +5,7 @@
 # include "EventManager.hpp"
 # include "INetworkRelay.hh"
 # include "Select.hh"
-
+# include "NetworkInitializer.hh"
 # include "Remote.hh"
 
 class ServerRelay : public INetworkRelay
@@ -31,6 +31,7 @@ private:
   void					addClient();
   unsigned int				generateHash();
 protected:
+  NetworkInitializer			_network_initializer;
   SocketTCP				_server_socket_tcp;
   SocketUDP				_server_socket_udp;
   Select				_select;
