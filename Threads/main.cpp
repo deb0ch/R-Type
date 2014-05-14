@@ -1,56 +1,86 @@
-
+#include <unistd.h>
 #include <ostream>
 #include "Threads.hh"
+#include "ThreadPool.hpp"
 
 Mutex	g_mutex;
 
-class PutainDeSaMere
+class ClassTest
 {
 public:
-  void	fct2Merde(Any & arg);
+  void 	TestFunction(Any arg);
+  void 	TestFunction2(Any arg);
 public:
-  PutainDeSaMere() {}
-  virtual ~PutainDeSaMere() {}
+  ClassTest() {}
+  virtual ~ClassTest() {}
 
 private:
-  PutainDeSaMere(const PutainDeSaMere &);
-  PutainDeSaMere &operator=(const PutainDeSaMere &);
+  ClassTest(const ClassTest &);
+  ClassTest &operator=(const ClassTest &);
 protected:
   int	_arg;
 };
 
-void	PutainDeSaMere::fct2Merde(Any & arg)
+void 	ClassTest::TestFunction2(Any arg)
 {
-	std::ostringstream strstream;
+  ScopedMutex p(&g_mutex);
+  std::string hey = "abcdefghijkabcdefghijkabcdefghijkabcdefghijk\n";
+  std::ostringstream strstream;
 
-	std::string		hey = "Hey ! Je suis le thread ";
-	_arg = *arg.getValue<int>();
-	strstream << hey << _arg << std::endl;
-	hey = strstream.str();
-	g_mutex.lock();
-	for (size_t i = 0; i < 1000; i++)
-	{
-		for (int i = 0; i < hey.length(); ++i)
-		{
-			putchar(hey[i]);
-		}
-	}
-	g_mutex.unlock();
+  strstream << *arg.getValue<int>();
+  for (size_t i = 0; i < 10; i++)
+    {
+      std::cout << "thread [" << strstream.str() << "] ";
+      for (unsigned int i = 0; i < hey.length(); ++i)
+	putchar(hey[i]);
+    }
 }
 
-int	main(int ac, char **av)
+void 	ClassTest::TestFunction(Any arg)
 {
-	PutainDeSaMere obj2Merde;
-	PutainDeSaMere obj2Merdebis;
-	Thread<PutainDeSaMere>	thread1;
-	Thread<PutainDeSaMere>	thread2;
-	int		toto1 = 42;
-	int		toto2 = 84;
+  ScopedMutex p(&g_mutex);
+  std::ostringstream strstream;
 
-	thread1.start(Any(&toto1), &obj2Merde, &PutainDeSaMere::fct2Merde);
-	thread2.start(Any(&toto2), &obj2Merdebis, &PutainDeSaMere::fct2Merde);
-	thread1.wait();
-	thread2.wait();
-	getchar();
-	return (0);
+  std::string	hey = "Hey ! Je suis le thread ";
+  _arg = *arg.getValue<int>();
+  strstream << hey << _arg << std::endl;
+  hey = strstream.str();
+  g_mutex.lock();
+  for (size_t i = 0; i < 10; i++)
+    {
+      for (unsigned int i = 0; i < hey.length(); ++i)
+	{
+	  putchar(hey[i]);
+	}
+    }
+  g_mutex.unlock();
+}
+
+int	main()
+{
+  ClassTest objTest;
+
+  ThreadPool	*pool = new ThreadPool(5);
+
+  Thread<ClassTest> *thread = new Thread<ClassTest>;
+
+  int		toto1 = 1;
+  int		toto2 = 2;
+  int		toto3 = 3;
+  int		toto4 = 4;
+
+  // thread->start(&objTest, &ClassTest::TestFunction, Any(&toto4));
+  // thread.wait();
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+  getchar();
+  return (0);
 }
