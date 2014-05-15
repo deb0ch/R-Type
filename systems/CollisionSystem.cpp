@@ -59,5 +59,8 @@ bool	CollisionSystem::isColliding(const Pos2DComponent &pos1, const Box2DCompone
 void	CollisionSystem::collision_event(IEvent *e)
 {
   CollisionEvent*	event = dynamic_cast<CollisionEvent*>(e);
-  std::cout << "Collision entre " <<   event->getEntity1()->getId() << " et " <<   event->getEntity2()->getId() << std::endl;
+  /*
+  std::cout << "Collision entre " <<   event->getEntity1()->getId() << " et " 
+	  << event->getEntity2()->getId() << std::endl;
+  */
 }

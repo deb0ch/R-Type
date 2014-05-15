@@ -8,7 +8,7 @@
 class		LifeComponent : public AComponent<LifeComponent>, public INetworkSerializableComponent
 {
 public:
-	LifeComponent(unsigned int life = 100);
+	LifeComponent(unsigned int life = 100, unsigned int invulnerability = 0);
 	LifeComponent(const LifeComponent&);
 	virtual	~LifeComponent();
 	LifeComponent	&operator=(const LifeComponent&);
@@ -16,10 +16,16 @@ public:
 	virtual void	unserialize(IBuffer &);
 
 	unsigned int	getLife() const;
-	void setLife(const unsigned int);
+	void decreaseLife(const unsigned int);
+	void gainLife(const unsigned int);
+
+	bool isInvulnerable() const;
+	void decreaseInvulnerability();
 
 protected:
 	unsigned int _life;
+	unsigned int _invulenerabilityMaxTime;
+	unsigned int _invulnerability;
 };
 
 #endif /* !LIFECOMPONENT_H_ */
