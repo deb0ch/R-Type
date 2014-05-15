@@ -77,7 +77,6 @@ void		addSystems(World &world)
 	CollisionSystem *collision;
 	collision = new CollisionSystem();
 	world.addSystem(collision);
-	world.addEventHandler("CollisionEvent", collision, &CollisionSystem::collision_event);
 	world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
 	EntityDeleterSystem *entityDeleterSystem;
@@ -128,11 +127,29 @@ void		addEntities(World &world)
 		);
 
 	world.addEntity(world.createEntity()
-		->addComponent(new Pos2DComponent(500.0f, 100.0f))
-		->addComponent(new Box2DComponent(50.0f, 50.0f))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		->addComponent(new Pos2DComponent(500.0f, 500.0f))
+		->addComponent(new Box2DComponent(250.0f, 150.0f))
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
+		ImageLoader::NbSprite{2, 5}))
 		->addComponent(new CollisionPowerComponent(10000))
 		);
+
+	world.addEntity(world.createEntity()
+		->addComponent(new Pos2DComponent(250.0f, 500.0f))
+		->addComponent(new Box2DComponent(250.0f, 150.0f))
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
+		ImageLoader::NbSprite{ 2, 5 }))
+		->addComponent(new CollisionPowerComponent(10000))
+		);
+
+	world.addEntity(world.createEntity()
+		->addComponent(new Pos2DComponent(0.0f, 500.0f))
+		->addComponent(new Box2DComponent(250.0f, 150.0f))
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
+		ImageLoader::NbSprite{ 2, 5 }))
+		->addComponent(new CollisionPowerComponent(10000))
+		);
+
 
 	world.addEntity(world.createEntity()
 		->addComponent(test->create(Hash()("Pos2DComponent"))->clone())
@@ -142,6 +159,7 @@ void		addEntities(World &world)
 		->addComponent(test->create(Hash()("SFMLInputComponent"))->clone())
 		->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
 		->addComponent(test->create(Hash()("ActionComponent"))->clone())
+		->addComponent(new LifeComponent(100))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		);
 
@@ -168,7 +186,7 @@ void		addEntities(World &world)
 		->addComponent(new Friction2DComponent(0.9f))
 		->addComponent(new MovementSpeedComponent(0.8f))
 		->addComponent(new PlayerMovementComponent())
-		->addComponent(new LifeComponent(100))
+		->addComponent(new LifeComponent())
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
