@@ -99,7 +99,12 @@ void			ClientRelay::sendBroadcastTCP(const std::string &, IBuffer &buffer)
 
 IBuffer			*ClientRelay::getTCPBuffer()
 {
-  return (new NetworkBuffer(4096));
+  IBuffer *buffer;
+
+  buffer = new NetworkBuffer(4096);
+  buffer->setPosition(sizeof(unsigned int));
+  std::cout << "creating buffer: " << buffer << std::endl;
+  return (buffer);
 }
 
 IBuffer			*ClientRelay::getUDPBuffer()

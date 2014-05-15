@@ -76,8 +76,7 @@ private:
 	  ++i;
 	else
 	  --i;
-	++this->_buffer_size;
-	++this->_current_pos;
+	this->setPosition(this->getPosition() + 1);
       }
   };
 

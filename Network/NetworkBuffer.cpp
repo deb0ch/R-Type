@@ -9,8 +9,7 @@ NetworkBuffer::NetworkBuffer(unsigned int size) : bufferMaxSize(size)
 
 NetworkBuffer::~NetworkBuffer()
 {
-  std::cout << "deleting: " << this << std::endl;
-  delete this->_buffer;
+  delete[] this->_buffer;
 }
 
 NetworkBuffer::NetworkBuffer(const IBuffer &buffer) : bufferMaxSize(buffer.getMaxSize())
@@ -170,6 +169,8 @@ unsigned int	NetworkBuffer::getPosition() const
 void		NetworkBuffer::setPosition(unsigned int pos)
 {
   this->_current_pos = pos;
+  if (this->_buffer_size < this->_current_pos)
+    this->_buffer_size = this->_current_pos;
 }
 
 
@@ -185,8 +186,7 @@ void		NetworkBuffer::serialize<std::string>(const std::string &element)
   for (auto it = element.begin(); it != element.end(); ++it)
     {
       this->_buffer[this->_current_pos] = *it;
-      ++this->_buffer_size;
-      ++this->_current_pos;
+      this->setPosition(this->getPosition() + 1);
     }
 }
 

@@ -74,10 +74,10 @@ void			Remote::sendTCP(IBuffer *buffer)
 
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   size = buffer->getLength();
-  std::cout << "sending size: " << size << std::endl;
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
+  std::cout << "sending size: " << size << " " << buffer->getLength() << std::endl;
   this->_send_buffer_tcp.push(buffer);
 }
 
@@ -140,14 +140,14 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
     {
       this->_temporary_tcp_buffer.rewind();
       this->_temporary_tcp_buffer >> size;
-      std::cout << "Received packet size: " << size << std::endl;
-      if (size >= this->_temporary_tcp_buffer.getLength()) // need redo, wrong condition
+      std::cout << "Received packet size: " << size << " " << this->_temporary_tcp_buffer.getLength() << std::endl;
+      if (this->_temporary_tcp_buffer.getLength() >= size)
 	{
 	  /**
 	   * @todo copy the surplus of data we read into the begining of this->_temporary_tcp_buffer,
 	   * add set its position to the end of the message
 	   */
-	  if (size > this->_temporary_tcp_buffer.getLength()) // need redo, wrong condition
+	  if (this->_temporary_tcp_buffer.getLength() > size) // need redo, wrong condition
 	    throw std::logic_error("NOT IMPLEMENTED");
 	  buffer = network.getTCPBuffer();
 	  buffer->rewind();
@@ -160,6 +160,7 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 	  if (this->_private_hash == 0)
 	    {
 	      *buffer >> this->_private_hash;
+	      std::cout << "OKADPOKAZPODK: " << this->_private_hash << std::endl;
 	      network.disposeTCPBuffer(buffer);
 	    }
 	  else

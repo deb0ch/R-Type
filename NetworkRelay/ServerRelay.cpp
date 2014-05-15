@@ -187,7 +187,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
 
   buffer = new NetworkBuffer(4096);
   buffer->setPosition(sizeof(unsigned int));
-  std::cout << "creating: " << buffer << std::endl;
+  std::cout << "creating buffer: " << buffer << std::endl;
   return (buffer);
 }
 
@@ -203,12 +203,15 @@ IBuffer			*ServerRelay::getUDPBuffer()
 
 void			ServerRelay::disposeUDPBuffer(IBuffer *buffer)
 {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   delete buffer;
 }
 
 void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
 {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   delete buffer;
+  std::cout << "WTF TCP" << std::endl;
 }
 
 std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
