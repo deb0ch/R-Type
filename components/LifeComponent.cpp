@@ -35,7 +35,10 @@ void LifeComponent::decreaseLife(const unsigned int damages)
 {
 	if (this->_invulnerability)
 		return;
-	this->_life -= damages;
+	if (damages >= this->_life)
+		this->_life = 0;
+	else
+		this->_life -= damages;
 	this->_invulnerability = this->_invulenerabilityMaxTime;
 }
 
