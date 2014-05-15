@@ -113,7 +113,8 @@ void		addEntities(World &world)
 		->addComponent(new Box2DComponent(50.0f, 50.0f))
 		->addComponent(new Speed2DComponent(5.f, 5.f))
 		->addComponent(new Friction2DComponent(0.5f))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"),
+		ImageLoader::NbSprite{5, 5}, 0, 16))
 		->addComponent(new SFMLInputComponent())
 		->addComponent(new MovementSpeedComponent(5))
 		->addComponent(new LifeComponent(100))
@@ -130,7 +131,7 @@ void		addEntities(World &world)
 		->addComponent(new Pos2DComponent(500.0f, 500.0f))
 		->addComponent(new Box2DComponent(250.0f, 150.0f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
-		ImageLoader::NbSprite{2, 5}))
+		ImageLoader::NbSprite{2, 4}, 7))
 		->addComponent(new CollisionPowerComponent(10000))
 		);
 
@@ -138,7 +139,7 @@ void		addEntities(World &world)
 		->addComponent(new Pos2DComponent(250.0f, 500.0f))
 		->addComponent(new Box2DComponent(250.0f, 150.0f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
-		ImageLoader::NbSprite{ 2, 5 }))
+		ImageLoader::NbSprite{ 2, 4 }, 7))
 		->addComponent(new CollisionPowerComponent(10000))
 		);
 
@@ -146,7 +147,7 @@ void		addEntities(World &world)
 		->addComponent(new Pos2DComponent(0.0f, 500.0f))
 		->addComponent(new Box2DComponent(250.0f, 150.0f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet36.png"),
-		ImageLoader::NbSprite{ 2, 5 }))
+		ImageLoader::NbSprite{ 2, 4 }, 7))
 		->addComponent(new CollisionPowerComponent(10000))
 		);
 
@@ -170,6 +171,8 @@ void		addEntities(World &world)
 		->addComponent(new Friction2DComponent(0.3f))
 		->addComponent(new MovementSpeedComponent(0.3f))
 		->addComponent(new LifeComponent())
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("ShotBoss.png"),
+		ImageLoader::NbSprite{ 4, 1 }, 3))
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
@@ -177,7 +180,7 @@ void		addEntities(World &world)
 		->addAction("LEFT")
 		)
 		->addComponent(new MoveFollowComponent(world.getEntity(1)->_id))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		);
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(100.0f, 200.0f))
@@ -194,7 +197,9 @@ void		addEntities(World &world)
 		->addAction("LEFT")
 		)
 		->addComponent(new MoveFollowComponent(world.getEntity(1)->_id))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("ShotBoss.png"),
+		ImageLoader::NbSprite{ 4, 1 }, 3))
+		);
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(000.0f, 400.0f))
@@ -263,7 +268,7 @@ int			main()
 	world.start();
 	for (;;)
 	{
-		world.process(0.16f);
+		world.process(50000000.0f);
 	}
 	world.stop();
 
