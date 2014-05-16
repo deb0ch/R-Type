@@ -21,7 +21,7 @@ private:
 
 public:
 
-  Select(const int to);
+  Select(const int to, const int tu);
   Select();
   ~Select() {}
 
@@ -67,7 +67,7 @@ public:
 
   void	reset();
 
-  void	setTimeOut(const int);
+  void	setTimeOut(const int to, const int tu);
   void	doSelect();
   bool	issetReads(const int);
   bool	issetWrites(const int);

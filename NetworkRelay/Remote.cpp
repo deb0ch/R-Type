@@ -156,7 +156,6 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 		 size - sizeof(unsigned int)); // Change this
 	  buffer->setLength(size - sizeof(unsigned int));
 	  buffer->rewind();
-	  std::cout << "received buffer: " << buffer->getBuffer() << std::endl;
 	  if (this->_private_hash == 0)
 	    {
 	      *buffer >> this->_private_hash;

@@ -2,15 +2,16 @@
 #include "TCPException.hh"
 #include "UDPException.hh"
 
-ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer()
+ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select(0, 1000)
 {
   SocketTCP	*sock = new SocketTCP;
 
   sock->init();
   sock->connect(addr, port);
   this->_remote = new Remote(*sock);
+  this->_remote->setIP(addr);
+  this->_remote->setPort(port);
   this->_socket_udp.init();
-  this->_socket_udp.bind(port);
   this->_select.initReads();
   this->_select.initWrites();
   this->_select.addRead(this->_remote->getTCPSocket().getHandle());
@@ -29,9 +30,15 @@ void			ClientRelay::waitForEvent()
   this->_select.addRead(this->_remote->getTCPSocket().getHandle());
   this->_select.addRead(this->_socket_udp.getHandle());
   if (!this->_remote->getSendBufferTCP().isEmpty())
-    this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
+    {
+      std::cout << "Add write TCP" << std::endl;
+      this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
+    }
   if (!this->_remote->getSendBufferUDP().isEmpty())
-    this->_select.addRead(this->_socket_udp.getHandle());
+    {
+      std::cout << "Add write UDP" << std::endl;
+      this->_select.addWrite(this->_socket_udp.getHandle());
+    }
   this->_select.doSelect();
 }
 
@@ -48,14 +55,13 @@ void			ClientRelay::start()
   while (!disconnect)
     {
       this->waitForEvent();
-      std::cout << "Something happens" << std::endl;
-
       if (this->_select.issetReads(this->_socket_udp.getHandle()))
 	{
-	  IBuffer *buffer = this->getUDPBuffer();
-	  std::string ip;
-	  int port;
+	  IBuffer	*buffer = this->getUDPBuffer();
+	  std::string	ip;
+	  int		port;
 	  this->_socket_udp.receive(*buffer, ip, port);
+	  buffer->setPosition(sizeof(unsigned int));
 	  Remote *remote = this->getRemote(ip, port);
 	  std::cout << "Received UDP" << std::endl;
 	  if (remote)
@@ -99,7 +105,7 @@ void			ClientRelay::sendBroadcastTCP(const std::string &, IBuffer &buffer)
 
 IBuffer			*ClientRelay::getTCPBuffer()
 {
-  IBuffer *buffer;
+  IBuffer		*buffer;
 
   buffer = new NetworkBuffer(4096);
   buffer->setPosition(sizeof(unsigned int));

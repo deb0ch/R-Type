@@ -124,6 +124,7 @@ int	SocketUDP::receive(IBuffer &data, std::string& address, int& port)
 		throw UDPException(WSAGetLastError());
 	}
 	data.setLength(res);
+	data.rewind();
 	return (res);
 }
 

@@ -3,12 +3,13 @@
 #include "SelectException.hh"
 #include "Select.hh"
 
-Select::Select(const int to)
+Select::Select(const int to, const int tu)
 {
   this->_reads = NULL;
   this->_writes = NULL;
   this->_to = new struct timeval();
   this->_to->tv_sec = to;
+  this->_to->tv_usec = tu;
   this->maxFd = 0;
 }
 
@@ -20,10 +21,12 @@ Select::Select()
   this->maxFd = 0;
 }
 
-void	Select::setTimeOut(const int to)
+void	Select::setTimeOut(const int to, const int tu)
 {
-  if (this->_to)
-    this->_to->tv_sec = to;
+  if (!this->_to)
+    this->_to = new struct timeval();
+  this->_to->tv_sec = to;
+  this->_to->tv_usec = tu;
 }
 
 void	Select::doSelect()

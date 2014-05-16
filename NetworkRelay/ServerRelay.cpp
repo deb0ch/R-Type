@@ -2,7 +2,7 @@
 #include "ServerRelay.hh"
 #include "NetworkBuffer.hh"
 
-ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer()
+ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer(), _select(0, 1000)
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -46,7 +46,6 @@ void	ServerRelay::waitForEvent()
 		    }
 
 		});
-  std::cout << "Waiting.." << std::endl;
   this->_select.doSelect();
 }
 
@@ -60,7 +59,6 @@ void	ServerRelay::start()
   while (1)
     {
       this->waitForEvent();
-      std::cout << "Something happens" << std::endl;
 
       this->manageRemotes();
 
@@ -112,18 +110,26 @@ void		ServerRelay::removeRemote(Remote *remote)
  */
 void		ServerRelay::receiveUDP()
 {
-  IBuffer *buffer = this->getUDPBuffer();
-  std::string ip;
-  int port;
-  unsigned int id;
-  Remote *remote;
+  IBuffer	*buffer = this->getUDPBuffer();
+  std::string	ip;
+  int		port;
+  unsigned int	id;
+  Remote	*remote;
 
   std::cout << "Receiving UDP" << std::endl;
   this->_server_socket_udp.receive(*buffer, ip, port);
+  buffer->rewind();
   *buffer >> id;
   remote = this->getRemote(id);
+  std::cout << "RECEIVING ID: " << id << std::endl;
   if (remote)
-    remote->getRecvBufferUDP().push(buffer);
+    {
+      remote->setIP(ip);
+      remote->setPort(port);
+      remote->getRecvBufferUDP().push(buffer);
+    }
+  else
+    std::cout << "Not found :(" << std::endl;
 }
 
 void		ServerRelay::addClient()
@@ -136,6 +142,7 @@ void		ServerRelay::addClient()
   std::cout << "Adding client" << std::endl;
   new_client = this->_server_socket_tcp.accept();
   hash = this->generateHash();
+  std::cout << "GENERATING HASH: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
   remote->setRoom("default");
   this->_remotes.push_back(remote);
@@ -183,7 +190,7 @@ Remote		*ServerRelay::getRemote(const std::string &ip, const int port)
 
 IBuffer			*ServerRelay::getTCPBuffer()
 {
-  IBuffer *buffer;
+  IBuffer		*buffer;
 
   buffer = new NetworkBuffer(4096);
   buffer->setPosition(sizeof(unsigned int));
@@ -193,7 +200,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
 
 IBuffer			*ServerRelay::getUDPBuffer()
 {
-  IBuffer *buffer;
+  IBuffer		*buffer;
 
   buffer = new NetworkBuffer;
   buffer->setPosition(sizeof(unsigned int));
@@ -219,7 +226,7 @@ std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
   std::vector<Remote *>		ret;
 
   std::for_each(this->_remotes.begin(), this->_remotes.end(), [&ret, &room_name] (Remote *remote) -> void {
-      if (remote->getRoom() == room_name)
+      if (remote->getRoom() == room_name) // PUT A TRYLOCK HERE
 	{
 	  remote->lock();
 	  ret.push_back(remote);
