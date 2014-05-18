@@ -14,6 +14,10 @@
 # include "ActionComponent.hh"
 # include "PlayerMovementComponent.hh"
 # include "Entity.hh"
+# include "LifeComponent.hh"
+# include "MoveForwardComponent.hh"
+# include "MoveSequenceComponent.hh"
+# include "EntitySpawnerComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -25,7 +29,7 @@ public :
   virtual ~EntityFactory()
   {}
 
-  void		addEntity(Entity *input, const std::string &key)
+  void		addEntity(const std::string &key, Entity *input)
   {
     this->add(Hash()(key), input);
   }
@@ -37,14 +41,24 @@ public :
 
   void		init()
   {
-    this->addEntity(new Entity(), "PLAYER");
+    this->addEntity("PLAYER", (new Entity()));
 
-    this->addEntity((new Entity())
-		    ->addComponent(new Pos2DComponent(300.0f, 000.0f))
+    this->addEntity("TEST_SPAWN", (new Entity())
+		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		    ->addComponent(new Speed2DComponent(20.f, 5.f))
+		    ->addComponent(new Speed2DComponent(-5.f, 0.f))
+		    ->addComponent(new MovementSpeedComponent(0.5f))
+		    ->addComponent(new LifeComponent(20))
 		    ->addComponent(new SFMLSpriteComponent("players.png"))
-      , "TEST");
+		    ->addComponent((new ActionComponent())
+				   ->addAction("UP")
+				   ->addAction("RIGHT")
+				   ->addAction("DOWN")
+				   ->addAction("LEFT")
+				   )
+		    // ->addComponent(new EntitySpawnerComponent({"TEST_SPAWN"}))
+		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    );
   }
 };
 
