@@ -21,8 +21,7 @@ protected:
   int	_arg;
 };
 
-void 	ClassTest::TestFunction2(Any arg)
-{
+void 	ClassTest::TestFunction2(Any arg) {
   ScopedMutex p(&g_mutex);
   std::string hey = "abcdefghijkabcdefghijkabcdefghijkabcdefghijk\n";
   std::ostringstream strstream;
@@ -45,22 +44,16 @@ void 	ClassTest::TestFunction(Any arg)
   _arg = *arg.getValue<int>();
   strstream << hey << _arg << std::endl;
   hey = strstream.str();
-  g_mutex.lock();
-  for (size_t i = 0; i < 10; i++)
-    {
-      for (unsigned int i = 0; i < hey.length(); ++i)
-	{
-	  putchar(hey[i]);
-	}
-    }
-  g_mutex.unlock();
+  for (size_t i = 0; i < 10; i++) {
+    std::cout << hey << std::endl;
+  }
 }
 
 int	main()
 {
   ClassTest objTest;
 
-  ThreadPool	*pool = new ThreadPool(5);
+  ThreadPool	*pool = new ThreadPool(10);
 
   Thread<ClassTest> *thread = new Thread<ClassTest>;
 
@@ -69,11 +62,10 @@ int	main()
   int		toto3 = 3;
   int		toto4 = 4;
 
-  // thread->start(&objTest, &ClassTest::TestFunction, Any(&toto4));
-  // thread.wait();
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+  /*
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
@@ -81,6 +73,9 @@ int	main()
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
   pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
-  getchar();
+  */
+  //getchar();
+  delete pool;
+  //getchar();
   return (0);
 }

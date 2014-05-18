@@ -32,7 +32,9 @@ IMutex::STATUS	Mutex::status() const
 
 Mutex::Mutex()
   : _ret(0), _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
-{}
+{
+  std::cout << "Mutex" << std::endl;
+}
 
 Mutex::~Mutex()
 {

@@ -28,7 +28,7 @@ NetworkException::NetworkException(const int error) {
 }
 NetworkException::NetworkException(const std::string &info) {
   this->_info = "NetworkException : ";
-  this->_info = info;
+  this->_info += info;
 }
 
 /* Protected Constructor */
