@@ -19,6 +19,7 @@
 #include	"MoveSequenceSystem.hh"
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
+#include	"EntitySpawnerSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -35,6 +36,7 @@
 #include	"MoveSequenceComponent.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
+#include	"EntitySpawnerComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -58,6 +60,7 @@ void		addSystems(World &world)
   world.addSystem(new MoveSequenceSystem());
   world.addSystem(new ActionMovementSystem());
   world.addSystem(new LifeSystem());
+  world.addSystem(new EntitySpawnerSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -77,8 +80,8 @@ void		addSystems(World &world)
       "Speed2DComponent",
       "Friction2DComponent" };
   network = new NetworkSendUpdateSystem(arg);
-  world.addSystem(network);
-  world.addSystem(new NetworkReceiveUpdateSystem());
+  //world.addSystem(network);
+  //world.addSystem(new NetworkReceiveUpdateSystem());
 }
 
 void		addSharedObjetcs(World &world)
@@ -95,9 +98,9 @@ void		addSharedObjetcs(World &world)
 void		addEntities(World &world)
 {
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
+  		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
   		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 5.f))
+		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
@@ -113,12 +116,11 @@ void		addEntities(World &world)
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 5.f))
+		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
 		  ->addComponent(new SFMLInputComponent())
 		  ->addComponent(new MovementSpeedComponent(5))
-		  ->addComponent(new LifeComponent(100))
 		  ->addComponent(new CollisionPowerComponent(100))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
@@ -159,7 +161,6 @@ void		addEntities(World &world)
 		  ->addComponent(test->create(Hash()("Box2DComponent"))->clone())
 		  ->addComponent(test->create(Hash()("Speed2DComponent"))->clone())
 		  ->addComponent(test->create(Hash()("Friction2DComponent"))->clone())
-		  ->addComponent(test->create(Hash()("SFMLInputComponent"))->clone())
 		  ->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
 		  ->addComponent(test->create(Hash()("ActionComponent"))->clone())
 		  ->addComponent(new LifeComponent(100))
@@ -252,8 +253,27 @@ void		addEntities(World &world)
 				 ->addAction("LEFT")
 				 )
 		  );
-}
 
+  world.addEntity(world.createEntity()
+		  ->addComponent(new Pos2DComponent(600.0f, 200.0f))
+		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new Speed2DComponent(0.f, 0.f))
+		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
+		  ->addComponent(new EntitySpawnerComponent({"TEST_SPAWN"}))
+		  ->addComponent(new MovementSpeedComponent(0.5f))
+		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 50))
+		  ->addComponent(new Friction2DComponent(0.5f))
+		  ->addComponent((new ActionComponent())
+				 ->addAction("UP")
+				 ->addAction("RIGHT")
+				 ->addAction("DOWN")
+				 ->addAction("LEFT")
+				 )
+		  );
+
+}
+#include	"RandomInt.hpp"
+#include	"RandomReal.hpp"
 int			main()
 {
   World		world;
@@ -268,6 +288,15 @@ int			main()
       world.process(0.16f);
     }
   world.stop();
+
+  /*
+  // To generate a random number with parameters :
+  std::cout << RandomInt()(0, 5) << std::endl;
+  // With only the minimum :
+  std::cout << RandomInt()(0) << std::endl;
+  // Without any parameters, it's tricky :
+  std::cout << RandomInt().operator() <int>() << std::endl;
+  */
 
   return (0);
 }

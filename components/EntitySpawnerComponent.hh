@@ -1,33 +1,48 @@
 #ifndef ENTITYSPAWNERCOMPONENT_H_
 # define ENTITYSPAWNERCOMPONENT_H_
 
+# include	<vector>
+# include	<string>
+
 # include	"AComponent.hpp"
 # include	"ISerializableComponent.hh"
 # include	"INetworkSerializableComponent.hh"
 
-class		EntitySpawnerComponent : public AComponent<EntitySpawnerComponent>, public INetworkSerializableComponent
+# include	"Entity.hh"
+# include	"Pos2DComponent.hh"
+
+class		EntityFactory;
+
+class		EntitySpawnerComponent : public AComponent<EntitySpawnerComponent>
 {
 protected:
-  float		_vX;
-  float		_vY;
+  std::vector<std::string>	_entities;
+  std::vector<std::string>	_components;
+  unsigned int			_next;
+  unsigned long			_nb;
+  unsigned long			_delay;
+  std::pair<float, float>	_min_pos;
+  std::pair<float, float>	_max_pos;
+  bool				_random;
+  bool				_abs;
+
+  bool				_active;
 
 public:
-		EntitySpawnerComponent(float x = 0.0f, float y = 0.0f);
+  EntitySpawnerComponent(std::vector<std::string> entities = {},
+			 std::vector<std::string> components = {},
+			 unsigned long nb = 0,
+			 unsigned long delay = 15,
+			 std::pair<float, float> min_pos = {0, 0},
+			 std::pair<float, float> max_pos = {0, 0},
+			 bool random = true,
+			 bool abs = false);
 		EntitySpawnerComponent(const EntitySpawnerComponent&);
   virtual	~EntitySpawnerComponent();
   EntitySpawnerComponent	&operator=(const EntitySpawnerComponent&);
 
-  virtual void	serialize(IBuffer &buffer) const;
-  virtual void	unserialize(IBuffer &buffer);
-
-  float		getVX() const;
-  float		getVY() const;
-
-  void		setVX(float x);
-  void		setVY(float y);
-
-  void		addVX(float x);
-  void		addVY(float y);
+  void				setActive(bool active);
+  Entity			*spawnEntity(EntityFactory *facto, const Pos2DComponent *pos = NULL);
 };
 
 #endif /* !ENTITYSPAWNERCOMPONENT_H_ */

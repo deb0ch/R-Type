@@ -26,6 +26,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.hh
 	PARENT_SCOPE
 )
 
@@ -46,5 +47,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.cpp
 	PARENT_SCOPE
 )
