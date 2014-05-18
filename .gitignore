@@ -18,6 +18,7 @@
 
 # Core files
 core
+vgcore.*
 
 # Executables
 RType_Client

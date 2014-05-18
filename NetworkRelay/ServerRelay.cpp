@@ -273,11 +273,6 @@ void				ServerRelay::sendBroadcastTCP(const std::string &room_name, IBuffer &buf
     });
 }
 
-bool				ServerRelay::isReady() const
-{
-  return (true);
-}
-
 void				ServerRelay::udpConnect(Remote *remote)
 {
   IBuffer			*buffer;

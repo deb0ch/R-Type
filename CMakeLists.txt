@@ -60,6 +60,7 @@ FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR})
 
 # COMPILE WITH SFML
 if (UNIX)
+  	SET(CMAKE_BUILD_TYPE "Debug")
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-window.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-system.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)

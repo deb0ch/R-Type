@@ -155,11 +155,6 @@ void			ClientRelay::disposeTCPBuffer(IBuffer *buffer)
   delete buffer;
 }
 
-bool			ClientRelay::isReady() const
-{
-  return (this->_remote->getPrivateHash() != 0);
-}
-
 void			ClientRelay::udpConnect()
 {
   IBuffer		*buffer;

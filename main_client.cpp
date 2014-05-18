@@ -10,12 +10,17 @@ int	main()
 
   ClientRelay a("127.0.0.1", 6667);
   thread.start(&a, &ClientRelay::start, b);
-  while (!a.isReady())
-    sleep(1);
-  std::cout << "toto" << std::endl;
+  std::vector<Remote *> tmp_remotes;
+
+  // Get a remote to start ping pong talking
+  do
+    {
+      sleep(1);
+      tmp_remotes = a.getRemotes("default");
+    } while (tmp_remotes.empty());
   IBuffer *tmp_buffer = a.getTCPBuffer();
   *tmp_buffer << "coucou";
-  Remote *tmp_remote = a.getRemotes("").front();
+  Remote *tmp_remote = tmp_remotes.front();
   tmp_remote->sendUDP(tmp_buffer);
   tmp_remote->unlock();
 

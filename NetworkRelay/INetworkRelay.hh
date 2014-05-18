@@ -26,7 +26,6 @@ public:
   virtual Remote			*getRemote(const std::string &ip, const int port) = 0;
   virtual void				disposeUDPBuffer(IBuffer *) = 0;
   virtual void				disposeTCPBuffer(IBuffer *) = 0;
-  virtual bool				isReady() const = 0;
 protected:
 };
 
