@@ -55,9 +55,3 @@ bool	CollisionSystem::isColliding(const Pos2DComponent &pos1, const Box2DCompone
 		       pos2.getY() + (box2.getHeight() / 2.f));
   return ((inner_left < inner_right) && (inner_top < inner_bot));
 }
-
-void	CollisionSystem::collision_event(IEvent *e)
-{
-  CollisionEvent*	event = dynamic_cast<CollisionEvent*>(e);
-  std::cout << "Collision entre " <<   event->getEntity1()->getId() << " et " <<   event->getEntity2()->getId() << std::endl;
-}

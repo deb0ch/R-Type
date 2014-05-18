@@ -1,29 +1,29 @@
-#include "PlayerMovementSystem.hh"
+#include "ActionMovementSystem.hh"
 #include "ActionComponent.hh"
 #include "Speed2DComponent.hh"
 #include "MovementSpeedComponent.hh"
 
-const std::map<std::string, std::pair<int, int> > PlayerMovementSystem::KeyMovement = {
+const std::map<std::string, std::pair<int, int> > ActionMovementSystem::KeyMovement = {
   {"UP",	{0, -1}},
   {"LEFT",	{-1, 0}},
   {"DOWN",	{0, 1}},
   {"RIGHT",	{1, 0}}
 };
 
-PlayerMovementSystem::PlayerMovementSystem() : ASystem("PlayerMovementSystem")
+ActionMovementSystem::ActionMovementSystem() : ASystem("ActionMovementSystem")
 {}
 
-PlayerMovementSystem::~PlayerMovementSystem()
+ActionMovementSystem::~ActionMovementSystem()
 {}
 
-bool PlayerMovementSystem::canProcess(Entity *entity)
+bool ActionMovementSystem::canProcess(Entity *entity)
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("Speed2DComponent"))
     return (true);
   return (false);
 }
 
-void PlayerMovementSystem::processEntity(Entity *entity, const float)
+void ActionMovementSystem::processEntity(Entity *entity, const float)
 {
   ActionComponent		*action;
   Speed2DComponent		*speed;
