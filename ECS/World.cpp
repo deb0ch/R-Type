@@ -159,6 +159,7 @@ void	World::process(const float delta)
  */
 void	World::init()
 {
+  this->_initialized = true;
   std::for_each(this->_systems.begin(), this->_systems.end(), [] (ISystem *system) -> void {
       system->init();
     });

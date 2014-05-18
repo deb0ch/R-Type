@@ -8,9 +8,11 @@
 #endif
 
 //----- ----- Constructors ----- ----- //
-SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
+SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, ImageLoader::NbSprite sprites)
   : AComponent("SFMLSpriteComponent"), _filaName(PATH + filename)
-{}
+{
+  this->_sprites = sprites;
+}
 
 //----- ----- Destructor ----- ----- //
 SFMLSpriteComponent::~SFMLSpriteComponent()
@@ -19,7 +21,7 @@ SFMLSpriteComponent::~SFMLSpriteComponent()
 //----- ----- Getters ----- ----- //
 sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader)
 {
-  imageLoader.addImage(this->_filaName, ImageLoader::NbSprite{5,5});
+  imageLoader.addImage(this->_filaName, this->_sprites);
 
   sf::Sprite *sprite = imageLoader.createSprite(this->_filaName, 0);
   return (sprite);

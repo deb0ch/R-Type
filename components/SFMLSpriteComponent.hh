@@ -11,9 +11,10 @@ class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>, public INet
 {
 protected:
   std::string	_filaName;
+  ImageLoader::NbSprite _sprites;
 
 public:
-		SFMLSpriteComponent(const std::string &filename = "");
+	SFMLSpriteComponent(const std::string &filename = "", ImageLoader::NbSprite = { 5, 5 });
   virtual	~SFMLSpriteComponent();
 
   virtual	void serialize(IBuffer &buffer) const;
