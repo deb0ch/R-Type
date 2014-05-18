@@ -20,12 +20,12 @@ bool MoveSequenceSystem::canProcess(Entity *entity)
 void MoveSequenceSystem::processEntity(Entity *entity, const float)
 {
   ActionComponent		*action;
-  MoveSequenceComponent *moveEntity;
+  MoveSequenceComponent		*moveEntity;
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   moveEntity = entity->getComponent<MoveSequenceComponent>("MoveSequenceComponent");
 
-  if (moveEntity != NULL)
+  if (action && moveEntity)
     {
       action->setAction(moveEntity->getAction(), true);
       moveEntity->incrementTick();
