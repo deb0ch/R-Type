@@ -25,6 +25,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.hh
 	PARENT_SCOPE
 )
 
@@ -45,5 +46,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.cpp
 	PARENT_SCOPE
 )
