@@ -56,6 +56,17 @@ public:
       }
   }
 
+  void	initReads();
+  void	initWrites();
+  void	addRead(int);
+  void	addWrite(int);
+
+  void	removeRead(int);
+  void	removeWrite(int);
+
+  void	resetReads();
+  void	resetWrites();
+
   void	setTimeOut(const int);
   void	doSelect();
   bool	issetReads(const int);

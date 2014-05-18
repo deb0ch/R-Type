@@ -17,3 +17,13 @@ float	MovementSpeedComponent::getSpeed() const
 {
   return (this->_movement_speed);
 }
+
+void	MovementSpeedComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_movement_speed;
+}
+
+void	MovementSpeedComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_movement_speed;
+}
