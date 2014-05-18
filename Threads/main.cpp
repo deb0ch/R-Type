@@ -27,7 +27,7 @@ void 	ClassTest::TestFunction2(Any arg) {
   std::ostringstream strstream;
 
   strstream << *arg.getValue<int>();
-  for (size_t i = 0; i < 10; i++)
+  for (size_t i = 0; i < 1; i++)
     {
       std::cout << "thread [" << strstream.str() << "] ";
       for (unsigned int i = 0; i < hey.length(); ++i)
@@ -42,9 +42,9 @@ void 	ClassTest::TestFunction(Any arg)
 
   std::string	hey = "Hey ! Je suis le thread ";
   _arg = *arg.getValue<int>();
-  strstream << hey << _arg << std::endl;
+  strstream << hey << _arg ;
   hey = strstream.str();
-  for (size_t i = 0; i < 10; i++) {
+  for (size_t i = 0; i < 1; i++) {
     std::cout << hey << std::endl;
   }
 }
@@ -53,29 +53,20 @@ int	main()
 {
   ClassTest objTest;
 
-  ThreadPool	*pool = new ThreadPool(10);
-
-  Thread<ClassTest> *thread = new Thread<ClassTest>;
+  ThreadPool	*pool = new ThreadPool(5);
 
   int		toto1 = 1;
   int		toto2 = 2;
   int		toto3 = 3;
   int		toto4 = 4;
 
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
-  /*
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
-  pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
-  */
-  //getchar();
+  for (int i = 0; i < 100; ++i)
+    {
+      pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto1)));
+      pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto2)));
+      pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction, Any(&toto3)));
+      pool->addTask(new Task<ClassTest>(&objTest, &ClassTest::TestFunction2, Any(&toto4)));
+    }
   delete pool;
-  //getchar();
   return (0);
 }

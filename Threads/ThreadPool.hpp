@@ -27,13 +27,12 @@ public:
   }
 
   ~ThreadPool() {
+    while (!_tasks.isEmpty());
     _status = STOPPED;
-    //_condvar.broadcast();
+    _condvar.broadcast();
     for (auto it = _pool.begin(); it != _pool.end(); ++it) {
-      //_condvar.broadcast();
-      //(*it)->wait();
+      (*it)->wait();
       delete *it;
-      //_condvar.broadcast();
     }
   }
 
@@ -42,23 +41,19 @@ public:
     _condvar.broadcast();
   }
 
-  eStatus		getStatus() const {
-    return (_status);
-  }
-
   void			runThread(Any) {
     ITask*		task;
 
-    while (/*_status == RUNNING*/ 1) {
-      if (_tasks.isEmpty())
+    while (_status == RUNNING) {
+      if (usleep(500) && _tasks.isEmpty()) {
 	_condvar.wait(&_mutex);
-      //if (_status == RUNNING) {
+      }
+      if (_status == RUNNING) {
 	try {
 	  task = this->_tasks.getNextPop();
 	  (*task)();
-	  delete task;
-	} catch (std::exception) { }
-	//}
+	} catch (std::exception) {}
+      }
     }
   }
 
@@ -69,7 +64,7 @@ private :
 
 private:
   const unsigned int			_nbThread;
-  volatile eStatus			_status;
+  eStatus				_status;
   CondVar				_condvar;
   Mutex					_mutex;
   SafeFifo<ITask *>			_tasks;
