@@ -12,11 +12,17 @@ void	Mutex::lock()
 	_status = LOCKED;
 }
 
-void	Mutex::trylock()
+bool	Mutex::trylock()
 {
 	if ((_ret = WaitForSingleObject(_mutexHandle, 0)) == WAIT_FAILED)
 		throw MutexException(GetLastError());
-	_status = LOCKED;
+	if (_ret == WAIT_OBJECT_0)
+	  {
+	    _status = LOCKED;
+	    return (true);
+	  }
+	else
+	  return (false);
 }
 
 void	Mutex::unlock()

@@ -30,8 +30,7 @@ SET(SOURCES
   WMutex.cpp
   ScopedMutex.cpp
   UCondVar.cpp
-  WCondVar.cpp
-  main.cpp)
+  WCondVar.cpp)
 
 SET (LIB_TYPE STATIC)
 

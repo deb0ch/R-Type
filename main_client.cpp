@@ -37,7 +37,7 @@ int	main()
 	    }
 	  remote->unlock();
       	});
-      sleep(1);
+      usleep(5000);
     }
   return (0);
 }

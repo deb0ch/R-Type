@@ -39,6 +39,7 @@ public:
 
   void				lock();
   void				unlock();
+  bool				trylock();
   bool				isUnLocked();
 
   void				setReady(bool ready);

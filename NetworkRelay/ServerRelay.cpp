@@ -44,7 +44,6 @@ void	ServerRelay::waitForEvent()
 		      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle() << std::endl;
 		      this->_select.addWrite(remote->getTCPSocket().getHandle());
 		    }
-
 		});
   this->_select.doSelect();
 }
@@ -60,13 +59,13 @@ void	ServerRelay::start()
     {
       this->waitForEvent();
 
-      this->manageRemotes();
-
       if (this->_select.issetReads(this->_server_socket_udp.getHandle()))
 	this->receiveUDP();
 
       if (this->_select.issetReads(this->_server_socket_tcp.getHandle()))
 	this->addClient();
+
+      this->manageRemotes();
     }
 }
 
@@ -105,7 +104,9 @@ void		ServerRelay::removeRemote(Remote *remote)
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
+  std::cout << "before delete" << std::endl;
   delete remote;
+  std::cout << "afeter delete" << std::endl;
 }
 
 /**
@@ -228,7 +229,6 @@ void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
 {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   delete buffer;
-  std::cout << "WTF TCP" << std::endl;
 }
 
 std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
@@ -236,10 +236,14 @@ std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
   std::vector<Remote *>		ret;
 
   std::for_each(this->_remotes.begin(), this->_remotes.end(), [&ret, &room_name] (Remote *remote) -> void {
-      if (remote->getRoom() == room_name && remote->isReady()) // PUT A TRYLOCK HERE
+      if (remote->trylock())
 	{
-	  remote->lock();
-	  ret.push_back(remote);
+	  if (remote->getRoom() == room_name && remote->isReady())
+	    {
+	      ret.push_back(remote);
+	    }
+	  else
+	    remote->unlock();
 	}
     });
   return (ret);
@@ -274,9 +278,9 @@ bool				ServerRelay::isReady() const
   return (true);
 }
 
-void			ServerRelay::udpConnect(Remote *remote)
+void				ServerRelay::udpConnect(Remote *remote)
 {
-  IBuffer		*buffer;
+  IBuffer			*buffer;
 
   buffer = this->getUDPBuffer();
   remote->sendUDP(buffer);

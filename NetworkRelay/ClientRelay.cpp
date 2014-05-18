@@ -94,10 +94,14 @@ std::vector<Remote *>	ClientRelay::getRemotes(const std::string &room_name)
 {
   std::vector<Remote *>	remotes;
 
-  if (this->_remote->isReady())
+  if (this->_remote->trylock())
     {
-      this->_remote->lock();
-      remotes.push_back(this->_remote);
+      if (this->_remote->isReady())
+	{
+	  remotes.push_back(this->_remote);
+	}
+      else
+	this->_remote->unlock();
     }
   return (remotes);
 }

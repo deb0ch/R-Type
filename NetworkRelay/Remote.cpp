@@ -195,6 +195,11 @@ void		Remote::unlock()
   this->_mutex.unlock();
 }
 
+bool		Remote::trylock()
+{
+  return (this->_mutex.trylock());
+}
+
 bool		Remote::isUnLocked()
 {
   return (this->_mutex.status() == IMutex::UNLOCKED);

@@ -11,7 +11,7 @@ class Mutex : public IMutex
 {
 public:
 	virtual void	lock();
-	virtual void	trylock();
+	virtual bool	trylock();
 	virtual void	unlock();
 	virtual STATUS	status() const;
 
