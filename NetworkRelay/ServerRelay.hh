@@ -35,6 +35,8 @@ private:
   void					receiveUDP();
   void					removeRemote(Remote *remote);
   void					manageRemotes();
+  void					udpConnect(Remote *remote);
+
 protected:
   NetworkInitializer			_network_initializer;
   SocketTCP				_server_socket_tcp;

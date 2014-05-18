@@ -34,12 +34,12 @@ void	ServerRelay::waitForEvent()
 
 		  this->_select.addRead(remote->getTCPSocket().getHandle());
 
-		  if (!remote->getSendBufferUDP().isEmpty())
+		  if (remote->canSendUDP())
 		    {
 		      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle() << std::endl;
 		      this->_select.addWrite(this->_server_socket_udp.getHandle());
 		    }
-		  if (!remote->getSendBufferTCP().isEmpty())
+		  if (remote->canSendTCP())
 		    {
 		      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle() << std::endl;
 		      this->_select.addWrite(remote->getTCPSocket().getHandle());
@@ -80,7 +80,10 @@ void		ServerRelay::manageRemotes()
 	(*it)->networkSendTCP(*this);
 
       if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
-	(*it)->networkSendUDP(*this, this->_server_socket_udp);
+	{
+	  (*it)->networkSendUDP(*this, this->_server_socket_udp);
+	  // this->_select.removeWrite(this->_server_socket_tcp);
+	}
 
       if (this->_select.issetReads((*it)->getTCPSocket().getHandle()))
 	{
@@ -124,12 +127,19 @@ void		ServerRelay::receiveUDP()
   std::cout << "RECEIVING ID: " << id << std::endl;
   if (remote)
     {
+      remote->setReady(true);
       remote->setIP(ip);
       remote->setPort(port);
-      remote->getRecvBufferUDP().push(buffer);
+      if (buffer->end())
+	{
+	  std::cout << "Sending OK" << std::endl;
+	  this->udpConnect(remote);
+	}
+      else
+	remote->getRecvBufferUDP().push(buffer);
     }
   else
-    std::cout << "Not found :(" << std::endl;
+    std::cout << "Remote not found" << std::endl;
 }
 
 void		ServerRelay::addClient()
@@ -226,7 +236,7 @@ std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
   std::vector<Remote *>		ret;
 
   std::for_each(this->_remotes.begin(), this->_remotes.end(), [&ret, &room_name] (Remote *remote) -> void {
-      if (remote->getRoom() == room_name) // PUT A TRYLOCK HERE
+      if (remote->getRoom() == room_name && remote->isReady()) // PUT A TRYLOCK HERE
 	{
 	  remote->lock();
 	  ret.push_back(remote);
@@ -262,4 +272,12 @@ void				ServerRelay::sendBroadcastTCP(const std::string &room_name, IBuffer &buf
 bool				ServerRelay::isReady() const
 {
   return (true);
+}
+
+void			ServerRelay::udpConnect(Remote *remote)
+{
+  IBuffer		*buffer;
+
+  buffer = this->getUDPBuffer();
+  remote->sendUDP(buffer);
 }

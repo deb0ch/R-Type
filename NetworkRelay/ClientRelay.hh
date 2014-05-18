@@ -29,6 +29,7 @@ public:
 
 private:
   void					waitForEvent();
+  void					udpConnect();
 
 protected:
   NetworkInitializer			_network_initializer;

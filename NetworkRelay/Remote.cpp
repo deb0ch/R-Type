@@ -4,6 +4,7 @@
 
 Remote::Remote(ISocketTCP &socket, unsigned int hash)
 {
+  this->_ready = false;
   this->_tcp = &socket;
   this->_ip = "";
   this->_port = 0;
@@ -197,4 +198,28 @@ void		Remote::unlock()
 bool		Remote::isUnLocked()
 {
   return (this->_mutex.status() == IMutex::UNLOCKED);
+}
+
+bool		Remote::canSendUDP()
+{
+  if (!this->_send_buffer_udp.isEmpty())
+    return (true);
+  return (false);
+}
+
+bool		Remote::canSendTCP()
+{
+  if (!this->_send_buffer_tcp.isEmpty())
+    return (true);
+  return (false);
+}
+
+void		Remote::setReady(bool ready)
+{
+  this->_ready = ready;
+}
+
+bool		Remote::isReady() const
+{
+  return (this->_ready);
 }

@@ -41,6 +41,12 @@ public:
   void				unlock();
   bool				isUnLocked();
 
+  void				setReady(bool ready);
+  bool				isReady() const;
+
+  bool				canSendUDP();
+  bool				canSendTCP();
+
 protected:
   ISocketTCP			*_tcp;
   std::string			_ip;
@@ -53,6 +59,7 @@ protected:
   SafeFifo<IBuffer *>		_recv_buffer_tcp;
   SafeFifo<IBuffer *>		_recv_buffer_udp;
   Mutex				_mutex;
+  bool				_ready;
 };
 
 #endif /* !REMOTE_H_ */
