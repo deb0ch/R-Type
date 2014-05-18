@@ -41,11 +41,9 @@ public:
 	if (itSecond->second == e)
 	  return ;
       }
-      std::cout << "ADD1 : " << type << std::endl;
       it->second.push_back(std::make_pair(obj, e));
       return ;
     }
-    std::cout << "ADD2 : " << type << std::endl;
     this->_event_handlers[type].push_back(std::make_pair(obj, e));
   }
 
