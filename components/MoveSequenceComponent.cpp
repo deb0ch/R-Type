@@ -14,27 +14,12 @@ MoveSequenceComponent::MoveSequenceComponent(const MoveSequenceComponent::Sens s
 		this->_actions = { "RIGHT", "LEFT" };
 }
 
-MoveSequenceComponent::MoveSequenceComponent(const MoveSequenceComponent&ref)
-: AComponent("MoveSequenceComponent")
-{
-	this->_sens = ref._sens;
-	this->_tick = ref._tick;
-	this->_index = ref._index;
-	this->_tickToChange = ref._tickToChange;
-}
-
 //----- ----- Destructor ----- ----- //
 MoveSequenceComponent::~MoveSequenceComponent()
 {}
 
 //----- ----- Operators ----- ----- //
-MoveSequenceComponent	&MoveSequenceComponent::operator=(const MoveSequenceComponent &ref)
-{
-	this->_sens = ref._sens;
-	this->_tick = ref._tick;
-	this->_tickToChange = ref._tickToChange;
-	return (*this);
-}
+//----- ----- Methods ----- ----- //
 
 void  MoveSequenceComponent::incrementTick()
 {
