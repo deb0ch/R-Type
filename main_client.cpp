@@ -21,6 +21,7 @@
 #include	"LifeSystem.hh"
 #include	"EntitySpawnerSystem.hh"
 #include	"ActionFireSystem.hh"
+#include	"FireAlwaysSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -38,6 +39,7 @@
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
 #include	"EntitySpawnerComponent.hh"
+#include	"FireAlwaysComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -63,6 +65,7 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new ActionFireSystem());
+  //world.addSystem(new FireAlwaysSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -138,130 +141,6 @@ void		addEntities(World &world)
 		  );
 
   world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(500.0f, 500.0f))
-		  ->addComponent(new Box2DComponent(250.0f, 150.0f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("r-typesheet36.png"),
-							 ImageLoader::NbSprite{2, 5}))
-		  ->addComponent(new CollisionPowerComponent(10000))
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(250.0f, 500.0f))
-		  ->addComponent(new Box2DComponent(250.0f, 150.0f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("r-typesheet36.png"),
-							 ImageLoader::NbSprite{ 2, 5 }))
-		  ->addComponent(new CollisionPowerComponent(10000))
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(0.0f, 500.0f))
-		  ->addComponent(new Box2DComponent(250.0f, 150.0f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("r-typesheet36.png"),
-							 ImageLoader::NbSprite{ 2, 5 }))
-		  ->addComponent(new CollisionPowerComponent(10000))
-		  );
-
-  ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(test->create(Hash()("Pos2DComponent"))->clone())
-		  ->addComponent(test->create(Hash()("Box2DComponent"))->clone())
-		  ->addComponent(test->create(Hash()("Speed2DComponent"))->clone())
-		  ->addComponent(test->create(Hash()("Friction2DComponent"))->clone())
-		  ->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
-		  ->addComponent(test->create(Hash()("ActionComponent"))->clone())
-		  ->addComponent(new LifeComponent(100))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new Friction2DComponent(0.3f))
-		  ->addComponent(new MovementSpeedComponent(0.3f))
-		  ->addComponent(new LifeComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 )
-		  ->addComponent(new MoveFollowComponent(world.getEntity(1)->_id))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png"))));
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new Friction2DComponent(0.9f))
-		  ->addComponent(new MovementSpeedComponent(0.8f))
-		  ->addComponent(new PlayerMovementComponent())
-		  ->addComponent(new LifeComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 )
-		  ->addComponent(new MoveFollowComponent(world.getEntity(1)->_id))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png"))));
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(000.0f, 400.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new Friction2DComponent(0.6f))
-		  ->addComponent(new MovementSpeedComponent(0.8f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT, MoveForwardComponent::UP))
-		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 50))
-		  ->addComponent(new LifeComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 )
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(600.0f, 450.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new Friction2DComponent(0.6f))
-		  ->addComponent(new MovementSpeedComponent(0.8f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 25))
-		  ->addComponent(new LifeComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 )
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(000.0f, 00.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(5.f, 2.f))
-		  ->addComponent(new Friction2DComponent(0.6f))
-		  ->addComponent(new MovementSpeedComponent(0.5f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::DOWN, MoveForwardComponent::RIGHT))
-		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 50))
-		  ->addComponent(new LifeComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 )
-		  );
-
-  world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(600.0f, 200.0f))
 		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		  ->addComponent(new Speed2DComponent(0.f, 0.f))
@@ -270,17 +149,19 @@ void		addEntities(World &world)
 		  ->addComponent(new MovementSpeedComponent(0.5f))
 		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 50))
 		  ->addComponent(new Friction2DComponent(0.5f))
+		  ->addComponent(new FireAlwaysComponent())
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
 				 ->addAction("RIGHT")
 				 ->addAction("DOWN")
 				 ->addAction("LEFT")
+				 ->addAction("FIRE")
 				 )
 		  );
 
 }
-#include	"RandomInt.hpp"
-#include	"RandomReal.hpp"
+
+
 int			main()
 {
   World		world;
@@ -295,15 +176,6 @@ int			main()
       world.process(0.16f);
     }
   world.stop();
-
-  /*
-  // To generate a random number with parameters :
-  std::cout << RandomInt()(0, 5) << std::endl;
-  // With only the minimum :
-  std::cout << RandomInt()(0) << std::endl;
-  // Without any parameters, it's tricky :
-  std::cout << RandomInt().operator() <int>() << std::endl;
-  */
 
   return (0);
 }
