@@ -14,17 +14,17 @@ int	main()
     {
       std::vector<Remote *> c = a.getRemotes("default");
       std::for_each(c.begin(), c.end(), [&a] (Remote *remote) -> void {
-      	  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferUDP();
+      	  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferTCP();
       	  std::string tmp;
       	  while (!buffers.isEmpty())
       	    {
       	      IBuffer *buffer = buffers.getNextPop();
       	      *buffer >> tmp;
       	      std::cout << "AMEN: " << tmp << std::endl;
-      	      a.disposeUDPBuffer(buffer);
-      	      buffer = a.getUDPBuffer();
+      	      a.disposeTCPBuffer(buffer);
+      	      buffer = a.getTCPBuffer();
       	      *buffer << "mais lol";
-      	      remote->sendUDP(buffer);
+      	      remote->sendTCP(buffer);
       	    }
       	  remote->unlock();
       	});

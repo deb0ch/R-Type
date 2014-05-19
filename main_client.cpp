@@ -21,14 +21,14 @@ int	main()
   IBuffer *tmp_buffer = a.getTCPBuffer();
   *tmp_buffer << "coucou";
   Remote *tmp_remote = tmp_remotes.front();
-  tmp_remote->sendUDP(tmp_buffer);
+  tmp_remote->sendTCP(tmp_buffer);
   tmp_remote->unlock();
 
   while (1)
     {
       std::vector<Remote *> c = a.getRemotes("default");
       std::for_each(c.begin(), c.end(), [&a] (Remote *remote) -> void {
-	  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferUDP();
+	  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferTCP();
 	  std::string tmp;
 	  while (!buffers.isEmpty())
 	    {
@@ -36,9 +36,9 @@ int	main()
 	      *buffer >> tmp;
 	      std::cout << "AMEN: " << tmp << std::endl;
 	      a.disposeUDPBuffer(buffer);
-	      buffer = a.getUDPBuffer();
+	      buffer = a.getTCPBuffer();
 	      *buffer << "mais lol";
-	      remote->sendUDP(buffer);
+	      remote->sendTCP(buffer);
 	    }
 	  remote->unlock();
       	});

@@ -127,47 +127,18 @@ void			Remote::networkSendTCP(INetworkRelay &network)
     }
 }
 
-# include <stdexcept>
-
 bool			Remote::networkReceiveTCP(INetworkRelay &network)
 {
-  unsigned int		size;
   unsigned int		size_read;
-  IBuffer		*buffer;
 
   std::cout << __PRETTY_FUNCTION__ << std::endl;
+  this->_temporary_tcp_buffer.gotoEnd();
   size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
-  if (this->_temporary_tcp_buffer.getLength() >= sizeof(unsigned int))
-    {
-      this->_temporary_tcp_buffer.rewind();
-      this->_temporary_tcp_buffer >> size;
-      std::cout << "Received packet size: " << size << " " << this->_temporary_tcp_buffer.getLength() << std::endl;
-      if (this->_temporary_tcp_buffer.getLength() >= size)
-	{
-	  /**
-	   * @todo copy the surplus of data we read into the begining of this->_temporary_tcp_buffer,
-	   * add set its position to the end of the message
-	   */
-	  if (this->_temporary_tcp_buffer.getLength() > size)
-	    throw std::logic_error("NOT IMPLEMENTED");
-	  buffer = network.getTCPBuffer();
-	  buffer->rewind();
-	  memcpy(buffer->getBuffer(),
-		 this->_temporary_tcp_buffer.getBuffer() + sizeof(unsigned int),
-		 size - sizeof(unsigned int)); // Change this
-	  buffer->setLength(size - sizeof(unsigned int));
-	  buffer->rewind();
-	  if (this->_private_hash == 0)
-	    {
-	      *buffer >> this->_private_hash;
-	      std::cout << "OKADPOKAZPODK: " << this->_private_hash << std::endl;
-	      network.disposeTCPBuffer(buffer);
-	    }
-	  else
-	    this->_recv_buffer_tcp.push(buffer);
-	}
-      this->_temporary_tcp_buffer.rewind();
-    }
+  while (this->extractTCPPacket(network))
+    ;
+  memmove(this->_temporary_tcp_buffer.getBuffer(),
+	  this->_temporary_tcp_buffer.getBuffer() + this->_temporary_tcp_buffer.getPosition(),
+	  this->_temporary_tcp_buffer.getRemainingLength());
   return (size_read > 0);
 }
 
@@ -178,6 +149,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
   unsigned int	size;
   IBuffer	*buffer;
 
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_temporary_tcp_buffer.getRemainingLength() >= sizeof(unsigned int))
     {
       old_pos = this->_temporary_tcp_buffer.getPosition();
