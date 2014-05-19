@@ -22,6 +22,7 @@ void		ActionFireSystem::processEntity(Entity *entity, const float)
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   spawner = entity->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent");
-  std::cout << action->isActive("FIRE") << std::endl;
-  spawner->setActive(action->isActive("FIRE"));
+
+  if (action->isActive("FIRE"))
+    spawner->setActive(true);
 }

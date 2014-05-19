@@ -24,5 +24,6 @@ void ResetActionSystem::processEntity(Entity *entity, const float)
 		action->setAction("LEFT", false);
 		action->setAction("RIGHT", false);
 		action->setAction("DOWN", false);
+		action->setAction("FIRE", false);
 	}
 }
