@@ -37,9 +37,7 @@ public:
 			 std::pair<float, float> max_pos = {0, 0},
 			 bool random = true,
 			 bool abs = false);
-		EntitySpawnerComponent(const EntitySpawnerComponent&);
   virtual	~EntitySpawnerComponent();
-  EntitySpawnerComponent	&operator=(const EntitySpawnerComponent&);
 
   void				setActive(bool active);
   Entity			*spawnEntity(EntityFactory *facto, const Pos2DComponent *pos = NULL);

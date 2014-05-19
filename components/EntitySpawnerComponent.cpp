@@ -27,41 +27,11 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
   this->_active = true;
 }
 
-EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent &ref)
-  : AComponent("EntitySpawnerComponent")
-{
-  _entities = ref._entities;
-  _components = ref._components;
-  _nb = ref._nb;
-  _delay = ref._delay;
-  _min_pos = ref._min_pos;
-  _max_pos = ref._max_pos;
-  _random = ref._random;
-  _abs = ref._abs;
-  _next = ref._next;
-  _active = ref._active;
-}
-
 //----- ----- Destructor ----- ----- //
 EntitySpawnerComponent::~EntitySpawnerComponent()
 {}
 
 //----- ----- Operators ----- ----- //
-EntitySpawnerComponent	&EntitySpawnerComponent::operator=(const EntitySpawnerComponent &ref)
-{
-  _entities = ref._entities;
-  _components = ref._components;
-  _nb = ref._nb;
-  _delay = ref._delay;
-  _min_pos = ref._min_pos;
-  _max_pos = ref._max_pos;
-  _random = ref._random;
-  _abs = ref._abs;
-  _next = ref._next;
-  _active = ref._active;
-  return (*this);
-}
-
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 void			EntitySpawnerComponent::setActive(bool active)
