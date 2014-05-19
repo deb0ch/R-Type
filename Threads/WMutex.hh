@@ -24,7 +24,7 @@ private:
 	Mutex &		operator=(const Mutex & other) = delete;
 
 private:
-	int			_ret;
+	int		_ret;
 	STATUS		_status;
 	HANDLE		_mutexHandle;
 };
