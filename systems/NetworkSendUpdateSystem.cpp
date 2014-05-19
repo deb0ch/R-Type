@@ -18,24 +18,20 @@ NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
 
 bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("NetworkSendUpdateComponent"))
+  if (entity->hasComponent("NetworkSendUpdateComponent") &&
+      this->_network != NULL && this->_room_name != NULL)
     return (true);
   return (false);
 }
 
 void				NetworkSendUpdateSystem::beforeProcess()
 {
-  this->_packets_sended =
-    this->_world->getSharedObject< std::vector< NetworkBuffer * > >("LeChevalCestTropGenial");
-}
-
-void				NetworkSendUpdateSystem::start()
-{
-  this->_world->setSharedObject("LeChevalCestTropGenial", new std::vector<NetworkBuffer *>());
+  this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
+  this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
 void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
-									     NetworkBuffer &buffer)
+									     IBuffer &buffer)
 {
   INetworkSerializableComponent	*serializable_component;
   IComponent			*component;
@@ -55,8 +51,10 @@ void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkSendUpdateComponent	*network_component;
-  NetworkBuffer			*buffer = new NetworkBuffer();
+  IBuffer			*buffer;
+  Room				*room;
 
+  buffer = this->_network->getUDPBuffer();
   network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
   *buffer << static_cast<char>(ENTITY_UPDATE);
   *buffer << entity->_id;
@@ -64,6 +62,7 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   *buffer << static_cast<char>(1);
   this->serializeComponents(entity, *buffer);
   network_component->increasePacketNumber();
-  // Send buffer here
-  this->_packets_sended->push_back(buffer);
+  room = this->_network->getRoom(*this->_room_name);
+  room->sendBroadcastUDP(*this->_network, buffer);
+  room->unlock();
 }

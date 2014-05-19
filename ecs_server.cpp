@@ -15,7 +15,6 @@
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
 #include	"MoveFollowSystem.hh"
-#include	"ReceiveUDPSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -62,7 +61,6 @@ void		addSystems(World &world)
 	world.addSystem(new OutOfBoundsSystem());
 	world.addSystem(new MoveFollowSystem());
 	world.addSystem(new PlayerMovementSystem());
-	world.addSystem(new ReceiveUDPSystem());
 
 	CollisionSystem *collision;
 	collision = new CollisionSystem();

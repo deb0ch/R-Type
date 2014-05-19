@@ -2,6 +2,9 @@
 # define NETWORKSENDUPDATESYSTEM_H_
 
 # include "ASystem.hh"
+# include "INetworkRelay.hh"
+# include "Room.hh"
+# include "LockVector.hpp"
 
 enum PacketType
   {
@@ -19,13 +22,13 @@ public:
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
   virtual void	beforeProcess();
-  virtual void	start();
 
 private:
-  void		serializeComponents(Entity *, NetworkBuffer &buffer);
+  void		serializeComponents(Entity *, IBuffer &buffer);
 private:
   std::vector<std::string>		_component_to_send;
-  std::vector< NetworkBuffer * >	*_packets_sended;
+  INetworkRelay				*_network;
+  std::string				*_room_name;
   static const int			_buffer_size = 512;
 };
 

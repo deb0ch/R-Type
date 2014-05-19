@@ -21,18 +21,21 @@ int	main()
 			{
 			  if (!remote->isReady())
 			    return ;
-			  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferTCP();
+			  LockVector<IBuffer *> &buffers = remote->getRecvBufferTCP();
 			  std::string tmp;
-			  while (!buffers.isEmpty())
+			  buffers.lock();
+			  while (!buffers.empty())
 			    {
-			      IBuffer *buffer = buffers.getNextPop();
+			      IBuffer *buffer = buffers.front();
 			      *buffer >> tmp;
 			      std::cout << "AMEN: " << tmp << std::endl;
 			      a.disposeTCPBuffer(buffer);
 			      buffer = a.getTCPBuffer();
 			      *buffer << "mais lol";
 			      remote->sendTCP(buffer);
+			      buffers.erase(buffers.begin());
 			    }
+			  buffers.unlock();
 			});
 	  tmp_room->unlock();
 	}

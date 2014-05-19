@@ -14,94 +14,132 @@ NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 
 bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("NetworkReceiveUpdateComponent") && this->_packets_to_apply != NULL)
+  if (entity->hasComponent("NetworkReceiveUpdateComponent") &&
+      this->_network != NULL && this->_room_name != NULL)
     return (true);
   return (false);
 }
 
 void				NetworkReceiveUpdateSystem::beforeProcess()
 {
-  auto				tmp =
-    this->_world->getSharedObject< std::vector<NetworkBuffer *> >("LeChevalCestTropGenial");
-
-  if (tmp)
-    this->_packets_to_apply = tmp;
+  this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
+  this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
 void				NetworkReceiveUpdateSystem::afterProcess()
 {
-  unsigned int			id_entity;
-  unsigned int			num_packet;
-  Entity			*entity;
-  NetworkBuffer			*buffer;
-  char				packet_type;
+  Room				*room;
 
-  auto it = this->_packets_to_apply->begin();
-  while (it != this->_packets_to_apply->end()) // setup a try{}catch here for unserialize
-    {
-      buffer = *it;
-      buffer->rewind();
-      *buffer >> packet_type;
-      if (packet_type == ENTITY_UPDATE)
-	{
-	  this->getEntityInfos(*buffer, id_entity, num_packet);
-	  if (!this->remoteEntityExists(id_entity))
-	    {
-	      entity = this->_world->createEntity();
-	      entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
-	      this->updateEntity(entity, *buffer);
-	      this->_world->addEntity(entity);
-	      delete buffer;
-	      it = this->_packets_to_apply->erase(it);
-	    }
-	  else
-	    ++it;
-	}
-      else
-	++it;
-    }
+  room = this->_network->getRoom(*this->_room_name);
+
+  std::vector<Remote *> &remotes = room->getRemotes();
+  std::for_each(remotes.begin(), remotes.end(),
+		[this] (Remote *remote) -> void
+		{
+		  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
+		  recv_buffer.lock();
+		  LockVector<IBuffer *>::iterator it = recv_buffer.begin();
+		  while (it != recv_buffer.end())
+		    {
+		      this->parsePacket(recv_buffer, it);
+		    }
+		  recv_buffer.unlock();
+		});
+  room->unlock();
 }
 
 void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkReceiveUpdateComponent	*receive_component;
-  unsigned int			id_entity;
-  unsigned int			num_packet;
-  char				packet_type;
-  NetworkBuffer			*buffer;
+  Room				*room;
 
   receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
-  auto it = this->_packets_to_apply->begin();
-  while (it != this->_packets_to_apply->end()) // setup a try{}catch here for unserialize
-    {
-      buffer = *it;
-      buffer->rewind();
-      *buffer >> packet_type;
-      if (packet_type == ENTITY_UPDATE)
-	{
-	  this->getEntityInfos(*buffer, id_entity, num_packet);
-	  if (id_entity == receive_component->getRemoteID())
-	    {
-	      if (num_packet > receive_component->getPacketNum())
+  room = this->_network->getRoom(*this->_room_name);
+
+  std::vector<Remote *> &remotes = room->getRemotes();
+  std::for_each(remotes.begin(), remotes.end(),
+		[this, &entity, &receive_component] (Remote *remote) -> void
 		{
-		  this->updateEntity(entity, *buffer);
-		  receive_component->setPacketNum(num_packet);
-		}
-	      delete buffer;
-	      it = this->_packets_to_apply->erase(it);
-	    }
-	  else
-	    ++it;
-	}
-      else
-	++it;
-    }
+		  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
+		  recv_buffer.lock();
+		  LockVector<IBuffer *>::iterator it = recv_buffer.begin();
+		  while (it != recv_buffer.end())
+		    {
+		      this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
+		    }
+		  recv_buffer.unlock();
+		});
+  room->unlock();
 }
 
 // -------------- Private functions --------------
 
+void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
+								NetworkReceiveUpdateComponent *receive_component,
+								LockVector<IBuffer *> &vector,
+								LockVector<IBuffer *>::iterator &it)
+{
+  unsigned int	id_entity;
+  unsigned int	num_packet;
+  char		packet_type;
+  IBuffer	*buffer;
+
+  buffer = *it;
+  buffer->rewind();
+  *buffer >> packet_type;
+  if (packet_type == ENTITY_UPDATE)
+    {
+      this->getEntityInfos(*buffer, id_entity, num_packet);
+      if (id_entity == receive_component->getRemoteID())
+	{
+	  if (num_packet > receive_component->getPacketNum())
+	    {
+	      this->updateEntity(entity, *buffer);
+	      receive_component->setPacketNum(num_packet);
+	    }
+	  delete buffer;
+	  it = vector.erase(it);
+	}
+      else
+	++it;
+    }
+  else
+    ++it;
+}
+
+void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
+							LockVector<IBuffer *>::iterator &it)
+{
+  unsigned int	id_entity;
+  unsigned int	num_packet;
+  char		packet_type;
+  Entity	*entity;
+  IBuffer	*buffer;
+
+  buffer = *it;
+  buffer->rewind();
+  *buffer >> packet_type;
+  if (packet_type == ENTITY_UPDATE)
+    {
+      this->getEntityInfos(*buffer, id_entity, num_packet);
+      if (!this->remoteEntityExists(id_entity))
+	{
+	  entity = this->_world->createEntity();
+	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
+	  this->updateEntity(entity, *buffer);
+	  this->_world->addEntity(entity);
+	  delete buffer;
+	  it = vector.erase(it);
+	}
+      else
+	++it;
+    }
+  else
+    ++it;
+}
+
 void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
-										 NetworkBuffer &buffer)
+										 IBuffer &buffer)
 {
   std::size_t			component_hash;
   IComponent			*new_component;
@@ -125,7 +163,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
-									 NetworkBuffer &buffer)
+									 IBuffer &buffer)
 {
   auto it = entity->_components.begin();
   while (it != entity->_components.end())
@@ -144,7 +182,7 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
     }
 }
 
-void				NetworkReceiveUpdateSystem::getEntityInfos(NetworkBuffer &buffer,
+void				NetworkReceiveUpdateSystem::getEntityInfos(IBuffer &buffer,
 									   unsigned int &id_entity,
 									   unsigned int &num_packet)
 {
