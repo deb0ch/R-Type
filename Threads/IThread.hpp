@@ -1,10 +1,6 @@
 #ifndef ITHREAD_H_
 # define ITHREAD_H_
 
-# ifdef __linux__
-#  include <pthread.h>
-# endif /* !__linux__ */
-
 # include <string>
 # include "ThreadException.hh"
 # include "Any.hpp"
