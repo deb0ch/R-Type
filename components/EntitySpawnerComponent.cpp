@@ -68,16 +68,21 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
   else
     this->_next = RandomInt().operator() <unsigned long>(0, this->_entities.size() - 1);
 
+  if (!res)
+    return (NULL);
   res_pos = res->getComponent<Pos2DComponent>("Pos2DComponent");
   if (!res_pos)
-    res->addComponent((res_pos = new Pos2DComponent(0, 0)));
+    {
+      res_pos = new Pos2DComponent(0, 0);
+      res->addComponent(res_pos);
+    }
   if (!this->_abs && pos)
     {
       res_pos->setX(pos->getX());
       res_pos->setY(pos->getY());
     }
-  res_pos->setX(pos->getX() + RandomReal()(this->_min_pos.first, this->_max_pos.first));
-  res_pos->setY(pos->getY() + RandomReal()(this->_min_pos.second, this->_max_pos.second));
+  res_pos->setX(res_pos->getX() + RandomReal()(this->_min_pos.first, this->_max_pos.first));
+  res_pos->setY(res_pos->getY() + RandomReal()(this->_min_pos.second, this->_max_pos.second));
 
   ++this->_counter;
   return (res);
