@@ -152,7 +152,6 @@ void		addEntities(World &world)
 		->addComponent(new CollisionPowerComponent(10000))
 		);
 
-
 	world.addEntity(world.createEntity()
 		->addComponent(test->create(Hash()("Pos2DComponent"))->clone())
 		->addComponent(test->create(Hash()("Box2DComponent"))->clone())
@@ -261,7 +260,6 @@ int			main()
 	addSystems(world);
 	addSharedObjetcs(world);
 	addEntities(world);
-
 
 	world.start();
 	/*
