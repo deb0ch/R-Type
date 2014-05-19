@@ -51,21 +51,21 @@
 
 void		addSystems(World &world)
 {
-  world.addSystem(new ResetActionSystem());
-  world.addSystem(new MoveSystem());
-  world.addSystem(new Friction2DSystem());
-  world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
+  world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
   world.addSystem(new MoveSequenceSystem());
+  world.addSystem(new FireAlwaysSystem());
   world.addSystem(new ActionMovementSystem());
-  world.addSystem(new LifeSystem());
-  world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new ActionFireSystem());
-  //world.addSystem(new FireAlwaysSystem());
+  world.addSystem(new Friction2DSystem());
+  world.addSystem(new MoveSystem());
+  world.addSystem(new LifeSystem());
+  world.addSystem(new ResetActionSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -78,6 +78,7 @@ void		addSystems(World &world)
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
 
+  /*
   NetworkSendUpdateSystem *network;
   std::vector<std::string> arg =
     { "Pos2DComponent",
@@ -85,6 +86,7 @@ void		addSystems(World &world)
       "Speed2DComponent",
       "Friction2DComponent" };
   network = new NetworkSendUpdateSystem(arg);
+  */
   //world.addSystem(network);
   //world.addSystem(new NetworkReceiveUpdateSystem());
 }
