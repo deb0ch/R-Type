@@ -114,7 +114,7 @@ void		addEntities(World &world)
 		->addComponent(new Speed2DComponent(5.f, 5.f))
 		->addComponent(new Friction2DComponent(0.5f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"),
-		ImageLoader::NbSprite{ 5, 5 }, { "", "UP", "DOWN" }, { 3, 4, 2 }))
+		ImageLoader::NbSprite{ 5, 5 }, 0, 3))
 		->addComponent(new SFMLInputComponent())
 		->addComponent(new MovementSpeedComponent(5))
 		->addComponent(new LifeComponent(200, 100))
