@@ -14,7 +14,7 @@ bool		ActionFireSystem::canProcess(Entity *entity)
     return (true);
   return (false);
 }
-#include	<iostream>
+
 void		ActionFireSystem::processEntity(Entity *entity, const float)
 {
   ActionComponent		*action;
@@ -23,6 +23,5 @@ void		ActionFireSystem::processEntity(Entity *entity, const float)
   action = entity->getComponent<ActionComponent>("ActionComponent");
   spawner = entity->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent");
 
-  if (action->isActive("FIRE"))
-    spawner->setActive(true);
+  spawner->setActive(action->isActive("FIRE"));
 }
