@@ -6,6 +6,7 @@
 # include "NetworkInitializer.hh"
 # include "INetworkRelay.hh"
 # include "Remote.hh"
+# include "Room.hh"
 
 class ClientRelay : public INetworkRelay
 {
@@ -14,11 +15,7 @@ public:
   virtual				~ClientRelay();
   virtual void				start();
   virtual void				start(Any);
-  virtual std::vector<Remote *>		getRemotes(const std::string &room_name);
-  virtual void				sendBroadcastUDP(const std::string &room_name,
-							 IBuffer &buffer);
-  virtual void				sendBroadcastTCP(const std::string &room_name,
-							 IBuffer &buffer);
+  virtual Room				*getRoom(const std::string &room_name);
   virtual IBuffer			*getTCPBuffer();
   virtual IBuffer			*getUDPBuffer();
   virtual Remote			*getRemote(unsigned int);
@@ -34,6 +31,7 @@ protected:
   NetworkInitializer			_network_initializer;
   SocketUDP				_socket_udp;
   Select				_select;
+  Room					_room;
   Remote				*_remote;
 };
 

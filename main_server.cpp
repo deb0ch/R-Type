@@ -7,27 +7,35 @@ int	main()
 {
   Thread<ServerRelay> thread;
   Any b;
+  Room *tmp_room;
 
   ServerRelay a(6667, 42);
   thread.start(&a, &ServerRelay::start, b);
   while (1)
     {
-      std::vector<Remote *> c = a.getRemotes("default");
-      std::for_each(c.begin(), c.end(), [&a] (Remote *remote) -> void {
-      	  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferTCP();
-      	  std::string tmp;
-      	  while (!buffers.isEmpty())
-      	    {
-      	      IBuffer *buffer = buffers.getNextPop();
-      	      *buffer >> tmp;
-      	      std::cout << "AMEN: " << tmp << std::endl;
-      	      a.disposeTCPBuffer(buffer);
-      	      buffer = a.getTCPBuffer();
-      	      *buffer << "mais lol";
-      	      remote->sendTCP(buffer);
-      	    }
-      	  remote->unlock();
-      	});
+      tmp_room = a.getRoom("default");
+      if (tmp_room)
+	{
+	  std::for_each(tmp_room->getRemotes().begin(), tmp_room->getRemotes().end(),
+			[&a] (Remote *remote) -> void
+			{
+			  if (!remote->isReady())
+			    return ;
+			  SafeFifo<IBuffer *> &buffers = remote->getRecvBufferTCP();
+			  std::string tmp;
+			  while (!buffers.isEmpty())
+			    {
+			      IBuffer *buffer = buffers.getNextPop();
+			      *buffer >> tmp;
+			      std::cout << "AMEN: " << tmp << std::endl;
+			      a.disposeTCPBuffer(buffer);
+			      buffer = a.getTCPBuffer();
+			      *buffer << "mais lol";
+			      remote->sendTCP(buffer);
+			    }
+			});
+	  tmp_room->unlock();
+	}
       usleep(5000);
     }
   return (0);

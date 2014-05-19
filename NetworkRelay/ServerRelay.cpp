@@ -18,10 +18,6 @@ ServerRelay::~ServerRelay()
 {
   this->_server_socket_udp.close();
   this->_server_socket_tcp.close();
-  std::for_each(this->_remotes.begin(), this->_remotes.end(),
-		[] (Remote *remote) -> void {
-		  delete remote;
-		});
 }
 
 void	ServerRelay::waitForEvent()
@@ -30,20 +26,27 @@ void	ServerRelay::waitForEvent()
   this->_select.addRead(this->_server_socket_tcp.getHandle());
   this->_select.addRead(this->_server_socket_udp.getHandle());
   std::for_each(this->_remotes.begin(), this->_remotes.end(),
-		[this] (Remote *remote) -> void {
+		[this] (std::pair<const std::string, Room> &pair) -> void
+		{
+		  std::vector<Remote *> &remotes = pair.second.getRemotes();
+		  std::for_each(remotes.begin(), remotes.end(),
+				[this] (Remote *remote) -> void
+				{
+				  this->_select.addRead(remote->getTCPSocket().getHandle());
 
-		  this->_select.addRead(remote->getTCPSocket().getHandle());
-
-		  if (remote->canSendUDP())
-		    {
-		      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle() << std::endl;
-		      this->_select.addWrite(this->_server_socket_udp.getHandle());
-		    }
-		  if (remote->canSendTCP())
-		    {
-		      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle() << std::endl;
-		      this->_select.addWrite(remote->getTCPSocket().getHandle());
-		    }
+				  if (remote->canSendUDP())
+				    {
+				      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle()
+						<< std::endl;
+				      this->_select.addWrite(this->_server_socket_udp.getHandle());
+				    }
+				  if (remote->canSendTCP())
+				    {
+				      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle()
+						<< std::endl;
+				      this->_select.addWrite(remote->getTCPSocket().getHandle());
+				    }
+				});
 		});
   this->_select.doSelect();
 }
@@ -71,30 +74,53 @@ void	ServerRelay::start()
 
 void		ServerRelay::manageRemotes()
 {
-  auto		it = this->_remotes.begin();
+  auto it = this->_remotes.begin();
+  Room		*room;
 
   while (it != this->_remotes.end())
     {
-      if (this->_select.issetWrites((*it)->getTCPSocket().getHandle()))
-	(*it)->networkSendTCP(*this);
+      room = &it->second;
+      std::vector<Remote *> &remotes = room->getRemotes();
+      std::for_each(remotes.begin(), remotes.end(),
+		    [this, &room] (Remote *remote) -> void
+		    {
+		      if (this->_select.issetWrites(remote->getTCPSocket().getHandle()))
+			remote->networkSendTCP(*this);
 
-      if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
-	{
-	  (*it)->networkSendUDP(*this, this->_server_socket_udp);
-	  // this->_select.removeWrite(this->_server_socket_tcp);
-	}
+		      if (this->_select.issetWrites(this->_server_socket_udp.getHandle()))
+			{
+			  remote->networkSendUDP(*this, this->_server_socket_udp);
+			  // this->_select.removeWrite(this->_server_socket_udp);
+			}
 
-      if (this->_select.issetReads((*it)->getTCPSocket().getHandle()))
+		      if (this->_select.issetReads(remote->getTCPSocket().getHandle()))
+			{
+			  if (!remote->networkReceiveTCP(*this))
+			    room->disconnectRemote(remote);
+			}
+		    });
+      if (room->trylock())
 	{
-	  if (!(*it)->networkReceiveTCP(*this))
+	  std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
+	  std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
+			[&room] (Remote *remote) -> void
+			{
+			  room->removeRemote(remote);
+			});
+	  if (room->getRemotes().empty())
 	    {
-	      this->removeRemote(*it);
-	      it = this->_remotes.erase(it);
+	      if (this->_mutex_room.trylock())
+		{
+		  it = this->_remotes.erase(it);
+		  room = NULL;
+		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!ERASE RROM!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+		  this->_mutex_room.unlock();
+		}
 	    }
-	  else
-	    ++it;
+	  if (room)
+	    room->unlock();
 	}
-      else
+      if (room)
 	++it;
     }
 }
@@ -155,8 +181,7 @@ void		ServerRelay::addClient()
   hash = this->generateHash();
   std::cout << "GENERATING HASH: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
-  remote->setRoom("default");
-  this->_remotes.push_back(remote);
+  this->_remotes["default"].getRemotes().push_back(remote);
   buffer = this->getTCPBuffer();
   *buffer << hash;
   remote->sendTCP(buffer);
@@ -175,28 +200,38 @@ unsigned int	ServerRelay::generateHash()
 
 Remote		*ServerRelay::getRemote(unsigned int hash)
 {
-  auto it = std::find_if(this->_remotes.begin(), this->_remotes.end(), [hash] (Remote *remote) -> bool {
-      if (remote->getPrivateHash() == hash)
-	return (true);
-      return (false);
-    });
-
-  if (it == this->_remotes.end())
-    return (NULL);
-  return (*it);
+  for(auto it = this->_remotes.begin(); it != this->_remotes.end(); ++it)
+    {
+      std::vector<Remote *> &remotes = it->second.getRemotes();
+      auto result = std::find_if(remotes.begin(), remotes.end(),
+				 [this, &hash] (Remote *remote) -> bool
+				 {
+				   if (remote->getPrivateHash() == hash)
+				     return true;
+				   return false;
+				 });
+      if (result != remotes.end())
+	return (*result);
+    }
+  return (NULL);
 }
 
 Remote		*ServerRelay::getRemote(const std::string &ip, const int port)
 {
-  auto it = std::find_if(this->_remotes.begin(), this->_remotes.end(), [&ip, port] (Remote *remote) -> bool {
-      if (remote->getIP() == ip && remote->getPort() == port)
-	return (true);
-      return (false);
-    });
-
-  if (it == this->_remotes.end())
-    return (NULL);
-  return (*it);
+  for(auto it = this->_remotes.begin(); it != this->_remotes.end(); ++it)
+    {
+      std::vector<Remote *> &remotes = it->second.getRemotes();
+      auto result = std::find_if(remotes.begin(), remotes.end(),
+				 [this, &ip, &port] (Remote *remote) -> bool
+				 {
+				   if (remote->getIP() == ip && remote->getPort() == port)
+				     return true;
+				   return false;
+				 });
+      if (result != remotes.end())
+	return (*result);
+    }
+  return (NULL);
 }
 
 IBuffer			*ServerRelay::getTCPBuffer()
@@ -231,46 +266,19 @@ void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
   delete buffer;
 }
 
-std::vector<Remote *>		ServerRelay::getRemotes(const std::string &room_name)
+Room			*ServerRelay::getRoom(const std::string &room_name)
 {
-  std::vector<Remote *>		ret;
+  this->_mutex_room.lock();
+  auto it = this->_remotes.find(room_name);
 
-  std::for_each(this->_remotes.begin(), this->_remotes.end(), [&ret, &room_name] (Remote *remote) -> void {
-      if (remote->trylock())
-	{
-	  if (remote->getRoom() == room_name && remote->isReady())
-	    {
-	      ret.push_back(remote);
-	    }
-	  else
-	    remote->unlock();
-	}
-    });
-  return (ret);
-}
-
-void				ServerRelay::sendBroadcastUDP(const std::string &room_name, IBuffer &buffer)
-{
-  std::for_each(this->_remotes.begin(), this->_remotes.end(), [this, &room_name, &buffer] (Remote *remote) -> void {
-      if (remote->getRoom() == room_name)
-	{
-	  IBuffer *cpy = this->getUDPBuffer();
-	  *cpy = buffer;
-	  remote->sendUDP(cpy);
-	}
-    });
-}
-
-void				ServerRelay::sendBroadcastTCP(const std::string &room_name, IBuffer &buffer)
-{
-  std::for_each(this->_remotes.begin(), this->_remotes.end(), [this, &room_name, &buffer] (Remote *remote) -> void {
-      if (remote->getRoom() == room_name)
-	{
-	  IBuffer *cpy = this->getTCPBuffer();
-	  *cpy = buffer;
-	  remote->sendTCP(cpy);
-	}
-    });
+  if (it == this->_remotes.end())
+    {
+      this->_mutex_room.unlock();
+      return (NULL);
+    }
+  it->second.lock();
+  this->_mutex_room.unlock();
+  return &(it->second);
 }
 
 void				ServerRelay::udpConnect(Remote *remote)

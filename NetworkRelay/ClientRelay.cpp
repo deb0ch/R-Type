@@ -11,6 +11,7 @@ ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializ
   this->_remote = new Remote(*sock);
   this->_remote->setIP(addr);
   this->_remote->setPort(port);
+  this->_room.getRemotes().push_back(this->_remote);
   this->_socket_udp.init();
   this->_select.initReads();
   this->_select.initWrites();
@@ -21,7 +22,6 @@ ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializ
 ClientRelay::~ClientRelay()
 {
   this->_socket_udp.close();
-  delete this->_remote;
 }
 
 void			ClientRelay::waitForEvent()
@@ -88,32 +88,13 @@ void			ClientRelay::start()
 	    disconnect = true;
 	}
     }
+  std::cout << "DISCONNECTED :O" << std::endl;
 }
 
-std::vector<Remote *>	ClientRelay::getRemotes(const std::string &room_name)
+Room	*ClientRelay::getRoom(const std::string &)
 {
-  std::vector<Remote *>	remotes;
-
-  if (this->_remote->trylock())
-    {
-      if (this->_remote->isReady())
-	{
-	  remotes.push_back(this->_remote);
-	}
-      else
-	this->_remote->unlock();
-    }
-  return (remotes);
-}
-
-void			ClientRelay::sendBroadcastUDP(const std::string &, IBuffer &buffer)
-{
-  this->_remote->sendUDP(&buffer);
-}
-
-void			ClientRelay::sendBroadcastTCP(const std::string &, IBuffer &buffer)
-{
-  this->_remote->sendTCP(&buffer);
+  this->_room.lock();
+  return (&this->_room);
 }
 
 IBuffer			*ClientRelay::getTCPBuffer()
@@ -140,7 +121,7 @@ Remote			*ClientRelay::getRemote(unsigned int)
   return (this->_remote);
 }
 
-Remote			*ClientRelay::getRemote(const std::string &ip, const int port)
+Remote			*ClientRelay::getRemote(const std::string &, const int)
 {
   return (this->_remote);
 }

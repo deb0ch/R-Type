@@ -13,7 +13,6 @@ Remote::Remote(ISocketTCP &socket, unsigned int hash) : _temporary_tcp_buffer(40
 
 Remote::~Remote()
 {
-  this->_mutex.lock();
   if (this->_tcp)
     this->_tcp->close();
   delete this->_tcp;
@@ -139,6 +138,9 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
   memmove(this->_temporary_tcp_buffer.getBuffer(),
 	  this->_temporary_tcp_buffer.getBuffer() + this->_temporary_tcp_buffer.getPosition(),
 	  this->_temporary_tcp_buffer.getRemainingLength());
+  this->_temporary_tcp_buffer.setLength(this->_temporary_tcp_buffer.getRemainingLength());
+  this->_temporary_tcp_buffer.rewind();
+  std::cout << "end " << __PRETTY_FUNCTION__ << std::endl;
   return (size_read > 0);
 }
 
@@ -193,26 +195,6 @@ void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 	   this->_ip, this->_port);
   network.disposeUDPBuffer(buffer);
   this->_send_buffer_udp.pop();
-}
-
-void		Remote::lock()
-{
-  this->_mutex.lock();
-}
-
-void		Remote::unlock()
-{
-  this->_mutex.unlock();
-}
-
-bool		Remote::trylock()
-{
-  return (this->_mutex.trylock());
-}
-
-bool		Remote::isUnLocked()
-{
-  return (this->_mutex.status() == IMutex::UNLOCKED);
 }
 
 bool		Remote::canSendUDP()

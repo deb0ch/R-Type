@@ -37,11 +37,6 @@ public:
   bool				networkReceiveTCP(INetworkRelay &network);
   void				networkSendUDP(INetworkRelay &network, SocketUDP &udp);
 
-  void				lock();
-  void				unlock();
-  bool				trylock();
-  bool				isUnLocked();
-
   void				setReady(bool ready);
   bool				isReady() const;
 
@@ -62,7 +57,6 @@ protected:
   NetworkBuffer			_temporary_tcp_buffer;
   SafeFifo<IBuffer *>		_recv_buffer_tcp;
   SafeFifo<IBuffer *>		_recv_buffer_udp;
-  Mutex				_mutex;
   bool				_ready;
 };
 
