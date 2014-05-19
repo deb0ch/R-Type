@@ -2,7 +2,7 @@
 #include "ActionComponent.hh"
 
 ResetActionSystem::ResetActionSystem()
-: ASystem("ResetActionSystem", 15)
+: ASystem("ResetActionSystem", 2)
 {}
 
 ResetActionSystem::~ResetActionSystem()
