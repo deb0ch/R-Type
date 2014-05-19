@@ -23,5 +23,6 @@ void		FireAlwaysSystem::processEntity(Entity *entity, const float)
   action = entity->getComponent<ActionComponent>("ActionComponent");
   if (!action)
     return ;
+
   action->setAction("FIRE", true);
 }

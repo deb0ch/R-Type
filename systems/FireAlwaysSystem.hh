@@ -3,7 +3,6 @@
 
 # include	<map>
 # include	"ASystem.hh"
-# include	"SFML/Window/Keyboard.hpp"
 
 class		FireAlwaysSystem : public ASystem
 {
