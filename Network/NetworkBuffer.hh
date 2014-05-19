@@ -36,11 +36,13 @@ public:
 
   virtual bool		end() const;
   virtual void		rewind();
+  virtual void		gotoEnd();
   virtual void		reset();
   virtual const char	*getBuffer() const;
   virtual char		*getBuffer();
   virtual unsigned int	getLength() const;
   virtual void		setLength(unsigned int);
+  virtual unsigned int	getRemainingLength() const;
   virtual unsigned int	getMaxSize() const;
 
   virtual unsigned int	getPosition() const;

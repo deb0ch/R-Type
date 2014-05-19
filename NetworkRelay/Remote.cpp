@@ -2,7 +2,7 @@
 #include "Remote.hh"
 #include "INetworkRelay.hh"
 
-Remote::Remote(ISocketTCP &socket, unsigned int hash)
+Remote::Remote(ISocketTCP &socket, unsigned int hash) : _temporary_tcp_buffer(4096)
 {
   this->_ready = false;
   this->_tcp = &socket;
@@ -148,7 +148,7 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 	   * @todo copy the surplus of data we read into the begining of this->_temporary_tcp_buffer,
 	   * add set its position to the end of the message
 	   */
-	  if (this->_temporary_tcp_buffer.getLength() > size) // need redo, wrong condition
+	  if (this->_temporary_tcp_buffer.getLength() > size)
 	    throw std::logic_error("NOT IMPLEMENTED");
 	  buffer = network.getTCPBuffer();
 	  buffer->rewind();
@@ -169,6 +169,44 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
       this->_temporary_tcp_buffer.rewind();
     }
   return (size_read > 0);
+}
+
+// Private function to get message from recv buffer
+bool		Remote::extractTCPPacket(INetworkRelay &network)
+{
+  unsigned int	old_pos;
+  unsigned int	size;
+  IBuffer	*buffer;
+
+  if (this->_temporary_tcp_buffer.getRemainingLength() >= sizeof(unsigned int))
+    {
+      old_pos = this->_temporary_tcp_buffer.getPosition();
+      this->_temporary_tcp_buffer >> size;
+      if (this->_temporary_tcp_buffer.getRemainingLength() + sizeof(size) >= size)
+	{
+	  buffer = network.getTCPBuffer();
+	  buffer->rewind();
+	  memcpy(buffer->getBuffer(),
+		 this->_temporary_tcp_buffer.getBuffer() + this->_temporary_tcp_buffer.getPosition(),
+		 size - sizeof(size));
+	  buffer->setLength(size - sizeof(size));
+	  buffer->rewind();
+	  if (this->_private_hash == 0)
+	    {
+	      *buffer >> this->_private_hash;
+	      std::cout << "Connexion established: " << this->_private_hash << std::endl;
+	      network.disposeTCPBuffer(buffer);
+	    }
+	  else
+	    this->_recv_buffer_tcp.push(buffer);
+	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +
+						  size - sizeof(size));
+	  return (true);
+	}
+      else
+	this->_temporary_tcp_buffer.setPosition(old_pos);
+    }
+  return (false);
 }
 
 void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)

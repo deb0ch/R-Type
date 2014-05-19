@@ -139,7 +139,7 @@ int SocketTCP::receive(IBuffer &buffer) {
 		    buffer.getMaxSize() - buffer.getPosition(), MSG_NOSIGNAL)) == -1)
     throw TCPException(errno);
   buffer.setLength(buffer.getLength() + ret);
-  buffer.setPosition(buffer.getLength());
+  // buffer.setPosition(buffer.getLength());
   return (ret);
 }
 

@@ -173,6 +173,10 @@ void		NetworkBuffer::setPosition(unsigned int pos)
     this->_buffer_size = this->_current_pos;
 }
 
+void		NetworkBuffer::gotoEnd()
+{
+  this->_current_pos = this->_buffer_size;
+}
 
 template <>
 void		NetworkBuffer::serialize<std::string>(const std::string &element)
@@ -207,4 +211,9 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
       element += this->_buffer[this->_current_pos];
       ++this->_current_pos;
     }
+}
+
+unsigned int	NetworkBuffer::getRemainingLength() const
+{
+  return (this->getLength() - this->getPosition());
 }

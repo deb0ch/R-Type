@@ -44,6 +44,8 @@ typedef unsigned __int16  uint16_t;
 typedef unsigned __int32  uint32_t;
 typedef unsigned __int64  uint64_t;
 
+#define __PRETTY_FUNCTION__ "not supported"
+
 #elif __linux__
 #include <unistd.h>
 #endif /* _WIN32*/

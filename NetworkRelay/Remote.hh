@@ -48,6 +48,9 @@ public:
   bool				canSendUDP();
   bool				canSendTCP();
 
+private:
+  bool				extractTCPPacket(INetworkRelay &);
+
 protected:
   ISocketTCP			*_tcp;
   std::string			_ip;
