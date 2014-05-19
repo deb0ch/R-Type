@@ -133,7 +133,7 @@ void		ServerRelay::removeRemote(Remote *remote)
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
   std::cout << "before delete" << std::endl;
   delete remote;
-  std::cout << "afeter delete" << std::endl;
+  std::cout << "after delete" << std::endl;
 }
 
 /**
@@ -164,7 +164,11 @@ void		ServerRelay::receiveUDP()
 	  this->udpConnect(remote);
 	}
       else
-	remote->getRecvBufferUDP().push(buffer);
+	{
+	  remote->getRecvBufferUDP().lock();
+	  remote->getRecvBufferUDP().push_back(buffer);
+	  remote->getRecvBufferUDP().unlock();
+	}
     }
   else
     std::cout << "Remote not found" << std::endl;

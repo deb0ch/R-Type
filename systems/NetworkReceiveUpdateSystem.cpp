@@ -98,7 +98,6 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
     }
 }
 
-
 // -------------- Private functions --------------
 
 void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,

@@ -90,12 +90,12 @@ void			Remote::sendUDP(IBuffer *buffer)
   this->_send_buffer_udp.push(buffer);
 }
 
-SafeFifo<IBuffer *>	&Remote::getRecvBufferUDP()
+LockVector<IBuffer *>	&Remote::getRecvBufferUDP()
 {
   return (this->_recv_buffer_udp);
 }
 
-SafeFifo<IBuffer *>	&Remote::getRecvBufferTCP()
+LockVector<IBuffer *>	&Remote::getRecvBufferTCP()
 {
   return (this->_recv_buffer_tcp);
 }
@@ -131,17 +131,21 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
   unsigned int		size_read;
 
   std::cout << __PRETTY_FUNCTION__ << std::endl;
-  this->_temporary_tcp_buffer.gotoEnd();
-  size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
-  while (this->extractTCPPacket(network))
-    ;
-  memmove(this->_temporary_tcp_buffer.getBuffer(),
-	  this->_temporary_tcp_buffer.getBuffer() + this->_temporary_tcp_buffer.getPosition(),
-	  this->_temporary_tcp_buffer.getRemainingLength());
-  this->_temporary_tcp_buffer.setLength(this->_temporary_tcp_buffer.getRemainingLength());
-  this->_temporary_tcp_buffer.rewind();
-  std::cout << "end " << __PRETTY_FUNCTION__ << std::endl;
-  return (size_read > 0);
+  if (this->_recv_buffer_tcp.trylock())
+    {
+      this->_temporary_tcp_buffer.gotoEnd();
+      size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
+      while (this->extractTCPPacket(network))
+	;
+      memmove(this->_temporary_tcp_buffer.getBuffer(),
+	      this->_temporary_tcp_buffer.getBuffer() + this->_temporary_tcp_buffer.getPosition(),
+	      this->_temporary_tcp_buffer.getRemainingLength());
+      this->_temporary_tcp_buffer.setLength(this->_temporary_tcp_buffer.getRemainingLength());
+      this->_temporary_tcp_buffer.rewind();
+      this->_recv_buffer_tcp.unlock();
+      return (size_read > 0);
+    }
+  return (true);
 }
 
 // Private function to get message from recv buffer
@@ -172,7 +176,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	      network.disposeTCPBuffer(buffer);
 	    }
 	  else
-	    this->_recv_buffer_tcp.push(buffer);
+	    this->_recv_buffer_tcp.push_back(buffer);
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +
 						  size - sizeof(size));
 	  return (true);

@@ -8,6 +8,7 @@
 # include "NetworkBuffer.hh"
 # include "INetworkRelay.hh"
 # include "SafeFifo.hpp"
+# include "LockVector.hpp"
 
 class Remote
 {
@@ -27,8 +28,8 @@ public:
   // TODO:
   void				sendTCP(IBuffer *);
   void				sendUDP(IBuffer *);
-  SafeFifo<IBuffer *>		&getRecvBufferUDP();
-  SafeFifo<IBuffer *>		&getRecvBufferTCP();
+  LockVector<IBuffer *>		&getRecvBufferUDP();
+  LockVector<IBuffer *>		&getRecvBufferTCP();
 
   const std::string		&getRoom() const;
   void				setRoom(const std::string &);
@@ -55,8 +56,8 @@ protected:
   SafeFifo<IBuffer *>		_send_buffer_tcp;
   SafeFifo<IBuffer *>		_send_buffer_udp;
   NetworkBuffer			_temporary_tcp_buffer;
-  SafeFifo<IBuffer *>		_recv_buffer_tcp;
-  SafeFifo<IBuffer *>		_recv_buffer_udp;
+  LockVector<IBuffer *>		_recv_buffer_tcp;
+  LockVector<IBuffer *>		_recv_buffer_udp;
   bool				_ready;
 };
 

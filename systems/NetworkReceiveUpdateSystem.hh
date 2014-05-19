@@ -2,6 +2,7 @@
 # define NETWORKRECEIVEUPDATESYSTEM_H_
 
 # include "ASystem.hh"
+# include "NetworkReceiveUpdateComponent.hh"
 
 class NetworkBuffer;
 
