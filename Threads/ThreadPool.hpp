@@ -45,8 +45,10 @@ public:
     ITask*		task;
 
     while (_status == RUNNING) {
-      if (usleep(500) && _tasks.isEmpty()) {
+      if (_tasks.isEmpty()) {
+	this->_mutex.lock();
 	_condvar.wait(&_mutex);
+	this->_mutex.unlock();
       }
       if (_status == RUNNING) {
 	try {
