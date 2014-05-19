@@ -20,6 +20,7 @@
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
 #include	"EntitySpawnerSystem.hh"
+#include	"ActionFireSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -61,6 +62,7 @@ void		addSystems(World &world)
   world.addSystem(new ActionMovementSystem());
   world.addSystem(new LifeSystem());
   world.addSystem(new EntitySpawnerSystem());
+  world.addSystem(new ActionFireSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -98,35 +100,40 @@ void		addSharedObjetcs(World &world)
 void		addEntities(World &world)
 {
   world.addEntity(world.createEntity()
-  		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
-  		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
+		  ->addComponent(new EntitySpawnerComponent({"TEST_BULLET"}))
+		  //->addComponent(new CollisionPowerComponent(100))
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
 				 ->addAction("RIGHT")
 				 ->addAction("DOWN")
 				 ->addAction("LEFT")
+				 ->addAction("FIRE")
 				 )
 		  );
 
   world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(0.0f, 100.0f))
+		  ->addComponent(new Pos2DComponent(100.0f, 150.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
+		  ->addComponent(new SFMLSpriteComponent("players.png"))
 		  ->addComponent(new SFMLInputComponent())
+		  ->addComponent(new EntitySpawnerComponent({"TEST_BULLET"}))
+		  //->addComponent(new CollisionPowerComponent(100))
 		  ->addComponent(new MovementSpeedComponent(5))
-		  ->addComponent(new CollisionPowerComponent(100))
 		  ->addComponent((new ActionComponent())
 				 ->addAction("UP")
 				 ->addAction("RIGHT")
 				 ->addAction("DOWN")
 				 ->addAction("LEFT")
+				 ->addAction("FIRE")
 				 )
 		  );
 
