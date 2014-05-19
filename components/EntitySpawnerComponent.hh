@@ -28,6 +28,9 @@ protected:
 
   bool				_active;
 
+  unsigned long			_counter;
+  unsigned long			_tick;
+
 public:
   EntitySpawnerComponent(std::vector<std::string> entities = {},
 			 std::vector<std::string> components = {},

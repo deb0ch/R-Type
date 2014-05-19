@@ -25,6 +25,8 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
 {
   this->_next = 0;
   this->_active = true;
+  this->_counter = 0;
+  this->_tick = 0;
 }
 
 //----- ----- Destructor ----- ----- //
@@ -41,21 +43,19 @@ void			EntitySpawnerComponent::setActive(bool active)
 //----- ----- Methods ----- ----- //
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DComponent *pos)
 {
-  static unsigned long	counter = 0;
-  static unsigned long	tick = 0;
   Entity		*res = NULL;
   Pos2DComponent	*res_pos = NULL;
 
-  if (!this->_active)
-    return (NULL);
+  if (this->_tick < this->_delay)
+    return ((Entity *) (0 * ++this->_tick));
 
-  if ((tick++ < this->_delay) ||
-      (this->_nb > 0 && counter >= _nb) ||
+  if (!this->_active ||
+      (this->_nb > 0 && this->_counter >= _nb) ||
       this->_entities.size() == 0)
     return (NULL);
 
-  if (tick >= this->_delay)
-    tick = 0;
+  if (this->_tick >= this->_delay)
+    this->_tick = 0;
 
   if (facto)
     res = facto->create(this->_entities[this->_next]);
@@ -79,6 +79,6 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
   res_pos->setX(pos->getX() + RandomReal()(this->_min_pos.first, this->_max_pos.first));
   res_pos->setY(pos->getY() + RandomReal()(this->_min_pos.second, this->_max_pos.second));
 
-  ++counter;
+  ++this->_counter;
   return (res);
 }
