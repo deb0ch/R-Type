@@ -46,7 +46,8 @@ public :
     this->addEntity("TEST_SPAWN", (new Entity())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		    ->addComponent(new Speed2DComponent(-5.f, 0.f))
+		    ->addComponent(new Speed2DComponent(0.f, 0.f))
+		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent(new MovementSpeedComponent(0.5f))
 		    ->addComponent(new LifeComponent(20))
 		    ->addComponent(new SFMLSpriteComponent("players.png"))
@@ -56,8 +57,25 @@ public :
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   )
-		    // ->addComponent(new EntitySpawnerComponent({"TEST_SPAWN"}))
+		    //->addComponent(new EntitySpawnerComponent({"TEST_SPAWN"}))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    );
+
+    this->addEntity("TEST_BULLET", (new Entity())
+		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
+		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		    ->addComponent(new Speed2DComponent(0.f, 0.f))
+		    ->addComponent(new Friction2DComponent(0.5f))
+		    ->addComponent(new MovementSpeedComponent(3.f))
+		    ->addComponent(new LifeComponent(5))
+		    ->addComponent(new SFMLSpriteComponent("players.png"))
+		    ->addComponent((new ActionComponent())
+				   ->addAction("UP")
+				   ->addAction("RIGHT")
+				   ->addAction("DOWN")
+				   ->addAction("LEFT")
+				   )
+		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
 		    );
   }
 };
