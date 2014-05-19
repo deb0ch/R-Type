@@ -43,6 +43,8 @@
 
 #include	"ComponentFactory.hpp"
 
+#include	"SoundLoader.hh"
+
 #ifdef _WIN32
 #define PATH "Ressources\\Images\\"
 #elif __linux__
@@ -260,10 +262,18 @@ int			main()
 	addSharedObjetcs(world);
 	addEntities(world);
 
+
 	world.start();
+	/*
+	SoundLoader *s = new SoundLoader();
+	s->addSound("Ressources/Sound/laser.wav");
+	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+	sound->play();
+	*/
+
 	for (;;)
 	{
-		world.process(0.16f);
+	    world.process(0.16f);
 	}
 	world.stop();
 
