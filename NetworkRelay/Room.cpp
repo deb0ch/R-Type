@@ -43,7 +43,10 @@ const std::vector<Remote *>	&Room::getRemotes() const
 
 void				Room::disconnectRemote(Remote *remote)
 {
-  this->_pending_disconnect_remotes.push_back(remote);
+  if (std::find(this->_pending_disconnect_remotes.begin(),
+		this->_pending_disconnect_remotes.end(), remote) ==
+      this->_pending_disconnect_remotes.end())
+    this->_pending_disconnect_remotes.push_back(remote);
 }
 
 std::vector<Remote *>		&Room::getPendingDisonnectRemotes()
@@ -55,7 +58,7 @@ void				Room::removeRemote(Remote *remote)
 {
   auto it = std::find(this->_remotes.begin(), this->_remotes.end(), remote);
 
-  if (it != this->_remotes.end())
+  if (it == this->_remotes.end())
     return ;
   delete *it;
   this->_remotes.erase(it);

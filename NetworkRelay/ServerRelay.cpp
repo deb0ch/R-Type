@@ -107,13 +107,14 @@ void		ServerRelay::manageRemotes()
 			{
 			  room->removeRemote(remote);
 			});
+	  remotes_disconnect.clear();
 	  if (room->getRemotes().empty())
 	    {
 	      if (this->_mutex_room.trylock())
 		{
 		  it = this->_remotes.erase(it);
 		  room = NULL;
-		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!ERASE RROM!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 		  this->_mutex_room.unlock();
 		}
 	    }
