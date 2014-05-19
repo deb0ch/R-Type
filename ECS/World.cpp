@@ -68,12 +68,14 @@ World	*World::addEntity(Entity *entity)
  */
 World	*World::addSystem(ISystem *system)
 {
-  this->_systems.push_back(system);
   system->setWorld(this);
-  std::sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
+  this->_systems.push_back(system);
+
+  std::stable_sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
 							      const ISystem *system_b) -> bool {
 	      return (system_a->getPriority() > system_b->getPriority());
 	    });
+
   return (this);
 }
 
