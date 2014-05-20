@@ -40,11 +40,11 @@ sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader, const std::
 		if (it == this->_map.end())
 			return (NULL);
 	}
-	if (this->_previousAction == action)
+	if (this->_previousAction == it->first)
 		++this->_tickCounter;
 	else
 	{
-		this->_previousAction = action;
+		this->_previousAction = it->first;
 		this->_tickCounter = 0;
 		this->_counter = 0;
 	}
