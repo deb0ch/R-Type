@@ -2,7 +2,7 @@
 #include "ServerRelay.hh"
 #include "NetworkBuffer.hh"
 
-ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer(), _select(0, 1000)
+ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer(), _select(0, 100000)
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -166,6 +166,7 @@ void		ServerRelay::receiveUDP()
       else
 	{
 	  remote->getRecvBufferUDP().lock();
+	  buffer->setOffset(sizeof(unsigned int));
 	  remote->getRecvBufferUDP().push_back(buffer);
 	  remote->getRecvBufferUDP().unlock();
 	}

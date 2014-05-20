@@ -63,6 +63,9 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   this->serializeComponents(entity, *buffer);
   network_component->increasePacketNumber();
   room = this->_network->getRoom(*this->_room_name);
-  room->sendBroadcastUDP(*this->_network, buffer);
-  room->unlock();
+  if (room)
+    {
+      room->sendBroadcastUDP(*this->_network, buffer);
+      room->unlock();
+    }
 }

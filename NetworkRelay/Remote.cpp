@@ -176,7 +176,10 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	      network.disposeTCPBuffer(buffer);
 	    }
 	  else
-	    this->_recv_buffer_tcp.push_back(buffer);
+	    {
+	      buffer->setOffset(sizeof(size));
+	      this->_recv_buffer_tcp.push_back(buffer);
+	    }
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +
 						  size - sizeof(size));
 	  return (true);

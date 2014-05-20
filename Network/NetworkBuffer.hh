@@ -48,11 +48,15 @@ public:
   virtual unsigned int	getPosition() const;
   virtual void		setPosition(unsigned int);
 
+  virtual unsigned int	getOffset() const;
+  virtual void		setOffset(unsigned int);
+
 protected:
   const unsigned int	bufferMaxSize;
   char			*_buffer;
   unsigned int		_buffer_size;
   unsigned int		_current_pos;
+  unsigned int		_offset;
 
 private:
   template <typename T>

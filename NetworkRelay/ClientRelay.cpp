@@ -2,7 +2,7 @@
 #include "TCPException.hh"
 #include "UDPException.hh"
 
-ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select(0, 1000)
+ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select(0, 100000)
 {
   SocketTCP	*sock = new SocketTCP;
 
@@ -69,7 +69,14 @@ void			ClientRelay::start()
 	      std::cout << "CLIENT READY" << std::endl;
 	    }
 	  if (!buffer->end())
-	    this->_remote->getRecvBufferUDP().push_back(buffer);
+	    {
+	      std::cout << "Received smth" << std::endl;
+	      buffer->rewind();
+	      this->_remote->getRecvBufferUDP().lock();
+	      buffer->setOffset(sizeof(unsigned int));
+	      this->_remote->getRecvBufferUDP().push_back(buffer);
+	      this->_remote->getRecvBufferUDP().unlock();
+	    }
 	}
 
       if (this->_select.issetWrites(this->_socket_udp.getHandle()))

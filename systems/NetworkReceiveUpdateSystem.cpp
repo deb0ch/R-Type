@@ -30,22 +30,26 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 {
   Room				*room;
 
+  if (!this->_network || !this->_network)
+    return ;
   room = this->_network->getRoom(*this->_room_name);
-
-  std::vector<Remote *> &remotes = room->getRemotes();
-  std::for_each(remotes.begin(), remotes.end(),
-		[this] (Remote *remote) -> void
-		{
-		  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		  recv_buffer.lock();
-		  LockVector<IBuffer *>::iterator it = recv_buffer.begin();
-		  while (it != recv_buffer.end())
+  if (room)
+    {
+      std::vector<Remote *> &remotes = room->getRemotes();
+      std::for_each(remotes.begin(), remotes.end(),
+		    [this] (Remote *remote) -> void
 		    {
-		      this->parsePacket(recv_buffer, it);
-		    }
-		  recv_buffer.unlock();
-		});
-  room->unlock();
+		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
+		      recv_buffer.lock();
+		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
+		      while (it != recv_buffer.end())
+			{
+			  this->parsePacket(recv_buffer, it);
+			}
+		      recv_buffer.unlock();
+		    });
+      room->unlock();
+    }
 }
 
 void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
@@ -119,8 +123,10 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
+  std::cout << "Hereu: " << (int)packet_type << std::endl;
   if (packet_type == ENTITY_UPDATE)
     {
+      std::cout << "Here" << std::endl;
       this->getEntityInfos(*buffer, id_entity, num_packet);
       if (!this->remoteEntityExists(id_entity))
 	{
@@ -141,18 +147,15 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
 void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 										 IBuffer &buffer)
 {
-  std::size_t			component_hash;
+  unsigned long			component_hash;
   IComponent			*new_component;
   INetworkSerializableComponent	*serializable_component;
 
-  return;
   buffer >> component_hash;
-  /*
-  VOIR AVEC ROMAIN ICI FACTORY
-  */
   std::cout << component_hash << std::endl;
   ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
   new_component = test->create(component_hash);
+  std::cout << new_component << std::endl;
   if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
     {
       std::cerr << "Received a no serializable component" << std::endl;

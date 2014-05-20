@@ -4,12 +4,13 @@ NetworkBuffer::NetworkBuffer(unsigned int size) : bufferMaxSize(size)
 {
   this->_buffer_size = 0;
   this->_current_pos = 0;
+  this->_offset = 0;
   this->_buffer = new char[bufferMaxSize];
 }
 
 NetworkBuffer::~NetworkBuffer()
 {
-  delete[] this->_buffer;
+  delete[] (this->_buffer - this->_offset);
 }
 
 NetworkBuffer::NetworkBuffer(const IBuffer &buffer) : bufferMaxSize(buffer.getMaxSize())
@@ -20,6 +21,7 @@ NetworkBuffer::NetworkBuffer(const IBuffer &buffer) : bufferMaxSize(buffer.getMa
   this->_current_pos = buffer.getPosition();
   this->_buffer = new char[bufferMaxSize];
   cpy = buffer.getBuffer();
+  this->_offset = buffer.getOffset();
   for (unsigned int i = 0; i < this->_buffer_size; ++i)
     {
       this->_buffer[i] = cpy[i];
@@ -38,6 +40,7 @@ IBuffer		&NetworkBuffer::operator=(const IBuffer &buffer)
 	delete this->_buffer;
       this->_buffer = new char[bufferMaxSize];
       cpy = buffer.getBuffer();
+      this->_offset = buffer.getOffset();
       for (unsigned int i = 0; i < this->_buffer_size; ++i)
 	{
 	  this->_buffer[i] = cpy[i];
@@ -216,4 +219,22 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
 unsigned int	NetworkBuffer::getRemainingLength() const
 {
   return (this->getLength() - this->getPosition());
+}
+
+unsigned int	NetworkBuffer::getOffset() const
+{
+  return (this->_offset);
+}
+
+void		NetworkBuffer::setOffset(unsigned int offset)
+{
+  int		diff;
+
+  diff = offset - this->_offset;
+  if (this->_buffer_size >= diff)
+    {
+      this->_buffer += diff;
+      this->_buffer_size -= diff;
+      this->_offset = offset;
+    }
 }

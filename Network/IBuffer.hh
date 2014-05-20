@@ -35,6 +35,8 @@ public:
   virtual unsigned int		getPosition() const = 0;
   virtual void			setPosition(unsigned int) = 0;
   virtual IBuffer		&operator=(const IBuffer &) = 0;
+  virtual unsigned int		getOffset() const = 0;
+  virtual void			setOffset(unsigned int) = 0;
 protected:
 
 };

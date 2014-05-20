@@ -35,6 +35,8 @@
 
 #include	"ComponentFactory.hpp"
 
+#include	"ServerRelay.hh"
+
 #ifdef _WIN32
 #define PATH "Ressources\\Images\\"
 #elif __linux__
@@ -81,15 +83,22 @@ void		addSystems(World &world)
 	"Friction2DComponent" };
 	network = new NetworkSendUpdateSystem(arg);
 	world.addSystem(network);
-	world.addSystem(new NetworkReceiveUpdateSystem());
+	// world.addSystem(new NetworkReceiveUpdateSystem());
 }
 
 void		addSharedObjetcs(World &world)
 {
 	ComponentFactory *compos = new ComponentFactory();
+	ServerRelay *server = new ServerRelay(6667, 42);
+	Thread<ServerRelay> *thread = new Thread<ServerRelay>();
+	Any tmp;
+
+	thread->start(server, &ServerRelay::start, tmp);
 	compos->init();
 	world.setSharedObject("imageLoader", new ImageLoader());
 	world.setSharedObject("componentFactory", compos);
+	world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(server));
+	world.setSharedObject("RoomName", new std::string("default"));
 }
 
 void		addEntities(World &world)
@@ -105,6 +114,7 @@ void		addEntities(World &world)
 		->addComponent(new SFMLInputComponent())
 		->addComponent(new MovementSpeedComponent(1))
 		->addComponent(new PlayerMovementComponent())
+		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
@@ -121,6 +131,7 @@ void		addEntities(World &world)
 		->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
 		->addComponent(test->create(Hash()("ActionComponent"))->clone())
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		->addComponent(new NetworkSendUpdateComponent())
 		);
 
 	world.addEntity(world.createEntity()
@@ -131,6 +142,7 @@ void		addEntities(World &world)
 		->addComponent(new MovementSpeedComponent(0.8f))
 		->addComponent(new PlayerMovementComponent())
 		->addComponent(new MoveFollowComponent(world.getEntity(1)))
+		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
@@ -143,12 +155,14 @@ void		addEntities(World &world)
 		->addComponent(new Pos2DComponent(800.0f, 000.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
 		->addComponent(new Speed2DComponent(-4.f, 5.f))
+		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(300.0f, 000.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
 		->addComponent(new Speed2DComponent(20.f, 5.f))
+		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 }
 
