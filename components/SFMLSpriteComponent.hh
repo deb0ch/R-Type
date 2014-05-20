@@ -11,23 +11,27 @@ class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>,
 	public INetworkSerializableComponent
 {
 protected:
-	std::string	_filaName;
+	std::string	_fileName;
 	ImageLoader::NbSprite _sprites;
 	int _nbSprites;
 	int _counter;
 	int _firstSprite;
 	unsigned int _tickCounter;
 	unsigned int _tickChange;
+	std::string _previousAction;
+	std::map<std::string, std::pair<int, int> > _map;
 
 public:
-	SFMLSpriteComponent(const std::string &filename = "", ImageLoader::NbSprite = { 5, 5 },
-		int nbSprites = 0, int firstSprite = 0, unsigned int tickChange = 10);
+	SFMLSpriteComponent();
+	SFMLSpriteComponent(const std::string &filename, const ImageLoader::NbSprite& sprites,
+		const std::map<std::string, std::pair<int, int> > &map, unsigned int tickChange = 10);
+
 	virtual	~SFMLSpriteComponent();
 
 	virtual	void serialize(IBuffer &buffer) const;
 	virtual	void unserialize(IBuffer &buffer);
 
-	sf::Sprite	*getSprite(ImageLoader &imageLoader);
+	sf::Sprite	*getSprite(ImageLoader &imageLoader, const std::string & action = "");
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */
