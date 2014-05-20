@@ -115,10 +115,10 @@ void		addEntities(World &world)
 		->addComponent(new Box2DComponent(50.0f, 50.0f))
 		->addComponent(new Speed2DComponent(5.f, 5.f))
 		->addComponent(new Friction2DComponent(0.5f))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"), ImageLoader::NbSprite{ 5, 5 },
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("players2.png"), ImageLoader::NbSprite{ 5, 5 },
 		{ { "", { 2, 0 } },
-		{ "DOWN", { 0, 0 } },
-		{ "UP", { 4, 0 } } }))
+		{ "DOWN", { 0, 2 } },
+		{ "UP", { 3, 2 } } }))
 		->addComponent(new SFMLInputComponent())
 		->addComponent(new MovementSpeedComponent(5))
 		->addComponent(new LifeComponent(200, 100))
@@ -246,7 +246,7 @@ void		addEntities(World &world)
 		->addComponent(new MovementSpeedComponent(0.5f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet-7.png"),
 		ImageLoader::NbSprite{ 4, 3 },
-		{ { "", { 8, 4 } } }))
+		{ { "", { 8, 4 } } }, 2))
 		->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 150))
 		->addComponent(new LifeComponent())
 		->addComponent(new CollisionPowerComponent(50))

@@ -55,17 +55,25 @@ sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader, const std::
 			this->_counter = 0;
 		this->_tickCounter = 0;
 	}
+	this->_currentSprite = this->_counter + it->second.first;
 	sf::Sprite *sprite = imageLoader.createSprite(this->_fileName,
-		this->_counter + it->second.first);
+		this->_currentSprite);
 	return (sprite);
 }
 
 void		SFMLSpriteComponent::serialize(IBuffer &buffer) const
 {
 	buffer << this->_fileName;
+	buffer << this->_sprites.nbSprintX;
+	buffer << this->_sprites.nbSprintY;
+	buffer << this->_currentSprite;
+
 }
 
 void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 {
 	buffer >> this->_fileName;
+	buffer >> this->_sprites.nbSprintX;
+	buffer >> this->_sprites.nbSprintY;
+	buffer >> this->_currentSprite;
 }

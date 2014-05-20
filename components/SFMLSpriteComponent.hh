@@ -13,12 +13,11 @@ class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>,
 protected:
 	std::string	_fileName;
 	ImageLoader::NbSprite _sprites;
-	int _nbSprites;
 	int _counter;
-	int _firstSprite;
 	unsigned int _tickCounter;
 	unsigned int _tickChange;
 	std::string _previousAction;
+	int _currentSprite;
 	std::map<std::string, std::pair<int, int> > _map;
 
 public:
