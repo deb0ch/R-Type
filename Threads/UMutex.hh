@@ -13,7 +13,7 @@ class Mutex : public IMutex
   friend class CondVar;
 public:
   virtual void		lock();
-  virtual void		trylock();
+  virtual bool		trylock();
   virtual void		unlock();
   virtual STATUS	status() const;
 

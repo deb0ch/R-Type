@@ -17,6 +17,7 @@ SET(HEADER_C
   ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.hh
   PARENT_SCOPE
   )
 
@@ -25,5 +26,6 @@ SET(SOURCE_C
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.cpp
   PARENT_SCOPE
   )

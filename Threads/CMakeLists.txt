@@ -41,7 +41,7 @@ SET (LIB_TYPE STATIC)
 ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0 -Wall -Wextra")
 	INCLUDE_DIRECTORIES(/usr/include/)
 	TARGET_LINK_LIBRARIES(Threadlib -pthread)
 endif (UNIX)
