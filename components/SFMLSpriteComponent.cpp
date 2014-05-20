@@ -61,6 +61,14 @@ sf::Sprite	*SFMLSpriteComponent::getSprite(ImageLoader &imageLoader, const std::
 	return (sprite);
 }
 
+bool		SFMLSpriteComponent::hasAction(const std::string & action)
+{
+	auto it = this->_map.find(action);
+	if (it == this->_map.end())
+		return (false);
+	return (true);
+}
+
 void		SFMLSpriteComponent::serialize(IBuffer &buffer) const
 {
 	buffer << this->_fileName;

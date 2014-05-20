@@ -31,6 +31,7 @@ public:
 	virtual	void unserialize(IBuffer &buffer);
 
 	sf::Sprite	*getSprite(ImageLoader &imageLoader, const std::string & action = "");
+	bool		hasAction(const std::string & action);
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */

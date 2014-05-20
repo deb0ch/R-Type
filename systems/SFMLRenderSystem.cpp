@@ -30,18 +30,16 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 	ImageLoader *imageLoader = this->_world->getSharedObject<ImageLoader>("imageLoader");
 	if (!imageLoader)
 		return; //TODO throw
-	sf::Sprite *sprite;
-	if (action == NULL)
-		sprite = spriteComp->getSprite(*imageLoader);
-	else
+	sf::Sprite *sprite = NULL;
+	if (action != NULL)
 	{
-		if (action->isActive("UP"))
+		if (action->isActive("UP") && spriteComp->hasAction("UP"))
 			sprite = spriteComp->getSprite(*imageLoader, "UP");
-		else if (action->isActive("DOWN"))
+		else if (action->isActive("DOWN") && spriteComp->hasAction("DOWN"))
 			sprite = spriteComp->getSprite(*imageLoader, "DOWN");
-		else
-			sprite = spriteComp->getSprite(*imageLoader);
 	}
+	if (sprite == NULL) // default sprite
+		sprite = spriteComp->getSprite(*imageLoader);
 	if (sprite == NULL)
 		return;
 	sprite->setPosition(pos->getX(), pos->getY());
