@@ -45,11 +45,7 @@
 
 #include	"SoundLoader.hh"
 
-#ifdef _WIN32
-#define PATH "Ressources\\Images\\"
-#elif __linux__
 #define PATH "Ressources/Images/"
-#endif
 
 void		registerComponents(World &world)
 {
@@ -121,7 +117,7 @@ void		addEntities(World &world)
 		{ "UP", { 3, 2 } } }))
 		->addComponent(new SFMLInputComponent())
 		->addComponent(new MovementSpeedComponent(5))
-		->addComponent(new LifeComponent(200, 100))
+		->addComponent(new LifeComponent(500))
 		->addComponent(new CollisionPowerComponent(100))
 		->addComponent((new ActionComponent())
 		->addAction("UP")
@@ -268,18 +264,12 @@ int			main()
 
 
 	world.start();
-	/*
-	buff.loadFromFile("Ressources\\Sound\\laser.wav");
-	sf::Sound explosion;
-	explosion.setBuffer(buff);
-	explosion.play();
-	*/
-	/*
+	
 	SoundLoader *s = new SoundLoader();
 	s->addSound("Ressources/Sound/laser.wav");
 	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
 	sound->play();
-	*/
+
 	for (;;)
 	{
 	    world.process(0.16f);
