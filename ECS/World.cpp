@@ -8,6 +8,7 @@
 World::World()
 {
   this->_nextEntityID = 1;
+  this->_entities.reserve(1000);
   this->_initialized = false;
 }
 
