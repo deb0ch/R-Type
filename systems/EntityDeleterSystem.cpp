@@ -5,7 +5,7 @@
 #include "EntityDeletedEvent.hh"
 
 EntityDeleterSystem::EntityDeleterSystem()
-  : ASystem("EntityDeleterSystem")
+  : ASystem("EntityDeleterSystem", 0)
 {
 }
 
