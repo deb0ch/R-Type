@@ -7,12 +7,12 @@ ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializ
   SocketTCP	*sock = new SocketTCP;
 
   sock->init();
+  this->_socket_udp.init();
   sock->connect(addr, port);
   this->_remote = new Remote(*sock);
   this->_remote->setIP(addr);
   this->_remote->setPort(port);
   this->_room.getRemotes().push_back(this->_remote);
-  this->_socket_udp.init();
   this->_select.initReads();
   this->_select.initWrites();
   this->_select.addRead(this->_remote->getTCPSocket().getHandle());
