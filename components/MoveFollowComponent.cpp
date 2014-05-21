@@ -4,7 +4,7 @@
 
 //----- ----- Constructors ----- ----- //
 MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
-  : AComponent("MoveFollowComponent")
+  : AComponent("MoveFollowComponent"), _idToFollow(-1)
 {
   this->_tagToFollow = tagToFollow;
 }
@@ -12,6 +12,16 @@ MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
 //----- ----- Destructor ----- ----- //
 MoveFollowComponent::~MoveFollowComponent()
 {}
+
+unsigned long	MoveFollowComponent::getIdToFollow() const
+{
+  return this->_idToFollow;
+}
+
+void		MoveFollowComponent::setIdToFollow(unsigned long idToFollow)
+{
+  this->_idToFollow = idToFollow;
+}
 
 const std::string &	MoveFollowComponent::getTagToFollow() const
 {

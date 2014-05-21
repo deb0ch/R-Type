@@ -1,12 +1,13 @@
+
 #include "EntityDeletedEvent.hh"
 #include "MoveFollowSystem.hh"
 #include "MoveFollowComponent.hh"
 #include "ActionComponent.hh"
 #include "Pos2DComponent.hh"
 
-MoveFollowSystem::MoveFollowSystem() : ASystem("MoveFollowSystem") {
-  this->_deletedElements = std::vector<Entity *>();
-}
+MoveFollowSystem::MoveFollowSystem()
+  : ASystem("MoveFollowSystem")
+{}
 
 MoveFollowSystem::~MoveFollowSystem()
 {}
@@ -52,51 +53,29 @@ Entity*		MoveFollowSystem::searchClosestTarget(Entity* entity,
   return (target);
 }
 
-// void MoveFollowSystem::processEntity(Entity* entity, const float)
-// {
-//   ActionComponent*		action;
-//   MoveFollowComponent*		moveFollowComponent;
-//   Pos2DComponent*		posEntity;
-//   Entity*			entityToFollow;
-
-//   action = entity->getComponent<ActionComponent>("ActionComponent");
-//   moveFollowComponent = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
-//   posEntity = entity->getComponent<Pos2DComponent>("Pos2DComponent");
-
-//   const std::string &		tagToFollow = moveFollowComponent->getTagToFollow();
-
-//   if ((entityToFollow = searchClosestTarget(entity, tagToFollow)) != NULL)
-//     {
-//       Pos2DComponent*	posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
-
-//       if (posToFollow == NULL)
-// 	return;
-//       if (posEntity->getX() < posToFollow->getX())
-// 	action->setAction("RIGHT", true);
-//       if (posEntity->getX() > posToFollow->getX())
-// 	action->setAction("LEFT", true);
-//       if (posEntity->getY() < posToFollow->getY())
-// 	action->setAction("DOWN", true);
-//       if (posEntity->getY() > posToFollow->getY())
-// 	action->setAction("UP", true);
-//     }
-// }
-
 void MoveFollowSystem::processEntity(Entity *entity, const float)
 {
-  ActionComponent		*action;
-  MoveFollowComponent		*target;
-  Entity			*entityToFollow;
-  Pos2DComponent		*posEntity;
+  ActionComponent*		action;
+  MoveFollowComponent*		moveFollowComponent;
+  Pos2DComponent*		posEntity;
+  Entity*			entityToFollow = NULL;
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
-  target = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
+  moveFollowComponent = entity->getComponent<MoveFollowComponent>("MoveFollowComponent");
   posEntity = entity->getComponent<Pos2DComponent>("Pos2DComponent");
 
-  if ((entityToFollow = this->_world->getEntity(target->getIdToFollow())) != NULL)
+  if ((entityToFollow = this->_world->getEntity(moveFollowComponent->getIdToFollow())) == NULL)
     {
-      auto posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
-      if (!posToFollow)
+      const std::string &	tagToFollow = moveFollowComponent->getTagToFollow();
+
+      entityToFollow = searchClosestTarget(entity, tagToFollow);
+    }
+
+  if (entityToFollow != NULL)
+    {
+      Pos2DComponent*	posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
+
+      if (posToFollow == NULL)
 	return;
       if (posEntity->getX() < posToFollow->getX())
 	action->setAction("RIGHT", true);

@@ -17,7 +17,6 @@ public:
   virtual	~MoveFollowSystem();
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
-  virtual void	init();
 
 private:
   inline float	getDistance(Pos2DComponent* a, Pos2DComponent* b) const;
@@ -25,15 +24,6 @@ private:
 			 Pos2DComponent* prevTarget,
 			 Pos2DComponent* newTarget) const;
   Entity*	searchClosestTarget(Entity*, const std::string &) const;
-
-// protected:
-//   virtual void		afterProcess();
-
-// private:
-//   void removeMoveFollowSystem(IEvent *event);
-
-// private:
-//   std::vector<Entity *> _deletedElements;
 };
 
 #endif /* !MOVEFOLLOWSYSTEM_H_ */
