@@ -1,9 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-#PROJECT(test)
-
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0")
-
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ECS)
 
 SET(HEADERS
@@ -30,22 +26,16 @@ SET(SOURCES
   WMutex.cpp
   ScopedMutex.cpp
   UCondVar.cpp
-  WCondVar.cpp)
+  WCondVar.cpp
+  )
 
 SET (LIB_TYPE STATIC)
-
-#FILE(GLOB_RECURSE ${SOURCES} ${HEADERS})
 	
 ADD_LIBRARY(Threadlib ${LIB_TYPE} ${HEADERS} ${SOURCES})
 #ADD_EXECUTABLE(Threadlib ${HEADERS} ${SOURCES})
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0 -Wall -Wextra")
 	INCLUDE_DIRECTORIES(/usr/include/)
-	TARGET_LINK_LIBRARIES(Threadlib /usr/lib/x86_64-linux-gnu/libpthread.so)
+	TARGET_LINK_LIBRARIES(Threadlib -pthread)
 endif (UNIX)
-
-#ADD_EXECUTABLE(test main.cpp)
-
-#TARGET_LINK_LIBRARIES(test Threadlib)
-#TARGET_LINK_LIBRARIES(test pthread)

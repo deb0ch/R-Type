@@ -17,16 +17,28 @@ public:
 		_container.obj = obj;
 		_container.fct = fct;
 		_container.arg = arg;
-		if ((_threadHandle = CreateThread(NULL, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
-			&_container, 0, &_thread)) == NULL)
+		if ((_threadHandle = CreateThread(
+			NULL,
+			0,
+			reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
+			&_container,
+			0,
+			&_thread)) == NULL)
 				throw ThreadException(GetLastError());
 		_status = RUNNING;
 	}
 
   virtual void				start(void* (*fct)(void*), void* arg)
   {
-	  if ((_ret = pthread_create(&this->_thread, NULL, fct, arg)) != 0)
-		  this->_status = IThread<T>::RUNNING;
+	  if ((_threadHandle = CreateThread(
+		  NULL,
+		  0,
+		  reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
+		  arg,
+		  0,
+		  &_thread)) == NULL)
+		  throw ThreadException(GetLastError());
+    this->_status = IThread<T>::RUNNING;
   }
 
 	virtual void						exit()
