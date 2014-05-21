@@ -17,9 +17,7 @@ public:
 
 public:
 	MoveSequenceComponent(const Sens = UP_DOWN, const unsigned int tickToChange = 20);
-	MoveSequenceComponent(const MoveSequenceComponent&);
 	virtual	~MoveSequenceComponent();
-	MoveSequenceComponent	&operator=(const MoveSequenceComponent&);
 
 	void  incrementTick();
 	const std::string &getAction() const;

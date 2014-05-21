@@ -26,7 +26,7 @@ public:
 
     if (it == this->_types.end())
       return (NULL);
-    return it->second->clone();
+    return (it->second->clone());
   }
 
 protected:
