@@ -106,12 +106,12 @@ void		addSharedObjetcs(World &world)
 	Thread<ServerRelay> *thread = new Thread<ServerRelay>();
 	Any tmp;
 
+	world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(server));
+	world.setSharedObject("RoomName", new std::string("default"));
 	thread->start(server, &ServerRelay::start, tmp);
 	compos->init();
 	world.setSharedObject("imageLoader", new ImageLoader());
 	world.setSharedObject("componentFactory", compos);
-	world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(server));
-	world.setSharedObject("RoomName", new std::string("default"));
 }
 
 void		addEntities(World &world)

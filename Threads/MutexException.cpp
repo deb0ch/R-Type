@@ -14,8 +14,7 @@ void MutexException::addError(const int error)
   strerror_s(buffer, sizeof(buffer), error);
   this->_info += buffer;
 #elif __linux__
-  strerror_r(error, buffer, sizeof(buffer));
-  this->_info += buffer;
+  this->_info += strerror_r(error, buffer, sizeof(buffer));
 #endif
 }
 

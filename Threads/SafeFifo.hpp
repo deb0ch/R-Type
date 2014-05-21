@@ -1,7 +1,6 @@
 #ifndef		SAFEFIFO_H_
 # define	SAFEFIFO_H_
 
-#include <pthread.h>
 #include <vector>
 #include "Threads.hh"
 

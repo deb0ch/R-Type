@@ -4,7 +4,10 @@
 
 NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::string> &serializable_action)
   : ASystem("NetworkReceiveActionSystem"), _serializable_action(serializable_action)
-{}
+{
+	this->_room_name = NULL;
+	this->_network = NULL;
+}
 
 NetworkReceiveActionSystem::~NetworkReceiveActionSystem()
 {}
@@ -14,7 +17,9 @@ void NetworkReceiveActionSystem::beforeProcess()
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
-    this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
+  {
+	  this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
+  }
 }
 
 bool NetworkReceiveActionSystem::canProcess(Entity *entity)

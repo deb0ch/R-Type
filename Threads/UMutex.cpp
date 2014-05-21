@@ -15,13 +15,10 @@ bool	Mutex::trylock()
 {
   if ((_ret = pthread_mutex_trylock(&_mutex)) != 0 && _ret != EBUSY)
     throw MutexException(_ret);
+  _status = LOCKED;
   if (_ret == EBUSY)
-    return (false);
-  else
-    {
-      _status = LOCKED;
-      return (true);
-    }
+	  return (false);
+  return (true);
 }
 
 void	Mutex::unlock()
@@ -38,7 +35,8 @@ IMutex::STATUS	Mutex::status() const
 
 Mutex::Mutex()
   : _ret(0), _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
-{}
+{
+}
 
 Mutex::~Mutex()
 {
