@@ -19,6 +19,7 @@
 #include	"MoveSequenceSystem.hh"
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
+#include	"BackgroundSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -35,6 +36,7 @@
 #include	"MoveSequenceComponent.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
+#include	"TagComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -59,6 +61,7 @@ void		registerComponents(World &world)
 
 void		addSystems(World &world)
 {
+	world.addSystem(new BackgroundSystem());
 	world.addSystem(new ResetActionSystem());
 	world.addSystem(new MoveSystem());
 	world.addSystem(new Friction2DSystem());
@@ -107,6 +110,24 @@ void		addEntities(World &world)
 	ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
 	world.addEntity(world.createEntity()
+			->addComponent((new TagComponent())
+				       ->addTag("do_not_delete")
+				       ->addTag("BackgroundSystem"))
+			->addComponent(new Pos2DComponent(0.0f, 0.0f))
+			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new SFMLSpriteComponent(PATH + std::string("background.png"), ImageLoader::NbSprite{1, 1}, {{"", {0, 0}}})));
+
+
+	world.addEntity(world.createEntity()
+			->addComponent((new TagComponent())
+				       ->addTag("do_not_delete")
+				       ->addTag("BackgroundSystem"))
+			->addComponent(new Pos2DComponent(1095, 0.0f))
+			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new SFMLSpriteComponent(PATH + std::string("background.png"), ImageLoader::NbSprite{1, 1}, {{"", {0, 0}}})));
+
+
+	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(0.0f, 100.0f))
 		->addComponent(new Box2DComponent(50.0f, 50.0f))
 		->addComponent(new Speed2DComponent(5.f, 5.f))
@@ -126,8 +147,8 @@ void		addEntities(World &world)
 		->addAction("LEFT")
 		)
 		);
-	
-	
+
+
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(250.0f, 470.0f))
 		->addComponent(new Box2DComponent(100.0f, 100.0f))
@@ -135,7 +156,7 @@ void		addEntities(World &world)
 		{ { "", { 0, 8 } } }))
 		->addComponent(new CollisionPowerComponent(10000))
 		);
-	
+
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(600.0f, 500.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
@@ -195,7 +216,7 @@ void		addEntities(World &world)
 		->addAction("DOWN")
 		)
 		);
-		
+
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(600.0f, 250.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
@@ -216,7 +237,7 @@ void		addEntities(World &world)
 		)
 		);
 
-	
+
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(550.0f, 280.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
@@ -251,6 +272,7 @@ void		addEntities(World &world)
 		->addAction("DOWN")
 		)
 		);
+
 }
 
 int			main()
@@ -264,7 +286,7 @@ int			main()
 
 
 	world.start();
-	
+
 	SoundLoader *s = new SoundLoader();
 	s->addSound("Ressources/Sound/laser.wav");
 	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");

@@ -15,7 +15,7 @@ public:
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
 
-  void addTag(const std::string& tag);
+  TagComponent *addTag(const std::string& tag);
   bool hasTag(const std::string& tag) const;
   void removeTag(const std::string& tag);
 

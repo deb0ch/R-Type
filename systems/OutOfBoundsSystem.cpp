@@ -2,6 +2,7 @@
 
 #include "Pos2DComponent.hh"
 #include "EntityDeletedEvent.hh"
+#include "TagComponent.hh"
 #include "OutOfBoundsSystem.hh"
 
 OutOfBoundsSystem::OutOfBoundsSystem()
@@ -27,6 +28,9 @@ void		OutOfBoundsSystem::processEntity(Entity *e, const float)
     return ;
   if ((pos->getX() >= 800 + 50 || pos->getX() <= 0 - 50) ||
       (pos->getY() >= 600 + 50 || pos->getY() <= 0 - 50)) {
+    TagComponent *tmp = e->getComponent<TagComponent>("TagComponent");
+    if (tmp && tmp->hasTag("do_not_delete"))
+      return;
     this->_world->sendEvent(new EntityDeletedEvent(e));
   }
 }
