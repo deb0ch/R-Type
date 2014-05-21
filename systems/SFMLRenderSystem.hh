@@ -9,7 +9,7 @@
 class			SFMLRenderSystem : public ASystem
 {
 protected:
-  static const bool		debug = true;
+  static const bool		debug = false;
 
   sf::RenderWindow	*_window;
 
