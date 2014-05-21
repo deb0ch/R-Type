@@ -5,9 +5,17 @@
 #include "INetworkSerializableComponent.hh"
 #include "NetworkBuffer.hh"
 #include "ComponentFactory.hpp"
+#include "Hash.hh"
 
-NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem() : ASystem("NetworkReceiveUpdateSystem")
-{}
+NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem(const std::vector<std::string> &serializable_component)
+  : ASystem("NetworkReceiveUpdateSystem")
+{
+  std::for_each(serializable_component.begin(), serializable_component.end(),
+		[this] (const std::string &name)
+		{
+		  this->_serializable_component[Hash()(name)] = false;
+		});
+}
 
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
@@ -123,10 +131,8 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
-  std::cout << "Hereu: " << (int)packet_type << std::endl;
   if (packet_type == ENTITY_UPDATE)
     {
-      std::cout << "Here" << std::endl;
       this->getEntityInfos(*buffer, id_entity, num_packet);
       if (!this->remoteEntityExists(id_entity))
 	{
@@ -154,34 +160,48 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   buffer >> component_hash;
   std::cout << component_hash << std::endl;
   ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
-  new_component = test->create(component_hash);
-  std::cout << new_component << std::endl;
-  if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
+  auto it = this->_serializable_component.find(component_hash);
+  if (it != this->_serializable_component.end())
     {
-      std::cerr << "Received a no serializable component" << std::endl;
+      it->second = true;
+      new_component = test->create(component_hash);
+      std::cout << "created: " << new_component << std::endl;
+      if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
+	{
+	  std::cerr << "Received a no serializable component" << std::endl;
+	  throw 1;
+	}
+      serializable_component->unserialize(buffer);
+      entity->addComponent(new_component);
+    }
+  else
+    {
+      std::cerr << "Received a no serializable component (2)" << std::endl;
       throw 1;
     }
-  serializable_component->unserialize(buffer);
-  entity->addComponent(new_component);
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
 									 IBuffer &buffer)
 {
   auto it = entity->_components.begin();
-  while (it != entity->_components.end())
-    {
-      if (dynamic_cast<INetworkSerializableComponent *>(*it) != NULL) // We delete all serializable component
-	{
-	  delete *it;
-	  it = entity->_components.erase(it);
-	}
-      else
-	++it;
-    }
+  resetSerializable();
   while (!buffer.end())
     {
       this->unserializeComponent(entity, buffer);
+    }
+  while (it != entity->_components.end())
+    {
+      std::cout << "Cycling though component: " << *it << std::endl;
+      std::cout << (*it)->getType() << std::endl;
+      auto it_serializable = this->_serializable_component.find(Hash()((*it)->getType()));
+      if (it_serializable != this->_serializable_component.end() && it_serializable->second == false)
+  	{
+  	  delete *it;
+  	  it = entity->_components.erase(it);
+  	}
+      else
+  	++it;
     }
 }
 
@@ -208,4 +228,12 @@ bool				NetworkReceiveUpdateSystem::remoteEntityExists(unsigned int id)
 	  return (true);
 	return (false);
       }) != entities.end());
+}
+
+void		NetworkReceiveUpdateSystem::resetSerializable()
+{
+  for (auto it = this->_serializable_component.begin(); it != this->_serializable_component.end(); ++it)
+    {
+      it->second = false;
+    }
 }

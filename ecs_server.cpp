@@ -15,6 +15,7 @@
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
 #include	"MoveFollowSystem.hh"
+#include	"NetworkReceiveActionSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -77,13 +78,23 @@ void		addSystems(World &world)
 
 	NetworkSendUpdateSystem *network;
 	std::vector<std::string> arg =
-	{ "Pos2DComponent",
-	"SFMLSpriteComponent",
-	"Speed2DComponent",
-	"Friction2DComponent" };
+	  { "Pos2DComponent",
+	    "SFMLSpriteComponent",
+	    "Speed2DComponent",
+	    "Friction2DComponent",
+	    "ActionComponent",
+	    "PlayerMovementComponent",
+	    "NetworkSendActionComponent" };
 	network = new NetworkSendUpdateSystem(arg);
 	world.addSystem(network);
 	// world.addSystem(new NetworkReceiveUpdateSystem());
+	std::vector<std::string> serializable_action =
+	  { "UP",
+	    "RIGHT",
+	    "DOWN",
+	    "LEFT",
+	    "FIRE" };
+	world.addSystem(new NetworkReceiveActionSystem(serializable_action));
 }
 
 void		addSharedObjetcs(World &world)
@@ -103,8 +114,8 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
-
-	ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
+  Entity *tmp;
+  ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(0.0f, 100.0f))
@@ -134,22 +145,24 @@ void		addEntities(World &world)
 		->addComponent(new NetworkSendUpdateComponent())
 		);
 
-	world.addEntity(world.createEntity()
+	tmp = world.createEntity()
 		->addComponent(new Pos2DComponent(100.0f, 200.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
 		->addComponent(new Speed2DComponent(5.f, 2.f))
 		->addComponent(new Friction2DComponent(0.9f))
 		->addComponent(new MovementSpeedComponent(0.8f))
 		->addComponent(new PlayerMovementComponent())
+		->addComponent(new NetworkReceiveActionComponent())
 		->addComponent(new MoveFollowComponent(world.getEntity(1)))
-		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
 		->addAction("DOWN")
 		->addAction("LEFT")
 		)
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")));
+	tmp->addComponent(new NetworkSendActionComponent(tmp->_id)); // May change this to a TAG latter
+	world.addEntity(tmp);
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(800.0f, 000.0f))

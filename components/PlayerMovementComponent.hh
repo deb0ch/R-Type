@@ -3,8 +3,9 @@
 
 # include "AComponent.hpp"
 # include "ISerializableComponent.hh"
+# include "INetworkSerializableComponent.hh"
 
-class PlayerMovementComponent : public AComponent<PlayerMovementComponent>, public ISerializableComponent
+class PlayerMovementComponent : public AComponent<PlayerMovementComponent>, public INetworkSerializableComponent
 {
 public:
   PlayerMovementComponent() : AComponent("PlayerMovementComponent")

@@ -12,7 +12,7 @@ class NetworkBuffer;
 class NetworkReceiveUpdateSystem : public ASystem
 {
 public:
-		NetworkReceiveUpdateSystem();
+  NetworkReceiveUpdateSystem(const std::vector<std::string> &serializable_component);
   virtual	~NetworkReceiveUpdateSystem();
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
@@ -29,11 +29,13 @@ private:
   void		parsePacketOnEntity(Entity *entity, NetworkReceiveUpdateComponent *receive_component,
 				    LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);
   void		parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);
+  void		resetSerializable();
 
 
 protected:
-  INetworkRelay	*_network;
-  std::string	*_room_name;
+  std::map<unsigned long, bool>	_serializable_component;
+  INetworkRelay			*_network;
+  std::string			*_room_name;
 };
 
 #endif /* !NETWORKRECEIVEUPDATESYSTEM_H_ */

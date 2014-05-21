@@ -64,7 +64,8 @@ void				Room::removeRemote(Remote *remote)
   this->_remotes.erase(it);
 }
 
-void				Room::sendBroadcastUDP(INetworkRelay &network, IBuffer *buffer)
+void				Room::sendBroadcastUDP(INetworkRelay &network,
+						       IBuffer *buffer, bool make_copy)
 {
   auto				it = this->_remotes.begin();
   Remote			*tmp;
@@ -74,7 +75,7 @@ void				Room::sendBroadcastUDP(INetworkRelay &network, IBuffer *buffer)
     {
       tmp = *it;
       ++it;
-      if (it != this->_remotes.end())
+      if (it != this->_remotes.end() || make_copy == true)
 	{
 	  tmp_buffer = network.getUDPBuffer();
 	  *tmp_buffer = *buffer;
@@ -85,7 +86,8 @@ void				Room::sendBroadcastUDP(INetworkRelay &network, IBuffer *buffer)
     }
 }
 
-void				Room::sendBroadcastTCP(INetworkRelay &network, IBuffer *buffer)
+void				Room::sendBroadcastTCP(INetworkRelay &network,
+						       IBuffer *buffer, bool make_copy)
 {
   auto				it = this->_remotes.begin();
   Remote			*tmp;
@@ -95,7 +97,7 @@ void				Room::sendBroadcastTCP(INetworkRelay &network, IBuffer *buffer)
     {
       tmp = *it;
       ++it;
-      if (it != this->_remotes.end())
+      if (it != this->_remotes.end() || make_copy == true)
 	{
 	  tmp_buffer = network.getTCPBuffer();
 	  *tmp_buffer = *buffer;

@@ -13,6 +13,7 @@
 # include "NetworkSendUpdateComponent.hh"
 # include "ActionComponent.hh"
 # include "PlayerMovementComponent.hh"
+# include "NetworkSendActionComponent.hh"
 # include "Hash.hh"
 
 class ComponentFactory : public Factory<IComponent, unsigned long>
@@ -41,12 +42,9 @@ public :
 		this->addComponent(new MovementSpeedComponent());
 		this->addComponent(new SFMLSpriteComponent());
 		this->addComponent(new NetworkSendUpdateComponent());
-		this->addComponent((new ActionComponent())
-			->addAction("UP")
-			->addAction("RIGHT")
-			->addAction("DOWN")
-			->addAction("LEFT"));
+		this->addComponent(new ActionComponent());
 		this->addComponent(new PlayerMovementComponent());
+		this->addComponent(new NetworkSendActionComponent());
 	}
 };
 

@@ -18,8 +18,8 @@ public:
   void				disconnectRemote(Remote *remote);
   std::vector<Remote *>		&getPendingDisonnectRemotes();
   void				removeRemote(Remote *remote);
-  void				sendBroadcastUDP(INetworkRelay &, IBuffer *buffer);
-  void				sendBroadcastTCP(INetworkRelay &, IBuffer *buffer);
+  void				sendBroadcastUDP(INetworkRelay &, IBuffer *buffer, bool make_copy = false);
+  void				sendBroadcastTCP(INetworkRelay &, IBuffer *buffer, bool make_copy = false);
 
 private:
   Room(const Room &) = delete;

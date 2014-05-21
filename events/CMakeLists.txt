@@ -3,6 +3,7 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.hh
 	PARENT_SCOPE
 )
 
@@ -11,6 +12,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.cpp
 	PARENT_SCOPE
 )
 
@@ -19,6 +21,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.hh
 	PARENT_SCOPE
 )
 	
@@ -27,5 +30,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntityDeletedEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.cpp
 	PARENT_SCOPE
 )

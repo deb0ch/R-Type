@@ -33,7 +33,7 @@ public:
   IComponent	*getComponent(const std::string &string_type) const;
 
   /**
-   * @todo Throw an exception if the return if null.
+   * @todo Throw an exception if the return is null.
    */
   template <typename T>
   T		*getComponent(const std::string &string_type) const
@@ -43,8 +43,12 @@ public:
 
     if (!(component = this->getComponent(string_type)))
       return (NULL);
+    std::cout << "aze: " << string_type << "." << std::endl;
     if (!(tmp = dynamic_cast<T*>(component)))
-      std::cerr << ": Invalid type" << std::endl;
+      {
+	std::cerr << ": Invalid type" << std::endl;
+	abort();
+      }
     return (tmp);
   }
 };

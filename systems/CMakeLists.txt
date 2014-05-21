@@ -12,6 +12,8 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -28,6 +30,8 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionSystem.cpp
 	PARENT_SCOPE
 	)
 
@@ -45,6 +49,8 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionSystem.hh
 	PARENT_SCOPE
 )
 
@@ -62,5 +68,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/OutOfBoundsSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLEventSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionSystem.cpp
 	PARENT_SCOPE
 )

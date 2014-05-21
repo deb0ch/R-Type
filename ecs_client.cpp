@@ -15,6 +15,7 @@
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
 #include	"MoveFollowSystem.hh"
+#include	"NetworkSendActionSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -58,11 +59,11 @@ void		addSystems(World &world)
 	world.addSystem(new MoveSystem());
 	world.addSystem(new Friction2DSystem());
 	world.addSystem(new SFMLRenderSystem());
-	// world.addSystem(new SFMLEventSystem());
-	// world.addSystem(new SFMLInputSystem());
+	world.addSystem(new SFMLEventSystem());
+	world.addSystem(new SFMLInputSystem());
 	// world.addSystem(new OutOfBoundsSystem());
 	// world.addSystem(new MoveFollowSystem());
-	// world.addSystem(new PlayerMovementSystem());
+	world.addSystem(new PlayerMovementSystem());
 
 	// CollisionSystem *collision;
 	// collision = new CollisionSystem();
@@ -74,8 +75,22 @@ void		addSystems(World &world)
 	// world.addSystem(entityDeleterSystem);
 	// world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	// 	&EntityDeleterSystem::addEntityToDelete);
-
-	world.addSystem(new NetworkReceiveUpdateSystem());
+	std::vector<std::string> arg =
+	  { "Pos2DComponent",
+	    "SFMLSpriteComponent",
+	    "Speed2DComponent",
+	    "Friction2DComponent",
+	    "ActionComponent",
+	    "PlayerMovementComponent",
+	    "NetworkSendActionComponent" };
+	world.addSystem(new NetworkReceiveUpdateSystem(arg));
+	std::vector<std::string> serializable_action =
+	  { "UP",
+	    "RIGHT",
+	    "DOWN",
+	    "LEFT",
+	    "FIRE" };
+	world.addSystem(new NetworkSendActionSystem(serializable_action));
 }
 
 void		addSharedObjetcs(World &world)

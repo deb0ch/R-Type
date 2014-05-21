@@ -8,7 +8,8 @@
 
 enum PacketType
   {
-    ENTITY_UPDATE
+    ENTITY_UPDATE,
+    ACTION_UPDATE,
   };
 
 class NetworkBuffer;

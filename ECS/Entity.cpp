@@ -33,6 +33,8 @@ Entity&		Entity::operator=(const Entity& ref)
  */
 Entity		*Entity::addComponent(IComponent *component)
 {
+  if (!component)
+    abort();
   if (component && !this->hasComponent(component->getType()))
     this->_components.push_back(component);
   return (this);
