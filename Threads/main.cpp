@@ -1,4 +1,6 @@
-#include <unistd.h>
+#ifdef __linux__
+# include <unistd.h>
+#endif /* !__linux__ */
 #include <ostream>
 #include "Threads.hh"
 #include "ThreadPool.hpp"
@@ -44,7 +46,7 @@ void 	ClassTest::TestFunction(Any arg)
   _arg = *arg.getValue<int>();
   strstream << hey << _arg ;
   hey = strstream.str();
-  for (size_t i = 0; i < 1; i++) {
+  for (size_t i = 0; i < 1; ++i) {
     std::cout << hey << std::endl;
   }
 }

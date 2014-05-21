@@ -26,6 +26,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DSystem.hh
 	PARENT_SCOPE
 )
 
@@ -47,5 +48,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DSystem.cpp
 	PARENT_SCOPE
 )

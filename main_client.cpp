@@ -19,6 +19,7 @@
 #include	"MoveSequenceSystem.hh"
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
+#include	"MovementLimitFrame2DSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -35,6 +36,7 @@
 #include	"MoveSequenceComponent.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
+#include	"MovementLimitFrame2DComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -63,39 +65,40 @@ void		registerComponents(World &world)
 
 void		addSystems(World &world)
 {
-	world.addSystem(new ResetActionSystem());
-	world.addSystem(new MoveSystem());
-	world.addSystem(new Friction2DSystem());
-	world.addSystem(new SFMLRenderSystem());
-	world.addSystem(new SFMLEventSystem());
-	world.addSystem(new SFMLInputSystem());
-	world.addSystem(new OutOfBoundsSystem());
-	world.addSystem(new MoveFollowSystem());
-	world.addSystem(new MoveForwardSystem());
-	world.addSystem(new MoveSequenceSystem());
-	world.addSystem(new ActionMovementSystem());
-	world.addSystem(new LifeSystem());
+  world.addSystem(new ResetActionSystem());
+  world.addSystem(new MoveSystem());
+  world.addSystem(new Friction2DSystem());
+  world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new SFMLEventSystem());
+  world.addSystem(new SFMLInputSystem());
+  world.addSystem(new OutOfBoundsSystem());
+  world.addSystem(new MoveFollowSystem());
+  world.addSystem(new MoveForwardSystem());
+  world.addSystem(new MoveSequenceSystem());
+  world.addSystem(new ActionMovementSystem());
+  world.addSystem(new LifeSystem())
+    ->addSystem(new MovementLimitFrame2DSystem());
 
-	CollisionSystem *collision;
-	collision = new CollisionSystem();
-	world.addSystem(collision);
-	world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
+  CollisionSystem *collision;
+  collision = new CollisionSystem();
+  world.addSystem(collision);
+  world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-	EntityDeleterSystem *entityDeleterSystem;
-	entityDeleterSystem = new EntityDeleterSystem();
-	world.addSystem(entityDeleterSystem);
-	world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-		&EntityDeleterSystem::addEntityToDelete);
+  EntityDeleterSystem *entityDeleterSystem;
+  entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
 
-	NetworkSendUpdateSystem *network;
-	std::vector<std::string> arg =
-	{ "Pos2DComponent",
-	"SFMLSpriteComponent",
-	"Speed2DComponent",
-	"Friction2DComponent" };
-	network = new NetworkSendUpdateSystem(arg);
-	world.addSystem(network);
-	world.addSystem(new NetworkReceiveUpdateSystem());
+  NetworkSendUpdateSystem *network;
+  std::vector<std::string> arg =
+    { "Pos2DComponent",
+      "SFMLSpriteComponent",
+      "Speed2DComponent",
+      "Friction2DComponent" };
+  network = new NetworkSendUpdateSystem(arg);
+  world.addSystem(network);
+  world.addSystem(new NetworkReceiveUpdateSystem());
 }
 
 void		addSharedObjetcs(World &world)
@@ -111,22 +114,23 @@ void		addEntities(World &world)
 	ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
 	world.addEntity(world.createEntity()
-		->addComponent(new Pos2DComponent(0.0f, 100.0f))
-		->addComponent(new Box2DComponent(50.0f, 50.0f))
-		->addComponent(new Speed2DComponent(5.f, 5.f))
-		->addComponent(new Friction2DComponent(0.5f))
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
-		->addComponent(new SFMLInputComponent())
-		->addComponent(new MovementSpeedComponent(5))
-		->addComponent(new LifeComponent(100))
-		->addComponent(new CollisionPowerComponent(100))
-		->addComponent((new ActionComponent())
-		->addAction("UP")
-		->addAction("RIGHT")
-		->addAction("DOWN")
-		->addAction("LEFT")
-		)
-		);
+			->addComponent(new Pos2DComponent(0.0f, 100.0f))
+			->addComponent(new Box2DComponent(50.0f, 50.0f))
+			->addComponent(new Speed2DComponent(5.f, 5.f))
+			->addComponent(new Friction2DComponent(0.5f))
+			->addComponent(new SFMLSpriteComponent(PATH + std::string("r-typesheet-3.png")))
+			->addComponent(new SFMLInputComponent())
+			->addComponent(new MovementSpeedComponent(5))
+			->addComponent(new LifeComponent(100))
+			->addComponent(new CollisionPowerComponent(100))
+			->addComponent((new ActionComponent())
+				       ->addAction("UP")
+				       ->addAction("RIGHT")
+				       ->addAction("DOWN")
+				       ->addAction("LEFT")
+				       )
+			->addComponent(new MovementLimitFrame2DComponent())
+			);
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(500.0f, 500.0f))

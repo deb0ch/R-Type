@@ -26,6 +26,8 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.hh
 	PARENT_SCOPE
 )
 
@@ -46,5 +48,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.cpp
 	PARENT_SCOPE
 )

@@ -11,11 +11,14 @@ void	Mutex::lock()
   _status = LOCKED;
 }
 
-void	Mutex::trylock()
+bool	Mutex::trylock()
 {
   if ((_ret = pthread_mutex_trylock(&_mutex)) != 0 && _ret != EBUSY)
     throw MutexException(_ret);
   _status = LOCKED;
+  if (_ret == EBUSY)
+	  return (false);
+  return (true);
 }
 
 void	Mutex::unlock()
