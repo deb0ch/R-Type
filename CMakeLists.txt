@@ -23,7 +23,7 @@ SET(SOURCE_S
 SET(SOURCE_C
 	main_client.cpp)
 
-MESSAGE("add subdirectories ...")
+MESSAGE("add subdirectories")
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/systems")	
@@ -58,15 +58,15 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/NetworkRelay)
 ADD_EXECUTABLE(${SERVER_BIN} ${SOURCE_S} ${HEADER_S})
 ADD_EXECUTABLE(${CLIENT_BIN} ${SOURCE_C} ${HEADER_C})
 
-#RELEASE MODE
-MESSAGE("set build type ...")
-SET(CMAKE_BUILD_TYPE "Release")
-
 # COPY RESSOURCES
 MESSAGE("Copy ressources files ...")
 SET(RESSOURCES ${CMAKE_SOURCE_DIR}/Ressources)
 FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR})
 
+
+#RELEASE MODE
+SET(CMAKE_BUILD_TYPE "Release")
+MESSAGE("set build type : " ${CMAKE_BUILD_TYPE})
 # COMPILE WITH SFML
 if (UNIX)
 	MESSAGE("OS TYPE : UNIX")
@@ -95,7 +95,6 @@ if (WIN32)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-system.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-window.lib)
-		MESSAGE("RELEASE")
 	else ()
 		SET(DLL ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/bin/Debug)
 		FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
@@ -107,7 +106,6 @@ if (WIN32)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-system-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-window-d.lib)
-		MESSAGE("DEBUG")
 	endif ()
 endif (WIN32)
 
