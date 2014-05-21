@@ -325,28 +325,30 @@ public:
 			));
 
 			this->addEntity("BOSS_1", (new Entity())
-				->addComponent(new Pos2DComponent(650.0f, 570.0f))
-				->addComponent(new Box2DComponent(130.0f, 50.0f))
+				->addComponent(new Pos2DComponent(650.0f, 500.0f))
+				->addComponent(new Box2DComponent(130.0f, 205.0f))
 				->addComponent(new Speed2DComponent(0.f, 0.f))
-				->addComponent(new MovementSpeedComponent(1.2f))
+				->addComponent(new MovementSpeedComponent(0.9f))
 				->addComponent(new Friction2DComponent(0.5f))
 				->addComponent(new TeamComponent())
 				->addComponent(new FireAlwaysComponent())
-				->addComponent(new LifeComponent(10000))
+				->addComponent(new LifeComponent(200))
 				->addComponent((new CollisionComponent())
-				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 130.0f, 50.0f)))
+					->addCollisionPoint(new CollisionPoint(-15.0f, -60.0f, 100.0f, 90.0f))
+					->addCollisionPoint(new CollisionPoint(5.0f, 75.0f, 55.0, 50.0f)))
 				->addComponent(new CollisionPowerComponent(100))
-				->addComponent(new SFMLSpriteComponent("r-typesheet-18.png",
-				ImageLoader::NbSprite{ 1, 1 },
-				{ { "", { 0, 0 } } }))
-				->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 195))
+				->addComponent(new SFMLSpriteComponent("Boss.png",
+				ImageLoader::NbSprite{ 4, 9 },
+				{ { "", { 4, 4 } } }))
+				->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 170))
 				->addComponent((new ActionComponent())
 				->addAction("UP")
 				->addAction("DOWN")
 				->addAction("FIRE"))
 				->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET_2", "MONSTER_BASIC_BULLET_2",
 				"MONSTER_FROM_BOSS", "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET" }, {}, 0, 40,
-				{ (-90.0f), (0.0f) }, { (-90.0f), (0.0f) }, true, false)));
+				{ (-90.0f), (0.0f) }, { (-90.0f), (0.0f) }, true, false))
+				);
 	}
 
 	void		init()
