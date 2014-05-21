@@ -19,7 +19,7 @@ public :
     };
 
 public:
-  ThreadPool(unsigned int nbThread) : _nbThread(nbThread), _status(RUNNING) {
+  ThreadPool(unsigned int nbThread) : _status(RUNNING) {
     for (unsigned int i = 0; i < nbThread; i++) {
       this->_pool.push_back(new Thread< ThreadPool >());
       this->_pool[i]->start(this, &ThreadPool::runThread, Any());
@@ -65,7 +65,6 @@ private :
   ThreadPool &operator=(const ThreadPool & other) = delete;
 
 private:
-  const unsigned int			_nbThread;
   eStatus				_status;
   CondVar				_condvar;
   Mutex					_mutex;
