@@ -84,7 +84,9 @@ void		addSystems(World &world)
 	    "Friction2DComponent",
 	    "ActionComponent",
 	    "PlayerMovementComponent",
-	    "NetworkSendActionComponent" };
+	    "PlayerMovementComponent",
+	    "NetworkSendActionComponent",
+	    "SFMLInputComponent" };
 	network = new NetworkSendUpdateSystem(arg);
 	world.addSystem(network);
 	// world.addSystem(new NetworkReceiveUpdateSystem());
@@ -133,36 +135,37 @@ void		addEntities(World &world)
 		->addAction("LEFT")
 		)
 		);
-	world.addEntity(world.createEntity()
-		->addComponent(test->create(Hash()("Pos2DComponent"))->clone())
-		->addComponent(test->create(Hash()("Box2DComponent"))->clone())
-		->addComponent(test->create(Hash()("Speed2DComponent"))->clone())
-		->addComponent(test->create(Hash()("Friction2DComponent"))->clone())
-		->addComponent(test->create(Hash()("SFMLInputComponent"))->clone())
-		->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
-		->addComponent(test->create(Hash()("ActionComponent"))->clone())
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
-		->addComponent(new NetworkSendUpdateComponent())
-		);
 
 	tmp = world.createEntity()
+	  ->addComponent(test->create(Hash()("Pos2DComponent"))->clone())
+	  ->addComponent(test->create(Hash()("Box2DComponent"))->clone())
+	  ->addComponent(test->create(Hash()("Speed2DComponent"))->clone())
+	  ->addComponent(test->create(Hash()("Friction2DComponent"))->clone())
+	  ->addComponent(test->create(Hash()("SFMLInputComponent"))->clone())
+	  ->addComponent(test->create(Hash()("MovementSpeedComponent"))->clone())
+	  ->addComponent(test->create(Hash()("ActionComponent"))->clone())
+	  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+	  ->addComponent(new NetworkSendUpdateComponent())
+	  ->addComponent(new NetworkReceiveActionComponent());
+	tmp->addComponent(new NetworkSendActionComponent(tmp->_id)); // change this to TAG latter?
+	world.addEntity(tmp);
+
+	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(100.0f, 200.0f))
 		->addComponent(new Box2DComponent(10.0f, 10.0f))
 		->addComponent(new Speed2DComponent(5.f, 2.f))
 		->addComponent(new Friction2DComponent(0.9f))
 		->addComponent(new MovementSpeedComponent(0.8f))
 		->addComponent(new PlayerMovementComponent())
-		->addComponent(new NetworkReceiveActionComponent())
 		->addComponent(new MoveFollowComponent(world.getEntity(1)))
+		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
+		->addComponent(new NetworkSendUpdateComponent())
 		->addComponent((new ActionComponent())
 		->addAction("UP")
 		->addAction("RIGHT")
 		->addAction("DOWN")
 		->addAction("LEFT")
-		)
-		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")));
-	tmp->addComponent(new NetworkSendActionComponent(tmp->_id)); // May change this to a TAG latter
-	world.addEntity(tmp);
+			       ));
 
 	world.addEntity(world.createEntity()
 		->addComponent(new Pos2DComponent(800.0f, 000.0f))

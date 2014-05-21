@@ -4,6 +4,7 @@
 # include	<vector>
 # include	<string>
 # include	<iostream>
+# include	<algorithm>
 
 # include	"IComponent.hh"
 
@@ -32,6 +33,20 @@ public:
   /** @see Entity::getComponent(const std::string &type) */
   IComponent	*getComponent(const std::string &string_type) const;
 
+  template <typename T, typename U>
+  IComponent	*getComponent(const T &value, const U &hash) const
+  {
+    auto iterator = std::find_if(this->_components.begin(), this->_components.end(),
+				 [&hash, &value] (const IComponent *component) -> bool
+				 {
+				   return (hash(component->getType()) == value);
+				 });
+
+    if (iterator == this->_components.end())
+      return (NULL);
+    return (*iterator);
+  }
+
   /**
    * @todo Throw an exception if the return is null.
    */
@@ -43,8 +58,23 @@ public:
 
     if (!(component = this->getComponent(string_type)))
       return (NULL);
-    std::cout << "aze: " << string_type << "." << std::endl;
     if (!(tmp = dynamic_cast<T*>(component)))
+      {
+	std::cerr << ": Invalid type" << std::endl;
+	abort();
+      }
+    return (tmp);
+  }
+
+  template <typename X, typename T, typename U>
+  X		*getComponent(const T &value, const U &hash) const
+  {
+    IComponent	*component;
+    X		*tmp;
+
+    if (!(component = this->getComponent(value, hash)))
+      return (NULL);
+    if (!(tmp = dynamic_cast<X*>(component)))
       {
 	std::cerr << ": Invalid type" << std::endl;
 	abort();

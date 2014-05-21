@@ -82,7 +82,8 @@ void		addSystems(World &world)
 	    "Friction2DComponent",
 	    "ActionComponent",
 	    "PlayerMovementComponent",
-	    "NetworkSendActionComponent" };
+	    "NetworkSendActionComponent",
+	    "SFMLInputComponent" };
 	world.addSystem(new NetworkReceiveUpdateSystem(arg));
 	std::vector<std::string> serializable_action =
 	  { "UP",

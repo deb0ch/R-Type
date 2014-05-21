@@ -1,4 +1,3 @@
-#include	<algorithm>
 #include	"Entity.hh"
 #include	"VectorDeleter.hpp"
 
