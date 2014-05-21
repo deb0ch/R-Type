@@ -52,12 +52,6 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
-#ifdef _WIN32
-#define PATH "Ressources\\Images\\"
-#elif __linux__
-#define PATH "Ressources/Images/"
-#endif
-
 void		registerComponents(World &world)
 {
   (void)world;
@@ -128,6 +122,8 @@ void		addEntities(World &world)
 	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
 	if (entityFactory == NULL)
 		return;
+	world.addEntity(entityFactory->create("BACKGROUND_1"));
+	world.addEntity(entityFactory->create("BACKGROUND_2"));
 	world.addEntity(entityFactory->create("PLAYER_RED"));
 	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   /*
