@@ -22,6 +22,8 @@ public:
 
   void		setX(float x);
   void		setY(float y);
+
+  Pos2DComponent	*operator+(const Pos2DComponent&);
 };
 
 #endif /* !POS2DCOMPONENT_H_ */

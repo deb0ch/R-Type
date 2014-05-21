@@ -56,7 +56,7 @@ private:
   template <typename T>
   void		serialize(const T &elements)
   {
-    size_t i;
+    int		i;
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
@@ -69,7 +69,7 @@ private:
       i = 0;
     else
       i = sizeof(T) - 1;
-    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
+    while ((isBigEndian() && i < static_cast<int>(sizeof(T))) || (!isBigEndian() && i >= 0))
       {
 	this->_buffer[this->_buffer_size] = tab[i];
 	if (isBigEndian())
@@ -83,7 +83,7 @@ private:
   template <typename T>
   void		unserialize(T &elements)
   {
-    size_t	i;
+    int		i;
     char	*tab;
 
     tab = reinterpret_cast<char *>(&elements);
@@ -96,7 +96,7 @@ private:
       i = 0;
     else
       i = sizeof(T) - 1;
-    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
+    while ((isBigEndian() && i < static_cast<int>(sizeof(T))) || (!isBigEndian() && i >= 0))
       {
 	tab[i] = this->_buffer[this->_current_pos];
 	if (isBigEndian())

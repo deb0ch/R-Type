@@ -45,3 +45,8 @@ void		Pos2DComponent::unserialize(IBuffer &buffer)
   buffer >> this->_x;
   buffer >> this->_y;
 }
+
+Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
+{
+  return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));
+}

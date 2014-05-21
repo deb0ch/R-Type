@@ -31,6 +31,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.hh
 	PARENT_SCOPE
 )
 
@@ -57,5 +58,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.cpp
 	PARENT_SCOPE
 )
