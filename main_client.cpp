@@ -57,7 +57,6 @@
 
 void		addSystems(World &world)
 {
-  world.addSystem(new BackgroundSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
@@ -74,6 +73,7 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -118,7 +118,8 @@ void		addEntities(World &world)
 	world.addEntity(entityFactory->create("BACKGROUND_1"));
 	world.addEntity(entityFactory->create("BACKGROUND_2"));
 	world.addEntity(entityFactory->create("PLAYER_RED"));
-	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+	world.addEntity(entityFactory->create("BOSS_1"));
+	//world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 int		main()

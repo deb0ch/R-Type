@@ -5,6 +5,7 @@
 #include	"CollisionEvent.hh"
 #include	"CollisionPowerComponent.hh"
 #include	"EntityDeletedEvent.hh"
+#include	"EntityFactory.hpp"
 
 //----- ----- Constructors ----- ----- //
 LifeSystem::LifeSystem()
@@ -34,6 +35,17 @@ void			LifeSystem::processEntity(Entity *e, const float)
 	if (lifecompo->getLife() <= 0)
 	{
 		this->_world->sendEvent(new EntityDeletedEvent(e));
+		/*Pos2DComponent *position = e->getComponen<Pos2DComponent>("Pos2DComponent");
+		if (position != NULL)
+		{
+			EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+			if (entityFactory == NULL)
+				return;
+			Entity *explosion = entityFactory->create("EXPLODE");
+			explosion->getComponent<Pos2DComponent>("Pos2DComponent")->setX(position->getX());
+			explosion->getComponent<Pos2DComponent>("Pos2DComponent")->setY(position->getY());
+			this->_world->addEntity(explosion);
+		}*/
 		return;
 	}
 	if (lifecompo->isInvulnerable())
