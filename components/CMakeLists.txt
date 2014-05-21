@@ -13,6 +13,8 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
@@ -26,8 +28,12 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	PARENT_SCOPE
 )
 
@@ -37,6 +43,8 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
@@ -48,7 +56,11 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	PARENT_SCOPE
 )

@@ -11,7 +11,6 @@
 
 class ThreadPool
 {
-  // Public
 public :
   enum	eStatus
     {
@@ -19,65 +18,46 @@ public :
       STOPPED
     };
 
-  void			addTask(ITask * task)
-  {
+public:
+  ThreadPool(unsigned int nbThread) : _status(RUNNING) {
+    for (unsigned int i = 0; i < nbThread; i++) {
+      this->_pool.push_back(new Thread< ThreadPool >());
+      this->_pool[i]->start(this, &ThreadPool::runThread, Any());
+    }
+  }
+
+  ~ThreadPool() {
+    while (!_tasks.isEmpty());
+    _status = STOPPED;
+    _condvar.broadcast();
+    for (auto it = _pool.begin(); it != _pool.end(); ++it) {
+      (*it)->wait();
+      delete *it;
+    }
+  }
+
+  void			addTask(ITask * task) {
     this->_tasks.push(task);
     _condvar.broadcast();
   }
 
-  eStatus		getStatus() const
-  {
-    return (_status);
-  }
+  void			runThread(Any) {
+    ITask*		task;
 
-  // Coplien
-
-  ThreadPool(unsigned int nbThread)
-    : _nbThread(nbThread), _status(RUNNING)
-  {
-    for (unsigned int i = 0; i < nbThread; i++)
-      {
-	this->_pool.push_back(new Thread< ThreadPool >());
-	this->_pool[i]->start(this, &ThreadPool::runThread, Any());
+    while (_status == RUNNING) {
+      if (_tasks.isEmpty()) {
+	this->_mutex.lock();
+	_condvar.wait(&_mutex);
+	this->_mutex.unlock();
       }
-  }
-
-  ~ThreadPool()
-  {
-    _mutex.lock();
-    _status = STOPPED;
-    _mutex.unlock();
-    _condvar.broadcast();
-    for (auto it = _pool.begin(); it != _pool.end(); ++it)
-      {
-	delete *it;
-	_condvar.broadcast();
+      if (_status == RUNNING) {
+	try {
+	  task = this->_tasks.getNextPop();
+	  (*task)();
+	} catch (std::exception) {}
       }
+    }
   }
-
-  void			runThread(Any)
-  {
-    ITask *	task;
-
-    if (_status == STOPPED)
-      {
-	std::cout << "Catastrophe2 !!!" << std::endl;
-      }
-    while (42)
-      {
-	while (_tasks.isEmpty() && _status == RUNNING)
-	  _condvar.wait(&_mutex);
-	if (_status == STOPPED)
-	  return ;
-	if ((task = this->_tasks.getNextPop()) != NULL)
-	  {
-	    (*task)();
-	    delete task;
-	  }
-      }
-  }
-
-  // Private
 
 private :
   ThreadPool() = delete;
@@ -85,12 +65,12 @@ private :
   ThreadPool &operator=(const ThreadPool & other) = delete;
 
 private:
-  const unsigned int			_nbThread;
-  volatile eStatus			_status;
+  eStatus				_status;
   CondVar				_condvar;
   Mutex					_mutex;
   SafeFifo<ITask *>			_tasks;
   std::vector<Thread< ThreadPool > *>	_pool;
+
 };
 
 #endif /* !THREADPOOL_H_ */

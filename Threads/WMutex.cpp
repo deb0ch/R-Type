@@ -1,28 +1,25 @@
 #ifdef _WIN32
 
 # include "WMutex.hh"
-# include "MutexException.hh"
 
 // Public
 
 void	Mutex::lock()
 {
-	if ((_ret = WaitForSingleObject(_mutexHandle, INFINITE)) == WAIT_FAILED)
-		throw MutexException(GetLastError());
+	// This can raise EXCEPTION_POSSIBLE_DEADLOCK. Winapi recommends not to handle this exception.
+	EnterCriticalSection(&_criticalSection);
 	_status = LOCKED;
 }
 
-void	Mutex::trylock()
+bool	Mutex::trylock()
 {
-	if ((_ret = WaitForSingleObject(_mutexHandle, 0)) == WAIT_FAILED)
-		throw MutexException(GetLastError());
 	_status = LOCKED;
+	return (static_cast<bool>(TryEnterCriticalSection(&_criticalSection))); // cannot fail. No exceptions.
 }
 
 void	Mutex::unlock()
 {
-	if (ReleaseMutex(_mutexHandle) == false)
-		throw MutexException(GetLastError());
+	LeaveCriticalSection(&_criticalSection);
 	_status = UNLOCKED;
 }
 
@@ -31,17 +28,20 @@ IMutex::STATUS	Mutex::status() const
 	return (_status);
 }
 
-Mutex::Mutex()
-: _ret(0), _status(UNLOCKED)
+PCRITICAL_SECTION	Mutex::getCriticalSection()
 {
-	if ((_mutexHandle = CreateMutex(NULL, false, NULL)) == NULL)
-		throw MutexException(GetLastError());
+	return (&_criticalSection);
+}
+
+Mutex::Mutex()
+: _status(UNLOCKED)
+{
+	InitializeCriticalSection(&_criticalSection); // cannot fail. No return value, no exceptions.
 }
 
 Mutex::~Mutex()
 {
-	if (CloseHandle(_mutexHandle) == false)
-		throw MutexException(GetLastError());
+	DeleteCriticalSection(&_criticalSection); // cannot fail. No return value, no exceptions.
 }
 
 // Private

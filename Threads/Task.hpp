@@ -8,7 +8,9 @@ class Task : public ITask
 {
 public:
   virtual void	run() { (_obj->*(_fct))(_arg); }
-  virtual void	operator()() { (_obj->*(_fct))(_arg); }
+  virtual void	operator()() {
+    (_obj->*(_fct))(_arg);
+  }
 
 		Task(T* obj, void (T::*fct)(Any), Any arg) : _obj(obj), _fct(fct), _arg(arg) {}
   virtual	~Task() {}
@@ -27,7 +29,11 @@ class CTask : public ITask
 {
 public:
   virtual void		run() { (*_task)(_arg); }
-  virtual void		operator()() { (*_task)(_arg);; }
+  virtual void		operator()() {
+    std::cout << "A" << std::endl;
+    (*_task)(_arg);
+    std::cout << "B" << std::endl;
+  }
 
   CTask(void* (*_task)(void*), void* _arg);
   virtual		~CTask() {}

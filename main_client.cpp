@@ -1,5 +1,7 @@
 #include	<iostream>
 
+#include	"SFML/Audio/Music.hpp"
+
 #include	"World.hh"
 #include	"Entity.hh"
 
@@ -19,10 +21,14 @@
 #include	"MoveSequenceSystem.hh"
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
+#include	"BackgroundSystem.hh"
 #include	"EntitySpawnerSystem.hh"
 #include	"ActionFireSystem.hh"
 #include	"FireAlwaysSystem.hh"
+#include	"MovementLimitFrame2DSystem.hh"
+#include	"AutoDestructSystem.hh"
 
+#include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
 #include	"Friction2DComponent.hh"
@@ -38,8 +44,10 @@
 #include	"MoveSequenceComponent.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
+#include	"TagComponent.hh"
 #include	"EntitySpawnerComponent.hh"
 #include	"FireAlwaysComponent.hh"
+#include	"MovementLimitFrame2DComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -48,9 +56,11 @@
 
 #include	"ComponentFactory.hpp"
 #include	"EntityFactory.hpp"
+#include	"SoundLoader.hh"
 
 void		addSystems(World &world)
 {
+  world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
@@ -66,6 +76,8 @@ void		addSystems(World &world)
   world.addSystem(new MoveSystem());
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
+  world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();
@@ -104,65 +116,15 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
-		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
-		  ->addComponent(new Speed2DComponent(0.f, 0.f))
-		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new SFMLSpriteComponent("players.png"))
-		  ->addComponent(new SFMLInputComponent())
-		  //->addComponent(new EntitySpawnerComponent({"TEST_BULLET"}))
-		  //->addComponent(new CollisionPowerComponent(100))
-		  ->addComponent(new MovementSpeedComponent(5))
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 ->addAction("FIRE")
-				 )
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(100.0f, 150.0f))
-		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
-		  ->addComponent(new Speed2DComponent(0.f, 0.f))
-		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new SFMLSpriteComponent("players.png"))
-		  ->addComponent(new SFMLInputComponent())
-		  //->addComponent(new EntitySpawnerComponent({"TEST_BULLET"}))
-		  //->addComponent(new CollisionPowerComponent(100))
-		  ->addComponent(new MovementSpeedComponent(5))
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 ->addAction("FIRE")
-				 )
-		  );
-
-  world.addEntity(world.createEntity()
-		  ->addComponent(new Pos2DComponent(600.0f, 200.0f))
-		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
-		  ->addComponent(new Speed2DComponent(0.f, 0.f))
-		  ->addComponent(new SFMLSpriteComponent(std::string("players.png")))
-		  //->addComponent(new EntitySpawnerComponent({"TEST_SPAWN"}))
-		  ->addComponent(new MovementSpeedComponent(0.5f))
-		  ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::UP_DOWN, 50))
-		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new FireAlwaysComponent())
-		  ->addComponent((new ActionComponent())
-				 ->addAction("UP")
-				 ->addAction("RIGHT")
-				 ->addAction("DOWN")
-				 ->addAction("LEFT")
-				 ->addAction("FIRE")
-				 )
-		  );
-
+	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+	if (entityFactory == NULL)
+		return;
+	world.addEntity(entityFactory->create("BACKGROUND_1"));
+	world.addEntity(entityFactory->create("BACKGROUND_2"));
+	world.addEntity(entityFactory->create("PLAYER_RED"));
+	//world.addEntity(entityFactory->create("BOSS_1"));
+	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
-
 
 int		main()
 {
@@ -172,12 +134,27 @@ int		main()
   addSharedObjetcs(world);
   addEntities(world);
 
-  world.start();
-  for (;;)
-    {
-      world.process(0.16f);
-    }
-  world.stop();
+	world.start();
+
+	sf::Music music;
+
+	if (music.openFromFile("Ressources/Sound/music.ogg")) {
+	  music.setLoop(true);
+	  music.play();
+	}
+
+	/*
+	SoundLoader *s = new SoundLoader();
+	s->addSound("Ressources/Sound/laser.wav");
+	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+	sound->play();
+	*/
+
+	for (;;)
+	{
+	    world.process(0.16f);
+	}
+	world.stop();
 
   return (0);
 }

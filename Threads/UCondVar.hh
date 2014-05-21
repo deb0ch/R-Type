@@ -12,7 +12,6 @@ private:
 
 protected:
   pthread_cond_t	cond;
-  //  Mutex			mutex;
 
 public:
   CondVar();
