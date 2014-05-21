@@ -19,6 +19,7 @@
 #include	"MoveSequenceSystem.hh"
 #include	"ResetActionSystem.hh"
 #include	"LifeSystem.hh"
+#include	"BackgroundSystem.hh"
 #include	"EntitySpawnerSystem.hh"
 #include	"ActionFireSystem.hh"
 #include	"FireAlwaysSystem.hh"
@@ -39,6 +40,7 @@
 #include	"MoveSequenceComponent.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionPowerComponent.hh"
+#include	"TagComponent.hh"
 #include	"EntitySpawnerComponent.hh"
 #include	"FireAlwaysComponent.hh"
 #include	"MovementLimitFrame2DComponent.hh"
@@ -51,12 +53,6 @@
 #include	"ComponentFactory.hpp"
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
-
-#ifdef _WIN32
-#define PATH "Ressources\\Images\\"
-#elif __linux__
-#define PATH "Ressources/Images/"
-#endif
 
 void		registerComponents(World &world)
 {
@@ -71,6 +67,7 @@ void		registerComponents(World &world)
 
 void		addSystems(World &world)
 {
+  world.addSystem(new BackgroundSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
@@ -128,6 +125,8 @@ void		addEntities(World &world)
 	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
 	if (entityFactory == NULL)
 		return;
+	world.addEntity(entityFactory->create("BACKGROUND_1"));
+	world.addEntity(entityFactory->create("BACKGROUND_2"));
 	world.addEntity(entityFactory->create("PLAYER_RED"));
 	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   /*
