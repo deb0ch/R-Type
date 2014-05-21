@@ -8,23 +8,10 @@ LifeComponent::LifeComponent(unsigned int life, unsigned int invulnerability)
 	this->_invulenerabilityMaxTime = invulnerability;
 }
 
-LifeComponent::LifeComponent(const LifeComponent &ref)
-: AComponent("LifeComponent")
-{
-	this->_life = ref._life;
-}
-
-
 LifeComponent::~LifeComponent()
 {}
 
 //----- ----- Operators ----- ----- //
-LifeComponent	&LifeComponent::operator=(const LifeComponent &ref)
-{
-	this->_life = ref._life;
-	return (*this);
-}
-
 //----- ----- Getters ----- ----- //
 unsigned int	LifeComponent::getLife() const
 {
