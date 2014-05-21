@@ -20,6 +20,7 @@
 # include "MoveSequenceComponent.hh"
 # include "EntitySpawnerComponent.hh"
 # include "MovementLimitFrame2DComponent.hh"
+# include "TagComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -39,6 +40,25 @@ public :
   Entity*	create(const std::string &key)
   {
     return (this->Factory::create(Hash()(key)));
+  }
+
+  void		initBackground()
+  {
+    this->addEntity("BACKGROUND_1", (new Entity())
+		    ->addComponent((new TagComponent())
+				   ->addTag("do_not_delete")
+				   ->addTag("BackgroundSystem"))
+		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{1, 1}, {{"", {0, 0}}})));
+
+    this->addEntity("BACKGROUND_2", (new Entity())
+		    ->addComponent((new TagComponent())
+				   ->addTag("do_not_delete")
+				   ->addTag("BackgroundSystem"))
+		    ->addComponent(new Pos2DComponent(1095.0f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{1, 1}, {{"", {0, 0}}})));
   }
 
   void		initPlayer()
@@ -224,6 +244,7 @@ public :
 
   void		init()
   {
+	  this->initBackground();
 	  this->initPlayer();
 	  this->initBullet();
 	  this->initMonster();

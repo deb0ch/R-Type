@@ -9,13 +9,14 @@ TagComponent::~TagComponent(){
 
 }
 
-void TagComponent::addTag(const std::string& tag)
+TagComponent *TagComponent::addTag(const std::string& tag)
 {
   auto it = std::find(this->_tags.begin(), this->_tags.end(), tag);
 
   if (it == this->_tags.end()) {
     this->_tags.push_back(tag);
   }
+  return this;
 }
 
 bool TagComponent::hasTag(const std::string& tag) const
