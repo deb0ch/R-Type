@@ -9,9 +9,7 @@ class		CollisionPowerComponent : public AComponent<CollisionPowerComponent>, pub
 {
 public:
 	CollisionPowerComponent(unsigned int collisionPower = 100);
-	CollisionPowerComponent(const CollisionPowerComponent&);
 	virtual	~CollisionPowerComponent();
-	CollisionPowerComponent	&operator=(const CollisionPowerComponent&);
 	virtual void	serialize(IBuffer &) const;
 	virtual void	unserialize(IBuffer &);
 
