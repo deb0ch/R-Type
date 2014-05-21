@@ -47,6 +47,9 @@ public:
       std::cerr << ": Invalid type" << std::endl;
     return (tmp);
   }
+
+  unsigned int	getId() const;
+  Entity*	clone() const;
 };
 
 #endif /* !ENTITY_H_ */

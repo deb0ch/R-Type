@@ -4,7 +4,7 @@
 
 #include	"SFMLSpriteComponent.hh"
 #include	"Pos2DComponent.hh"
-#include	"Box2DComponent.hh"
+#include	"ActionComponent.hh"
 
 SFMLRenderSystem::SFMLRenderSystem()
   : ASystem("SFMLRenderSystem")
@@ -16,9 +16,7 @@ SFMLRenderSystem::~SFMLRenderSystem()
 //----- ----- Methods ----- ----- //
 bool		SFMLRenderSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("SFMLSpriteComponent") &&
-      entity->hasComponent("Pos2DComponent") &&
-      entity->hasComponent("Box2DComponent"))
+  if (entity->hasComponent("SFMLSpriteComponent") && entity->hasComponent("Pos2DComponent"))
     return (true);
   return (false);
 }
@@ -27,34 +25,31 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 {
   SFMLSpriteComponent	*spriteComp = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
   Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
-  ImageLoader		*imageLoader = this->_world->getSharedObject<ImageLoader>("imageLoader");
-  Box2DComponent	*box = entity->getComponent<Box2DComponent>("Box2DComponent");
-  float			width, height;
+  ActionComponent	*action = entity->getComponent<ActionComponent>("ActionComponent");
 
+  ImageLoader *imageLoader = this->_world->getSharedObject<ImageLoader>("imageLoader");
   if (!imageLoader)
-    return ; //TODO throw
-  width = box->getWidth();
-  height = box->getHeight();
-
-  sf::RectangleShape rectangle(sf::Vector2f(width, height));
-  rectangle.setFillColor(sf::Color::Transparent);
-  rectangle.setOrigin(width / 2, height / 2);
-  rectangle.setPosition(pos->getX(), pos->getY());
-  rectangle.setOutlineThickness(-3);
-  rectangle.setOutlineColor(sf::Color(250, 0, 0));
-  this->_window->draw(rectangle);
-
-  sf::Sprite *sprite = spriteComp->getSprite(*imageLoader);
-  sprite->setPosition(pos->getX() - (width / 2), pos->getY() - (height / 2));
-  sprite->setScale(width / sprite->getLocalBounds().width,
-		   height / sprite->getLocalBounds().height);
+    return; //TODO throw
+  sf::Sprite *sprite = NULL;
+  if (action != NULL)
+    {
+      if (action->isActive("UP") && spriteComp->hasAction("UP"))
+	sprite = spriteComp->getSprite(*imageLoader, "UP");
+      else if (action->isActive("DOWN") && spriteComp->hasAction("DOWN"))
+	sprite = spriteComp->getSprite(*imageLoader, "DOWN");
+    }
+  if (sprite == NULL) // default sprite
+    sprite = spriteComp->getSprite(*imageLoader);
+  if (sprite == NULL)
+    return;
+  sprite->setPosition(pos->getX(), pos->getY());
   this->_window->draw(*sprite);
   delete sprite;
 }
 
 void		SFMLRenderSystem::start()
 {
-  this->_window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "EpicGradius");
+  this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius");
   this->_window->setFramerateLimit(60);
   this->_world->setSharedObject("sfmlwindow", this->_window);
 }

@@ -23,16 +23,10 @@ SocketUDP::SocketUDP(const SOCKET &sock)
 
 SocketUDP::~SocketUDP()
 {
-	WSACleanup();
 }
 
 void SocketUDP::init()
 {
-	int iResult = WSAStartup(MAKEWORD(2, 2), &(this->wsaData));
-	if (iResult != 0)
-	{
-		throw UDPException(WSAGetLastError());
-	}
 	char optval = 1;
 	this->socket = WSASocket(AF_INET, SOCK_DGRAM, IPPROTO_UDP, NULL, 0, WSA_FLAG_OVERLAPPED);
 	::setsockopt(this->socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
@@ -144,12 +138,12 @@ void		SocketUDP::setBlocking(const bool block)
 	ioctlsocket(this->socket, FIONBIO, &blocking);
 }
 
-const bool	SocketUDP::isBlocking() const
+bool	SocketUDP::isBlocking() const
 {
 	return (this->blockSocket);
 }
 
-const int	SocketUDP::getHandle() const
+int	SocketUDP::getHandle() const
 {
 	return (this->socket);
 }

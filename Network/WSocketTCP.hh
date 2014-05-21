@@ -23,15 +23,15 @@ public:
 	virtual void listen(const std::size_t block);
 	virtual void bind(const int port, const std::string & address = "");
 	virtual void setBlocking(bool const blocking);
-	virtual const int		getHandle() const;
+	virtual int getHandle() const;
 
-	virtual const bool	isBlocking() const;
+	virtual bool isBlocking() const;
 	virtual void close();
 	virtual void init();
 
 	virtual void connect(const std::string &address, const int port);
 	virtual void connect(const int address, const int port);
-	virtual int	send(const IBuffer &);
+	virtual bool	send(IBuffer &);
 	virtual int receive(IBuffer &);
 private:
 	SocketTCP(const SocketTCP &);

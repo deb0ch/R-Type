@@ -5,20 +5,33 @@
 # include "AComponent.hpp"
 # include "ImageLoader.hh"
 # include "ISerializableComponent.hh"
+# include "INetworkSerializableComponent.hh"
 
-class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>, public ISerializableComponent
+class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>,
+	public INetworkSerializableComponent
 {
 protected:
-  std::string	_filaName;
+	std::string	_fileName;
+	ImageLoader::NbSprite _sprites;
+	int _counter;
+	unsigned int _tickCounter;
+	unsigned int _tickChange;
+	std::string _previousAction;
+	int _currentSprite;
+	std::map<std::string, std::pair<int, int> > _map;
 
 public:
-		SFMLSpriteComponent(const std::string &filename = "");
-  virtual	~SFMLSpriteComponent();
+	SFMLSpriteComponent();
+	SFMLSpriteComponent(const std::string &filename, const ImageLoader::NbSprite& sprites,
+		const std::map<std::string, std::pair<int, int> > &map, unsigned int tickChange = 10);
 
-  virtual	void serialize(IBuffer &buffer) const;
-  virtual	void unserialize(IBuffer &buffer);
+	virtual	~SFMLSpriteComponent();
 
-  sf::Sprite	*getSprite(ImageLoader &imageLoader);
+	virtual	void serialize(IBuffer &buffer) const;
+	virtual	void unserialize(IBuffer &buffer);
+
+	sf::Sprite	*getSprite(ImageLoader &imageLoader, const std::string & action = "");
+	bool		hasAction(const std::string & action);
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */

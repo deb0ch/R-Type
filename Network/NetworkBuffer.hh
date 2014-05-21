@@ -7,8 +7,10 @@
 class NetworkBuffer : public IBuffer
 {
 public:
-  NetworkBuffer();
+  NetworkBuffer(unsigned int size = 512);
   virtual ~NetworkBuffer();
+  NetworkBuffer(const IBuffer &);
+  virtual IBuffer &operator=(const IBuffer &);
 
   static bool		isBigEndian()
   {
@@ -39,12 +41,14 @@ public:
   virtual char		*getBuffer();
   virtual unsigned int	getLength() const;
   virtual void		setLength(unsigned int);
-  virtual int		getMaxSize() const;
+  virtual unsigned int	getMaxSize() const;
 
+  virtual unsigned int	getPosition() const;
+  virtual void		setPosition(unsigned int);
 
 protected:
-  static const int	bufferMaxSize = 512;
-  char			_buffer[bufferMaxSize];
+  const unsigned int	bufferMaxSize;
+  char			*_buffer;
   unsigned int		_buffer_size;
   unsigned int		_current_pos;
 
@@ -52,7 +56,7 @@ private:
   template <typename T>
   void		serialize(const T &elements)
   {
-    int		i;
+    size_t i;
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
@@ -79,7 +83,7 @@ private:
   template <typename T>
   void		unserialize(T &elements)
   {
-    int		i;
+    size_t	i;
     char	*tab;
 
     tab = reinterpret_cast<char *>(&elements);

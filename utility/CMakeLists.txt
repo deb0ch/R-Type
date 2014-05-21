@@ -14,6 +14,13 @@ SET(HEADER_C
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/INetworkRelay.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/RandomInt.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/RandomReal.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.hh
   PARENT_SCOPE
   )
 
@@ -22,5 +29,7 @@ SET(SOURCE_C
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Random.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.cpp
   PARENT_SCOPE
   )

@@ -11,22 +11,23 @@ class Mutex : public IMutex
 {
 public:
 	virtual void		lock();
-	virtual void		trylock();
+	virtual bool		trylock();
 	virtual void		unlock();
-	virtual STATUS	status() const;
+	virtual STATUS		status() const;
+
+	PCRITICAL_SECTION	getCriticalSection();
 
 public:
 	Mutex();
-	virtual		~Mutex();
+	virtual				~Mutex();
 
 private:
 	Mutex(const Mutex & other) = delete;
-	Mutex &		operator=(const Mutex & other) = delete;
+	Mutex &				operator=(const Mutex & other) = delete;
 
 private:
-	int			_ret;
-	STATUS		_status;
-	HANDLE		_mutexHandle;
+	STATUS				_status;
+	CRITICAL_SECTION	_criticalSection;
 };
 
 #endif /* !WMUTEX_H_ */

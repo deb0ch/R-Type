@@ -24,7 +24,7 @@ void SocketTCP::init() {
   setsockopt(this->_socket, SOL_SOCKET, SO_REUSEADDR, &reuseAddr, sizeof(reuseAddr));
 }
 
-const int		SocketTCP::getHandle() const {
+int		SocketTCP::getHandle() const {
   return (this->_socket);
 }
 
@@ -41,7 +41,7 @@ void SocketTCP::setBlocking(bool const blocking) {
   this->_isBlocking = blocking;
 }
 
-const bool SocketTCP::isBlocking() const {
+bool SocketTCP::isBlocking() const {
   return (this->_isBlocking);
 }
 
@@ -118,14 +118,16 @@ void SocketTCP::connect(const int address, const int port) {
     throw TCPException(errno);
 }
 
-int SocketTCP::send(const IBuffer &buffer) {
+bool SocketTCP::send(IBuffer &buffer) {
   int ret;
 
   if (this->_socket == INVALID_SOCKET)
     throw TCPException(MSG_INVALID_SOCKET);
-  if ((ret = ::send(this->_socket, buffer.getBuffer(), buffer.getLength(), MSG_NOSIGNAL)) == -1)
+  if ((ret = ::send(this->_socket, buffer.getBuffer() + buffer.getPosition(),
+		    buffer.getLength() - buffer.getPosition(), MSG_NOSIGNAL)) == -1)
     throw TCPException(errno);
-  return (ret);
+  buffer.setPosition(buffer.getPosition() + ret);
+  return (buffer.end());
 }
 
 int SocketTCP::receive(IBuffer &buffer) {
@@ -133,9 +135,11 @@ int SocketTCP::receive(IBuffer &buffer) {
 
   if (this->_socket == INVALID_SOCKET)
     throw TCPException(MSG_INVALID_SOCKET);
-  if ((ret = ::recv(this->_socket, buffer.getBuffer(), buffer.getMaxSize(), MSG_NOSIGNAL)) == -1)
+  if ((ret = ::recv(this->_socket, buffer.getBuffer() + buffer.getPosition(),
+		    buffer.getMaxSize() - buffer.getPosition(), MSG_NOSIGNAL)) == -1)
     throw TCPException(errno);
-  buffer.setLength(ret);
+  buffer.setLength(buffer.getLength() + ret);
+  buffer.setPosition(buffer.getLength());
   return (ret);
 }
 

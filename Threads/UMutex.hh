@@ -1,17 +1,19 @@
 #ifndef UMUTEX_H_
 # define UMUTEX_H_
 
-# include "ThreadException.hh"
+# include "MutexException.hh"
 # include "IMutex.hh"
 
 # include <pthread.h>
 
+class UCondVar;
 
 class Mutex : public IMutex
 {
+  friend class CondVar;
 public:
   virtual void		lock();
-  virtual void		trylock();
+  virtual bool		trylock();
   virtual void		unlock();
   virtual STATUS	status() const;
 

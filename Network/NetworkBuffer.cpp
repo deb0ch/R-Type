@@ -1,13 +1,48 @@
 #include "NetworkBuffer.hh"
 
-NetworkBuffer::NetworkBuffer()
+NetworkBuffer::NetworkBuffer(unsigned int size) : bufferMaxSize(size)
 {
   this->_buffer_size = 0;
   this->_current_pos = 0;
+  this->_buffer = new char[bufferMaxSize];
 }
 
 NetworkBuffer::~NetworkBuffer()
-{}
+{
+  delete this->_buffer;
+}
+
+NetworkBuffer::NetworkBuffer(const IBuffer &buffer) : bufferMaxSize(buffer.getMaxSize())
+{
+  const char	*cpy;
+
+  this->_buffer_size = buffer.getLength();
+  this->_current_pos = buffer.getPosition();
+  this->_buffer = new char[bufferMaxSize];
+  cpy = buffer.getBuffer();
+  for (unsigned int i = 0; i < this->_buffer_size; ++i)
+    {
+      this->_buffer[i] = cpy[i];
+    }
+}
+
+IBuffer		&NetworkBuffer::operator=(const IBuffer &buffer)
+{
+  const char	*cpy;
+
+  if (this != &buffer)
+    {
+      this->_buffer_size = buffer.getLength();
+      this->_current_pos = buffer.getPosition();
+      this->_buffer = new char[bufferMaxSize];
+      cpy = buffer.getBuffer();
+      for (unsigned int i = 0; i < this->_buffer_size; ++i)
+	{
+	  this->_buffer[i] = cpy[i];
+	}
+    }
+  return (*this);
+}
 
 bool		NetworkBuffer::end() const
 {
@@ -47,7 +82,7 @@ void			NetworkBuffer::setLength(unsigned int lenght)
   this->_buffer_size = lenght;
 }
 
-int			NetworkBuffer::getMaxSize() const
+unsigned int		NetworkBuffer::getMaxSize() const
 {
   return (bufferMaxSize);
 }
@@ -124,6 +159,17 @@ IBuffer		&NetworkBuffer::operator>>(char &value)
   return (*this);
 }
 
+unsigned int	NetworkBuffer::getPosition() const
+{
+  return (this->_current_pos);
+}
+
+void		NetworkBuffer::setPosition(unsigned int pos)
+{
+  this->_current_pos = pos;
+}
+
+
 template <>
 void		NetworkBuffer::serialize<std::string>(const std::string &element)
 {
@@ -149,7 +195,7 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
   this->unserialize<unsigned int>(size);
   if (this->_buffer_size - this->_current_pos < size)
     {
-      std::cout << "Not enough space" << std::endl; // raise exception
+      //std::cout << "Not enough space" << std::endl; // raise exception
       return ;
     }
   for (unsigned int i = 0; i < size; ++i)

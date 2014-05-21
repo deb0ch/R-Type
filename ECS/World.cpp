@@ -2,11 +2,13 @@
 
 #include	"VectorDeleter.hpp"
 #include	"World.hh"
+#include	"Hash.hh"
 
 //----- ----- Constructors ----- ----- //
 World::World()
 {
   this->_nextEntityID = 1;
+  this->_entities.reserve(1000);
   this->_initialized = false;
 }
 
@@ -53,6 +55,8 @@ Entity	*World::createEntity()
  */
 World	*World::addEntity(Entity *entity)
 {
+  if (entity->_id == 0)
+    entity->_id = this->_nextEntityID++;
   this->_entities.push_back(entity);
   if (entity->_id >= this->_nextEntityID)
     _nextEntityID = entity->_id + 1;
@@ -65,12 +69,13 @@ World	*World::addEntity(Entity *entity)
  */
 World	*World::addSystem(ISystem *system)
 {
-  this->_systems.push_back(system);
   system->setWorld(this);
-  std::sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
-							      const ISystem *system_b) -> bool {
-	      return (system_a->getPriority() > system_b->getPriority());
-	    });
+  this->_systems.push_back(system);
+  std::stable_sort(this->_systems.begin(), this->_systems.end(),
+		   [] (const ISystem *system_a,
+		       const ISystem *system_b) -> bool {
+		     return (system_a->getPriority() > system_b->getPriority());
+		   });
   return (this);
 }
 
@@ -156,6 +161,7 @@ void	World::process(const float delta)
  */
 void	World::init()
 {
+  this->_initialized = true;
   std::for_each(this->_systems.begin(), this->_systems.end(), [] (ISystem *system) -> void {
       system->init();
     });
@@ -209,26 +215,4 @@ void		World::sendEvent(IEvent *event)
 bool		World::hasEventHandler(const std::string &type) const
 {
   return (this->_event_manager.hasHandler(type));
-}
-
-IComponent	*World::createComponent(std::size_t type) const
-{
-  return (this->_component_factory.create(type));
-}
-
-IComponent	*World::createComponent(const std::string &type) const
-{
-  std::hash<std::string> hash;
-
-  std::cout << "alzejazlje: " << hash(type) << std::endl;
-  return (this->_component_factory.create(hash(type)));
-}
-
-void		World::registerComponent(const IComponent *component)
-{
-  std::hash<std::string> hash;
-
-  if (!component)
-    return ;
-  this->_component_factory.add(hash(component->getType()), component);
 }

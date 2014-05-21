@@ -3,8 +3,9 @@
 
 # include	"AComponent.hpp"
 # include	"ISerializableComponent.hh"
+# include	"INetworkSerializableComponent.hh"
 
-class		Speed2DComponent : public AComponent<Speed2DComponent>, public ISerializableComponent
+class		Speed2DComponent : public AComponent<Speed2DComponent>, public INetworkSerializableComponent
 {
 protected:
   float		_vX;
@@ -12,9 +13,7 @@ protected:
 
 public:
 		Speed2DComponent(float x = 0.0f, float y = 0.0f);
-		Speed2DComponent(const Speed2DComponent&);
   virtual	~Speed2DComponent();
-  Speed2DComponent	&operator=(const Speed2DComponent&);
 
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);
