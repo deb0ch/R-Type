@@ -22,10 +22,10 @@ public:
   virtual ISocketTCP	*accept();
   virtual void		listen(const std::size_t block);
   virtual void		bind(int port, const std::string & address = "");
-  virtual const int		getHandle() const;
+  virtual int		getHandle() const;
 
   virtual void setBlocking(const bool blocking);
-  virtual const bool isBlocking() const;
+  virtual bool isBlocking() const;
   virtual void close();
   virtual void init();
 

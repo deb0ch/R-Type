@@ -109,11 +109,11 @@ void SocketUDP::setBlocking(bool const blocking) {
   this->_isBlocking = blocking;
 }
 
-const bool SocketUDP::isBlocking() const {
+bool SocketUDP::isBlocking() const {
   return (this->_isBlocking);
 }
 
-const int		SocketUDP::getHandle() const {
+int		SocketUDP::getHandle() const {
   return (this->_socket);
 }
 
