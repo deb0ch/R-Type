@@ -35,16 +35,29 @@ EntitySpawnerComponent::~EntitySpawnerComponent()
 
 //----- ----- Operators ----- ----- //
 //----- ----- Getters ----- ----- //
+bool				EntitySpawnerComponent::isAbsolute() const
+{
+  return (this->_abs);
+}
+
+const std::pair<float, float>	EntitySpawnerComponent::getCoordinates() const
+{
+  return (std::make_pair(RandomReal()(this->_min_pos.first, this->_max_pos.first),
+			 RandomReal()(this->_min_pos.second, this->_max_pos.second)
+			 )
+	  );
+}
+
 //----- ----- Setters ----- ----- //
 void			EntitySpawnerComponent::setActive(bool active)
 {
   this->_active = active;
 }
+
 //----- ----- Methods ----- ----- //
-Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DComponent *pos)
+Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
 {
   Entity		*res = NULL;
-  Pos2DComponent	*res_pos = NULL;
 
   if (this->_tick < this->_delay)
     return ((Entity *) (0 * ++this->_tick));
@@ -70,21 +83,6 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
 
   if (!res)
     return (NULL);
-  res_pos = res->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!res_pos)
-    {
-      res_pos = new Pos2DComponent(0, 0);
-      res->addComponent(res_pos);
-    }
-  res_pos->setX(0);
-  res_pos->setY(0);
-  if (!this->_abs && pos)
-    {
-      res_pos->setX(pos->getX());
-      res_pos->setY(pos->getY());
-    }
-  res_pos->setX(res_pos->getX() + RandomReal()(this->_min_pos.first, this->_max_pos.first));
-  res_pos->setY(res_pos->getY() + RandomReal()(this->_min_pos.second, this->_max_pos.second));
 
   ++this->_counter;
   return (res);

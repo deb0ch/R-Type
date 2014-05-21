@@ -42,8 +42,11 @@ public:
 			 bool abs = false);
   virtual	~EntitySpawnerComponent();
 
+  bool				isAbsolute() const;
+  const std::pair<float, float>	getCoordinates() const;
+
   void				setActive(bool active);
-  Entity			*spawnEntity(EntityFactory *facto, const Pos2DComponent *pos = NULL);
+  Entity			*spawnEntity(EntityFactory *facto);
 };
 
 #endif /* !ENTITYSPAWNERCOMPONENT_H_ */
