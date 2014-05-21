@@ -76,6 +76,8 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
       res_pos = new Pos2DComponent(0, 0);
       res->addComponent(res_pos);
     }
+  res_pos->setX(0);
+  res_pos->setY(0);
   if (!this->_abs && pos)
     {
       res_pos->setX(pos->getX());
