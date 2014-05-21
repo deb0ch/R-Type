@@ -121,6 +121,7 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
+  /*
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -177,7 +178,7 @@ void		addEntities(World &world)
 				 ->addAction("FIRE")
 				 )
 		  );
-
+  */
 }
 
 
@@ -190,7 +191,7 @@ int		main()
   addEntities(world);
 
 	world.start();
-	
+
 	SoundLoader *s = new SoundLoader();
 	s->addSound("Ressources/Sound/laser.wav");
 	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");

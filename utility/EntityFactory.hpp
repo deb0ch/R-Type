@@ -41,6 +41,7 @@ public :
 
   void		init()
   {
+    /*
     this->addEntity("PLAYER", (new Entity()));
 
     this->addEntity("TEST_SPAWN", (new Entity())
@@ -77,6 +78,7 @@ public :
 				   )
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
 		    );
+    */
   }
 };
 
