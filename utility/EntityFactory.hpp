@@ -283,12 +283,13 @@ public:
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(40.0f, 40.0f))
 			->addComponent(new TeamComponent())
+			->addComponent(new FireAlwaysComponent())
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("Monster1.png",
 			ImageLoader::NbSprite{ 8, 1 },
 			{ { "", { 0, 8 } } }))
-			->addComponent(new MovementSpeedComponent(3))
+			->addComponent(new MovementSpeedComponent(2))
 			->addComponent(new LifeComponent())
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 40.0f)))
@@ -319,8 +320,8 @@ public:
 			->addComponent(new LifeComponent(500))
 			->addComponent(new CollisionPowerComponent(50))
 			->addComponent(new FireAlwaysComponent())
-				->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_2", },
-			{}, 0, 40, { -60.0f, 0.0f }, { -60.0f, 0.0f }))
+			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_2", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" },
+			{}, 0, 40, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 			->addComponent((new ActionComponent())
 			->addAction("UP")
@@ -337,7 +338,6 @@ public:
 			);
 	}
 
-	// amuse toi JC
 	void		initBoss()
 	{
 		this->addEntity("MONSTER_FROM_BOSS", (new Entity())
