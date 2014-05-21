@@ -1,20 +1,24 @@
+
 #include	"MoveFollowComponent.hh"
 #include	"Pos2DComponent.hh"
 
 //----- ----- Constructors ----- ----- //
-MoveFollowComponent::MoveFollowComponent(const unsigned long idToFollow)
+MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
   : AComponent("MoveFollowComponent")
 {
-  this->_idToFollow = idToFollow;
+  this->_tagToFollow = tagToFollow;
 }
 
 //----- ----- Destructor ----- ----- //
 MoveFollowComponent::~MoveFollowComponent()
 {}
 
-unsigned long	MoveFollowComponent::getIdToFollow() const {
-  return this->_idToFollow;
+const std::string &	MoveFollowComponent::getTagToFollow() const
+{
+  return this->_tagToFollow;
 }
-void		MoveFollowComponent::setIdToFollow(const unsigned long idToFollow) {
-    this->_idToFollow = idToFollow;
+
+void		MoveFollowComponent::setTagToFollow(const std::string & tagToFollow)
+{
+  this->_tagToFollow = tagToFollow;
 }

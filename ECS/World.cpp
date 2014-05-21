@@ -72,8 +72,8 @@ World	*World::addSystem(ISystem *system)
   system->setWorld(this);
   this->_systems.push_back(system);
   std::stable_sort(this->_systems.begin(), this->_systems.end(),
-		   [] (const ISystem *system_a,
-		       const ISystem *system_b) -> bool {
+		   [] (const ISystem *system_a, const ISystem *system_b) -> bool
+		   {
 		     return (system_a->getPriority() > system_b->getPriority());
 		   });
   return (this);
@@ -89,7 +89,8 @@ World	*World::removeEntity(Entity *entity)
 World	*World::removeEntity(unsigned long id)
 {
   auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
-			 [id] (Entity *entity) -> bool {
+			 [id] (Entity *entity) -> bool
+			 {
 			   return (entity->_id == id);
 			 });
 
@@ -111,7 +112,8 @@ World	*World::removeSystem(ISystem *system)
 World	*World::removeSystem(const std::string &type)
 {
   auto it = std::find_if(this->_systems.begin(), this->_systems.end(),
-			 [type] (ISystem *system) -> bool {
+			 [type] (ISystem *system) -> bool
+			 {
 			   return (system->getType() == type);
 			 });
 
@@ -131,7 +133,8 @@ std::vector<Entity *> &World::getEntities()
 Entity		*World::getEntity(unsigned long id)
 {
   auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
-			 [id] (Entity *entity) -> bool {
+			 [id] (Entity *entity) -> bool
+			 {
 			   return (entity->_id == id);
 			 });
 
@@ -151,9 +154,11 @@ void	World::process(const float delta)
 {
   if (!this->_initialized)
     this->init();
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this, delta] (ISystem *system) -> void {
-      system->process(this->_entities, delta);
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[this, delta] (ISystem *system) -> void
+		{
+		  system->process(this->_entities, delta);
+		});
 }
 
 /**
@@ -162,9 +167,11 @@ void	World::process(const float delta)
 void	World::init()
 {
   this->_initialized = true;
-  std::for_each(this->_systems.begin(), this->_systems.end(), [] (ISystem *system) -> void {
-      system->init();
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[] (ISystem *system) -> void
+		{
+		  system->init();
+		});
 }
 
 /**
@@ -172,9 +179,11 @@ void	World::init()
  */
 void	World::start()
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->start();
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[this] (ISystem *system) -> void
+		{
+		  system->start();
+		});
 }
 
 /**
@@ -182,9 +191,11 @@ void	World::start()
  */
 void	World::pause()
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->pause();
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[this] (ISystem *system) -> void
+		{
+		  system->pause();
+		});
 }
 
 /**
@@ -192,9 +203,11 @@ void	World::pause()
  */
 void	World::resume()
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->resume();
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[this] (ISystem *system) -> void
+		{
+		  system->resume();
+		});
 }
 
 /**
@@ -202,9 +215,11 @@ void	World::resume()
  */
 void	World::stop()
 {
-  std::for_each(this->_systems.begin(), this->_systems.end(), [this] (ISystem *system) -> void {
-      system->stop();
-    });
+  std::for_each(this->_systems.begin(), this->_systems.end(),
+		[this] (ISystem *system) -> void
+		{
+		  system->stop();
+		});
 }
 
 void		World::sendEvent(IEvent *event)
