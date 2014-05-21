@@ -19,15 +19,14 @@ bool MoveForwardSystem::canProcess(Entity *entity)
 
 void MoveForwardSystem::processEntity(Entity *entity, const float)
 {
-  ActionComponent		*action;
-  MoveForwardComponent *moveEntity;
+  ActionComponent	*action;
+  MoveForwardComponent	*moveEntity;
 
   action = entity->getComponent<ActionComponent>("ActionComponent");
   moveEntity = entity->getComponent<MoveForwardComponent>("MoveForwardComponent");
 
   std::vector<std::string> movements = moveEntity->getDirection();
+
   for (unsigned int i = 0; i < movements.size(); i++)
-    {
-      action->setAction(movements[i], true);
-    }
+    action->setAction(movements[i], true);
 }

@@ -19,6 +19,7 @@
 # include "MoveForwardComponent.hh"
 # include "MoveSequenceComponent.hh"
 # include "EntitySpawnerComponent.hh"
+# include "MovementLimitFrame2DComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -106,11 +107,12 @@ public :
 		  ));
 
 	  this->addEntity("PLAYER_RED", (new Entity())
+		  ->addComponent(new MovementLimitFrame2DComponent())
 		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
-		  ->addComponent(new LifeComponent())
+		  // ->addComponent(new LifeComponent())
 		  ->addComponent(new SFMLSpriteComponent("players.png",
 		  ImageLoader::NbSprite{ 5, 5 },
 		  { { "", { 17, 0 } },

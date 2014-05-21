@@ -22,6 +22,7 @@
 #include	"EntitySpawnerSystem.hh"
 #include	"ActionFireSystem.hh"
 #include	"FireAlwaysSystem.hh"
+#include	"MovementLimitFrame2DSystem.hh"
 
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
@@ -40,6 +41,7 @@
 #include	"CollisionPowerComponent.hh"
 #include	"EntitySpawnerComponent.hh"
 #include	"FireAlwaysComponent.hh"
+#include	"MovementLimitFrame2DComponent.hh"
 
 #include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
@@ -84,6 +86,7 @@ void		addSystems(World &world)
   world.addSystem(new MoveSystem());
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
+  world.addSystem(new MovementLimitFrame2DSystem());
 
   CollisionSystem *collision;
   collision = new CollisionSystem();

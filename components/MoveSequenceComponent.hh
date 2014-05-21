@@ -1,7 +1,7 @@
 #ifndef MOVESEQUENCECOMPONENT_H_
 # define MOVESEQUENCECOMPONENT_H_
 
-# include <string>
+# include	 <string>
 # include	"AComponent.hpp"
 # include	"Entity.hh"
 # include	"World.hh"
@@ -23,11 +23,11 @@ public:
 	const std::string &getAction() const;
 
 protected:
-	std::vector<std::string> _actions;
-	unsigned int _index;
-	Sens _sens;
-	unsigned int _tick;
-	unsigned int _tickToChange;
+	std::vector<std::string>	_actions;
+	unsigned int			_index;
+	Sens				_sens;
+	unsigned int			_tick;
+	unsigned int			_tickToChange;
 
 };
 

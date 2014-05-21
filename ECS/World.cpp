@@ -71,12 +71,11 @@ World	*World::addSystem(ISystem *system)
 {
   system->setWorld(this);
   this->_systems.push_back(system);
-
-  std::stable_sort(this->_systems.begin(), this->_systems.end(), [] (const ISystem *system_a,
-							      const ISystem *system_b) -> bool {
-	      return (system_a->getPriority() > system_b->getPriority());
-	    });
-
+  std::stable_sort(this->_systems.begin(), this->_systems.end(),
+		   [] (const ISystem *system_a,
+		       const ISystem *system_b) -> bool {
+		     return (system_a->getPriority() > system_b->getPriority());
+		   });
   return (this);
 }
 
