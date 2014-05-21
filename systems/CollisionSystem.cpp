@@ -1,6 +1,7 @@
 #include <iostream>
 #include "CollisionSystem.hh"
 #include "CollisionEvent.hh"
+#include "TeamComponent.hh"
 
 CollisionSystem::CollisionSystem() : ASystem("CollisionSystem")
 {
@@ -22,12 +23,19 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
   std::vector<Entity *> &world_entities = this->_world->getEntities();
   CollisionComponent	*entity_col;
   CollisionComponent	*world_entity_col;
+  TeamComponent		*entityTeam;
+  TeamComponent		*worldEntityTeam;
 
   entity_col = entity->getComponent<CollisionComponent>("CollisionComponent");
-  for(auto it = world_entities.begin(); it != world_entities.end(); ++it)
+  entityTeam = entity->getComponent<TeamComponent>("TeamComponent");
+  if (!entity_col || !entityTeam)
+    return ;
+  for (auto it = world_entities.begin(); it != world_entities.end(); ++it)
     {
       world_entity_col = (*it)->getComponent<CollisionComponent>("CollisionComponent");
+      worldEntityTeam = (*it)->getComponent<TeamComponent>("TeamComponent");
       if (world_entity_col && *it != entity &&
+	  worldEntityTeam && worldEntityTeam->getTeam() != entityTeam->getTeam() &&
 	  isCollidingAny(entity_col->getCollisionPoints(), world_entity_col->getCollisionPoints(),
 			 entity->getComponent<Pos2DComponent>("Pos2DComponent"),
 			 (*it)->getComponent<Pos2DComponent>("Pos2DComponent")))

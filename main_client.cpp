@@ -1,5 +1,7 @@
 #include	<iostream>
 
+#include	"SFML/Audio/Music.hpp"
+
 #include	"World.hh"
 #include	"Entity.hh"
 
@@ -132,10 +134,19 @@ int		main()
 
 	world.start();
 
+	sf::Music music;
+
+	if (music.openFromFile("Ressources/Sound/music.ogg")) {
+	  music.setLoop(true);
+	  music.play();
+	}
+
+	/*
 	SoundLoader *s = new SoundLoader();
 	s->addSound("Ressources/Sound/laser.wav");
 	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
 	sound->play();
+	*/
 
 	for (;;)
 	{
