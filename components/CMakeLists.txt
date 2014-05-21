@@ -33,6 +33,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	PARENT_SCOPE
 )
 
@@ -60,5 +61,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	PARENT_SCOPE
 )
