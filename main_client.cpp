@@ -25,6 +25,7 @@
 #include	"FireAlwaysSystem.hh"
 #include	"MovementLimitFrame2DSystem.hh"
 
+#include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
 #include	"Friction2DComponent.hh"

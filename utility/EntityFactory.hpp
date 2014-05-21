@@ -22,6 +22,7 @@
 # include "EntitySpawnerComponent.hh"
 # include "MovementLimitFrame2DComponent.hh"
 # include "TagComponent.hh"
+# include "CollisionComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -130,7 +131,7 @@ public :
 	  this->addEntity("PLAYER_RED", (new Entity())
 		  ->addComponent(new MovementLimitFrame2DComponent())
 		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))
-		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent(new Box2DComponent(50.0f, 20.0f))
 		  ->addComponent(new Speed2DComponent(0.f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new LifeComponent())
@@ -140,6 +141,8 @@ public :
 		  { "UP", { 18, 2 } },
 		  { "DOWN", { 15, 2 } } }))
 		  ->addComponent(new SFMLInputComponent())
+			  ->addComponent((new CollisionComponent())
+					 ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 50.0f, 20.0f)))
 		  ->addComponent(new MovementSpeedComponent(5))
 		  ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 5,
 		  { 40.0f, 0.0f }, { 40.0f, 0.0f }))
@@ -166,6 +169,8 @@ public :
 		  ImageLoader::NbSprite{ 4, 1 },
 		  { { "", { 0, 4 } } }))
 		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+			  ->addComponent((new CollisionComponent())
+					 ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
 		  ->addComponent((new ActionComponent())
 		  ->addAction("UP")
 		  ->addAction("RIGHT")
