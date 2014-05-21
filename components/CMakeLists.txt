@@ -29,6 +29,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.hh
 	PARENT_SCOPE
 )
 
@@ -52,5 +53,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.cpp
 	PARENT_SCOPE
 )
