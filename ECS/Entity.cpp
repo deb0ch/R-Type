@@ -25,7 +25,8 @@ Entity::~Entity()
 Entity&		Entity::operator=(const Entity& ref)
 {
   this->_id = ref._id;
-  this->_components = ref._components;
+  for (unsigned int i = 0 ; i < ref._components.size() ; ++i)
+    this->_components.push_back(ref._components[i]->clone());
   return (*this);
 }
 
