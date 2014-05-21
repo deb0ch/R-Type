@@ -24,6 +24,7 @@
 # include "MovementLimitFrame2DComponent.hh"
 # include "TagComponent.hh"
 # include "CollisionComponent.hh"
+# include "AutoDestructComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
