@@ -58,6 +58,7 @@
 
 void		registerComponents(World &world)
 {
+  (void)world;
 	/*
 	world.registerComponent(new Pos2DComponent());
 	world.registerComponent(new SFMLSpriteComponent());
@@ -121,6 +122,7 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
+  (void)world;
   /*
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))

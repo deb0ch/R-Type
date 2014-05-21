@@ -9,4 +9,5 @@ int main()
 {
 	std::cout << "toto" << std::endl;
 	ISocket *toto = new SocketTCP();
+	delete toto;
 }
