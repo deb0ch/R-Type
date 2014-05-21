@@ -12,7 +12,7 @@ CollisionSystem::~CollisionSystem()
 
 bool	CollisionSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("Pos2DComponent") && entity->hasComponent("Box2DComponent"))
+  if (entity->hasComponent("CollisionComponent"))
     return (true);
   return (false);
 }
@@ -20,25 +20,36 @@ bool	CollisionSystem::canProcess(Entity *entity)
 void	CollisionSystem::processEntity(Entity *entity, const float)
 {
   std::vector<Entity *> &world_entities = this->_world->getEntities();
-  Box2DComponent	*entity_box;
-  Pos2DComponent	*entity_pos;
-  Box2DComponent	*world_entity_box;
-  Pos2DComponent	*world_entity_pos;
+  CollisionComponent	*entity_col;
+  CollisionComponent	*world_entity_col;
 
-  entity_pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
-  entity_box = entity->getComponent<Box2DComponent>("Box2DComponent");
+  entity_col = entity->getComponent<CollisionComponent>("CollisionComponent");
   for(auto it = world_entities.begin(); it != world_entities.end(); ++it)
     {
-      world_entity_pos = (*it)->getComponent<Pos2DComponent>("Pos2DComponent");
-      world_entity_box = (*it)->getComponent<Box2DComponent>("Box2DComponent");
-      if (world_entity_pos && world_entity_box && *it != entity &&
-	  isColliding(*entity_pos, *entity_box, *world_entity_pos, *world_entity_box))
+      world_entity_col = (*it)->getComponent<CollisionComponent>("CollisionComponent");
+      if (world_entity_col && *it != entity &&
+	  isCollidingAny(entity_col->getCollisionPoints(), world_entity_col->getCollisionPoints(),
+			 entity->getComponent<Pos2DComponent>("Pos2DComponent"),
+			 (*it)->getComponent<Pos2DComponent>("Pos2DComponent")))
 	this->_world->sendEvent(new CollisionEvent());
     }
 }
 
-bool	CollisionSystem::isColliding(const Pos2DComponent &pos1, const Box2DComponent &box1,
-				     const Pos2DComponent &pos2, const Box2DComponent &box2) const
+bool	CollisionSystem::isCollidingAny(std::list<CollisionPoint *> const &Fpoints,
+					std::list<CollisionPoint *> const &Lpoints,
+					Pos2DComponent *posF, Pos2DComponent *posL)
+{
+  if (!posF || !posL)
+    return (false);
+  for (auto itF = Fpoints.begin(); itF != Fpoints.end(); ++itF)
+    for (auto itL = Lpoints.begin(); itL != Lpoints.end(); ++itL)
+      if (isColliding(*(*(*itF)->getPos() + *posF), *(*itF)->getBox(), *(*(*itL)->getPos() + *posL), *(*itL)->getBox()))
+	return (true);
+  return (false);
+}
+
+bool	CollisionSystem::isColliding(Pos2DComponent const &pos1, Box2DComponent const &box1,
+				     Pos2DComponent const &pos2, Box2DComponent const &box2) const
 {
   float	inner_left;
   float	inner_right;

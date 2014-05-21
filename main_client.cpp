@@ -16,6 +16,7 @@
 #include	"SFMLEventSystem.hh"
 #include	"MoveFollowSystem.hh"
 
+#include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
 #include	"Speed2DComponent.hh"
 #include	"Friction2DComponent.hh"
@@ -57,6 +58,8 @@ int		main()
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent((new CollisionComponent())
+				 ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 55.0f, 55.0f)))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
@@ -75,6 +78,8 @@ int		main()
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(200.0f, 200.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 50.0f))
+		  ->addComponent((new CollisionComponent())
+				 ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 20.0f, 20.0f)))
 		  ->addComponent(new Speed2DComponent(5.f, 5.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
@@ -93,6 +98,7 @@ int		main()
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(100.0f, 200.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent((new CollisionComponent()))
 		  ->addComponent(new Speed2DComponent(5.f, 2.f))
 		  ->addComponent(new Friction2DComponent(0.3f))
 		  ->addComponent(new MovementSpeedComponent(0.3f))
@@ -109,12 +115,14 @@ int		main()
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(800.0f, 000.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new CollisionComponent())
 		  ->addComponent(new Speed2DComponent(-4.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 
   world.addEntity(world.createEntity()
   		  ->addComponent(new Pos2DComponent(300.0f, 000.0f))
   		  ->addComponent(new Box2DComponent(10.0f, 10.0f))
+		  ->addComponent(new CollisionComponent())
 		  ->addComponent(new Speed2DComponent(20.f, 5.f))
 		  ->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 

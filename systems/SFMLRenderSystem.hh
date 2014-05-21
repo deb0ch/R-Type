@@ -20,6 +20,7 @@ public:
   virtual void		start();
   virtual void		beforeProcess();
   virtual void		afterProcess();
+  void			displayCollision(Entity *entity);
 };
 
 #endif /* !SFMLRENDERSYSTEM_H_ */
