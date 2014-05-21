@@ -49,6 +49,7 @@ public:
   }
 
   unsigned int	getId() const;
+  Entity*	clone() const;
 };
 
 #endif /* !ENTITY_H_ */

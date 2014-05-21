@@ -9,9 +9,7 @@ class		LifeComponent : public AComponent<LifeComponent>, public INetworkSerializ
 {
 public:
 	LifeComponent(unsigned int life = 100, unsigned int invulnerability = 0);
-	LifeComponent(const LifeComponent&);
 	virtual	~LifeComponent();
-	LifeComponent	&operator=(const LifeComponent&);
 	virtual void	serialize(IBuffer &) const;
 	virtual void	unserialize(IBuffer &);
 

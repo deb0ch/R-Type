@@ -27,6 +27,9 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.hh
 	PARENT_SCOPE
 )
 
@@ -49,5 +52,8 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ResetActionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.cpp
 	PARENT_SCOPE
 )

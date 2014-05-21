@@ -6,22 +6,8 @@ CollisionPowerComponent::CollisionPowerComponent(unsigned int collisionPower)
 	this->_collisionPower = collisionPower;
 }
 
-CollisionPowerComponent::CollisionPowerComponent(const CollisionPowerComponent &ref)
-: AComponent("CollisionPowerComponent")
-{
-	this->_collisionPower = ref._collisionPower;
-}
-
-
 CollisionPowerComponent::~CollisionPowerComponent()
 {}
-
-//----- ----- Operators ----- ----- //
-CollisionPowerComponent	&CollisionPowerComponent::operator=(const CollisionPowerComponent &ref)
-{
-	this->_collisionPower = ref._collisionPower;
-	return (*this);
-}
 
 //----- ----- Getters ----- ----- //
 unsigned int	CollisionPowerComponent::getCollisionPower() const
