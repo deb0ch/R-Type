@@ -6,6 +6,7 @@
 /**
  * This file replacement unistd.h on Windows
  */
+
 #include <stdlib.h>
 #include <io.h>
 #include <process.h> /* for getpid() and the exec..() family */
@@ -44,7 +45,7 @@ typedef unsigned __int16  uint16_t;
 typedef unsigned __int32  uint32_t;
 typedef unsigned __int64  uint64_t;
 
-#define __PRETTY_FUNCTION__ "not supported"
+#define __PRETTY_FUNCTION__ __FUNCTION__
 
 #elif __linux__
 #include <unistd.h>

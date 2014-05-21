@@ -1,6 +1,7 @@
 #include <cstring>
 #include "Remote.hh"
 #include "INetworkRelay.hh"
+#include "Unistd.hh"
 
 Remote::Remote(ISocketTCP &socket, unsigned int hash) : _temporary_tcp_buffer(4096)
 {

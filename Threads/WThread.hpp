@@ -25,9 +25,8 @@ public:
 
   virtual void				start(void* (*fct)(void*), void* arg)
   {
-    if ((_ret = pthread_create(&this->_thread, NULL, fct, arg)) != 0)
-      throw ThreadException(_ret);
-    this->_status = IThread<T>::RUNNING;
+	  if ((_ret = pthread_create(&this->_thread, NULL, fct, arg)) != 0)
+		  this->_status = IThread<T>::RUNNING;
   }
 
 	virtual void						exit()
