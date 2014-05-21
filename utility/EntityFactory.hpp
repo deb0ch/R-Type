@@ -7,6 +7,7 @@
 # include "Friction2DComponent.hh"
 # include "Box2DComponent.hh"
 # include "Pos2DComponent.hh"
+# include "TeamComponent.hh"
 # include "Speed2DComponent.hh"
 # include "MovementSpeedComponent.hh"
 # include "SFMLSpriteComponent.hh"
@@ -68,6 +69,7 @@ public:
 		this->addEntity("PLAYER_BLUE", (new Entity())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(50.0f, 50.0f))
+			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("players.png",
@@ -89,6 +91,7 @@ public:
 		this->addEntity("PLAYER_PURPLE", (new Entity())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(50.0f, 50.0f))
+			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("players.png",
@@ -110,6 +113,7 @@ public:
 		this->addEntity("PLAYER_GREEN", (new Entity())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(50.0f, 50.0f))
+			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("players.png",
@@ -132,6 +136,7 @@ public:
 			->addComponent(new MovementLimitFrame2DComponent())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(40.0f, 20.0f))
+			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new LifeComponent())
@@ -160,6 +165,7 @@ public:
 		this->addEntity("MONSTER_BASIC_BULLET", (new Entity())
 			->addComponent(new Pos2DComponent(300.0f, 300.0f))
 			->addComponent(new Box2DComponent(10.0f, 10.0f))
+			->addComponent(new TeamComponent())
 			->addComponent(new Speed2DComponent(0.0f, 0.0f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new MovementSpeedComponent(3.0f))
@@ -181,6 +187,7 @@ public:
 		this->addEntity("MONSTER_BASIC_BULLET_2", (new Entity())
 			->addComponent(new Pos2DComponent(300.0f, 300.0f))
 			->addComponent(new Box2DComponent(10.0f, 10.0f))
+			->addComponent(new TeamComponent())
 			->addComponent(new Speed2DComponent(0.0f, 0.0f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new MovementSpeedComponent(3.0f))
@@ -203,6 +210,7 @@ public:
 		this->addEntity("BASIC_BULLET", (new Entity())
 			->addComponent(new Pos2DComponent(300.0f, 300.0f))
 			->addComponent(new Box2DComponent(10.0f, 10.0f))
+			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new MovementSpeedComponent(3.0f))
@@ -227,6 +235,7 @@ public:
 		this->addEntity("MONSTER_1", (new Entity())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(40.0f, 40.0f))
+			->addComponent(new TeamComponent())
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("Monster1.png",
@@ -251,6 +260,7 @@ public:
 		this->addEntity("MONSTER_2", (new Entity())
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(50.0f, 50.0f))
+			->addComponent(new TeamComponent())
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("r-typesheet-7.png",
@@ -285,6 +295,7 @@ public:
 		this->addEntity("BOSS_1", (new Entity())
 			->addComponent(new Pos2DComponent(650.0f, 300.0f))
 			->addComponent(new LifeComponent(10000))
+			->addComponent(new TeamComponent())
 			->addComponent(new CollisionPowerComponent(100))
 			->addComponent(new SFMLSpriteComponent("r-typesheet-18.png",
 			ImageLoader::NbSprite{ 1, 1 },
