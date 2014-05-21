@@ -24,6 +24,7 @@
 # include "MovementLimitFrame2DComponent.hh"
 # include "TagComponent.hh"
 # include "CollisionComponent.hh"
+# include "AutoDestructComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -303,7 +304,7 @@ public:
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new SFMLSpriteComponent("Monster3.png",
 			ImageLoader::NbSprite{ 5, 1 },
-			{ 
+			{
 				{ "", { 2, 0 } }
 			}))
 			->addComponent(new MovementSpeedComponent(0.5))

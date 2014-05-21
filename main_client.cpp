@@ -26,6 +26,7 @@
 #include	"ActionFireSystem.hh"
 #include	"FireAlwaysSystem.hh"
 #include	"MovementLimitFrame2DSystem.hh"
+#include	"AutoDestructSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -59,6 +60,7 @@
 
 void		addSystems(World &world)
 {
+  world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
