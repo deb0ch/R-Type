@@ -14,7 +14,7 @@ void	Mutex::lock()
 bool	Mutex::trylock()
 {
 	_status = LOCKED;
-	return (TryEnterCriticalSection(&_criticalSection)); // cannot fail. No exceptions.
+	return (static_cast<bool>(TryEnterCriticalSection(&_criticalSection))); // cannot fail. No exceptions.
 }
 
 void	Mutex::unlock()

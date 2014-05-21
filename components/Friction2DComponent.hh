@@ -13,9 +13,7 @@ public:
 
 public:
 		Friction2DComponent(float coef = 0.01);
-		Friction2DComponent(const Friction2DComponent&);
   virtual	~Friction2DComponent();
-  Friction2DComponent	&operator=(const Friction2DComponent&);
 
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);

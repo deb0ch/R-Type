@@ -19,9 +19,7 @@ public:
 public:
 	MoveForwardComponent(const Direction = LEFT);
 	MoveForwardComponent(const Direction, const Direction);
-	MoveForwardComponent(const MoveForwardComponent&);
 	virtual	~MoveForwardComponent();
-	MoveForwardComponent	&operator=(const MoveForwardComponent&);
 
 	const std::vector<std::string> &getDirection() const;
 	void setDirection(const Direction);

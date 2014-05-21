@@ -19,7 +19,7 @@ public:
   virtual ~SFMLInputComponent();
 
   const std::map<std::string, std::vector<sf::Keyboard::Key> >&	getInputs() const;
-  void			addInput(const std::string &action, const sf::Keyboard::Key &key);
+  void	addInput(const std::string &action, const sf::Keyboard::Key &key);
   virtual void serialize(IBuffer &) const;
   virtual void unserialize(IBuffer &);
 };

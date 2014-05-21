@@ -56,7 +56,7 @@ private:
   template <typename T>
   void		serialize(const T &elements)
   {
-    int		i;
+    size_t i;
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
@@ -83,7 +83,7 @@ private:
   template <typename T>
   void		unserialize(T &elements)
   {
-    int		i;
+    size_t	i;
     char	*tab;
 
     tab = reinterpret_cast<char *>(&elements);

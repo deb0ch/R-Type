@@ -32,22 +32,11 @@ MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir,
 		this->_actions.push_back("LEFT");
 }
 
-MoveForwardComponent::MoveForwardComponent(const MoveForwardComponent &ref)
-: AComponent("MoveForwardComponent")
-{
-	this->_direction = ref._direction;
-}
-
 //----- ----- Destructor ----- ----- //
 MoveForwardComponent::~MoveForwardComponent()
 {}
 
-//----- ----- Operators ----- ----- //
-MoveForwardComponent	&MoveForwardComponent::operator=(const MoveForwardComponent &ref)
-{
-	this->_direction = ref._direction;
-	return (*this);
-}
+//----- ----- Methods ----- ----- //
 
 const std::vector<std::string> & MoveForwardComponent::getDirection() const
 {

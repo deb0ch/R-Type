@@ -12,9 +12,7 @@ protected:
 
 public:
 		MoveFollowComponent(const unsigned long idToFollow = 0);
-		MoveFollowComponent(const MoveFollowComponent&);
   virtual	~MoveFollowComponent();
-  MoveFollowComponent	&operator=(const MoveFollowComponent&);
 
   /*
   float		getX() const;
