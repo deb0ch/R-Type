@@ -94,10 +94,12 @@ void		addSystems(World &world)
 	world.addSystem(new NetworkSendActionSystem(serializable_action));
 }
 
+static std::string g_ip = "127.0.0.1";
+
 void		addSharedObjetcs(World &world)
 {
 	ComponentFactory	*compos = new ComponentFactory();
-	ClientRelay *client = new ClientRelay("127.0.0.1", 6667);
+	ClientRelay *client = new ClientRelay(g_ip, 6667);
 	Thread<ClientRelay> *thread = new Thread<ClientRelay>();
 	Any tmp;
 
@@ -177,10 +179,14 @@ void		addEntities(World &world)
 	// 	->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png"))));
 }
 
-int			main()
+int			main(int ac, char **av)
 {
 	World		world;
 
+	if (ac >= 2)
+	  {
+	    g_ip = av[1];
+	  }
 	registerComponents(world);
 	addSystems(world);
 	addSharedObjetcs(world);
