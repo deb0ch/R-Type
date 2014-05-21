@@ -122,7 +122,11 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
-  (void)world;
+	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+	if (entityFactory == NULL)
+		return;
+	world.addEntity(entityFactory->create("PLAYER_RED"));
+	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   /*
   world.addEntity(world.createEntity()
 		  ->addComponent(new Pos2DComponent(100.0f, 100.0f))

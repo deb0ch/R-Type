@@ -36,8 +36,8 @@ public:
 			 std::vector<std::string> components = {},
 			 unsigned long nb = 0,
 			 unsigned long delay = 15,
-			 std::pair<float, float> min_pos = {0, 0},
-			 std::pair<float, float> max_pos = {0, 0},
+			 std::pair<float, float> min_pos = {0.0f, 0.0f},
+			 std::pair<float, float> max_pos = {0.0f, 0.0f},
 			 bool random = true,
 			 bool abs = false);
   virtual	~EntitySpawnerComponent();
