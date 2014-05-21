@@ -33,6 +33,8 @@ protected:
   Select				_select;
   Room					_room;
   Remote				*_remote;
+  SafeFifo<IBuffer *>			_available_udp;
+  SafeFifo<IBuffer *>			_available_tcp;
 };
 
 #endif /* !CLIENTRELAY_H_ */

@@ -64,6 +64,8 @@ void		NetworkBuffer::rewind()
 void		NetworkBuffer::reset()
 {
   this->_current_pos = 0;
+  this->_buffer -= this->_offset;
+  this->_offset = 0;
   this->_buffer_size = 0;
 }
 
@@ -231,7 +233,7 @@ void		NetworkBuffer::setOffset(unsigned int offset)
   int		diff;
 
   diff = offset - this->_offset;
-  if (this->_buffer_size >= diff)
+  if (this->_buffer_size - diff >= 0)
     {
       this->_buffer += diff;
       this->_buffer_size -= diff;

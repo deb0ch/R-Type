@@ -244,9 +244,17 @@ IBuffer			*ServerRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  buffer = new NetworkBuffer(4096);
+  if (this->_available_tcp.isEmpty())
+    {
+      buffer = new NetworkBuffer(4096);
+      std::cout << "creating buffer tcp: " << buffer << std::endl;
+    }
+  else
+    {
+      buffer = this->_available_tcp.getNextPop();
+      buffer->reset();
+    }
   buffer->setPosition(sizeof(unsigned int));
-  std::cout << "creating buffer: " << buffer << std::endl;
   return (buffer);
 }
 
@@ -254,22 +262,28 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  buffer = new NetworkBuffer;
+  if (this->_available_udp.isEmpty())
+    {
+      buffer = new NetworkBuffer;
+      std::cout << "creating buffer udp: " << buffer << std::endl;
+    }
+  else
+    {
+      buffer = this->_available_udp.getNextPop();
+      buffer->reset();
+    }
   buffer->setPosition(sizeof(unsigned int));
-  std::cout << "creating: " << buffer << std::endl;
   return (buffer);
 }
 
 void			ServerRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
-  delete buffer;
+  this->_available_udp.push(buffer);
 }
 
 void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
-  delete buffer;
+  this->_available_tcp.push(buffer);
 }
 
 Room			*ServerRelay::getRoom(const std::string &room_name)

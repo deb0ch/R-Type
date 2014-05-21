@@ -108,9 +108,17 @@ IBuffer			*ClientRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  buffer = new NetworkBuffer(4096);
+  if (this->_available_tcp.isEmpty())
+    {
+      buffer = new NetworkBuffer(4096);
+      std::cout << "creating buffer tcp: " << buffer << std::endl;
+    }
+  else
+    {
+      buffer = this->_available_tcp.getNextPop();
+      buffer->reset();
+    }
   buffer->setPosition(sizeof(unsigned int));
-  std::cout << "creating buffer: " << buffer << std::endl;
   return (buffer);
 }
 
@@ -118,7 +126,16 @@ IBuffer			*ClientRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  buffer = new NetworkBuffer;
+  if (this->_available_udp.isEmpty())
+    {
+      buffer = new NetworkBuffer;
+      std::cout << "creating buffer udp: " << buffer << std::endl;
+    }
+  else
+    {
+      buffer = this->_available_udp.getNextPop();
+      buffer->reset();
+    }
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
@@ -135,12 +152,12 @@ Remote			*ClientRelay::getRemote(const std::string &, const int)
 
 void			ClientRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  delete buffer;
+  this->_available_udp.push(buffer);
 }
 
 void			ClientRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  delete buffer;
+  this->_available_tcp.push(buffer);
 }
 
 void			ClientRelay::udpConnect()

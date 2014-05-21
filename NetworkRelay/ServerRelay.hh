@@ -41,6 +41,8 @@ protected:
   std::vector<Remote *>			_disonnect_remotes;
   Mutex					_mutex_room;
   std::map<std::string, Room>		_remotes;
+  SafeFifo<IBuffer *>			_available_udp;
+  SafeFifo<IBuffer *>			_available_tcp;
   // EventManager<> of some sort
 };
 
