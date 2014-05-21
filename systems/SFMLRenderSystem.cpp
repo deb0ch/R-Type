@@ -5,7 +5,6 @@
 
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
-#include	"Pos2DComponent.hh"
 #include	"ActionComponent.hh"
 
 SFMLRenderSystem::SFMLRenderSystem()
@@ -46,6 +45,17 @@ void		SFMLRenderSystem::displayCollision(Entity *entity)
     }
 }
 
+void		SFMLRenderSystem::displayBox2D(float width, float height, Pos2DComponent *pos)
+{
+  sf::RectangleShape rectangle(sf::Vector2f(width, height));
+  rectangle.setFillColor(sf::Color::Transparent);
+  rectangle.setOrigin(width / 2, height / 2);
+  rectangle.setPosition(pos->getX(), pos->getY());
+  rectangle.setOutlineThickness(-3);
+  rectangle.setOutlineColor(sf::Color(250, 0, 0));
+  this->_window->draw(rectangle);
+}
+
 void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 {
   SFMLSpriteComponent	*spriteComp = entity->getComponent<SFMLSpriteComponent>("SFMLSpriteComponent");
@@ -66,35 +76,20 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
       else if (action->isActive("DOWN") && spriteComp->hasAction("DOWN"))
 	sprite = spriteComp->getSprite(*imageLoader, "DOWN");
     }
-
-  if (box)
+  width = (box) ? box->getWidth() : 0;
+  height = (box) ? box->getHeight() : 0;
+  if (debug)
     {
-      width = box->getWidth();
-      height = box->getHeight();
+      /*  display for debug here */
+      displayBox2D(width, height, pos);
+      if (entity->hasComponent("CollisionComponent"))
+	displayCollision(entity);
     }
-  else
-    {
-      width = 0;
-      height = 0;
-    }
-
-  /*  display for debug here */
-  sf::RectangleShape rectangle(sf::Vector2f(width, height));
-  rectangle.setFillColor(sf::Color::Transparent);
-  rectangle.setOrigin(width / 2, height / 2);
-  rectangle.setPosition(pos->getX(), pos->getY());
-  rectangle.setOutlineThickness(-3);
-  rectangle.setOutlineColor(sf::Color(250, 0, 0));
-  this->_window->draw(rectangle);
-  if (entity->hasComponent("CollisionComponent"))
-    displayCollision(entity);
-  /*  end of debug display */
-
-
   sprite = spriteComp->getSprite(*imageLoader);
   sprite->setPosition(pos->getX() - (width / 2), pos->getY() - (height / 2));
-  sprite->setScale(width / sprite->getLocalBounds().width,
-		   height / sprite->getLocalBounds().height);
+  if (box)
+    sprite->setScale(width / sprite->getLocalBounds().width,
+		     height / sprite->getLocalBounds().height);
   this->_window->draw(*sprite);
   delete sprite;
 }
