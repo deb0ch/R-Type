@@ -13,9 +13,7 @@ protected:
 
 public:
 		Pos2DComponent(float x = 0.0f, float y = 0.0f);
-		Pos2DComponent(const Pos2DComponent&);
   virtual	~Pos2DComponent();
-  Pos2DComponent	&operator=(const Pos2DComponent&);
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
 

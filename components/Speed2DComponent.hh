@@ -13,9 +13,7 @@ protected:
 
 public:
 		Speed2DComponent(float x = 0.0f, float y = 0.0f);
-		Speed2DComponent(const Speed2DComponent&);
   virtual	~Speed2DComponent();
-  Speed2DComponent	&operator=(const Speed2DComponent&);
 
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);
