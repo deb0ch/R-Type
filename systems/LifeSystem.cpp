@@ -35,24 +35,6 @@ void			LifeSystem::processEntity(Entity *e, const float)
 	if (lifecompo->getLife() <= 0)
 	{
 		this->_world->sendEvent(new EntityDeletedEvent(e));
-		ExplosionComponent *explosionName = e->getComponent<ExplosionComponent>("ExplosionComponent");
-		if (explosionName == NULL)
-			return;
-		Pos2DComponent *position = e->getComponent<Pos2DComponent>("Pos2DComponent");
-		if (position == NULL)
-			return;
-		EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
-		if (entityFactory == NULL)
-			return;
-		Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
-		if (explode == NULL)
-			return;
-		Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
-		if (explodePosition == NULL)
-			return;
-		explodePosition->setX(position->getX() + explosionName->getOffsetX());
-		explodePosition->setY(position->getY() + explosionName->getOffsetY());
-		this->_world->addEntity(explode);
 		return;
 	}
 	if (lifecompo->isInvulnerable())
@@ -74,4 +56,32 @@ void			LifeSystem::collision_event(IEvent *e)
 	lifeFirstE->decreaseLife(colPower->getCollisionPower());
 	std::cout << "Collision between " << firstEntity->getId()
 		<< " and " << secondEntity->getId() << std::endl;
+}
+
+void			LifeSystem::delete_entity(IEvent *e)
+{
+	EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
+	if (event_catch == NULL)
+		return;
+	Entity *dyingEntity = event_catch->getEntity();
+	if (dyingEntity == NULL)
+		return;
+	ExplosionComponent *explosionName = dyingEntity->getComponent<ExplosionComponent>("ExplosionComponent");
+	if (explosionName == NULL)
+		return;
+	Pos2DComponent *position = dyingEntity->getComponent<Pos2DComponent>("Pos2DComponent");
+	if (position == NULL)
+		return;
+	EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+	if (entityFactory == NULL)
+		return;
+	Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
+	if (explode == NULL)
+		return;
+	Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
+	if (explodePosition == NULL)
+		return;
+	explodePosition->setX(position->getX() + explosionName->getOffsetX());
+	explodePosition->setY(position->getY() + explosionName->getOffsetY());
+	this->_world->addEntity(explode);
 }

@@ -89,6 +89,8 @@ void		addSystems(World &world)
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+	  &LifeSystem::delete_entity);
 
   /*
   NetworkSendUpdateSystem *network;
@@ -122,8 +124,8 @@ void		addEntities(World &world)
 	world.addEntity(entityFactory->create("BACKGROUND_1"));
 	world.addEntity(entityFactory->create("BACKGROUND_2"));
 	world.addEntity(entityFactory->create("PLAYER_RED"));
-	world.addEntity(entityFactory->create("BOSS_1"));
-	//world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+	//world.addEntity(entityFactory->create("BOSS_1"));
+	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 int		main()

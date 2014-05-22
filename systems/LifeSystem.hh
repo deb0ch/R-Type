@@ -13,6 +13,7 @@ public:
 	LifeSystem();
 	virtual ~LifeSystem();
 	void	collision_event(IEvent *);
+	void	delete_entity(IEvent *);
 };
 
 #endif /* !LIFESYSTEM_H_ */
