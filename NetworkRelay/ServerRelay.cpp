@@ -37,14 +37,14 @@ void	ServerRelay::waitForEvent()
 
 				  if (remote->canSendUDP())
 				    {
-				      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle()
-						<< std::endl;
+				      //std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle()
+						//<< std::endl;
 				      this->_select.addWrite(this->_server_socket_udp.getHandle());
 				    }
 				  if (remote->canSendTCP())
 				    {
-				      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle()
-						<< std::endl;
+				      //std::cout << "Add write TCP" << remote->getTCPSocket().getHandle()
+						//<< std::endl;
 				      this->_select.addWrite(remote->getTCPSocket().getHandle());
 				    }
 				});
@@ -129,12 +129,12 @@ void		ServerRelay::manageRemotes()
 
 void		ServerRelay::removeRemote(Remote *remote)
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
-  std::cout << "before delete" << std::endl;
+  //std::cout << "before delete" << std::endl;
   delete remote;
-  std::cout << "after delete" << std::endl;
+  //std::cout << "after delete" << std::endl;
 }
 
 /**
@@ -148,12 +148,12 @@ void		ServerRelay::receiveUDP()
   unsigned int	id;
   Remote	*remote;
 
-  std::cout << "Receiving UDP" << std::endl;
+  //std::cout << "Receiving UDP" << std::endl;
   this->_server_socket_udp.receive(*buffer, ip, port);
   buffer->rewind();
   *buffer >> id;
   remote = this->getRemote(id);
-  std::cout << "RECEIVING ID: " << id << std::endl;
+  //std::cout << "RECEIVING ID: " << id << std::endl;
   if (remote)
     {
       remote->setReady(true);
@@ -161,7 +161,7 @@ void		ServerRelay::receiveUDP()
       remote->setPort(port);
       if (buffer->end())
 	{
-	  std::cout << "Sending OK" << std::endl;
+	  //std::cout << "Sending OK" << std::endl;
 	  this->udpConnect(remote);
 	}
       else
@@ -183,10 +183,10 @@ void		ServerRelay::addClient()
   IBuffer	*buffer;
   unsigned int	hash;
 
-  std::cout << "Adding client" << std::endl;
+  //std::cout << "Adding client" << std::endl;
   new_client = this->_server_socket_tcp.accept();
   hash = this->generateHash();
-  std::cout << "GENERATING HASH: " << hash << std::endl;
+  //std::cout << "GENERATING HASH: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
   this->_remotes["default"].getRemotes().push_back(remote);
   buffer = this->getTCPBuffer();
@@ -248,7 +248,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
   if (this->_available_tcp.isEmpty())
     {
       buffer = new NetworkBuffer(4096);
-      std::cout << "creating buffer tcp: " << buffer << std::endl;
+      //std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -266,7 +266,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
   if (this->_available_udp.isEmpty())
     {
       buffer = new NetworkBuffer;
-      std::cout << "creating buffer udp: " << buffer << std::endl;
+      //std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {

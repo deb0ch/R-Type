@@ -158,7 +158,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   INetworkSerializableComponent	*serializable_component;
 
   buffer >> component_hash;
-  std::cout << component_hash << std::endl;
+  //std::cout << component_hash << std::endl;
   ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
   auto it = this->_serializable_component.find(component_hash);
   if (it == this->_serializable_component.end())
@@ -172,7 +172,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   if (!serializable_component)
     {
       new_component = test->create(component_hash);
-      std::cout << "created: " << new_component << std::endl;
+      //std::cout << "created: " << new_component << std::endl;
       if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
 	{
 	  std::cerr << "Received a no serializable component" << std::endl;
@@ -194,8 +194,8 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
   auto it = entity->_components.begin();
   while (it != entity->_components.end())
     {
-      std::cout << "Cycling though component: " << *it << std::endl;
-      std::cout << (*it)->getType() << std::endl;
+      //std::cout << "Cycling though component: " << *it << std::endl;
+      //std::cout << (*it)->getType() << std::endl;
       auto it_serializable = this->_serializable_component.find(Hash()((*it)->getType()));
       if (it_serializable != this->_serializable_component.end() && it_serializable->second == false)
   	{

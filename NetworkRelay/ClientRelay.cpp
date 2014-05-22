@@ -31,12 +31,12 @@ void			ClientRelay::waitForEvent()
   this->_select.addRead(this->_socket_udp.getHandle());
   if (this->_remote->canSendTCP())
     {
-      std::cout << "Add write TCP" << std::endl;
+      //std::cout << "Add write TCP" << std::endl;
       this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
     }
   if (this->_remote->canSendUDP() || (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0))
     {
-      std::cout << "Add write UDP" << std::endl;
+      //std::cout << "Add write UDP" << std::endl;
       this->_select.addWrite(this->_socket_udp.getHandle());
     }
   this->_select.doSelect();
@@ -66,11 +66,11 @@ void			ClientRelay::start()
 	  if (!this->_remote->isReady())
 	    {
 	      this->_remote->setReady(true);
-	      std::cout << "CLIENT READY" << std::endl;
+	      //std::cout << "CLIENT READY" << std::endl;
 	    }
 	  if (!buffer->end())
 	    {
-	      std::cout << "Received smth" << std::endl;
+	      //std::cout << "Received smth" << std::endl;
 	      buffer->rewind();
 	      this->_remote->getRecvBufferUDP().lock();
 	      buffer->setOffset(sizeof(unsigned int));
@@ -111,7 +111,7 @@ IBuffer			*ClientRelay::getTCPBuffer()
   if (this->_available_tcp.isEmpty())
     {
       buffer = new NetworkBuffer(4096);
-      std::cout << "creating buffer tcp: " << buffer << std::endl;
+      //std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -129,7 +129,7 @@ IBuffer			*ClientRelay::getUDPBuffer()
   if (this->_available_udp.isEmpty())
     {
       buffer = new NetworkBuffer;
-      std::cout << "creating buffer udp: " << buffer << std::endl;
+      //std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {

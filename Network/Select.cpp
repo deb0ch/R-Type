@@ -17,7 +17,8 @@ Select::Select()
 {
   this->_reads = NULL;
   this->_writes = NULL;
-  this->_to = NULL;
+  this->_to->tv_sec = 0;
+  this->_to->tv_usec = 0;
   this->maxFd = 0;
 }
 

@@ -116,7 +116,8 @@ int	SocketUDP::receive(IBuffer &data, std::string& address, int& port)
 	struct sockaddr_in src;
 	int len_sockint = sizeof(src);
 
-	int res = ::recvfrom(this->socket, data.getBuffer(), data.getMaxSize(), 0, reinterpret_cast<struct sockaddr *>(&src), &len_sockint);
+	int res = ::recvfrom(this->socket, data.getBuffer(), data.getMaxSize(), 
+		0, reinterpret_cast<struct sockaddr *>(&src), &len_sockint);
 	address = inet_ntoa(src.sin_addr);
 	port = ntohs(src.sin_port);
 	if (res == SOCKET_ERROR)

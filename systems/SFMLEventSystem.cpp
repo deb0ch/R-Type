@@ -29,6 +29,10 @@ void	SFMLEventSystem::beforeProcess()
     {
       switch (event.type)
 	{
+	  case sf::Event::Closed:
+		  this->_window->close();
+			  break;
+
 	case sf::Event::KeyPressed:
 	  this->_world->sendEvent(new SFMLKeyEvent(event.key.code, true));
 	  break;

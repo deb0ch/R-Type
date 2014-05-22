@@ -73,18 +73,18 @@ void			Remote::sendTCP(IBuffer *buffer)
 {
   unsigned int		size;
 
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   size = buffer->getLength();
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
-  std::cout << "sending size: " << size << " " << buffer->getLength() << std::endl;
+  //std::cout << "sending size: " << size << " " << buffer->getLength() << std::endl;
   this->_send_buffer_tcp.push(buffer);
 }
 
 void			Remote::sendUDP(IBuffer *buffer)
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   buffer->rewind();
   *buffer << this->_private_hash;
   buffer->rewind();
@@ -115,11 +115,11 @@ void			Remote::networkSendTCP(INetworkRelay &network)
 {
   IBuffer		*buffer;
 
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_send_buffer_tcp.isEmpty())
     return ;
   buffer = this->_send_buffer_tcp.getNext();
-  std::cout << "sending: " << buffer << std::endl;
+  //std::cout << "sending: " << buffer << std::endl;
   if (this->_tcp->send(*buffer))
     {
       network.disposeTCPBuffer(buffer);
@@ -131,7 +131,7 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 {
   unsigned int		size_read;
 
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_recv_buffer_tcp.trylock())
     {
       this->_temporary_tcp_buffer.gotoEnd();
@@ -156,7 +156,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
   unsigned int	size;
   IBuffer	*buffer;
 
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_temporary_tcp_buffer.getRemainingLength() >= sizeof(unsigned int))
     {
       old_pos = this->_temporary_tcp_buffer.getPosition();
@@ -195,7 +195,7 @@ void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 {
   IBuffer	*buffer;
 
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_send_buffer_udp.isEmpty())
     return ;
   buffer = this->_send_buffer_udp.getNext();

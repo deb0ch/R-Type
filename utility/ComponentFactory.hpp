@@ -21,7 +21,7 @@ class ComponentFactory : public Factory<IComponent, unsigned long>
 private :
 	void addComponent(IComponent *input)
 	{
-		std::cout << input->getType() << std::endl;
+		//std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);
 	}
 
