@@ -25,6 +25,7 @@
 # include "TagComponent.hh"
 # include "CollisionComponent.hh"
 # include "AutoDestructComponent.hh"
+# include "ExplosionComponent.hh"
 # include "Hash.hh"
 
 class EntityFactory : public Factory<Entity, unsigned long>
@@ -65,6 +66,33 @@ public:
 			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 			->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 			{ { "", { 0, 0 } } })));
+	}
+
+	void		initOthers()
+	{
+		this->addEntity("EXPLOSION", (new Entity())
+			->addComponent(new Pos2DComponent(0.0f, 0.0f))
+			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
+			{ { "", { 0, 6 } } }, 5))
+			->addComponent(new AutoDestructComponent(30))
+			);
+
+		this->addEntity("BULLET_EXPLOSION", (new Entity())
+			->addComponent(new Pos2DComponent(0.0f, 0.0f))
+			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
+			{ { "", { 0, 6 } } }, 2))
+			->addComponent(new AutoDestructComponent(12))
+			);
+
+		this->addEntity("PLAYER_EXPLOSION", (new Entity())
+			->addComponent(new Pos2DComponent(0.0f, 0.0f))
+			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new SFMLSpriteComponent("ExplosionPlayer.png", ImageLoader::NbSprite{ 8, 1 },
+			{ { "", { 2, 6 } } }))
+			->addComponent(new AutoDestructComponent(60))
+			);
 	}
 
 	void		initPlayer()
@@ -143,6 +171,7 @@ public:
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new LifeComponent())
+			->addComponent(new ExplosionComponent("PLAYER_EXPLOSION"))
 			->addComponent(new SFMLSpriteComponent("players.png",
 			ImageLoader::NbSprite{ 5, 5 },
 			{ { "", { 17, 0 } },
@@ -151,8 +180,8 @@ public:
 			->addComponent(new SFMLInputComponent())
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
-			->addComponent(new MovementSpeedComponent(5))
-			->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 5,
+			->addComponent(new MovementSpeedComponent(2.2))
+			->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
 			{ 40.0f, 0.0f }, { 40.0f, 0.0f }))
 			->addComponent((new ActionComponent())
 			->addAction("UP")
@@ -180,29 +209,6 @@ public:
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
-			->addComponent((new ActionComponent())
-			->addAction("UP")
-			->addAction("RIGHT")
-			->addAction("DOWN")
-			->addAction("LEFT")
-			));
-
-		this->addEntity("MONSTER_BASIC_BULLET_2", (new Entity())
-			->addComponent(new Pos2DComponent(300.0f, 300.0f))
-			->addComponent(new Box2DComponent(10.0f, 10.0f))
-			->addComponent(new TeamComponent())
-			->addComponent(new Speed2DComponent(0.0f, 0.0f))
-			->addComponent(new Friction2DComponent(0.5f))
-			->addComponent(new MovementSpeedComponent(3.0f))
-			->addComponent(new CollisionPowerComponent(25))
-			->addComponent(new LifeComponent(5))
-			->addComponent(new SFMLSpriteComponent("ShotBasic.png",
-			ImageLoader::NbSprite{ 4, 1 },
-			{ { "", { 0, 4 } } }))
-			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-			->addComponent((new CollisionComponent())
-				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
-			->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
 			->addComponent((new ActionComponent())
 			->addAction("UP")
 			->addAction("RIGHT")
@@ -259,6 +265,7 @@ public:
 			->addComponent(new Pos2DComponent(300.0f, 300.0f))
 			->addComponent(new Box2DComponent(20.0f, 20.0f))
 			->addComponent(new TeamComponent(1))
+			->addComponent(new ExplosionComponent("BULLET_EXPLOSION"))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
 			->addComponent(new MovementSpeedComponent(3.0f))
@@ -284,6 +291,7 @@ public:
 			->addComponent(new Pos2DComponent(100.0f, 100.0f))
 			->addComponent(new Box2DComponent(40.0f, 40.0f))
 			->addComponent(new TeamComponent())
+			->addComponent(new ExplosionComponent())
 			->addComponent(new FireAlwaysComponent())
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
@@ -295,7 +303,7 @@ public:
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 40.0f)))
 			->addComponent(new CollisionPowerComponent(50))
-			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET" }, {}))
+			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET" }, {}, 0, 40))
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 			->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
 			->addComponent((new ActionComponent())
@@ -311,7 +319,7 @@ public:
 			->addComponent(new Box2DComponent(50.0f, 50.0f))
 			->addComponent(new TeamComponent())
 			->addComponent(new Speed2DComponent(0.f, 0.f))
-			->addComponent(new Friction2DComponent(0.5f))
+			->addComponent(new Friction2DComponent(0.9f))
 			->addComponent(new SFMLSpriteComponent("r-typesheet-7.png",
 			ImageLoader::NbSprite{ 4, 3 },
 			{ { "", { 8, 4 } } }))
@@ -319,9 +327,10 @@ public:
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 50.0f, 50.0f)))
 			->addComponent(new LifeComponent(500))
+			->addComponent(new ExplosionComponent())
 			->addComponent(new CollisionPowerComponent(50))
 			->addComponent(new FireAlwaysComponent())
-			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_2", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" },
+			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" },
 			{}, 0, 40, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 			->addComponent((new ActionComponent())
@@ -334,7 +343,7 @@ public:
 
 		this->addEntity("MONSTER_SPAWNER", (new Entity())
 			->addComponent(new Pos2DComponent(800.0f, 300.0f))
-			->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_2" }, {}, 0, 50,
+			->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_2" }, {}, 0, 100,
 			{ (0.0f), (-300.0f) }, { (0.0f), (300.0f) }, true, false))
 			);
 	}
@@ -358,7 +367,7 @@ public:
 			->addComponent((new CollisionComponent())
 			->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 25.0f)))
 			->addComponent(new CollisionPowerComponent(50))
-				->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET_2", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" }, {}, 0, 20,
+				->addComponent(new EntitySpawnerComponent({"MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" }, {}, 0, 20,
 		{ (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 			->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
@@ -391,8 +400,8 @@ public:
 				->addAction("UP")
 				->addAction("DOWN")
 				->addAction("FIRE"))
-				->addComponent(new EntitySpawnerComponent({"MONSTER_BASIC_BULLET_2",
-				"MONSTER_FROM_BOSS", "MONSTER_BASIC_BULLET_4", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET" }, {}, 0, 40,
+				->addComponent(new EntitySpawnerComponent({"MONSTER_FROM_BOSS", "MONSTER_BASIC_BULLET_4",
+				"MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET" }, {}, 0, 40,
 				{ (-5.0f), (0.0f) }, { (-5.0f), (0.0f) }, true, false))
 				);
 	}
@@ -404,6 +413,7 @@ public:
 		this->initBullet();
 		this->initMonster();
 		this->initBoss();
+		this->initOthers();
 	}
 };
 
