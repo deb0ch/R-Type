@@ -35,17 +35,24 @@ void			LifeSystem::processEntity(Entity *e, const float)
 	if (lifecompo->getLife() <= 0)
 	{
 		this->_world->sendEvent(new EntityDeletedEvent(e));
-		/*Pos2DComponent *position = e->getComponen<Pos2DComponent>("Pos2DComponent");
-		if (position != NULL)
-		{
-			EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
-			if (entityFactory == NULL)
-				return;
-			Entity *explosion = entityFactory->create("EXPLODE");
-			explosion->getComponent<Pos2DComponent>("Pos2DComponent")->setX(position->getX());
-			explosion->getComponent<Pos2DComponent>("Pos2DComponent")->setY(position->getY());
-			this->_world->addEntity(explosion);
-		}*/
+		ExplosionComponent *explosionName = e->getComponent<ExplosionComponent>("ExplosionComponent");
+		if (explosionName == NULL)
+			return;
+		Pos2DComponent *position = e->getComponent<Pos2DComponent>("Pos2DComponent");
+		if (position == NULL)
+			return;
+		EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+		if (entityFactory == NULL)
+			return;
+		Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
+		if (explode == NULL)
+			return;
+		Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
+		if (explodePosition == NULL)
+			return;
+		explodePosition->setX(position->getX());
+		explodePosition->setY(position->getY());
+		this->_world->addEntity(explode);
 		return;
 	}
 	if (lifecompo->isInvulnerable())
