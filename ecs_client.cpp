@@ -116,13 +116,13 @@ void		addEntities(World &world)
 
 	ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
-	test->create(Hash()("Pos2DComponent"));
-	test->create(Hash()("Box2DComponent"));
-	test->create(Hash()("Speed2DComponent"));
-	test->create(Hash()("Friction2DComponent"));
-	test->create(Hash()("SFMLInputComponent"));
-	test->create(Hash()("MovementSpeedComponent"));
-	test->create(Hash()("ActionComponent"));
+	delete test->create(Hash()("Pos2DComponent"));
+	delete test->create(Hash()("Box2DComponent"));
+	delete test->create(Hash()("Speed2DComponent"));
+	delete test->create(Hash()("Friction2DComponent"));
+	delete test->create(Hash()("SFMLInputComponent"));
+	delete test->create(Hash()("MovementSpeedComponent"));
+	delete test->create(Hash()("ActionComponent"));
 
 	// world.addEntity(world.createEntity()
 	// 	->addComponent(new Pos2DComponent(0.0f, 100.0f))

@@ -48,10 +48,13 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
   std::for_each(this->_serializable_action.begin(), this->_serializable_action.end(),
 		[&tmp, &changed, &action_component] (const std::string &action_name)
 		{
-		  if (action_component->hasChanged(action_name) && action_component->isActive(action_name))
+		  if (action_component->hasChanged(action_name))
 		    {
+		      std::cout << "Something has changed: " << action_name << std::endl;
 		      changed = true;
 		      *tmp << action_name;
+		      *tmp << static_cast<char>(action_component->isActive(action_name));
+		      action_component->resetChange(action_name);
 		    }
 		});
   if (changed)

@@ -83,11 +83,6 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 	  if (packet_number > network->getPacketNum())
 	    {
 	      network->setPacketNum(packet_number);
-	      std::for_each(this->_serializable_action.begin(), this->_serializable_action.end(),
-			    [&action] (const std::string &action_name)
-			    {
-			      action->setAction(action_name, false);
-			    });
 	      this->parseActions(*buffer, action);
 	    }
 	  it = buffers.erase(it);
@@ -102,10 +97,12 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 void		NetworkReceiveActionSystem::parseActions(IBuffer &buffer, ActionComponent *action)
 {
   std::string	action_name;
+  char		active;
 
   while (!buffer.end())
     {
       buffer >> action_name;
-      action->setAction(action_name, true);
+      buffer >> active;
+      action->setAction(action_name, active != 0);
     }
 }
