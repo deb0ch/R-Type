@@ -108,7 +108,7 @@ void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
 	      this->updateEntity(entity, *buffer);
 	      receive_component->setPacketNum(num_packet);
 	    }
-	  delete buffer;
+	  this->_network->disposeUDPBuffer(buffer);
 	  it = vector.erase(it);
 	}
       else
@@ -139,7 +139,7 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
 	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
 	  this->updateEntity(entity, *buffer);
 	  this->_world->addEntity(entity);
-	  delete buffer;
+	  this->_network->disposeUDPBuffer(buffer);
 	  it = vector.erase(it);
 	}
       else
@@ -156,7 +156,6 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   ASerializableComponent	*serializable_component;
 
   buffer >> component_hash;
-  std::cout << component_hash << std::endl;
   ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
   auto it = this->_serializable_component.find(component_hash);
   if (it == this->_serializable_component.end())
@@ -186,8 +185,6 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
   auto it = entity->_components.begin();
   while (it != entity->_components.end())
     {
-      std::cout << "Cycling though component: " << *it << std::endl;
-      std::cout << (*it)->getType() << std::endl;
       auto it_serializable = this->_serializable_component.find(Hash()((*it)->getType()));
       if (it_serializable != this->_serializable_component.end() && it_serializable->second == false)
   	{

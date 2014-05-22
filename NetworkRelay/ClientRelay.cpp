@@ -31,12 +31,10 @@ void			ClientRelay::waitForEvent()
   this->_select.addRead(this->_socket_udp.getHandle());
   if (this->_remote->canSendTCP())
     {
-      std::cout << "Add write TCP" << std::endl;
       this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
     }
   if (this->_remote->canSendUDP() || (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0))
     {
-      std::cout << "Add write UDP" << std::endl;
       this->_select.addWrite(this->_socket_udp.getHandle());
     }
   this->_select.doSelect();
@@ -70,7 +68,6 @@ void			ClientRelay::start()
 	    }
 	  if (!buffer->end())
 	    {
-	      std::cout << "Received smth" << std::endl;
 	      buffer->rewind();
 	      this->_remote->getRecvBufferUDP().lock();
 	      buffer->setOffset(sizeof(unsigned int));

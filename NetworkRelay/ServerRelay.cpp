@@ -37,14 +37,10 @@ void	ServerRelay::waitForEvent()
 
 				  if (remote->canSendUDP())
 				    {
-				      std::cout << "Add write UDP: " << this->_server_socket_udp.getHandle()
-						<< std::endl;
 				      this->_select.addWrite(this->_server_socket_udp.getHandle());
 				    }
 				  if (remote->canSendTCP())
 				    {
-				      std::cout << "Add write TCP" << remote->getTCPSocket().getHandle()
-						<< std::endl;
 				      this->_select.addWrite(remote->getTCPSocket().getHandle());
 				    }
 				});
@@ -129,12 +125,9 @@ void		ServerRelay::manageRemotes()
 
 void		ServerRelay::removeRemote(Remote *remote)
 {
-  std::cout << __PRETTY_FUNCTION__ << std::endl;
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
-  std::cout << "before delete" << std::endl;
   delete remote;
-  std::cout << "after delete" << std::endl;
 }
 
 /**
@@ -148,12 +141,10 @@ void		ServerRelay::receiveUDP()
   unsigned int	id;
   Remote	*remote;
 
-  std::cout << "Receiving UDP" << std::endl;
   this->_server_socket_udp.receive(*buffer, ip, port);
   buffer->rewind();
   *buffer >> id;
   remote = this->getRemote(id);
-  std::cout << "RECEIVING ID: " << id << std::endl;
   if (remote)
     {
       remote->setReady(true);
@@ -161,7 +152,6 @@ void		ServerRelay::receiveUDP()
       remote->setPort(port);
       if (buffer->end())
 	{
-	  std::cout << "Sending OK" << std::endl;
 	  this->udpConnect(remote);
 	}
       else
