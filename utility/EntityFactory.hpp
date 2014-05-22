@@ -303,9 +303,9 @@ public:
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 40.0f)))
 			->addComponent(new CollisionPowerComponent(50))
-			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET" }, {}, 0, 40))
+			->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" }, {}, 0, 40))
 			->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-			->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
+			->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 50))
 			->addComponent((new ActionComponent())
 			->addAction("UP")
 			->addAction("RIGHT")
@@ -344,7 +344,7 @@ public:
 		this->addEntity("MONSTER_SPAWNER", (new Entity())
 			->addComponent(new Pos2DComponent(800.0f, 300.0f))
 			->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_2" }, {}, 0, 100,
-			{ (0.0f), (-300.0f) }, { (0.0f), (300.0f) }, true, false))
+			{ (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
 			);
 	}
 
