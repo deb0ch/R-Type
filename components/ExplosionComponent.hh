@@ -8,12 +8,16 @@
 class		ExplosionComponent : public AComponent<ExplosionComponent>
 {
 public:
-	ExplosionComponent(const std::string &name = "EXPLOSION");
+	ExplosionComponent(const std::string &name = "EXPLOSION", float offsetX = 0.0f, float offsetY = 0.0f);
 	virtual	~ExplosionComponent();
 
 	const std::string &getExplosionEntityName() const;
+	float getOffsetX() const;
+	float getOffsetY() const;
 
 protected:
+	float _offsetX;
+	float _offsetY;
 	std::string _explosionEntityName;
 };
 

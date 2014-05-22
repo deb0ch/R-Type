@@ -50,8 +50,8 @@ void			LifeSystem::processEntity(Entity *e, const float)
 		Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
 		if (explodePosition == NULL)
 			return;
-		explodePosition->setX(position->getX());
-		explodePosition->setY(position->getY());
+		explodePosition->setX(position->getX() + explosionName->getOffsetX());
+		explodePosition->setY(position->getY() + explosionName->getOffsetY());
 		this->_world->addEntity(explode);
 		return;
 	}
