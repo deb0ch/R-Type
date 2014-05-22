@@ -25,7 +25,7 @@ public:
   virtual void	beforeProcess();
 
 private:
-  void		serializeComponents(Entity *, IBuffer &buffer);
+  void		serializeComponents(Entity *, Remote *, IBuffer &buffer);
 private:
   std::vector<std::string>		_component_to_send;
   INetworkRelay				*_network;

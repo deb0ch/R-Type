@@ -4,10 +4,9 @@
 # include	<map>
 # include	<string>
 
-# include	"AComponent.hpp"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		ActionComponent : public AComponent<ActionComponent>, public INetworkSerializableComponent
+class		ActionComponent : public ACopyableComponent<ActionComponent>
 {
 private:
   std::map<std::string, bool>	_actions;

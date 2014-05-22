@@ -2,7 +2,7 @@
 #include	"ActionComponent.hh"
 
 ActionComponent::ActionComponent()
-  : AComponent("ActionComponent")
+  : ACopyableComponent("ActionComponent")
 {}
 
 ActionComponent::~ActionComponent()

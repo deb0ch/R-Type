@@ -1,6 +1,6 @@
 #include "Box2DComponent.hh"
 
-Box2DComponent::Box2DComponent(float width, float height) : AComponent("Box2DComponent")
+Box2DComponent::Box2DComponent(float width, float height) : ACopyableComponent("Box2DComponent")
 {
   this->_width = width;
   this->_height = height;
@@ -11,7 +11,7 @@ Box2DComponent::~Box2DComponent()
 
 }
 
-Box2DComponent::Box2DComponent(const Box2DComponent &e) : AComponent("Box2DComponent")
+Box2DComponent::Box2DComponent(const Box2DComponent &e) : ACopyableComponent("Box2DComponent")
 {
   this->_width = e._width;
   this->_height = e._height;

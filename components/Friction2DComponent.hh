@@ -1,11 +1,9 @@
 #ifndef FRICTION2DCOMPONENT_H_
 # define FRICTION2DCOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class		Friction2DComponent : public AComponent<Friction2DComponent>, public INetworkSerializableComponent
+class		Friction2DComponent : public ACopyableComponent<Friction2DComponent>
 {
 public:
   float		getFrictionCoef() const;

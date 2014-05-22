@@ -2,11 +2,11 @@
 
 //----- ----- Constructors ----- ----- //
 Friction2DComponent::Friction2DComponent(float coef)
-  : AComponent("Friction2DComponent"), _frictionCoef(coef)
+  : ACopyableComponent("Friction2DComponent"), _frictionCoef(coef)
 {}
 
 Friction2DComponent::Friction2DComponent(const Friction2DComponent &ref)
-  : AComponent("Friction2DComponent")
+  : ACopyableComponent("Friction2DComponent")
 {
   this->_frictionCoef = ref._frictionCoef;
 }

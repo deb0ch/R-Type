@@ -1,12 +1,9 @@
 #ifndef NETWORKSENDACTIONCOMPONENT_H_
 # define NETWORKSENDACTIONCOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "ISerializableComponent.hh"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class NetworkSendActionComponent : public AComponent<NetworkSendActionComponent>,
-				   public INetworkSerializableComponent
+class NetworkSendActionComponent : public ACopyableComponent<NetworkSendActionComponent>
 {
 public:
   NetworkSendActionComponent(unsigned int id = 0);

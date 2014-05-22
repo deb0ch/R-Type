@@ -3,13 +3,13 @@
 
 //----- ----- Constructors ----- ----- //
 MoveFollowComponent::MoveFollowComponent(Entity *target)
-  : AComponent("MoveFollowComponent")
+  : ACopyableComponent("MoveFollowComponent")
 {
   this->_target = target;
 }
 
 MoveFollowComponent::MoveFollowComponent(const MoveFollowComponent &ref)
-  : AComponent("MoveFollowComponent")
+  : ACopyableComponent("MoveFollowComponent")
 {
   this->_target = ref._target;
 }
@@ -43,3 +43,10 @@ float	MoveFollowComponent::getY() const
 }
 
 //----- ----- Setters ----- ----- //
+
+
+void		MoveFollowComponent::serialize(IBuffer &buffer) const
+{}
+
+void		MoveFollowComponent::unserialize(IBuffer &buffer)
+{}

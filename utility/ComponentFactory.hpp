@@ -3,6 +3,7 @@
 
 # include <string>
 # include "Factory.hpp"
+# include "ASerializableComponent.hh"
 # include "SFMLInputComponent.hh"
 # include "Friction2DComponent.hh"
 # include "Box2DComponent.hh"
@@ -16,10 +17,10 @@
 # include "NetworkSendActionComponent.hh"
 # include "Hash.hh"
 
-class ComponentFactory : public Factory<IComponent, unsigned long>
+class ComponentFactory : public Factory<ASerializableComponent, unsigned long>
 {
 private :
-	void addComponent(IComponent *input)
+	void addComponent(ASerializableComponent *input)
 	{
 		std::cout << input->getType() << std::endl;
 		this->add(Hash()(input->getType()), input);

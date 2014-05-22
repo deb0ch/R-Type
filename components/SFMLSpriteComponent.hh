@@ -2,12 +2,10 @@
 # define SFMLSPRITECOMPONENT_H_
 
 # include "SFML/Graphics.hpp"
-# include "AComponent.hpp"
 # include "ImageLoader.hh"
-# include "ISerializableComponent.hh"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class		SFMLSpriteComponent : public AComponent<SFMLSpriteComponent>, public INetworkSerializableComponent
+class		SFMLSpriteComponent : public ACopyableComponent<SFMLSpriteComponent>
 {
 protected:
   std::string	_filaName;

@@ -4,7 +4,6 @@
 # include	<string>
 # include	"IComponent.hh"
 
-template <typename T>
 class		AComponent : public IComponent
 {
 protected:
@@ -18,11 +17,6 @@ public:
   }
   virtual	~AComponent()
   {}
-
-  virtual IComponent *clone() const
-  {
-    return (new T(*dynamic_cast<const T *>(this)));
-  }
 
   virtual const std::string	&getType() const
   {

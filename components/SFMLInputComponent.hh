@@ -6,10 +6,9 @@
 # include	<vector>
 
 # include	"SFML/Window/Keyboard.hpp"
-# include	"AComponent.hpp"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		SFMLInputComponent : public AComponent<SFMLInputComponent>, public INetworkSerializableComponent
+class		SFMLInputComponent : public ACopyableComponent<SFMLInputComponent>
 {
 private:
   std::map<std::string, std::vector<sf::Keyboard::Key> >	_inputs;

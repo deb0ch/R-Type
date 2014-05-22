@@ -1,11 +1,9 @@
 #ifndef SPEED2DCOMPONENT_H_
 # define SPEED2DCOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class		Speed2DComponent : public AComponent<Speed2DComponent>, public INetworkSerializableComponent
+class		Speed2DComponent : public ACopyableComponent<Speed2DComponent>
 {
 protected:
   float		_vX;

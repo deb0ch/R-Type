@@ -3,7 +3,7 @@
 
 //----- ----- Constructors ----- ----- //
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename)
-  : AComponent("SFMLSpriteComponent"), _filaName(filename)
+  : ACopyableComponent("SFMLSpriteComponent"), _filaName(filename)
 {}
 
 //----- ----- Destructor ----- ----- //

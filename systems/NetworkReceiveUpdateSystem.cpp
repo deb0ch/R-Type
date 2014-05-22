@@ -1,8 +1,7 @@
 #include "NetworkReceiveUpdateSystem.hh"
 #include "NetworkReceiveUpdateComponent.hh"
 #include "NetworkSendUpdateSystem.hh"
-#include "ISerializableComponent.hh"
-#include "INetworkSerializableComponent.hh"
+#include "ASerializableComponent.hh"
 #include "NetworkBuffer.hh"
 #include "ComponentFactory.hpp"
 #include "Hash.hh"
@@ -154,8 +153,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 										 IBuffer &buffer)
 {
   unsigned long			component_hash;
-  IComponent			*new_component;
-  INetworkSerializableComponent	*serializable_component;
+  ASerializableComponent	*serializable_component;
 
   buffer >> component_hash;
   std::cout << component_hash << std::endl;
@@ -168,19 +166,13 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
     }
   it->second = true;
   serializable_component =
-    entity->getComponent<INetworkSerializableComponent, unsigned long, Hash>(component_hash, Hash());
+    entity->getComponent<ASerializableComponent, unsigned long, Hash>(component_hash, Hash());
   if (!serializable_component)
     {
-      new_component = test->create(component_hash);
-      std::cout << "created: " << new_component << std::endl;
-      if (!(serializable_component = dynamic_cast<INetworkSerializableComponent *>(new_component)))
-	{
-	  std::cerr << "Received a no serializable component" << std::endl;
-	  throw 1;
-	}
+      serializable_component = test->create(component_hash);
     }
   serializable_component->unserialize(buffer);
-  entity->addComponent(dynamic_cast<IComponent *>(serializable_component));
+  entity->addComponent(serializable_component);
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,

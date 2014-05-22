@@ -1,11 +1,9 @@
 #ifndef MOVEMENTSPEEDCOMPONENT_H_
 # define MOVEMENTSPEEDCOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "ISerializableComponent.hh"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class MovementSpeedComponent : public AComponent<MovementSpeedComponent>, public INetworkSerializableComponent
+class MovementSpeedComponent : public ACopyableComponent<MovementSpeedComponent>
 {
 public:
 		MovementSpeedComponent(float movement_speed = 1.f);
