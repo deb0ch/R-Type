@@ -1,3 +1,4 @@
+
 #include	<iostream>
 
 #include	"SFML/Audio/Music.hpp"
@@ -58,6 +59,10 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
+#include	"Timer.hh"
+
+static float	g_fps = 60.f;
+
 void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
@@ -91,13 +96,13 @@ void		addSystems(World &world)
 			&EntityDeleterSystem::addEntityToDelete);
 
   /*
-  NetworkSendUpdateSystem *network;
-  std::vector<std::string> arg =
+    NetworkSendUpdateSystem *network;
+    std::vector<std::string> arg =
     { "Pos2DComponent",
-      "SFMLSpriteComponent",
-      "Speed2DComponent",
-      "Friction2DComponent" };
-  network = new NetworkSendUpdateSystem(arg);
+    "SFMLSpriteComponent",
+    "Speed2DComponent",
+    "Friction2DComponent" };
+    network = new NetworkSendUpdateSystem(arg);
   */
   //world.addSystem(network);
   //world.addSystem(new NetworkReceiveUpdateSystem());
@@ -116,45 +121,55 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
-	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
-	if (entityFactory == NULL)
-		return;
-	world.addEntity(entityFactory->create("BACKGROUND_1"));
-	world.addEntity(entityFactory->create("BACKGROUND_2"));
-	world.addEntity(entityFactory->create("PLAYER_RED"));
-	//world.addEntity(entityFactory->create("BOSS_1"));
-	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+  if (entityFactory == NULL)
+    return;
+  world.addEntity(entityFactory->create("BACKGROUND_1"));
+  world.addEntity(entityFactory->create("BACKGROUND_2"));
+  world.addEntity(entityFactory->create("PLAYER_RED"));
+  world.addEntity(entityFactory->create("BOSS_1"));
+  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 int		main()
 {
   World		world;
+  Timer		timer;
+  unsigned long	currentTime;
+  unsigned long	previousTime;
 
   addSystems(world);
   addSharedObjetcs(world);
   addEntities(world);
+  world.start();
 
-	world.start();
+  sf::Music music;
 
-	sf::Music music;
-
-	if (music.openFromFile("Ressources/Sound/music.ogg")) {
-	  music.setLoop(true);
-	  music.play();
-	}
-
-	/*
-	SoundLoader *s = new SoundLoader();
-	s->addSound("Ressources/Sound/laser.wav");
-	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-	sound->play();
-	*/
-
-	for (;;)
+  if (music.openFromFile("Ressources/Sound/music.ogg"))
+    {
+      music.setLoop(true);
+      music.play();
+    }
+  /*
+    SoundLoader *s = new SoundLoader();
+    s->addSound("Ressources/Sound/laser.wav");
+    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+    sound->play();
+  */
+  previousTime = timer.getMilliTime();
+  while (42)
+    {
+      currentTime = timer.getMilliTime();
+      if (currentTime - previousTime >= 1000.0 / g_fps)
 	{
-	    world.process(0.16f);
+	  std::cout << "delta = " << currentTime - previousTime << std::endl;
+	  std::cout << "fps = " << 1000.f / (currentTime - previousTime) << std::endl;
+	  world.process(currentTime - previousTime);
+	  previousTime = currentTime;
 	}
-	world.stop();
-
+      else
+	timer.milliSleep((1000.0 / g_fps) - (currentTime - previousTime));
+    }
+  world.stop();
   return (0);
 }

@@ -25,6 +25,7 @@ RTException::RTException(const int error) {
   this->_info = "RTException : ";
   this->addError(error);
 }
+
 RTException::RTException(const std::string &info) {
   this->_info = "RTException : ";
   this->_info = info;
@@ -35,6 +36,7 @@ RTException::RTException(const std::string &prefix, const int error) {
   this->_info = prefix;
   this->addError(error);
 }
+
 RTException::RTException(const std::string &prefix, const std::string &error) {
   this->_info = prefix;
   this->_info += error;

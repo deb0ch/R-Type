@@ -69,6 +69,7 @@ void MoveFollowSystem::processEntity(Entity *entity, const float)
       const std::string &	tagToFollow = moveFollowComponent->getTagToFollow();
 
       entityToFollow = searchClosestTarget(entity, tagToFollow);
+      moveFollowComponent->setIdToFollow(entityToFollow->getId());
     }
 
   if (entityToFollow != NULL)
