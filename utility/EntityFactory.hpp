@@ -73,6 +73,7 @@ public:
 		this->addEntity("EXPLOSION", (new Entity())
 			->addComponent(new Pos2DComponent(0.0f, 0.0f))
 			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new TeamComponent(3))
 			->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
 			{ { "", { 0, 6 } } }, 5))
 			->addComponent(new AutoDestructComponent(30))
@@ -81,6 +82,7 @@ public:
 		this->addEntity("BULLET_EXPLOSION", (new Entity())
 			->addComponent(new Pos2DComponent(0.0f, 0.0f))
 			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new TeamComponent(3))
 			->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
 			{ { "", { 0, 6 } } }, 2))
 			->addComponent(new AutoDestructComponent(12))
@@ -89,6 +91,7 @@ public:
 		this->addEntity("PLAYER_EXPLOSION", (new Entity())
 			->addComponent(new Pos2DComponent(0.0f, 0.0f))
 			->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+			->addComponent(new TeamComponent(3))
 			->addComponent(new Box2DComponent(100.0f, 100.0f))
 			->addComponent(new SFMLSpriteComponent("ExplosionPlayer.png", ImageLoader::NbSprite{ 8, 1 },
 			{ { "", { 2, 6 } } }))
@@ -98,7 +101,7 @@ public:
 		this->addEntity("ALIEN_BOMB_EXPLOSION", (new Entity())
 			->addComponent(new Pos2DComponent(0.0f, 0.0f))
 			->addComponent(new Speed2DComponent(0.0f, 0.0f))
-			->addComponent(new TeamComponent())
+			->addComponent(new TeamComponent(3))
 			->addComponent(new Box2DComponent(100.0f, 100.0f))
 			->addComponent(new CollisionPowerComponent(50))
 			->addComponent((new CollisionComponent())
@@ -111,7 +114,7 @@ public:
 		this->addEntity("BOSS_EXPLOSION", (new Entity())
 			->addComponent(new Pos2DComponent(0.0f, 0.0f))
 			->addComponent(new Speed2DComponent(0.0f, 0.0f))
-			->addComponent(new TeamComponent())
+			->addComponent(new TeamComponent(3))
 			->addComponent(new Box2DComponent(250.0f, 280.0f))
 			->addComponent(new CollisionPowerComponent(500))
 			->addComponent(new SFMLSpriteComponent("BigExplosion.png", ImageLoader::NbSprite{ 10, 1 },
@@ -197,7 +200,7 @@ public:
 			->addComponent(new TeamComponent(1))
 			->addComponent(new Speed2DComponent(0.f, 0.f))
 			->addComponent(new Friction2DComponent(0.5f))
-			->addComponent(new LifeComponent())
+			->addComponent(new LifeComponent(100, 20))
 			->addComponent(new ExplosionComponent("PLAYER_EXPLOSION"))
 			->addComponent(new SFMLSpriteComponent("players.png",
 			ImageLoader::NbSprite{ 5, 5 },
@@ -207,7 +210,7 @@ public:
 			->addComponent(new SFMLInputComponent())
 			->addComponent((new CollisionComponent())
 				->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
-			->addComponent(new MovementSpeedComponent(2.2f))
+			->addComponent(new MovementSpeedComponent(3.0f))
 			->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
 			{ 40.0f, 0.0f }, { 40.0f, 0.0f }))
 			->addComponent((new ActionComponent())
