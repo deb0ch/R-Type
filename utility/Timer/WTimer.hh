@@ -4,6 +4,9 @@
 # include <iostream>
 # include <string>
 # include <time.h>
+//# include <WinBase.h>
+# include <Windows.h>
+# include <SynchApi.h>
 
 # include "ITimer.hh"
 # include "RTException.hh"
@@ -39,7 +42,7 @@ private:
 
 private:
   unsigned long			_fps;
-  struct timespec		_timeBuff;
+  clock_t				_time;
   unsigned long			_currentTime;
   unsigned long			_previousTime;
 };
