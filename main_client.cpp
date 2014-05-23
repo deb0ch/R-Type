@@ -94,6 +94,8 @@ void		addSystems(World &world)
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+	  &LifeSystem::delete_entity);
 
   /*
     NetworkSendUpdateSystem *network;
