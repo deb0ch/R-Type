@@ -143,7 +143,6 @@ int		main()
   addSystems(world);
   addSharedObjetcs(world);
   addEntities(world);
-  world.start();
 
   sf::Music music;
 
@@ -158,12 +157,12 @@ int		main()
     sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
     sound->play();
   */
+  world.start();
   while (42)
     {
       timer.startFrame();
-      std::cout << "fps = " << timer.getCurrentFps() << std::endl;
       if (timer.canTick())
-	world.process(timer.getDeltaTime());
+	world.process(timer.getDeltaTime() / 1000000.f);
       timer.endFrame();
     }
   world.stop();

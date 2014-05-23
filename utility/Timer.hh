@@ -3,30 +3,41 @@
 
 # define _XOPEN_SOURCE 700
 
-# include <errno.h>
-# include <exception>
-# include <string.h>
-# include <time.h>
-# include <unistd.h>
+# ifdef __linux__
+#  include <errno.h>
+#  include <exception>
+#  include <unistd.h>
+# endif /* !__linux__ */
+
+# ifdef _win32
+
+# endif /* !_WIN32 */
+
+#  include <string>
+#  include <time.h>
+
 # include "RTException.hh"
 
+/**
+ * All time units in this class are in microseconds
+*/
 class Timer
 {
 public:
   void			startFrame();
   void			endFrame();
   bool			canTick() const;
-  float			getDeltaTime() const;
+  unsigned long		getDeltaTime() const;
 
-  int			getFps() const;
-  float			getCurrentFps() const;
-  void			setFps(int fps);
+  unsigned long		getFps() const;
+  unsigned long		getCurrentFps() const;
+  void			setFps(unsigned long fps);
 
-  float			getTime();
-  void			sleep(float delay) const;
+  unsigned long		getTime();
+  void			sleep(unsigned long delay) const;
 
 public:
-  Timer(int fps = 60);
+  Timer(unsigned long fps = 60);
   ~Timer() {}
 
 private:
@@ -34,14 +45,14 @@ private:
   Timer &operator=(const Timer &) = delete;
 
 private:
-  inline float		bufToTime(const struct timespec & timebuff) const;
+  inline unsigned long	bufToTime(const struct timespec & timebuff) const;
 
 private:
-  int			_fps;
+  unsigned long		_fps;
   struct timespec	_timeBuff;
-  float			_timeZero;
-  float			_currentTime;
-  float			_previousTime;
+  unsigned long		_timeZero;
+  unsigned long		_currentTime;
+  unsigned long		_previousTime;
 };
 
 #endif /* !TIMER_H_ */
