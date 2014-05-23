@@ -68,7 +68,10 @@ void	Timer::sleep(float delay) const
 
 // Private:
 
-inline float	Timer::bufToTime(const struct timespec & timeBuff) const
+inline long	Timer::bufToTime(const struct timespec & timeBuff) const
 {
+  std::cout << "bufToTime = " << timeBuff.tv_sec + timeBuff.tv_nsec / 1000000000.f << std::endl;
+  std::cout << "tv_sec = " << timeBuff.tv_sec << std::endl;
+  std::cout << "tv_nsec / = " << timeBuff.tv_sec + timeBuff.tv_nsec / 1000000000.f << std::endl;
   return (timeBuff.tv_sec + timeBuff.tv_nsec / 1000000000.f);
 }

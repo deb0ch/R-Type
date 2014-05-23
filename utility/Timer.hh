@@ -13,13 +13,20 @@
 class Timer
 {
 public:
-  void			setDelta();
-  unsigned long		getDelta() const;
-  unsigned long		getMilliTime();
-  void			milliSleep(unsigned long delay) const;
+  void			startFrame();
+  void			endFrame();
+  bool			canTick() const;
+  float			getDeltaTime() const;
+
+  int			getFps() const;
+  float			getCurrentFps() const;
+  void			setFps(int fps);
+
+  float			getTime();
+  void			sleep(float delay) const;
 
 public:
-  Timer();
+  Timer(int fps = 60);
   ~Timer() {}
 
 private:
@@ -27,11 +34,14 @@ private:
   Timer &operator=(const Timer &) = delete;
 
 private:
-  inline long		bufToMilliTime(const struct timespec & timebuff) const;
+  inline float		bufToTime(const struct timespec & timebuff) const;
 
 private:
+  int			_fps;
   struct timespec	_timeBuff;
-  unsigned long		_milliTimeZero;
+  float			_timeZero;
+  float			_currentTime;
+  float			_previousTime;
 };
 
 #endif /* !TIMER_H_ */

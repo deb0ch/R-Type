@@ -61,8 +61,6 @@
 
 #include	"Timer.hh"
 
-static float	g_fps = 60.f;
-
 void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
@@ -141,8 +139,6 @@ int		main()
 {
   World		world;
   Timer		timer;
-  unsigned long	currentTime;
-  unsigned long	previousTime;
 
   addSystems(world);
   addSharedObjetcs(world);
@@ -162,18 +158,13 @@ int		main()
     sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
     sound->play();
   */
-  previousTime = timer.getMilliTime();
   while (42)
     {
-      currentTime = timer.getMilliTime();
-      if (currentTime - previousTime >= 1000.0 / g_fps)
-	{
-	  std::cout << "fps = " << 1000.f / (currentTime - previousTime) << std::endl;
-	  world.process((currentTime - previousTime) / 1000.f);
-	  previousTime = currentTime;
-	}
-      else
-	timer.milliSleep((1000.0 / g_fps) - (currentTime - previousTime));
+      timer.startFrame();
+      std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+      if (timer.canTick())
+	world.process(timer.getDeltaTime());
+      timer.endFrame();
     }
   world.stop();
   return (0);
