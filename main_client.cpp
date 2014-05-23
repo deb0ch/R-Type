@@ -164,7 +164,7 @@ int		main()
 	{
 	  std::cout << "delta = " << currentTime - previousTime << std::endl;
 	  std::cout << "fps = " << 1000.f / (currentTime - previousTime) << std::endl;
-	  world.process(currentTime - previousTime);
+	  world.process((currentTime - previousTime) / 1000.f);
 	  previousTime = currentTime;
 	}
       else

@@ -31,6 +31,6 @@ void			MoveSystem::processEntity(Entity *e, const float deltaT)
   if (!(speed = e->getComponent<Speed2DComponent>("Speed2DComponent"))
       || !(pos = e->getComponent<Pos2DComponent>("Pos2DComponent")))
     return ;
-  pos->setY(pos->getY() + speed->getVY() * (deltaT / 10.f));
-  pos->setX(pos->getX() + speed->getVX() * (deltaT / 10.f));
+  pos->setY(pos->getY() + speed->getVY() * deltaT);
+  pos->setX(pos->getX() + speed->getVX() * deltaT);
 }

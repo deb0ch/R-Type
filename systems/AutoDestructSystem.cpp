@@ -22,7 +22,7 @@ void	AutoDestructSystem::processEntity(Entity *entity, const float)
   AutoDestructComponent *autoDestructComponent;
   autoDestructComponent = entity->getComponent<AutoDestructComponent>("AutoDestructComponent");
 
-  std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" << std::endl;
+  std::cout << "AUTODESTRUUUUUUUUUUUUUUUUUUUUUCT !!!" << std::endl;
   autoDestructComponent->setTick(autoDestructComponent->getTick() + 1);
   if (autoDestructComponent->getTick() >= autoDestructComponent->getDelay())
     this->_world->sendEvent(new EntityDeletedEvent(entity));
