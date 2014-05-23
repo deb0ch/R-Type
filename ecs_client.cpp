@@ -82,6 +82,7 @@ void		addSystems(World &world)
 	    "Friction2DComponent",
 	    "ActionComponent",
 	    "PlayerMovementComponent",
+	    "MovementSpeedComponent",
 	    "NetworkSendActionComponent",
 	    "SFMLInputComponent" };
 	world.addSystem(new NetworkReceiveUpdateSystem(arg));

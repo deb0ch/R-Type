@@ -66,6 +66,7 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
 	    room->sendBroadcastUDP(*this->_network, tmp, true);
 	  room->unlock();
 	}
+      network_component->increasePacketNumber();
     }
   this->_network->disposeUDPBuffer(tmp);
 }

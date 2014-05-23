@@ -60,7 +60,7 @@ void		addSystems(World &world)
 	world.addSystem(new Friction2DSystem());
 	world.addSystem(new SFMLRenderSystem());
 	world.addSystem(new SFMLEventSystem());
-	world.addSystem(new SFMLInputSystem());
+	// world.addSystem(new SFMLInputSystem());
 	world.addSystem(new OutOfBoundsSystem());
 	world.addSystem(new MoveFollowSystem());
 	world.addSystem(new PlayerMovementSystem());
@@ -84,7 +84,7 @@ void		addSystems(World &world)
 	    "Friction2DComponent",
 	    "ActionComponent",
 	    "PlayerMovementComponent",
-	    "PlayerMovementComponent",
+	    "MovementSpeedComponent",
 	    "NetworkSendActionComponent",
 	    "SFMLInputComponent" };
 	network = new NetworkSendUpdateSystem(arg);
@@ -120,8 +120,8 @@ void		addEntities(World &world)
   ComponentFactory *test = world.getSharedObject<ComponentFactory>("componentFactory");
 
 	tmp = world.createEntity()
-		->addComponent(new Pos2DComponent(0.0f, 100.0f))
-		->addComponent(new Speed2DComponent(5.f, 5.f))
+		->addComponent((new Pos2DComponent(0.0f, 100.0f))->sendUpdate(false))
+		->addComponent((new Speed2DComponent(5.f, 5.f))->sendUpdate(false))
 		->addComponent(new Friction2DComponent(0.1f))
 		->addComponent(new SFMLSpriteComponent(PATH + std::string("players.png")))
 		->addComponent(new SFMLInputComponent())

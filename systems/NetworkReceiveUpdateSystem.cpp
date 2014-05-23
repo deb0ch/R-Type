@@ -108,6 +108,9 @@ void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
 	      this->updateEntity(entity, *buffer);
 	      receive_component->setPacketNum(num_packet);
 	    }
+	  else
+	    std::cout << "Packed dropped: " << num_packet << " " <<
+	      receive_component->getPacketNum() << std::endl;
 	  this->_network->disposeUDPBuffer(buffer);
 	  it = vector.erase(it);
 	}
@@ -154,9 +157,14 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 {
   unsigned long			component_hash;
   ASerializableComponent	*serializable_component;
+  bool				update = true;
 
   buffer >> component_hash;
-  ComponentFactory *test = this->_world->getSharedObject<ComponentFactory>("componentFactory");
+  if (component_hash == 0)
+    {
+      buffer >> component_hash;
+      update = false;
+    }
   auto it = this->_serializable_component.find(component_hash);
   if (it == this->_serializable_component.end())
     {
@@ -166,12 +174,21 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   it->second = true;
   serializable_component =
     entity->getComponent<ASerializableComponent, unsigned long, Hash>(component_hash, Hash());
-  if (!serializable_component)
+  if (!serializable_component || update == false)
     {
-      serializable_component = test->create(component_hash);
+      ComponentFactory *fact = this->_world->getSharedObject<ComponentFactory>("componentFactory");
+
+      if (!(serializable_component = fact->create(component_hash)))
+	{
+	  std::cerr << "Cannot create component: " << component_hash << std::endl;
+	  throw 1;
+	}
     }
   serializable_component->unserialize(buffer);
-  entity->addComponent(serializable_component);
+  if (!entity->hasComponent(serializable_component->getType()))
+    entity->addComponent(serializable_component);
+  else if (update == false)
+    delete serializable_component;
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
@@ -188,6 +205,7 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
       auto it_serializable = this->_serializable_component.find(Hash()((*it)->getType()));
       if (it_serializable != this->_serializable_component.end() && it_serializable->second == false)
   	{
+	  std::cout << "deleting: " << (*it)->getType() << std::endl;
   	  delete *it;
   	  it = entity->_components.erase(it);
   	}
