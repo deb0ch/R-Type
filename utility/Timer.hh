@@ -13,22 +13,25 @@
 class Timer
 {
 public:
-  Timer();
-  ~Timer() {}
-
-public:
+  void			setDelta();
+  unsigned long		getDelta() const;
   unsigned long		getMilliTime();
   void			milliSleep(unsigned long delay) const;
 
-private:
-  struct timespec	_timeBuff;
-  unsigned long		_milliTimeZero;
+public:
+  Timer();
+  ~Timer() {}
 
 private:
   Timer(const Timer &) = delete;
   Timer &operator=(const Timer &) = delete;
 
+private:
   inline long		bufToMilliTime(const struct timespec & timebuff) const;
+
+private:
+  struct timespec	_timeBuff;
+  unsigned long		_milliTimeZero;
 };
 
 #endif /* !TIMER_H_ */

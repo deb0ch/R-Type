@@ -85,11 +85,13 @@ void		addSystems(World &world)
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
+
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
   EntityDeleterSystem *entityDeleterSystem;
+
   entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
@@ -113,8 +115,9 @@ void		addSystems(World &world)
 void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
-  compos->init();
   EntityFactory *entityFactory = new EntityFactory();
+
+  compos->init();
   entityFactory->init();
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
@@ -124,6 +127,7 @@ void		addSharedObjetcs(World &world)
 void		addEntities(World &world)
 {
   EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+
   if (entityFactory == NULL)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
@@ -164,7 +168,6 @@ int		main()
       currentTime = timer.getMilliTime();
       if (currentTime - previousTime >= 1000.0 / g_fps)
 	{
-	  std::cout << "delta = " << currentTime - previousTime << std::endl;
 	  std::cout << "fps = " << 1000.f / (currentTime - previousTime) << std::endl;
 	  world.process((currentTime - previousTime) / 1000.f);
 	  previousTime = currentTime;
