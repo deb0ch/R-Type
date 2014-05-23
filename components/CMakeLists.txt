@@ -16,6 +16,7 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -34,6 +35,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.cpp
 	PARENT_SCOPE)
 
 
@@ -55,6 +57,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.hh
 	PARENT_SCOPE
 )
 
@@ -74,5 +77,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.cpp
 	PARENT_SCOPE
 )
