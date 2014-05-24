@@ -25,6 +25,8 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnPlayerSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -54,6 +56,8 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnPlayerSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
 	PARENT_SCOPE
 	)
 
@@ -83,6 +87,8 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
 	PARENT_SCOPE
 )
 
@@ -112,5 +118,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionFireSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
 	PARENT_SCOPE
 )

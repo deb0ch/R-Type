@@ -40,9 +40,8 @@ protected:
   SocketTCP				_server_socket_tcp;
   SocketUDP				_server_socket_udp;
   Select				_select;
-  std::vector<Remote *>			_disonnect_remotes;
   Mutex					_mutex_room;
-  std::map<std::string, Room>		_remotes;
+  std::map<std::string, Room>		_remotes; // String: Nom de la room
   SafeFifo<IBuffer *>			_available_udp;
   SafeFifo<IBuffer *>			_available_tcp;
   // temporary

@@ -29,6 +29,7 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"NetworkReceiveDieEntitySystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -77,6 +78,7 @@ void		addSystems(World &world)
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
   world.addSystem(new BackgroundSystem());
+  world.addSystem(new NetworkReceiveDieEntitySystem());
 
   CollisionSystem *collision;
 
@@ -101,6 +103,12 @@ void		addSystems(World &world)
       "LEFT",
       "FIRE" };
   world.addSystem(new NetworkSendActionSystem(serializable_action));
+
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
+
 }
 
 static std::string g_ip = "127.0.0.1";
