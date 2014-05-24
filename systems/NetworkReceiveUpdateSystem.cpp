@@ -169,7 +169,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   auto it = this->_serializable_component.find(component_hash);
   if (it == this->_serializable_component.end())
     {
-      std::cerr << "Received a no serializable component (2)" << std::endl;
+      std::cerr << "Received a no serializable component (2): " << component_hash << std::endl;
       throw 1;
     }
   it->second = true;

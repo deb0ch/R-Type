@@ -71,7 +71,7 @@ void			NetworkPlayerComponent::unserialize(IBuffer &)
 void			NetworkPlayerComponent::networkSerialize(Remote *remote, IBuffer &buffer,
 								 bool send_force) const
 {
-  if (this->_send || send_force)
+  if (this->canSend(remote->getPrivateHash()) || send_force)
     {
       if (remote->getPrivateHash() == this->_remote_hash)
 	{
@@ -88,11 +88,11 @@ NetworkPlayerComponent	*NetworkPlayerComponent::addPlayerComponent(ASerializable
 {
   if (component)
     {
-      component->setNetworkSend(false);
+      component->setNetworkSendException(this->_remote_hash);
       if (std::find(this->_non_update_component.begin(),
 		    this->_non_update_component.end(),
-		    component->getType()) == this->_non_update_component.end())
-	component->setNetworkSendUpdate(false);
+		    component->getType()) != this->_non_update_component.end())
+	component->setNetworkSendUpdateException(this->_remote_hash);
       this->_components.push_back(component);
     }
   return this;

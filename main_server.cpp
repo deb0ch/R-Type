@@ -69,11 +69,10 @@
 
 void		addSystems(World &world)
 {
-  world.addSystem(new NetworkSendDieEntitySystem());
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
-  world.addSystem(new SFMLInputSystem());
+  // world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
@@ -119,6 +118,7 @@ void		addSystems(World &world)
       "NetworkPlayerComponent",
       "SFMLInputComponent" };
   world.addSystem(new NetworkSendUpdateSystem(arg));
+
   std::vector<std::string> serializable_action =
     { "UP",
       "RIGHT",

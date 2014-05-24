@@ -108,7 +108,6 @@ void		addSystems(World &world)
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
-
 }
 
 static std::string g_ip = "127.0.0.1";

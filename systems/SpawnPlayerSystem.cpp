@@ -61,12 +61,14 @@ void		SpawnPlayerSystem::beforeProcess()
 	  if (entityFactory)
 	    {
 	      Entity *player_entity = entityFactory->create("PLAYER_RED");
+	      this->_world->addEntity(player_entity);
 	      NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
 	      player_entity->addComponent((new NetworkPlayerComponent(hash))
 	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Pos2DComponent"))
 	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Speed2DComponent"))
+	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("ActionComponent"))
 	      				  ->addPlayerComponent(send_action));
-	      this->_world->addEntity(player_entity);
+
 	      std::cout << "Created entity" << std::endl;
 	    }
 	}

@@ -52,10 +52,10 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
 		    {
 		      std::cout << "Something has changed: " << action_name << std::endl;
 		      changed = true;
-		      *tmp << action_name;
-		      *tmp << static_cast<char>(action_component->isActive(action_name));
-		      action_component->resetChange(action_name);
 		    }
+		  *tmp << action_name;
+		  *tmp << static_cast<char>(action_component->isActive(action_name));
+		  action_component->resetChange(action_name);
 		});
   if (changed)
     {
