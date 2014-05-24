@@ -2,7 +2,9 @@
 # define NETWORKBUFFER_H_
 
 # include <iostream>
+# include <typeinfo>
 # include "IBuffer.hh"
+# include "BufferException.hh"
 
 class NetworkBuffer : public IBuffer
 {
@@ -68,8 +70,7 @@ private:
     tab = reinterpret_cast<const char *>(&elements);
     if (this->_buffer_size + sizeof(T) > bufferMaxSize)
       {
-	std::cout << "Not enough space" << std::endl; // raise exception
-	return ;
+	throw BufferException(this, std::string("Serialize: no more space; Size = ") + std::to_string(sizeof(T)));
       }
     if (isBigEndian())
       i = 0;
@@ -95,8 +96,7 @@ private:
     tab = reinterpret_cast<char *>(&elements);
     if (this->_buffer_size - this->_current_pos < sizeof(T))
       {
-	std::cout << "Not enough space" << std::endl; // raise exception
-	return ;
+	throw BufferException(this, std::string("Unserialize: no more space; Size = ") + std::to_string(sizeof(T)));
       }
     if (isBigEndian())
       i = 0;

@@ -50,7 +50,6 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
 		{
 		  if (action_component->hasChanged(action_name))
 		    {
-		      std::cout << "Something has changed: " << action_name << std::endl;
 		      changed = true;
 		    }
 		  *tmp << action_name;

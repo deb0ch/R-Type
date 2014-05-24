@@ -186,8 +186,7 @@ void		NetworkBuffer::serialize<std::string>(const std::string &element)
   this->serialize<unsigned int>(element.length());
   if (this->_buffer_size + element.length() > bufferMaxSize)
     {
-      std::cerr << "Invalid size" << std::endl; // raise exception
-      return ;
+      throw BufferException(this, std::string("Serialize std::string: no more space"));
     }
   for (auto it = element.begin(); it != element.end(); ++it)
     {
@@ -205,8 +204,7 @@ void		NetworkBuffer::unserialize<std::string>(std::string &element)
   this->unserialize<unsigned int>(size);
   if (this->_buffer_size - this->_current_pos < size)
     {
-      // std::cout << "Not enough space" << std::endl; // raise exception
-      return ;
+      throw BufferException(this, std::string("Unserialize std::string: no more space"));
     }
   for (unsigned int i = 0; i < size; ++i)
     {
@@ -230,8 +228,12 @@ void		NetworkBuffer::setOffset(unsigned int offset)
   int		diff;
 
   diff = offset - this->_offset;
-  if ((int)this->_buffer_size - diff >= 0)
+  if (static_cast<int>(this->_buffer_size) - diff >= 0)
     {
+      if (diff >= static_cast<int>(this->_current_pos))
+	this->_current_pos = 0;
+      else
+	this->_current_pos -= diff;
       this->_buffer += diff;
       this->_buffer_size -= diff;
       this->_offset = offset;

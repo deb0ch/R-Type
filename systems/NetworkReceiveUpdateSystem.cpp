@@ -51,7 +51,16 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
 		      while (it != recv_buffer.end())
 			{
-			  this->parsePacket(recv_buffer, it);
+			  try
+			    {
+			      this->parsePacket(recv_buffer, it);
+			    }
+			  catch (std::exception &e)
+			    {
+			      std::cerr << e.what() << std::endl;
+			      this->_network->disposeUDPBuffer(*it);
+			      it = recv_buffer.erase(it);
+			    }
 			}
 		      recv_buffer.unlock();
 		    });
@@ -76,7 +85,16 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 		  LockVector<IBuffer *>::iterator it = recv_buffer.begin();
 		  while (it != recv_buffer.end())
 		    {
-		      this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
+		      try
+			{
+			  this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
+			}
+		      catch (std::exception &e)
+			{
+			  std::cerr << e.what() << std::endl;
+			  this->_network->disposeUDPBuffer(*it);
+			  it = recv_buffer.erase(it);
+			}
 		    }
 		  recv_buffer.unlock();
 		});
@@ -139,7 +157,6 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
       if (!this->remoteEntityExists(id_entity))
 	{
 	  entity = this->_world->createEntity();
-	  std::cout << "Create entity: " << entity << std::endl;
 	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
 	  this->updateEntity(entity, *buffer);
 	  this->_world->addEntity(entity);
@@ -169,8 +186,8 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
   auto it = this->_serializable_component.find(component_hash);
   if (it == this->_serializable_component.end())
     {
-      std::cerr << "Received a no serializable component (2): " << component_hash << std::endl;
-      throw 1;
+      throw BufferException(&buffer, std::string("Receive an unserializable component: ") +
+			    std::to_string(component_hash));
     }
   it->second = true;
   serializable_component =
@@ -181,8 +198,8 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 
       if (!(serializable_component = fact->create(component_hash)))
 	{
-	  std::cerr << "Cannot create component: " << component_hash << std::endl;
-	  throw 1;
+	  throw BufferException(&buffer, std::string("Cannot create component: ") +
+				std::to_string(component_hash));
 	}
     }
   serializable_component->unserialize(buffer);
