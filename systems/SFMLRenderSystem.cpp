@@ -87,7 +87,10 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 	if (sprite == NULL)
 		sprite = spriteComp->getSprite(*imageLoader);
 	if (sprite == NULL)
-		return;
+	  {
+	    std::cout << "Sprite does not exist" << std::endl;
+	    return;
+	  }
 	sprite->setPosition(pos->getX() - (width / 2), pos->getY() - (height / 2));
 	if (box)
 		sprite->setScale(width / sprite->getLocalBounds().width,

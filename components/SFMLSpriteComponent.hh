@@ -16,6 +16,7 @@ protected:
 	std::string					_previousAction;
 	int						_currentSprite;
 	std::map<std::string, std::pair<int, int> >	_map;
+	bool						_mapexist;
 
 public:
 	SFMLSpriteComponent();

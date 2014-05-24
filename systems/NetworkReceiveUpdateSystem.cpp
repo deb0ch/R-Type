@@ -139,6 +139,7 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
       if (!this->remoteEntityExists(id_entity))
 	{
 	  entity = this->_world->createEntity();
+	  std::cout << "Create entity: " << entity << std::endl;
 	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
 	  this->updateEntity(entity, *buffer);
 	  this->_world->addEntity(entity);
