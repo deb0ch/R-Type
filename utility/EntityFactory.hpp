@@ -209,8 +209,10 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
+		    ->addComponent(new EntitySpawnerComponent({ "TRACKER_MISSILE" }, {}, 0, 20,
 							      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
+		    // ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
+		    // 					      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -379,6 +381,30 @@ public:
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   ));
+
+    this->addEntity("TRACKER_MISSILE", (new Entity())
+		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
+		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
+		    ->addComponent(new TeamComponent(1))
+		    ->addComponent(new Speed2DComponent(1000.0f, 0.0f))
+		    ->addComponent(new Friction2DComponent(0.07f))
+		    ->addComponent(new MovementSpeedComponent(60.f))
+		    ->addComponent(new MoveFollowComponent("Ennemy"))
+		    ->addComponent(new LifeComponent(100))
+		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
+		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
+							   ImageLoader::NbSprite{ 4, 3 },
+							   { { "", { 4, 0 } } }))
+		    ->addComponent((new CollisionComponent())
+				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
+		    ->addComponent(new CollisionPowerComponent(100))
+		    ->addComponent((new ActionComponent())
+				   ->addAction("UP")
+				   ->addAction("RIGHT")
+				   ->addAction("DOWN")
+				   ->addAction("LEFT")
+				   ));
   }
 
   void		initMonster()
@@ -407,8 +433,10 @@ public:
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("MONSTER_2", (new Entity())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
@@ -434,8 +462,10 @@ public:
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
@@ -473,8 +503,10 @@ public:
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("BOSS_1", (new Entity())
 		    ->addComponent(new Pos2DComponent(700.0f, 590.0f))
@@ -501,6 +533,8 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({"MONSTER_FROM_BOSS", "MONSTER_BASIC_BULLET_4",
 			    "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET" }, {}, 0, 40,
 			{ (-5.0f), (0.0f) }, { (-5.0f), (0.0f) }, true, false))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
 		    );
   }
 
