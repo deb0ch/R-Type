@@ -20,14 +20,16 @@ public:
       this->_types.insert(std::make_pair(key, obj));
   }
 
-  U	*create(const Key &key) const
+  const U	*getOriginal(const Key &key) const
   {
     auto it = this->_types.find(key);
 
     if (it == this->_types.end())
       return (NULL);
-    return it->second->clone();
+    return (it->second);
   }
+
+  virtual U	*create(const Key &key) const = 0;
 
 protected:
   std::map<Key, const U *> _types;

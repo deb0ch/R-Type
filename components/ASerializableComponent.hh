@@ -18,7 +18,8 @@ public:
   virtual void serialize(IBuffer &) const = 0;
   virtual void unserialize(IBuffer &) = 0;
   virtual void networkSerialize(Remote *remote, IBuffer &) const;
-  virtual ASerializableComponent *clone() const = 0;
+  virtual ASerializableComponent *cloneSerializable() const = 0;
+  virtual IComponent *clone() const;
 private:
   bool	_sendUpdate;
 };

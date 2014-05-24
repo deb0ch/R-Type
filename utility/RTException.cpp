@@ -16,8 +16,7 @@ void RTException::addError(const int error)
   strerror_s(buffer, sizeof(buffer), error);
   this->_info += buffer;
 #elif __linux__
-  strerror_r(error, buffer, sizeof(buffer));
-  this->_info += buffer;
+  this->_info += strerror_r(error, buffer, sizeof(buffer));
 #endif
 }
 
@@ -26,6 +25,7 @@ RTException::RTException(const int error) {
   this->_info = "RTException : ";
   this->addError(error);
 }
+
 RTException::RTException(const std::string &info) {
   this->_info = "RTException : ";
   this->_info = info;
@@ -36,6 +36,7 @@ RTException::RTException(const std::string &prefix, const int error) {
   this->_info = prefix;
   this->addError(error);
 }
+
 RTException::RTException(const std::string &prefix, const std::string &error) {
   this->_info = prefix;
   this->_info += error;

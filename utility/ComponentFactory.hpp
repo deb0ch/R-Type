@@ -20,33 +20,42 @@
 class ComponentFactory : public Factory<ASerializableComponent, unsigned long>
 {
 private :
-	void addComponent(ASerializableComponent *input)
-	{
-		std::cout << input->getType() << std::endl;
-		this->add(Hash()(input->getType()), input);
-	}
+  void addComponent(ASerializableComponent *input)
+  {
+    this->add(Hash()(input->getType()), input);
+  }
 
 public :
-	ComponentFactory()
-	{ }
+  ComponentFactory()
+  {}
 
-	virtual ~ComponentFactory(){
-	}
+  virtual ~ComponentFactory(){
+  }
 
-	virtual void init()
-	{
-		this->addComponent(new SFMLInputComponent());
-		this->addComponent(new Pos2DComponent());
-		this->addComponent(new Friction2DComponent());
-		this->addComponent(new Box2DComponent());
-		this->addComponent(new Speed2DComponent());
-		this->addComponent(new MovementSpeedComponent());
-		this->addComponent(new SFMLSpriteComponent());
-		this->addComponent(new NetworkSendUpdateComponent());
-		this->addComponent(new ActionComponent());
-		this->addComponent(new PlayerMovementComponent());
-		this->addComponent(new NetworkSendActionComponent());
-	}
+  virtual void init()
+  {
+    this->addComponent(new SFMLInputComponent());
+    this->addComponent(new Pos2DComponent());
+    this->addComponent(new Friction2DComponent());
+    this->addComponent(new Box2DComponent());
+    this->addComponent(new Speed2DComponent());
+    this->addComponent(new MovementSpeedComponent());
+    this->addComponent(new SFMLSpriteComponent());
+    this->addComponent(new NetworkSendUpdateComponent());
+    this->addComponent(new ActionComponent());
+    this->addComponent(new PlayerMovementComponent());
+    this->addComponent(new NetworkSendActionComponent());
+  }
+
+  virtual ASerializableComponent	*create(const unsigned long &key) const
+  {
+    const ASerializableComponent *tmp;
+
+    tmp = this->getOriginal(key);
+    if (!tmp)
+      return NULL;
+    return (tmp->cloneSerializable());
+  }
 };
 
 #endif

@@ -37,8 +37,8 @@ public:
    */
   void			setAction(const std::string &, const bool status);
 
-  void			serialize(IBuffer &) const;
-  void			unserialize(IBuffer &);
+  virtual void		serialize(IBuffer &) const;
+  virtual void		unserialize(IBuffer &);
 };
 
 #endif /* !ACTIONCOMPONENT_H_ */

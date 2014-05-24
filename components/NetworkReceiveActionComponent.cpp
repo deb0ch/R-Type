@@ -19,8 +19,8 @@ void		NetworkReceiveActionComponent::setPacketNum(unsigned int num)
   this->_packet_num = num;
 }
 
-void		NetworkReceiveActionComponent::serialize(IBuffer &buffer) const
+void		NetworkReceiveActionComponent::serialize(IBuffer &) const
 {}
 
-void		NetworkReceiveActionComponent::unserialize(IBuffer &buffer)
+void		NetworkReceiveActionComponent::unserialize(IBuffer &)
 {}

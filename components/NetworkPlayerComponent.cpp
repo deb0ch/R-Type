@@ -23,24 +23,24 @@ NetworkPlayerComponent &NetworkPlayerComponent::operator=(const NetworkPlayerCom
       std::for_each(e._components.begin(), e._components.end(),
 		    [this] (const ASerializableComponent *comp)
 		    {
-		      this->_components.push_back(comp->clone());
+		      this->_components.push_back(comp->cloneSerializable());
 		    });
     }
   return (*this);
 }
 
-ASerializableComponent *NetworkPlayerComponent::clone() const
+ASerializableComponent *NetworkPlayerComponent::cloneSerializable() const
 {
   return (new NetworkPlayerComponent(*this));
 }
 
-void			NetworkPlayerComponent::serialize(IBuffer &buffer) const
+void			NetworkPlayerComponent::serialize(IBuffer &) const
 {
   std::cout << "Not supposed to happen yet" << std::endl;
   throw 1;
 }
 
-void			NetworkPlayerComponent::unserialize(IBuffer &buffer)
+void			NetworkPlayerComponent::unserialize(IBuffer &)
 {
   std::cout << "Not supposed to happen yet" << std::endl;
   throw 1;

@@ -3,11 +3,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(RType_Server)
 PROJECT(RType_Client)
 
+MESSAGE("settings ...")
 SET(SERVER_BIN RType_Server)
 SET(CLIENT_BIN RType_Client)
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0 -Wall")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0 -W -Wall -Wextra")
 endif (UNIX)
 
 SET(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
@@ -17,11 +18,11 @@ SET(HEADER_S)
 SET(HEADER_C)
 
 SET(SOURCE_S
-	ecs_server.cpp)
+	main_server.cpp)
 
 SET(SOURCE_C
-	ecs_client.cpp)
-	
+	main_client.cpp)
+
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/systems")	
@@ -43,8 +44,12 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/events)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Network)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Threads)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/systems)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
+
+if (UNIX)
+	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src)
+	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
+endif (UNIX)
+
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/utility)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/NetworkRelay)
 
@@ -52,15 +57,19 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/NetworkRelay)
 ADD_EXECUTABLE(${SERVER_BIN} ${SOURCE_S} ${HEADER_S})
 ADD_EXECUTABLE(${CLIENT_BIN} ${SOURCE_C} ${HEADER_C})
 
-#RELEASE MODE
-
 # COPY RESSOURCES
+MESSAGE("Copy ressources files ...")
 SET(RESSOURCES ${CMAKE_SOURCE_DIR}/Ressources)
 FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR})
 
+
+#RELEASE MODE
+SET(CMAKE_BUILD_TYPE "Release")
+MESSAGE("set build type : " ${CMAKE_BUILD_TYPE})
 # COMPILE WITH SFML
 if (UNIX)
   	SET(CMAKE_BUILD_TYPE "Debug")
+	MESSAGE("OS TYPE : UNIX")
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-window.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-system.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)
@@ -92,13 +101,6 @@ if (WIN32)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-system.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-window.lib)
-		
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-audio.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-graphics.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-system.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-window.lib)
-		MESSAGE("RELEASE")
 	else ()
 		SET(DLL ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/bin/Debug)
 		FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
@@ -110,13 +112,6 @@ if (WIN32)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-system-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-window-d.lib)
-		
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-audio-d.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-graphics-d.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main-d.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-system-d.lib)
-		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-window-d.lib)
-		MESSAGE("DEBUG")
 	endif ()
 endif (WIN32)
 

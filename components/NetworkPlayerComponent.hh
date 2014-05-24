@@ -12,7 +12,7 @@ public:
   virtual				~NetworkPlayerComponent();
   NetworkPlayerComponent		&operator=(const NetworkPlayerComponent &);
 
-  virtual ASerializableComponent	*clone() const;
+  virtual ASerializableComponent	*cloneSerializable() const;
   virtual void				serialize(IBuffer &) const;
   virtual void				unserialize(IBuffer &);
   virtual void				networkSerialize(Remote *remote, IBuffer &) const;

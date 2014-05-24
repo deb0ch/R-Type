@@ -13,7 +13,7 @@ public:
   virtual ~ACopyableComponent()
   {}
 
-  virtual ASerializableComponent *clone() const
+  virtual ASerializableComponent *cloneSerializable() const
   {
     return (new T(*dynamic_cast<const T *>(this)));
   }

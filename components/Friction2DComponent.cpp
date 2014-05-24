@@ -5,22 +5,9 @@ Friction2DComponent::Friction2DComponent(float coef)
   : ACopyableComponent("Friction2DComponent"), _frictionCoef(coef)
 {}
 
-Friction2DComponent::Friction2DComponent(const Friction2DComponent &ref)
-  : ACopyableComponent("Friction2DComponent")
-{
-  this->_frictionCoef = ref._frictionCoef;
-}
-
 //----- ----- Destructor ----- ----- //
 Friction2DComponent::~Friction2DComponent()
 {}
-
-//----- ----- Operators ----- ----- //
-Friction2DComponent	&Friction2DComponent::operator=(const Friction2DComponent &ref)
-{
-  this->_frictionCoef = ref._frictionCoef;
-  return (*this);
-}
 
 //----- ----- Getters ----- ----- //
 float	Friction2DComponent::getFrictionCoef() const

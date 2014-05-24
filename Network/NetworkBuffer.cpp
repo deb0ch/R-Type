@@ -233,7 +233,7 @@ void		NetworkBuffer::setOffset(unsigned int offset)
   int		diff;
 
   diff = offset - this->_offset;
-  if (this->_buffer_size - diff >= 0)
+  if ((int)this->_buffer_size - diff >= 0)
     {
       this->_buffer += diff;
       this->_buffer_size -= diff;

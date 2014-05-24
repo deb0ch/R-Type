@@ -18,3 +18,8 @@ ASerializableComponent	*ASerializableComponent::sendUpdate(bool value)
   this->_sendUpdate = value;
   return this;
 }
+
+IComponent		*ASerializableComponent::clone() const
+{
+  return (this->cloneSerializable());
+}

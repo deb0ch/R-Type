@@ -25,8 +25,8 @@ public:
 
 public:
   /**
-   * @brief addImage if dosn't existe
-   * @throw ImageLoaderException throw execption when: loadFromFile failed OR
+   * @brief addImage if dosn't exists
+   * @throw ImageLoaderException throw exception when: loadFromFile failed OR
    * NbSprite.nbSprint = 0 OR fileName dosn't exist
    */
   void addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite);
@@ -51,7 +51,6 @@ private:
 private:
   ImageLoader(const ImageLoader &);
   ImageLoader &operator=(const ImageLoader &);
-
 };
 
 #endif /* !IMAGELOADER_H_ */

@@ -21,7 +21,7 @@ bool	Mutex::trylock()
     throw MutexException(ret);
   _status = LOCKED;
   if (ret == EBUSY)
-	  return (false);
+    return (false);
   return (true);
 }
 
@@ -41,8 +41,7 @@ IMutex::STATUS	Mutex::status() const
 
 Mutex::Mutex()
   : _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
-{
-}
+{}
 
 Mutex::~Mutex()
 {
