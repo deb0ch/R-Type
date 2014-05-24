@@ -5,8 +5,7 @@
 
 SFMLSpriteComponent::SFMLSpriteComponent()
 	: AComponent("SFMLSpriteComponent")
-{
-}
+{}
 
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, const ImageLoader::NbSprite& sprites,
 	const std::map<std::string, std::pair<int, int> > &map, unsigned int tickChange)

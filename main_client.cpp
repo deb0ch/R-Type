@@ -1,3 +1,4 @@
+
 #include	<iostream>
 
 #include	"SFML/Audio/Music.hpp"
@@ -58,6 +59,8 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
+#include	"Timer.hh"
+
 void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
@@ -80,11 +83,13 @@ void		addSystems(World &world)
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
+
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
   EntityDeleterSystem *entityDeleterSystem;
+
   entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
@@ -93,13 +98,13 @@ void		addSystems(World &world)
 	  &LifeSystem::delete_entity);
 
   /*
-  NetworkSendUpdateSystem *network;
-  std::vector<std::string> arg =
+    NetworkSendUpdateSystem *network;
+    std::vector<std::string> arg =
     { "Pos2DComponent",
-      "SFMLSpriteComponent",
-      "Speed2DComponent",
-      "Friction2DComponent" };
-  network = new NetworkSendUpdateSystem(arg);
+    "SFMLSpriteComponent",
+    "Speed2DComponent",
+    "Friction2DComponent" };
+    network = new NetworkSendUpdateSystem(arg);
   */
   //world.addSystem(network);
   //world.addSystem(new NetworkReceiveUpdateSystem());
@@ -114,8 +119,9 @@ void		addSharedObjetcs(World &world)
 	*/
 
   ComponentFactory *compos = new ComponentFactory();
-  compos->init();
   EntityFactory *entityFactory = new EntityFactory();
+
+  compos->init();
   entityFactory->init();
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
@@ -125,39 +131,46 @@ void		addSharedObjetcs(World &world)
 
 void		addEntities(World &world)
 {
-	EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
-	if (entityFactory == NULL)
-		return;
-	world.addEntity(entityFactory->create("BACKGROUND_1"));
-	world.addEntity(entityFactory->create("BACKGROUND_2"));
-	world.addEntity(entityFactory->create("PLAYER_RED"));
-	//world.addEntity(entityFactory->create("BOSS_1"));
-	world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+
+  if (entityFactory == NULL)
+    return;
+  world.addEntity(entityFactory->create("BACKGROUND_1"));
+  world.addEntity(entityFactory->create("BACKGROUND_2"));
+  world.addEntity(entityFactory->create("PLAYER_RED"));
+  world.addEntity(entityFactory->create("BOSS_1"));
+  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 int		main()
 {
   World		world;
+  Timer		timer;
 
   addSystems(world);
   addSharedObjetcs(world);
   addEntities(world);
+  sf::Music music;
 
-	world.start();
-
-	sf::Music music;
-	
-	if (music.openFromFile("Ressources/Sound/music.ogg"))
-	{
-	  music.setLoop(true);
-	  music.play();
-	}
-
-	for (;;)
-	{
-	    world.process(0.16f);
-	}
-	world.stop();
-
+  if (music.openFromFile("Ressources/Sound/music.ogg"))
+    {
+      music.setLoop(true);
+      music.play();
+    }
+  /*
+    SoundLoader *s = new SoundLoader();
+    s->addSound("Ressources/Sound/laser.wav");
+    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+    sound->play();
+  */
+  world.start();
+  while (42)
+    {
+      timer.startFrame();
+      if (timer.canTick())
+	world.process(timer.getDeltaTime() / 1000000.f);
+      timer.endFrame();
+    }
+  world.stop();
   return (0);
 }

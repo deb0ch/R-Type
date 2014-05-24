@@ -23,14 +23,14 @@ bool		MoveSystem::canProcess(Entity *e)
   return (false);
 }
 
-void			MoveSystem::processEntity(Entity *e, const float)
+void			MoveSystem::processEntity(Entity *e, const float deltaT)
 {
   Speed2DComponent	*speed;
   Pos2DComponent	*pos;
 
-  if (!(speed = e->getComponent<Speed2DComponent>("Speed2DComponent")) ||
-      !(pos = e->getComponent<Pos2DComponent>("Pos2DComponent")))
+  if (!(speed = e->getComponent<Speed2DComponent>("Speed2DComponent"))
+      || !(pos = e->getComponent<Pos2DComponent>("Pos2DComponent")))
     return ;
-  pos->setY(pos->getY() + speed->getVY());
-  pos->setX(pos->getX() + speed->getVX());
+  pos->setY(pos->getY() + speed->getVY() * deltaT);
+  pos->setX(pos->getX() + speed->getVX() * deltaT);
 }
