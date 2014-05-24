@@ -37,9 +37,10 @@ void NetworkReceiveDieEntitySystem::afterProcess()
 		    {
 		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
 		      recv_buffer.lock();
-		      for (auto it = recv_buffer.begin(); it != recv_buffer.end(); ) {
-			this->parsePacket(recv_buffer, it);
-		      }
+		      for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
+			{
+			  this->parsePacket(recv_buffer, it);
+			}
 		      recv_buffer.unlock();
 		    });
       room->unlock();

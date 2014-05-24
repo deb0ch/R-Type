@@ -95,17 +95,18 @@ void		addSystems(World &world)
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
+
+  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
+  world.addSystem(networkSendDieEntitySystem);
+  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
+			&NetworkSendDieEntitySystem::addEntityToDelete);
+
   EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
-
-  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
-  world.addSystem(networkSendDieEntitySystem);
-  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
-			&NetworkSendDieEntitySystem::addEntityToDelete);
 
   std::vector<std::string> arg =
     {
@@ -163,7 +164,6 @@ void		addEntities(World &world)
   world.addEntity(entityFactory->create("BACKGROUND_2"));
   // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
