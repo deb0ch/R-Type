@@ -84,15 +84,6 @@ void		addSystems(World &world)
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-  EntityDeleterSystem *entityDeleterSystem;
-
-  entityDeleterSystem = new EntityDeleterSystem();
-  world.addSystem(entityDeleterSystem);
-  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-			&EntityDeleterSystem::addEntityToDelete);
-  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-	  &LifeSystem::delete_entity);
-
   std::vector<std::string> arg =
     { "Pos2DComponent",
       "SFMLSpriteComponent",

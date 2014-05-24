@@ -60,17 +60,28 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
+#include	"ServerRelay.hh"
+#include	"Threads.hh"
+
 #include	"Timer.hh"
 
 void		addSystems(World &world)
 {
+  world.addSystem(new AutoDestructSystem());
+  world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new OutOfBoundsSystem());
+  world.addSystem(new MoveFollowSystem());
+  world.addSystem(new MoveForwardSystem());
+  world.addSystem(new MoveSequenceSystem());
+  world.addSystem(new FireAlwaysSystem());
   world.addSystem(new ActionMovementSystem());
   world.addSystem(new ActionFireSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
+  world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
   world.addSystem(new BackgroundSystem());
@@ -99,21 +110,27 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent" };
-  world.addSystem(new NetworkReceiveUpdateSystem(arg));
+  world.addSystem(new NetworkSendUpdateSystem(arg));
   std::vector<std::string> serializable_action =
     { "UP",
       "RIGHT",
       "DOWN",
       "LEFT",
       "FIRE" };
-  world.addSystem(new NetworkSendActionSystem(serializable_action));
+  world.addSystem(new NetworkReceiveActionSystem(serializable_action));
 }
 
 void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
   EntityFactory *entityFactory = new EntityFactory();
+  ServerRelay *server = new ServerRelay(6667, 42);
+  Thread<ServerRelay> *thread = new Thread<ServerRelay>();
+  Any tmp;
 
+  world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(server));
+  world.setSharedObject("RoomName", new std::string("default"));
+  thread->start(server, &ServerRelay::start, tmp);
   compos->init();
   entityFactory->init();
   world.setSharedObject("imageLoader", new ImageLoader());
@@ -121,18 +138,18 @@ void		addSharedObjetcs(World &world)
   world.setSharedObject("entityFactory", entityFactory);
 }
 
-// void		addEntities(World &world)
-// {
-//   EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+void		addEntities(World &world)
+{
+  EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
 
-//   if (entityFactory == NULL)
-//     return;
-//   world.addEntity(entityFactory->create("BACKGROUND_1"));
-//   world.addEntity(entityFactory->create("BACKGROUND_2"));
-//   world.addEntity(entityFactory->create("PLAYER_RED"));
-//   world.addEntity(entityFactory->create("BOSS_1"));
-//   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
-// }
+  if (entityFactory == NULL)
+    return;
+  world.addEntity(entityFactory->create("BACKGROUND_1"));
+  world.addEntity(entityFactory->create("BACKGROUND_2"));
+  world.addEntity(entityFactory->create("PLAYER_RED"));
+  world.addEntity(entityFactory->create("BOSS_1"));
+  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+}
 
 int		main()
 {
@@ -140,8 +157,10 @@ int		main()
   Timer		timer;
 
   addSystems(world);
+  std::cout << "a" << std::endl;
   addSharedObjetcs(world);
-  // addEntities(world);
+  std::cout << "b" << std::endl;
+  addEntities(world);
 
   sf::Music music;
 
@@ -157,6 +176,7 @@ int		main()
     sound->play();
   */
   world.start();
+  std::cout << "c" << std::endl;
   while (42)
     {
       timer.startFrame();

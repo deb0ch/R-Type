@@ -87,6 +87,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 5))
 		    ->addComponent(new AutoDestructComponent(30))
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("BULLET_EXPLOSION", (new Entity())
@@ -95,6 +96,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 2))
 		    ->addComponent(new AutoDestructComponent(12))
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("PLAYER_EXPLOSION", (new Entity())
@@ -104,6 +106,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("ExplosionPlayer.png", ImageLoader::NbSprite{ 8, 1 },
 							   { { "", { 2, 6 } } }))
 		    ->addComponent(new AutoDestructComponent(60))
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("ALIEN_BOMB_EXPLOSION", (new Entity())
@@ -117,6 +120,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png", ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 5, 3 } } }, 5))
 		    ->addComponent(new AutoDestructComponent(15))
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("BOSS_EXPLOSION", (new Entity())
@@ -130,12 +134,14 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 250.0f, 280.0f)))
 		    ->addComponent(new AutoDestructComponent(50))
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
   }
 
   void		initPlayer()
   {
     this->addEntity("PLAYER_BLUE", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -158,6 +164,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_PURPLE", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -180,6 +187,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_GREEN", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -202,6 +210,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_RED", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new MovementLimitFrame2DComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 20.0f))
@@ -233,6 +242,7 @@ public:
   void		initBullet()
   {
     this->addEntity("MONSTER_BASIC_BULLET", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent(new TeamComponent())
@@ -255,6 +265,7 @@ public:
 				   ));
 
     this->addEntity("MONSTER_BASIC_BULLET_3", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent(new TeamComponent())
@@ -277,6 +288,7 @@ public:
 				   ));
 
     this->addEntity("MONSTER_BASIC_BULLET_4", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent(new TeamComponent())
@@ -299,6 +311,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_1", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -322,6 +335,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_2", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -345,6 +359,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_3", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -368,6 +383,7 @@ public:
 				   ));
 
     this->addEntity("BASIC_BULLET", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(20.0f, 20.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -394,6 +410,7 @@ public:
   void		initMonster()
   {
     this->addEntity("MONSTER_1", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 40.0f))
 		    ->addComponent(new TeamComponent())
@@ -421,6 +438,7 @@ public:
 				   ));
 
     this->addEntity("MONSTER_2", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent())
@@ -457,6 +475,7 @@ public:
   void		initBoss()
   {
     this->addEntity("MONSTER_FROM_BOSS", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 25.0f))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
@@ -487,6 +506,7 @@ public:
 				   ));
 
     this->addEntity("BOSS_1", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(700.0f, 590.0f))
 		    ->addComponent(new Box2DComponent(130.0f, 205.0f))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
