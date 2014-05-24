@@ -23,9 +23,6 @@ public:
 
 public:
 	virtual ~ITimer() {}
-
-private:
-	virtual inline unsigned long	bufToTime(const struct timespec & timebuff) const = 0;
 };
 
 #endif /* !ITIMER_H_ */
