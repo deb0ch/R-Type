@@ -1,3 +1,4 @@
+#include	<numeric>
 #include	"EntitySpawnerComponent.hh"
 
 #include	"EntityFactory.hpp"
@@ -5,8 +6,8 @@
 #include	"RandomReal.hpp"
 
 //----- ----- Constructors ----- ----- //
-EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities,
-					       std::vector<std::string> components,
+EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities,
+					       std::vector<IComponent*> components,
 					       unsigned long nb,
 					       unsigned long delay,
 					       std::pair<float, float> min_pos,
@@ -27,24 +28,80 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
   this->_active = true;
   this->_counter = 0;
   this->_tick = 0;
+
+  this->_maxWeight = 0;
+  std::for_each(this->_entities.begin(),
+		this->_entities.end(),
+		[this] (std::pair<std::string, unsigned int> &p) {
+		  if (p.second <= 0)
+		    p.second = 1;
+		  this->_maxWeight += p.second;
+		});
+}
+
+EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
+  : ACopyableComponent("EntitySpawnerComponent"),
+    _entities(ref._entities),
+    _maxWeight(ref._maxWeight),
+    _nb(ref._nb),
+    _delay(ref._delay),
+    _min_pos(ref._min_pos),
+    _max_pos(ref._max_pos),
+    _random(ref._random),
+    _abs(ref._abs)
+{
+  this->_next = 0;
+  this->_active = true;
+  this->_counter = 0;
+  this->_tick = 0;
+
+  std::for_each(ref.getComponents().begin(),
+		ref.getComponents().end(),
+		[this] (IComponent* comp) -> void {
+		  this->_components.push_back(comp->clone());
+		});
 }
 
 //----- ----- Destructor ----- ----- //
 EntitySpawnerComponent::~EntitySpawnerComponent()
-{}
+{
+  std::for_each(this->getComponents().begin(),
+		this->getComponents().end(),
+		[] (IComponent* comp) -> void {
+		  delete comp;
+		});
+}
 
 //----- ----- Operators ----- ----- //
 //----- ----- Getters ----- ----- //
+bool				EntitySpawnerComponent::isAbsolute() const
+{
+  return (this->_abs);
+}
+
+const std::pair<float, float>	EntitySpawnerComponent::getCoordinates() const
+{
+  return (std::make_pair(RandomReal()(this->_min_pos.first, this->_max_pos.first),
+			 RandomReal()(this->_min_pos.second, this->_max_pos.second)
+			 )
+	  );
+}
+
+const std::vector<IComponent*>	&EntitySpawnerComponent::getComponents() const
+{
+  return (this->_components);
+}
+
 //----- ----- Setters ----- ----- //
 void			EntitySpawnerComponent::setActive(bool active)
 {
   this->_active = active;
 }
+
 //----- ----- Methods ----- ----- //
-Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DComponent *pos)
+Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
 {
   Entity		*res = NULL;
-  Pos2DComponent	*res_pos = NULL;
 
   if (this->_tick < this->_delay)
     return ((Entity *) (0 * ++this->_tick));
@@ -58,7 +115,7 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
     this->_tick = 0;
 
   if (facto)
-    res = facto->create(this->_entities[this->_next]);
+    res = facto->create(this->_entities[this->_next].first);
   if (!this->_random)
     {
       ++this->_next;
@@ -66,25 +123,25 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
 	this->_next = 0;
     }
   else
-    this->_next = RandomInt().operator() <unsigned long>(0, this->_entities.size() - 1);
+    {
+      unsigned int	r;
+      unsigned int	cumul = 0;
+
+      r = RandomInt().operator() <unsigned long>(1, this->_maxWeight);
+
+      for (unsigned int i = 0 ; i < this->_entities.size() ; ++i)
+	{
+	  if (r <= this->_entities[i].second + cumul)
+	    {
+	      this->_next = i;
+	      break ;
+	    }
+	  cumul += this->_entities[i].second;
+	}
+    }
 
   if (!res)
     return (NULL);
-  res_pos = res->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!res_pos)
-    {
-      res_pos = new Pos2DComponent(0, 0);
-      res->addComponent(res_pos);
-    }
-  res_pos->setX(0);
-  res_pos->setY(0);
-  if (!this->_abs && pos)
-    {
-      res_pos->setX(pos->getX());
-      res_pos->setY(pos->getY());
-    }
-  res_pos->setX(res_pos->getX() + RandomReal()(this->_min_pos.first, this->_max_pos.first));
-  res_pos->setY(res_pos->getY() + RandomReal()(this->_min_pos.second, this->_max_pos.second));
 
   ++this->_counter;
   return (res);

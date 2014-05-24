@@ -55,6 +55,8 @@ Entity	*World::createEntity()
  */
 World	*World::addEntity(Entity *entity)
 {
+	if (!entity)
+		return (this);
   if (entity->_id == 0)
     entity->_id = this->_nextEntityID++;
   this->_entities.push_back(entity);

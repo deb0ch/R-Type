@@ -122,6 +122,12 @@ static std::string g_ip = "127.0.0.1";
 
 void		addSharedObjetcs(World &world)
 {
+	SoundLoader *soundLoader = new SoundLoader();
+	soundLoader->addSound("Ressources/Sound/Silencer.wav");
+	/*
+
+	*/
+
   ComponentFactory *compos = new ComponentFactory();
   ClientRelay *client = new ClientRelay(g_ip, 6667);
   EntityFactory *entityFactory = new EntityFactory();
@@ -134,6 +140,7 @@ void		addSharedObjetcs(World &world)
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
   world.setSharedObject("entityFactory", entityFactory);
+  world.setSharedObject("soundLoader", soundLoader);
   world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(client));
   world.setSharedObject("RoomName", new std::string("default"));
 }
@@ -176,8 +183,11 @@ int		main(int ac, char **av)
   while (42)
     {
       timer.startFrame();
-      if (timer.canTick())
-	world.process(timer.getDeltaTime() / 1000000.f);
+	  if (timer.canTick())
+	  {
+		  //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+		  world.process(timer.getDeltaTime() / 1000000.f);
+	  }
       timer.endFrame();
     }
   world.stop();

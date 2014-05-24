@@ -20,7 +20,7 @@ public:
   }
 
   template <typename T>
-  T		operator()(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max()) const
+  T		operator()(T min = (std::numeric_limits<T>::min)(), T max = (std::numeric_limits<T>::max)()) const
   {
     return (std::uniform_int_distribution<T>(min, max)(seed));
   }

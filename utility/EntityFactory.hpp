@@ -49,6 +49,11 @@ public:
     return this->create(Hash()(key));
   }
 
+  Entity*	create(const std::string &key)
+  {
+    return (this->create(Hash()(key)));
+  }
+
   virtual Entity*	create(const unsigned long &key) const
   {
     const Entity	*tmp;
@@ -66,7 +71,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
 
@@ -75,7 +80,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(1095.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
   }
@@ -83,34 +88,35 @@ public:
   void		initOthers()
   {
     this->addEntity("EXPLOSION", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 5))
 		    ->addComponent(new AutoDestructComponent(30))
-		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("BULLET_EXPLOSION", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 2))
 		    ->addComponent(new AutoDestructComponent(12))
-		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("PLAYER_EXPLOSION", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new Box2DComponent(100.0f, 100.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionPlayer.png", ImageLoader::NbSprite{ 8, 1 },
 							   { { "", { 2, 6 } } }))
 		    ->addComponent(new AutoDestructComponent(60))
-		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("ALIEN_BOMB_EXPLOSION", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(0.0f, 0.0f))
 		    ->addComponent(new TeamComponent())
@@ -121,10 +127,10 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png", ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 5, 3 } } }, 5))
 		    ->addComponent(new AutoDestructComponent(15))
-		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
 
     this->addEntity("BOSS_EXPLOSION", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(0.0f, 0.0f))
 		    ->addComponent(new TeamComponent())
@@ -135,7 +141,6 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 250.0f, 280.0f)))
 		    ->addComponent(new AutoDestructComponent(50))
-		    ->addComponent(new NetworkSendUpdateComponent())
 		    );
   }
 
@@ -156,7 +161,7 @@ public:
 								 { "DOWN", { 0, 2 } } }))
 		    ->addComponent(new SFMLInputComponent())
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}))
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -180,7 +185,7 @@ public:
 								 { "DOWN", { 5, 2 } } }))
 		    ->addComponent(new SFMLInputComponent())
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}))
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -204,7 +209,7 @@ public:
 								 { "DOWN", { 10, 2 } } }))
 		    ->addComponent(new SFMLInputComponent())
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}))
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -233,8 +238,10 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
+		    ->addComponent(new EntitySpawnerComponent({ {"TRACKER_MISSILE", 0} }, {}, 0, 20,
 							      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
+		    // ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
+		    // 					      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -410,6 +417,31 @@ public:
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   ));
+
+    this->addEntity("TRACKER_MISSILE", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
+		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
+		    ->addComponent(new TeamComponent(1))
+		    ->addComponent(new Speed2DComponent(1000.0f, 0.0f))
+		    ->addComponent(new Friction2DComponent(0.07f))
+		    ->addComponent(new MovementSpeedComponent(60.f))
+		    ->addComponent(new MoveFollowComponent("Ennemy"))
+		    ->addComponent(new LifeComponent(100))
+		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
+		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
+							   ImageLoader::NbSprite{ 4, 3 },
+							   { { "", { 4, 0 } } }))
+		    ->addComponent((new CollisionComponent())
+				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
+		    ->addComponent(new CollisionPowerComponent(100))
+		    ->addComponent((new ActionComponent())
+				   ->addAction("UP")
+				   ->addAction("RIGHT")
+				   ->addAction("DOWN")
+				   ->addAction("LEFT")
+				   ));
   }
 
   void		initMonster()
@@ -431,16 +463,18 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 40.0f)))
 		    ->addComponent(new CollisionPowerComponent(50))
-		    ->addComponent(new EntitySpawnerComponent({ "MONSTER_BASIC_BULLET", "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" }, {}, 0, 20))
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET", 0}, {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 20))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 50))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 50))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("MONSTER_2", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent())
@@ -459,7 +493,7 @@ public:
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new FireAlwaysComponent())
-		    ->addComponent(new EntitySpawnerComponent({ "BOMB_BULLET_1", "BOMB_BULLET_2", "BOMB_BULLET_3" },
+		    ->addComponent(new EntitySpawnerComponent({ {"BOMB_BULLET_1", 0}, {"BOMB_BULLET_2", 0}, {"BOMB_BULLET_3", 0} },
 							      {}, 0, 60, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
 		    ->addComponent((new ActionComponent())
@@ -467,12 +501,15 @@ public:
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
+		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		    ->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_2" }, {}, 0, 100,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 100,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
 		    );
   }
@@ -498,17 +535,19 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 25.0f)))
 		    ->addComponent(new CollisionPowerComponent(50))
-		    ->addComponent(new EntitySpawnerComponent({"MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET_4" }, {}, 0, 30,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
-				   ->addAction("FIRE")
-				   ));
+				   ->addAction("FIRE"))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
+		    );
 
     this->addEntity("BOSS_1", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent())
@@ -528,14 +567,16 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Boss.png",
 							   ImageLoader::NbSprite{ 4, 9 },
 							   { { "", { 4, 4 } } }))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 185))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 185))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("DOWN")
 				   ->addAction("FIRE"))
-		    ->addComponent(new EntitySpawnerComponent({"MONSTER_FROM_BOSS", "MONSTER_BASIC_BULLET_4",
-			    "MONSTER_BASIC_BULLET_3", "MONSTER_BASIC_BULLET" }, {}, 0, 40,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_FROM_BOSS", 0}, {"MONSTER_BASIC_BULLET_4", 0},
+								{"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET", 0} }, {}, 0, 40,
 			{ (-5.0f), (0.0f) }, { (-5.0f), (0.0f) }, true, false))
+		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy"))
 		    );
   }
 

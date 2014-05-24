@@ -64,13 +64,13 @@ bool	CollisionSystem::isColliding(Pos2DComponent const &pos1, Box2DComponent con
   float	inner_top;
   float	inner_bot;
 
-  inner_left = std::max(pos1.getX() - (box1.getWidth() / 2.f),
+  inner_left = (std::max)(pos1.getX() - (box1.getWidth() / 2.f),
 			pos2.getX() - (box2.getWidth() / 2.f));
-  inner_right = std::min(pos1.getX() + (box1.getWidth() / 2.f),
+  inner_right = (std::min)(pos1.getX() + (box1.getWidth() / 2.f),
 			 pos2.getX() + (box2.getWidth() / 2.f));
-  inner_top = std::max(pos1.getY() - (box1.getHeight() / 2.f),
+  inner_top = (std::max)(pos1.getY() - (box1.getHeight() / 2.f),
 		       pos2.getY() - (box2.getHeight() / 2.f));
-  inner_bot = std::min(pos1.getY() + (box1.getHeight() / 2.f),
+  inner_bot = (std::min)(pos1.getY() + (box1.getHeight() / 2.f),
 		       pos2.getY() + (box2.getHeight() / 2.f));
   return ((inner_left < inner_right) && (inner_top < inner_bot));
 }
