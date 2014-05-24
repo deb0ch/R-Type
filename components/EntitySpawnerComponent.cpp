@@ -13,13 +13,13 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
 					       std::pair<float, float> max_pos,
 					       bool random,
 					       bool abs)
-						   : ACopyableComponent("EntitySpawnerComponent"),
+  : ACopyableComponent("EntitySpawnerComponent"),
     _entities(entities),
     _components(components),
     _nb(nb),
     _delay(delay),
-  _min_pos(min_pos),
-  _max_pos(max_pos),
+    _min_pos(min_pos),
+    _max_pos(max_pos),
     _random(random),
     _abs(abs)
 {
@@ -37,7 +37,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
 }
 
 EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
-  : AComponent("EntitySpawnerComponent"),
+  : ACopyableComponent("EntitySpawnerComponent"),
     _entities(ref._entities),
     _nb(ref._nb),
     _delay(ref._delay),
