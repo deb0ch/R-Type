@@ -13,7 +13,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
 					       std::pair<float, float> max_pos,
 					       bool random,
 					       bool abs)
-  : ACopyableComponent("EntitySpawnerComponent"),
+						   : ACopyableComponent("EntitySpawnerComponent"),
     _entities(entities),
     _components(components),
     _nb(nb),

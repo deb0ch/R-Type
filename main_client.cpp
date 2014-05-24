@@ -169,10 +169,12 @@ int		main(int ac, char **av)
   world.start();
   while (42)
     {
-      timer.startFrame();
+	timer.startFrame();
       if (timer.canTick())
 	world.process(timer.getDeltaTime() / 1000000.f);
       timer.endFrame();
+	  
+	  world.process(0.17f);
     }
   world.stop();
   return (0);
