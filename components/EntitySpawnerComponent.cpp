@@ -18,8 +18,8 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
     _components(components),
     _nb(nb),
     _delay(delay),
-    _min_pos(min_pos),
-    _max_pos(max_pos),
+  _min_pos(min_pos),
+  _max_pos(max_pos),
     _random(random),
     _abs(abs)
 {
@@ -27,6 +27,13 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
   this->_active = true;
   this->_counter = 0;
   this->_tick = 0;
+
+  std::for_each(this->_entities.begin(),
+		this->_entities.end(),
+		[] (std::pair<std::string, unsigned int> &p) {
+		  if (p.second <= 0)
+		    p.second = 1;
+		});
 }
 
 EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
@@ -113,8 +120,21 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
     }
   else
     {
-      this->_next = RandomInt().operator() <unsigned long>(0, this->_entities.size() - 1);
-      // todo
+      unsigned int	max;
+      unsigned int	r;
+
+      max = std::accumulate(this->_entities.begin(),
+			    this->_entities.end(),
+			    std::make_pair("", 0),
+			    [] (std::pair<std::string, unsigned int> n1, std::pair<std::string, unsigned int> n2) {
+			      return std::make_pair("", n1.second + n2.second);
+			    }).second;
+
+      r = RandomInt().operator() <unsigned long>(1, max);
+
+      for (unsigned int i = 0 ; i < this->_entities.size() ; ++i)
+	if (r <= this->_entities[i].second)
+	  this->_next = i;
     }
 
   if (!res)
