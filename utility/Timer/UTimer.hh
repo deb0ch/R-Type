@@ -1,5 +1,5 @@
-#ifndef		TIMER_H_
-# define	TIMER_H_
+#ifndef UTIMER_H_
+# define UTIMER_H_
 
 # define _XOPEN_SOURCE 700
 
@@ -13,15 +13,16 @@
 
 # endif /* !_WIN32 */
 
-#  include <string>
-#  include <time.h>
+# include <string>
+# include <time.h>
 
+# include "ITimer.hh"
 # include "RTException.hh"
 
 /**
  * All time units in this class are in microseconds
 */
-class Timer
+class Timer : public ITimer
 {
 public:
   void			startFrame();
@@ -55,4 +56,4 @@ private:
   unsigned long		_previousTime;
 };
 
-#endif /* !TIMER_H_ */
+#endif /* !UTIMER_H_ */

@@ -40,7 +40,8 @@ Entity*		MoveFollowSystem::searchClosestTarget(Entity* entity,
 
   for (auto it = _world->getEntities().begin() ; it != _world->getEntities().end() ; ++it)
     {
-      if ((*it)->hasComponent("TagComponent")
+      if ((*it)
+	  && (*it)->hasComponent("TagComponent")
 	  && (*it)->getComponent<TagComponent>("TagComponent")->hasTag(tagToFollow))
 	{
 	  if (target == NULL
@@ -69,13 +70,13 @@ void MoveFollowSystem::processEntity(Entity *entity, const float)
       const std::string &	tagToFollow = moveFollowComponent->getTagToFollow();
 
       entityToFollow = searchClosestTarget(entity, tagToFollow);
-      moveFollowComponent->setIdToFollow(entityToFollow->getId());
     }
 
   if (entityToFollow != NULL)
     {
       Pos2DComponent*	posToFollow = entityToFollow->getComponent<Pos2DComponent>("Pos2DComponent");
 
+      moveFollowComponent->setIdToFollow(entityToFollow->getId());
       if (posToFollow == NULL)
 	return;
       if (posEntity->getX() < posToFollow->getX())
