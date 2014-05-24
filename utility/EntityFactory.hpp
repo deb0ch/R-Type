@@ -70,7 +70,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-75.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
 
@@ -79,7 +79,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(1095.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-75.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
   }
@@ -504,7 +504,7 @@ public:
     this->addEntity("MONSTER_SPAWNER", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 100,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 75,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
 		    );
   }
