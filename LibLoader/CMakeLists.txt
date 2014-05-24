@@ -9,17 +9,13 @@ SET(HEADER_FILES
 	LibLoaderException.hh)
 
 SET(SOURCES
-        main.cpp
-        LibLoaderException.cpp)
-      
-SET (LIB_TYPE STATIC)
+	LibLoaderException.cpp
+	main.cpp)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/test)
-ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/test)
+ADD_SUBDIRECTORY("test")
 
-#FILE(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
-
-#ADD_LIBRARY(LibLoader ${LIB_TYPE} ${SOURCES} ${HEADER_FILES})
+INCLUDE_DIRECTORIES(test)
+	
 ADD_EXECUTABLE(LibLoader ${SOURCES} ${HEADER_FILES})
 
 if (UNIX)

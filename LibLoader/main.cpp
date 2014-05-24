@@ -1,13 +1,17 @@
+#include <string>
+
 #ifdef _WIN32
-#define PATHLIB "..\\plugin\\Debug\\"
-#define EXTENSION ".dll"
-#include "WLibraryLoader.hpp"
+	static const std::string pathLib = "../plugin/Debug/";
+	static const std::string extension = ".dll";
+
+	#include "WLibraryLoader.hpp"
 #elif __linux__
-# define _BSD_SOURCE
-#define EXTENSION ".so"
-#define PATHLIB "../plugin/lib"
-#include <unistd.h>
-#include "ULibraryLoader.hpp"
+	# define _BSD_SOURCE
+	static const std::string pathLib = "../plugin/lib";
+	static const std::string extension = ".so";
+
+	#include <unistd.h>
+	#include "ULibraryLoader.hpp"
 #endif
 
 #include "ILibraryLoader.hh"
@@ -19,29 +23,25 @@ int main()
 {
 	ILibraryLoader<IAnimal> *loader = new LibraryLoader<IAnimal>();
 
-	IAnimal *toto = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
+	IAnimal *toto = loader->getInstance(pathLib + std::string("platypus") + extension);
 	if (toto)
 		toto->scream();
-	loader->clearLibrary(PATHLIB + std::string("platypus") + EXTENSION);
-	IAnimal *titi = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
+	loader->clearLibrary(pathLib + std::string("platypus") + extension);
+	IAnimal *titi = loader->getInstance(pathLib + std::string("platypus") + extension);
 	if (titi)
 		titi->scream();
-	IAnimal *cheval = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
+	IAnimal *cheval = loader->getInstance(pathLib + std::string("platypus") + extension);
 	if (cheval)
 		cheval->scream();
-	IAnimal *tata = loader->getInstance(PATHLIB + std::string("armadillo") + EXTENSION, "entrypoint");
+	IAnimal *tata = loader->getInstance(pathLib + std::string("armadillo") + extension, "entrypoint");
 	if (tata)
 		tata->scream();
 	loader->clearLibraries();
-	IAnimal *poney = loader->getInstance(PATHLIB + std::string("platypus") + EXTENSION);
+	IAnimal *poney = loader->getInstance(pathLib + std::string("platypus") + extension);
 	if (poney)
 		poney->scream();
-	IAnimal *chocolat = loader->getInstance(PATHLIB + std::string("armadillo") + EXTENSION, "entrypoint");
+	IAnimal *chocolat = loader->getInstance(pathLib + std::string("armadillo") + extension, "entrypoint");
 	if (chocolat)
 		chocolat->scream();
-#if _WIN32
-	Sleep(50000);
-#elif __linux__
-	usleep(50000);
-#endif
+	getchar();
 }

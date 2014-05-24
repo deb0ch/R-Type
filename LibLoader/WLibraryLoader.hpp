@@ -58,21 +58,24 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	HINSTANCE Handle = NULL;
 
 	auto it = this->libs.find(path);
+	std::cout << "PATH : " << path.c_str() << std::endl;
 	if (it == this->libs.end())
 	{
 		std::cout << "toto" << std::endl;
 		Handle = LoadLibrary(path.c_str());
-		this->libs[path] = Handle;
+		if (Handle != NULL && Handle != INVALID_HANDLE_VALUE)
+			this->libs[path] = Handle;
 	}
 	else
 		Handle = it->second;
 	if (Handle == NULL || Handle == INVALID_HANDLE_VALUE)
-	  throw LibLoaderException("Cant load " + entry);
+	{
+		std::cout << "EXC" << std::endl;
+		throw LibLoaderException("Cant load " + entry);
+	}
 	instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
 	if (instancier)
-	{
 		res = instancier();
-	}
 	return (res);
 }
 
