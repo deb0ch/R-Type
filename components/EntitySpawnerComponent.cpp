@@ -5,8 +5,8 @@
 #include	"RandomReal.hpp"
 
 //----- ----- Constructors ----- ----- //
-EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities,
-					       std::vector<std::string> components,
+EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities,
+					       std::vector<IComponent*> components,
 					       unsigned long nb,
 					       unsigned long delay,
 					       std::pair<float, float> min_pos,
@@ -29,9 +29,37 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
   this->_tick = 0;
 }
 
+EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
+  : AComponent("EntitySpawnerComponent"),
+    _entities(ref._entities),
+    _nb(ref._nb),
+    _delay(ref._delay),
+    _min_pos(ref._min_pos),
+    _max_pos(ref._max_pos),
+    _random(ref._random),
+    _abs(ref._abs)
+{
+  this->_next = 0;
+  this->_active = true;
+  this->_counter = 0;
+  this->_tick = 0;
+
+  std::for_each(ref.getComponents().begin(),
+		ref.getComponents().end(),
+		[this] (IComponent* comp) -> void {
+		  this->_components.push_back(comp->clone());
+		});
+}
+
 //----- ----- Destructor ----- ----- //
 EntitySpawnerComponent::~EntitySpawnerComponent()
-{}
+{
+  std::for_each(this->getComponents().begin(),
+		this->getComponents().end(),
+		[] (IComponent* comp) -> void {
+		  delete comp;
+		});
+}
 
 //----- ----- Operators ----- ----- //
 //----- ----- Getters ----- ----- //
@@ -46,6 +74,11 @@ const std::pair<float, float>	EntitySpawnerComponent::getCoordinates() const
 			 RandomReal()(this->_min_pos.second, this->_max_pos.second)
 			 )
 	  );
+}
+
+const std::vector<IComponent*>	&EntitySpawnerComponent::getComponents() const
+{
+  return (this->_components);
 }
 
 //----- ----- Setters ----- ----- //
@@ -71,7 +104,7 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
     this->_tick = 0;
 
   if (facto)
-    res = facto->create(this->_entities[this->_next]);
+    res = facto->create(this->_entities[this->_next].first);
   if (!this->_random)
     {
       ++this->_next;
@@ -79,7 +112,10 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
 	this->_next = 0;
     }
   else
-    this->_next = RandomInt().operator() <unsigned long>(0, this->_entities.size() - 1);
+    {
+      this->_next = RandomInt().operator() <unsigned long>(0, this->_entities.size() - 1);
+      // todo
+    }
 
   if (!res)
     return (NULL);
