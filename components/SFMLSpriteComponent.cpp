@@ -77,8 +77,6 @@ bool		SFMLSpriteComponent::hasAction(const std::string & action)
 
 void		SFMLSpriteComponent::serialize(IBuffer &buffer) const
 {
-  unsigned int	nb;
-
 	buffer << this->_fileName;
 	buffer << this->_sprites.nbSprintX;
 	buffer << this->_sprites.nbSprintY;

@@ -8,12 +8,14 @@
 # include "NetworkInitializer.hh"
 # include "Remote.hh"
 # include "Room.hh"
+# include "World.hh"
 
 class ServerRelay : public INetworkRelay
 {
 private:
 public:
-  ServerRelay(int port = 4011, int nb_pending_connection = 42);
+  // World * is temporary, we will need to create a new world each time we create a room
+  ServerRelay(World *, int port = 4011, int nb_pending_connection = 42);
   virtual				~ServerRelay();
   virtual void				start();
   virtual void				start(Any);
@@ -43,7 +45,8 @@ protected:
   std::map<std::string, Room>		_remotes;
   SafeFifo<IBuffer *>			_available_udp;
   SafeFifo<IBuffer *>			_available_tcp;
-  // EventManager<> of some sort
+  // temporary
+  World					*_world;
 };
 
 #endif /* !SERVERRELAY_H_ */

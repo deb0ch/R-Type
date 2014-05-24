@@ -124,7 +124,7 @@ void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
   EntityFactory *entityFactory = new EntityFactory();
-  ServerRelay *server = new ServerRelay(6667, 42);
+  ServerRelay *server = new ServerRelay(&world, 6667, 42);
   Thread<ServerRelay> *thread = new Thread<ServerRelay>();
   Any tmp;
 
