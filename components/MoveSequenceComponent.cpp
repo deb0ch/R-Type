@@ -1,17 +1,13 @@
 #include	"MoveSequenceComponent.hh"
 
-MoveSequenceComponent::MoveSequenceComponent(const MoveSequenceComponent::Sens sens,
+MoveSequenceComponent::MoveSequenceComponent(const std::vector<std::string> &actions,
 					     const unsigned int tickToChange)
   : ACopyableComponent("MoveSequenceComponent")
 {
-  this->_sens = sens;
   this->_tick = 0;
   this->_tickToChange = tickToChange;
   this->_index = 0;
-  if (sens == MoveSequenceComponent::UP_DOWN)
-    this->_actions = { "UP", "DOWN" };
-  else if (sens == MoveSequenceComponent::RIGHT_LEFT)
-    this->_actions = { "RIGHT", "LEFT" };
+  this->_actions = actions;
 }
 
 //----- ----- Destructor ----- ----- //
@@ -33,8 +29,11 @@ void  MoveSequenceComponent::incrementTick()
     }
 }
 
-const std::string & MoveSequenceComponent::getAction() const
+const std::string &MoveSequenceComponent::getAction() const
 {
+  static std::string	empty("");
+  if (this->_actions.size() == 0)
+    return (empty);
   return (this->_actions[this->_index]);
 }
 

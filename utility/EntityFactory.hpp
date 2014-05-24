@@ -460,7 +460,7 @@ public:
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET", 0}, {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 20))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 50))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 50))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -533,7 +533,7 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -562,7 +562,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Boss.png",
 							   ImageLoader::NbSprite{ 4, 9 },
 							   { { "", { 4, 4 } } }))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 185))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 185))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("DOWN")
