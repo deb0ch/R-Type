@@ -1,11 +1,9 @@
 #ifndef FIREALWAYSCOMPONENT_H_
 # define FIREALWAYSCOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		FireAlwaysComponent : public AComponent<FireAlwaysComponent>, public INetworkSerializableComponent
+class		FireAlwaysComponent : public ACopyableComponent<FireAlwaysComponent>
 {
 public:
 		FireAlwaysComponent();

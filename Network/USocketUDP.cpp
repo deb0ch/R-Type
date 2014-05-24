@@ -35,7 +35,7 @@ void		SocketUDP::bind(const int port, const std::string & address) {
   else
     {
       if ((hostinfo = ::gethostbyname(address.c_str())) == NULL)
-	throw UDPException("Gethostbyname as failed");
+	throw UDPException("Gethostbyname has failed");
       sin.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
     }
   sin.sin_family = AF_INET;
@@ -91,6 +91,7 @@ int	SocketUDP::receive(IBuffer &buffer, std::string &address, int &port) {
   if (s == -1)
     throw UDPException(errno);
   buffer.setLength(s);
+  buffer.rewind();
   address = ::inet_ntoa(from.sin_addr);
   port = ::ntohs(from.sin_port);
   return (s);

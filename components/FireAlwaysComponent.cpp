@@ -2,7 +2,7 @@
 
 //----- ----- Constructors ----- ----- //
 FireAlwaysComponent::FireAlwaysComponent()
-  : AComponent("FireAlwaysComponent")
+  : ACopyableComponent("FireAlwaysComponent")
 {}
 
 //----- ----- Destructor ----- ----- //

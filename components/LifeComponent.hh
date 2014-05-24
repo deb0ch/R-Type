@@ -1,11 +1,9 @@
 #ifndef LIFECOMPONENT_H_
 # define LIFECOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		LifeComponent : public AComponent<LifeComponent>, public INetworkSerializableComponent
+class		LifeComponent : public ACopyableComponent<LifeComponent>
 {
 public:
 	LifeComponent(unsigned int life = 100, unsigned int invulnerability = 0);

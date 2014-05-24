@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "TeamComponent.hh"
 
-TeamComponent::TeamComponent(const unsigned int team) : AComponent("TeamComponent"){
+TeamComponent::TeamComponent(const unsigned int team) : ACopyableComponent("TeamComponent"){
   this->_team = team;
 }
 

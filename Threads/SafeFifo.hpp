@@ -1,7 +1,6 @@
 #ifndef		SAFEFIFO_H_
 # define	SAFEFIFO_H_
 
-//#include <pthread.h>
 #include <vector>
 #include "Threads.hh"
 
@@ -32,7 +31,7 @@ public:
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
-      return (NULL);
+      throw std::exception();
     return ((this->fifo.front()));
   }
 

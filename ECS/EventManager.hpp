@@ -48,7 +48,7 @@ public:
   }
 
   /**
-   * @todo Change the parameter from IEvent* to IEvent.
+   * @todo Change the parameter from IEvent* to IEvent&.
    */
   void		sendEvent(IEvent *event) {
     auto it = this->_event_handlers.find(event->getType());

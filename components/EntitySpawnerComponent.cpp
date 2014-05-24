@@ -13,7 +13,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::string> entities
 					       std::pair<float, float> max_pos,
 					       bool random,
 					       bool abs)
-  : AComponent("EntitySpawnerComponent"),
+  : ACopyableComponent("EntitySpawnerComponent"),
     _entities(entities),
     _components(components),
     _nb(nb),
@@ -89,3 +89,9 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, const Pos2DC
   ++this->_counter;
   return (res);
 }
+
+void			EntitySpawnerComponent::serialize(IBuffer &) const
+{}
+
+void			EntitySpawnerComponent::unserialize(IBuffer &)
+{}

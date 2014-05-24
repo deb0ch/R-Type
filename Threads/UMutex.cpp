@@ -6,25 +6,31 @@
 
 void	Mutex::lock()
 {
-  if ((_ret = pthread_mutex_lock(&_mutex)) != 0)
-    throw MutexException(_ret);
+  int	ret;
+
+  if ((ret = pthread_mutex_lock(&_mutex)) != 0)
+    throw MutexException(ret);
   _status = LOCKED;
 }
 
 bool	Mutex::trylock()
 {
-  if ((_ret = pthread_mutex_trylock(&_mutex)) != 0 && _ret != EBUSY)
-    throw MutexException(_ret);
+  int	ret;
+
+  if ((ret = pthread_mutex_trylock(&_mutex)) != 0 && ret != EBUSY)
+    throw MutexException(ret);
   _status = LOCKED;
-  if (_ret == EBUSY)
-	  return (false);
+  if (ret == EBUSY)
+    return (false);
   return (true);
 }
 
 void	Mutex::unlock()
 {
-  if ((_ret = pthread_mutex_unlock(&_mutex)) != 0)
-    throw MutexException(_ret);
+  int	ret;
+
+  if ((ret = pthread_mutex_unlock(&_mutex)) != 0)
+    throw MutexException(ret);
   _status = UNLOCKED;
 }
 
@@ -34,9 +40,8 @@ IMutex::STATUS	Mutex::status() const
 }
 
 Mutex::Mutex()
-  : _ret(0), _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
-{
-}
+  : _status(UNLOCKED), _mutex(PTHREAD_MUTEX_INITIALIZER)
+{}
 
 Mutex::~Mutex()
 {

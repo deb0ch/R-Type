@@ -6,7 +6,6 @@
 class		IComponent
 {
 public:
-		IComponent() {};
   virtual	~IComponent() {};
 
   virtual const std::string	&getType() const = 0;

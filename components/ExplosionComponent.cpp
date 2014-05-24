@@ -1,7 +1,7 @@
 #include "ExplosionComponent.hh"
 
 ExplosionComponent::ExplosionComponent(const std::string &name, float offsetX, float offsetY)
-	: AComponent("ExplosionComponent")
+	: ACopyableComponent("ExplosionComponent")
 {
 	this->_explosionEntityName = name;
 	this->_offsetX = offsetX;
@@ -25,3 +25,9 @@ float ExplosionComponent::getOffsetY() const
 {
 	return (this->_offsetY);
 }
+
+void ExplosionComponent::serialize(IBuffer &) const
+{}
+
+void ExplosionComponent::unserialize(IBuffer &)
+{}

@@ -1,6 +1,6 @@
 #include "AutoDestructComponent.hh"
 
-AutoDestructComponent::AutoDestructComponent(unsigned long delay) : AComponent("AutoDestructComponent")
+AutoDestructComponent::AutoDestructComponent(unsigned long delay) : ACopyableComponent("AutoDestructComponent")
 {
   this->_delay = delay;
   this->_tick = 0;
@@ -23,3 +23,9 @@ void AutoDestructComponent::setDelay(unsigned long delay) {
 void AutoDestructComponent::setTick(unsigned long tick) {
   this->_tick = tick;
 }
+
+void AutoDestructComponent::serialize(IBuffer &) const
+{}
+
+void AutoDestructComponent::unserialize(IBuffer &)
+{}

@@ -2,11 +2,11 @@
 # define MOVESEQUENCECOMPONENT_H_
 
 # include	 <string>
-# include	"AComponent.hpp"
+# include	"ACopyableComponent.hpp"
 # include	"Entity.hh"
 # include	"World.hh"
 
-class		MoveSequenceComponent : public AComponent<MoveSequenceComponent>
+class		MoveSequenceComponent : public ACopyableComponent<MoveSequenceComponent>
 {
 public:
   enum Sens
@@ -21,6 +21,8 @@ public:
 
   void  incrementTick();
   const std::string &getAction() const;
+  virtual void		serialize(IBuffer &) const;
+  virtual void		unserialize(IBuffer &);
 
 protected:
   std::vector<std::string>	_actions;

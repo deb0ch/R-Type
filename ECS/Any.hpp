@@ -99,14 +99,20 @@ public:
 
   Any(const Any &other)
   {
-    this->_container = other._container->clone();
+    if (other._container)
+      this->_container = other._container->clone();
+    else
+      this->_container = NULL;
   }
 
   Any &operator=(const Any &other)
   {
     if (this->_container)
       delete this->_container;
-    this->_container = other._container->clone();
+    if (other._container)
+      this->_container = other._container->clone();
+    else
+      this->_container = NULL;
     return (*this);
   }
 

@@ -2,7 +2,7 @@
 
 //----- ----- Constructors ----- ----- //
 Speed2DComponent::Speed2DComponent(float x, float y)
-  : AComponent("Speed2DComponent")
+  : ACopyableComponent("Speed2DComponent")
 {
   this->_vX = x;
   this->_vY = y;

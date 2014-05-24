@@ -1,7 +1,7 @@
 #include "LifeComponent.hh"
 
 LifeComponent::LifeComponent(unsigned int life, unsigned int invulnerability)
-	: AComponent("LifeComponent")
+	: ACopyableComponent("LifeComponent")
 {
 	this->_life = life;
 	this->_invulnerability = 0;

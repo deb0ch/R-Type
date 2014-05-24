@@ -4,16 +4,14 @@
 # include	<vector>
 # include	<string>
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
 # include	"Entity.hh"
 # include	"Pos2DComponent.hh"
 
 class		EntityFactory;
 
-class		EntitySpawnerComponent : public AComponent<EntitySpawnerComponent>
+class		EntitySpawnerComponent : public ACopyableComponent<EntitySpawnerComponent>
 {
 protected:
   std::vector<std::string>	_entities;
@@ -44,6 +42,8 @@ public:
 
   void				setActive(bool active);
   Entity			*spawnEntity(EntityFactory *facto, const Pos2DComponent *pos = NULL);
+  virtual void			serialize(IBuffer &) const;
+  virtual void			unserialize(IBuffer &);
 };
 
 #endif /* !ENTITYSPAWNERCOMPONENT_H_ */

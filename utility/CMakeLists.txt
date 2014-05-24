@@ -1,19 +1,35 @@
 SET(HEADER_S
   ${HEADER_S}
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/RTException.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/RandomInt.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/RandomReal.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/Timer.hh
   PARENT_SCOPE
   )
 
 SET(SOURCE_S
   ${SOURCE_S}
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/RTException.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Random.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
   PARENT_SCOPE
   )
 
 SET(HEADER_C
-  ${HEADER_S}
+  ${HEADER_C}
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoader.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/RTException.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/ImageLoaderException.hh
-  ${CMAKE_CURRENT_SOURCE_DIR}/INetworkRelay.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/Factory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFactory.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/ComponentFactory.hpp

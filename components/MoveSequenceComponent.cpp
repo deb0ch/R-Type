@@ -2,7 +2,7 @@
 
 MoveSequenceComponent::MoveSequenceComponent(const MoveSequenceComponent::Sens sens,
 					     const unsigned int tickToChange)
-  : AComponent("MoveSequenceComponent")
+  : ACopyableComponent("MoveSequenceComponent")
 {
   this->_sens = sens;
   this->_tick = 0;
@@ -37,3 +37,9 @@ const std::string & MoveSequenceComponent::getAction() const
 {
   return (this->_actions[this->_index]);
 }
+
+void		MoveSequenceComponent::serialize(IBuffer &) const
+{}
+
+void		MoveSequenceComponent::unserialize(IBuffer &)
+{}

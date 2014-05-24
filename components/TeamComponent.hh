@@ -3,10 +3,9 @@
 
 # include <vector>
 
-# include "AComponent.hpp"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class TeamComponent : public AComponent<TeamComponent>, public INetworkSerializableComponent
+class TeamComponent : public ACopyableComponent<TeamComponent>
 {
 public:
   TeamComponent(const unsigned int team = 0);

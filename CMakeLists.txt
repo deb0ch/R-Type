@@ -23,7 +23,6 @@ SET(SOURCE_S
 SET(SOURCE_C
 	main_client.cpp)
 
-MESSAGE("add subdirectories")
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/systems")	
@@ -47,7 +46,6 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Threads)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/systems)
 
 if (UNIX)
-	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src)
 	INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
 endif (UNIX)
 
@@ -67,6 +65,7 @@ FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR})
 #RELEASE MODE
 SET(CMAKE_BUILD_TYPE "Release")
 MESSAGE("set build type : " ${CMAKE_BUILD_TYPE})
+
 # COMPILE WITH SFML
 if (UNIX)
 	MESSAGE("OS TYPE : UNIX")
@@ -79,11 +78,11 @@ if (UNIX)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} pthread)
 	TARGET_LINK_LIBRARIES (${SERVER_BIN} pthread)
 
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-window.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-system.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-audio.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-graphics.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} /usr/lib/libsfml-window.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} /usr/lib/libsfml-system.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} /usr/lib/libsfml-network.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} /usr/lib/libsfml-audio.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} /usr/lib/libsfml-graphics.so.2.1)
 endif (UNIX)
 
 if (WIN32)
@@ -94,8 +93,14 @@ if (WIN32)
 		SET(DLL ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/bin/Release)
 		FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
 		FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR}/Release)
-		INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/include)
+		INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/include)
 
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-audio.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-graphics.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-system.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-window.lib)
+		
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-audio.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-graphics.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
@@ -104,8 +109,15 @@ if (WIN32)
 	else ()
 		SET(DLL ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/bin/Debug)
 		FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
-		FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR}/Release)
-		INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/include)
+		FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR}/Debug)
+		INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/include)
+		
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-audio.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-graphics.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-system.lib)
+		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-window.lib)
+		
 		
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-audio-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-graphics-d.lib)
@@ -118,6 +130,8 @@ endif (WIN32)
 # INCLUDE LIB
 TARGET_LINK_LIBRARIES (${SERVER_BIN} Networklib)
 TARGET_LINK_LIBRARIES (${SERVER_BIN} ECSlib)
+TARGET_LINK_LIBRARIES (${SERVER_BIN} Threadlib)
 
 TARGET_LINK_LIBRARIES (${CLIENT_BIN} Networklib)
 TARGET_LINK_LIBRARIES (${CLIENT_BIN} ECSlib)
+TARGET_LINK_LIBRARIES (${CLIENT_BIN} Threadlib)

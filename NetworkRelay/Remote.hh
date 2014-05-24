@@ -7,6 +7,8 @@
 # include "IBuffer.hh"
 # include "NetworkBuffer.hh"
 # include "INetworkRelay.hh"
+# include "SafeFifo.hpp"
+# include "LockVector.hpp"
 
 class Remote
 {
@@ -21,20 +23,29 @@ public:
   void				setIP(const std::string &ip);
   void				setPort(const int);
   void				setPrivateHash(const unsigned int);
-  std::vector<IBuffer *>	&getSendBufferUDP();
-  std::vector<IBuffer *>	&getSendBufferTCP();
+  SafeFifo<IBuffer *>		&getSendBufferUDP();
+  SafeFifo<IBuffer *>		&getSendBufferTCP();
   // TODO:
   void				sendTCP(IBuffer *);
   void				sendUDP(IBuffer *);
-  std::vector<IBuffer *>	&getRecvBufferUDP();
-  std::vector<IBuffer *>	&getRecvBufferTCP();
+  LockVector<IBuffer *>		&getRecvBufferUDP();
+  LockVector<IBuffer *>		&getRecvBufferTCP();
 
   const std::string		&getRoom() const;
   void				setRoom(const std::string &);
 
-  void				networkSendTCP();
-  void				networkReceiveTCP(INetworkRelay &network);
-  void				networkSendUDP(SocketUDP &udp);
+  void				networkSendTCP(INetworkRelay &network);
+  bool				networkReceiveTCP(INetworkRelay &network);
+  void				networkSendUDP(INetworkRelay &network, SocketUDP &udp);
+
+  void				setReady(bool ready);
+  bool				isReady() const;
+
+  bool				canSendUDP();
+  bool				canSendTCP();
+
+private:
+  bool				extractTCPPacket(INetworkRelay &);
 
 protected:
   ISocketTCP			*_tcp;
@@ -42,11 +53,12 @@ protected:
   std::string			_room;
   int				_port;
   unsigned int			_private_hash;
-  std::vector<IBuffer *>	_send_buffer_tcp;
-  std::vector<IBuffer *>	_send_buffer_udp;
+  SafeFifo<IBuffer *>		_send_buffer_tcp;
+  SafeFifo<IBuffer *>		_send_buffer_udp;
   NetworkBuffer			_temporary_tcp_buffer;
-  std::vector<IBuffer *>	_recv_buffer_tcp;
-  std::vector<IBuffer *>	_recv_buffer_udp;
+  LockVector<IBuffer *>		_recv_buffer_tcp;
+  LockVector<IBuffer *>		_recv_buffer_udp;
+  bool				_ready;
 };
 
 #endif /* !REMOTE_H_ */

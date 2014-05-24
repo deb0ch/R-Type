@@ -2,7 +2,7 @@
 
 //----- ----- Constructors ----- ----- //
 Friction2DComponent::Friction2DComponent(float coef)
-  : AComponent("Friction2DComponent"), _frictionCoef(coef)
+  : ACopyableComponent("Friction2DComponent"), _frictionCoef(coef)
 {}
 
 //----- ----- Destructor ----- ----- //

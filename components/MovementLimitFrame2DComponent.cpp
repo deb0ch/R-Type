@@ -2,7 +2,7 @@
 
 MovementLimitFrame2DComponent::MovementLimitFrame2DComponent(float posX, float posY,
 							     float width, float height)
-  : AComponent("MovementLimitFrame2DComponent")
+  : ACopyableComponent("MovementLimitFrame2DComponent")
 {
   this->_posX = posX;
   this->_posY = posY;
@@ -13,7 +13,7 @@ MovementLimitFrame2DComponent::MovementLimitFrame2DComponent(float posX, float p
 MovementLimitFrame2DComponent::~MovementLimitFrame2DComponent() {}
 
 MovementLimitFrame2DComponent::MovementLimitFrame2DComponent(const MovementLimitFrame2DComponent &e)
-  : AComponent("MovementLimitFrame2DComponent")
+  : ACopyableComponent("MovementLimitFrame2DComponent")
 {
   this->_posX = e._posX;
   this->_posY = e._posY;
@@ -31,6 +31,11 @@ MovementLimitFrame2DComponent	&MovementLimitFrame2DComponent::operator=(const Mo
       this->_height = e._height;
     }
   return (*this);
+}
+
+ASerializableComponent		*MovementLimitFrame2DComponent::cloneSerializable() const
+{
+  return new MovementLimitFrame2DComponent(*this);
 }
 
 float		MovementLimitFrame2DComponent::getPosX() const

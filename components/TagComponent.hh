@@ -2,11 +2,9 @@
 # define TAGCOMPONENT_H_
 
 # include <vector>
+# include "ACopyableComponent.hpp"
 
-# include "AComponent.hpp"
-# include "INetworkSerializableComponent.hh"
-
-class TagComponent : public AComponent<TagComponent>, public INetworkSerializableComponent
+class TagComponent : public ACopyableComponent<TagComponent>
 {
 public:
   TagComponent();
@@ -20,7 +18,7 @@ public:
   void		removeTag(const std::string& tag);
 
 protected:
-  std::vector<std::string > _tags;
+  std::vector<std::string> _tags;
 };
 
 #endif /* !TAGCOMPONENT_H_ */

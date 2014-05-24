@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "TagComponent.hh"
 
-TagComponent::TagComponent() : AComponent("TagComponent"){
+TagComponent::TagComponent() : ACopyableComponent("TagComponent"){
   this->_tags = std::vector<std::string >();
 }
 

@@ -2,7 +2,7 @@
 
 //----- ----- Constructors ----- ----- //
 Pos2DComponent::Pos2DComponent(float x, float y)
-  : AComponent("Pos2DComponent")
+  : ACopyableComponent("Pos2DComponent")
 {
   this->_x = x;
   this->_y = y;

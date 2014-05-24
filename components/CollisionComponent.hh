@@ -3,10 +3,10 @@
 
 # include <list>
 
-# include "AComponent.hpp"
+# include "ASerializableComponent.hh"
 # include "CollisionPoint.hh"
 
-class CollisionComponent : public AComponent<CollisionComponent>
+class CollisionComponent : public ASerializableComponent
 {
 
 protected:
@@ -17,6 +17,9 @@ public:
   virtual	~CollisionComponent();
   CollisionComponent(const CollisionComponent&);
   CollisionComponent	&operator=(const CollisionComponent&);
+  virtual ASerializableComponent	*cloneSerializable() const;
+  virtual void				serialize(IBuffer &) const;
+  virtual void				unserialize(IBuffer &);
 
   std::list<CollisionPoint *>	const &getCollisionPoints() const;
   CollisionComponent		*addCollisionPoint(CollisionPoint *);

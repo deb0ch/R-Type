@@ -26,7 +26,6 @@ private:
   Mutex &		operator=(const Mutex & other) = delete;
 
 private:
-  int			_ret;
   STATUS		_status;
   pthread_mutex_t	_mutex;
 };

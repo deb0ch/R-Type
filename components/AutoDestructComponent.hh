@@ -1,9 +1,9 @@
 #ifndef AUTODESTRUCTCOMPONENT_H_
 # define AUTODESTRUCTCOMPONENT_H_
 
-# include "AComponent.hpp"
+# include "ACopyableComponent.hpp"
 
-class AutoDestructComponent : public AComponent<AutoDestructComponent>
+class AutoDestructComponent : public ACopyableComponent<AutoDestructComponent>
 {
 protected:
   unsigned long _delay;
@@ -17,6 +17,8 @@ public:
   unsigned long getTick() const;
   void setDelay(unsigned long delay);
   void setTick(unsigned long tick);
+  virtual void serialize(IBuffer &) const;
+  virtual void unserialize(IBuffer &);
 };
 
 #endif /* !AUTODESTRUCTCOMPONENT_H_ */

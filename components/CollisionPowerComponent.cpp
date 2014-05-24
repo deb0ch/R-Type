@@ -1,7 +1,7 @@
 #include "CollisionPowerComponent.hh"
 
 CollisionPowerComponent::CollisionPowerComponent(unsigned int collisionPower)
-: AComponent("CollisionPowerComponent")
+: ACopyableComponent("CollisionPowerComponent")
 {
 	this->_collisionPower = collisionPower;
 }

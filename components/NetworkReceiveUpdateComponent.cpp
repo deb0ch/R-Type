@@ -2,7 +2,7 @@
 
 NetworkReceiveUpdateComponent::NetworkReceiveUpdateComponent(unsigned int remote_id,
 							     unsigned int packet_num)
-  : AComponent("NetworkReceiveUpdateComponent")
+  : ACopyableComponent("NetworkReceiveUpdateComponent")
 {
   this->_remote_id = remote_id;
   this->_packet_num = packet_num;
@@ -30,3 +30,9 @@ void		NetworkReceiveUpdateComponent::setPacketNum(unsigned int num)
 {
   this->_packet_num = num;
 }
+
+void NetworkReceiveUpdateComponent::serialize(IBuffer &) const
+{}
+
+void NetworkReceiveUpdateComponent::unserialize(IBuffer &)
+{}

@@ -2,11 +2,9 @@
 # define MOVEMENTLIMITFRAME2DCOMPONENT_H_
 
 # include "World.hh"
-# include "AComponent.hpp"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class MovementLimitFrame2DComponent : public AComponent<MovementLimitFrame2DComponent>,
-				      public INetworkSerializableComponent
+class MovementLimitFrame2DComponent : public ACopyableComponent<MovementLimitFrame2DComponent>
 {
 public:
   MovementLimitFrame2DComponent(float posX = 0.f, float posY = 0.f,
@@ -14,6 +12,7 @@ public:
   virtual	~MovementLimitFrame2DComponent();
   		MovementLimitFrame2DComponent(const MovementLimitFrame2DComponent&);
   MovementLimitFrame2DComponent	&operator=(const MovementLimitFrame2DComponent&);
+  virtual ASerializableComponent *cloneSerializable() const;
 
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);

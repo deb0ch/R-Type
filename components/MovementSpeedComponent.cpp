@@ -1,6 +1,6 @@
 #include "MovementSpeedComponent.hh"
 
-MovementSpeedComponent::MovementSpeedComponent(float movement_speed) : AComponent("MovementSpeedComponent")
+MovementSpeedComponent::MovementSpeedComponent(float movement_speed) : ACopyableComponent("MovementSpeedComponent")
 {
   this->_movement_speed = movement_speed;
 }

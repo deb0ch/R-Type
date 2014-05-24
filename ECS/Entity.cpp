@@ -1,4 +1,3 @@
-#include	<algorithm>
 #include	"Entity.hh"
 #include	"VectorDeleter.hpp"
 
@@ -42,6 +41,8 @@ unsigned int	Entity::getId() const
  */
 Entity		*Entity::addComponent(IComponent *component)
 {
+  if (!component)
+    abort();
   if (component && !this->hasComponent(component->getType()))
     this->_components.push_back(component);
   return (this);

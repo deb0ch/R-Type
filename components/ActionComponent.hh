@@ -4,12 +4,13 @@
 # include	<map>
 # include	<string>
 
-# include	"AComponent.hpp"
+# include	"ACopyableComponent.hpp"
 
-class		ActionComponent : public AComponent<ActionComponent>
+class		ActionComponent : public ACopyableComponent<ActionComponent>
 {
 private:
   std::map<std::string, bool>	_actions;
+  std::map<std::string, bool>	_actions_changed;
 
 public:
   ActionComponent();
@@ -20,6 +21,14 @@ public:
    */
   bool			isActive(const std::string &action) const;
   /**
+   * @brief Checks if an action has changed.
+   */
+  bool			hasChanged(const std::string &) const;
+  /**
+   * @brief Reset change
+   */
+  void			resetChange(const std::string &);
+  /**
    * @brief Add an possible action.
    */
   ActionComponent*	addAction(const std::string &);
@@ -27,6 +36,9 @@ public:
    * @brief Activate or desactivate an action.
    */
   void			setAction(const std::string &, const bool status);
+
+  virtual void		serialize(IBuffer &) const;
+  virtual void		unserialize(IBuffer &);
 };
 
 #endif /* !ACTIONCOMPONENT_H_ */

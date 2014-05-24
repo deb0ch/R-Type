@@ -4,7 +4,7 @@
 
 //----- ----- Constructors ----- ----- //
 MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
-  : AComponent("MoveFollowComponent"), _idToFollow(-1)
+  : ACopyableComponent("MoveFollowComponent"), _idToFollow(-1)
 {
   this->_tagToFollow = tagToFollow;
 }
@@ -27,6 +27,14 @@ const std::string &	MoveFollowComponent::getTagToFollow() const
 {
   return this->_tagToFollow;
 }
+
+void		MoveFollowComponent::serialize(IBuffer &) const
+{}
+
+void		MoveFollowComponent::unserialize(IBuffer &)
+{}
+
+//----- ----- Setters ----- ----- //
 
 void		MoveFollowComponent::setTagToFollow(const std::string & tagToFollow)
 {

@@ -1,11 +1,9 @@
 #ifndef POS2DCOMPONENT_H_
 # define POS2DCOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class		Pos2DComponent : public AComponent<Pos2DComponent>, public INetworkSerializableComponent
+class		Pos2DComponent : public ACopyableComponent<Pos2DComponent>
 {
 protected:
   float		_x;

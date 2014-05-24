@@ -1,10 +1,9 @@
 #ifndef BOX2DCOMPONENT_H_
 # define BOX2DCOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class Box2DComponent : public AComponent<Box2DComponent>, public INetworkSerializableComponent
+class Box2DComponent : public ACopyableComponent<Box2DComponent>
 {
 public:
   Box2DComponent(float width = 0.0f, float height = 0.0f);

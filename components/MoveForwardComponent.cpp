@@ -3,7 +3,7 @@
 
 //----- ----- Constructors ----- ----- //
 MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir)
-: AComponent("MoveForwardComponent")
+: ACopyableComponent("MoveForwardComponent")
 {
 	this->_direction = dir;
 	if (dir == MoveForwardComponent::UP)
@@ -19,7 +19,7 @@ MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir)
 
 MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir,
 	const Direction seconddir)
-	: AComponent("MoveForwardComponent")
+	: ACopyableComponent("MoveForwardComponent")
 {
 	this->_direction = dir;
 	if (dir == MoveForwardComponent::UP || seconddir == MoveForwardComponent::UP)
@@ -47,3 +47,9 @@ void MoveForwardComponent::setDirection(const MoveForwardComponent::Direction di
 {
 	this->_direction = dir;
 }
+
+void	MoveForwardComponent::serialize(IBuffer &) const
+{}
+
+void	MoveForwardComponent::unserialize(IBuffer &)
+{}

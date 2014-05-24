@@ -1,11 +1,11 @@
 #ifndef MOVEFOLLOWCOMPONENT_H_
 # define MOVEFOLLOWCOMPONENT_H_
 
-# include	"AComponent.hpp"
 # include	"Entity.hh"
+# include	"ACopyableComponent.hpp"
 # include	"World.hh"
 
-class		MoveFollowComponent : public AComponent<MoveFollowComponent>
+class		MoveFollowComponent : public ACopyableComponent<MoveFollowComponent>
 {
 protected:
   unsigned long		_idToFollow;
@@ -15,6 +15,8 @@ public:
 			MoveFollowComponent(const std::string & tagToFollow);
   virtual		~MoveFollowComponent();
 
+  virtual void		serialize(IBuffer &) const;
+  virtual void		unserialize(IBuffer &);
   unsigned long		getIdToFollow() const;
   void			setIdToFollow(const unsigned long idToFollow);
   const std::string &	getTagToFollow() const;

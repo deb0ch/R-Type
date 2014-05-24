@@ -36,21 +36,27 @@ public:
 
   virtual bool		end() const;
   virtual void		rewind();
+  virtual void		gotoEnd();
   virtual void		reset();
   virtual const char	*getBuffer() const;
   virtual char		*getBuffer();
   virtual unsigned int	getLength() const;
   virtual void		setLength(unsigned int);
+  virtual unsigned int	getRemainingLength() const;
   virtual unsigned int	getMaxSize() const;
 
   virtual unsigned int	getPosition() const;
   virtual void		setPosition(unsigned int);
+
+  virtual unsigned int	getOffset() const;
+  virtual void		setOffset(unsigned int);
 
 protected:
   const unsigned int	bufferMaxSize;
   char			*_buffer;
   unsigned int		_buffer_size;
   unsigned int		_current_pos;
+  unsigned int		_offset;
 
 private:
   template <typename T>
@@ -71,12 +77,12 @@ private:
       i = sizeof(T) - 1;
     while ((isBigEndian() && i < static_cast<int>(sizeof(T))) || (!isBigEndian() && i >= 0))
       {
-	this->_buffer[this->_buffer_size] = tab[i];
+	this->_buffer[this->_current_pos] = tab[i];
 	if (isBigEndian())
 	  ++i;
 	else
 	  --i;
-	++this->_buffer_size;
+	this->setPosition(this->getPosition() + 1);
       }
   };
 

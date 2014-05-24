@@ -1,11 +1,9 @@
 #ifndef COLLISIONPOWERCOMPONENT_H_
 # define COLLISIONPOWERCOMPONENT_H_
 
-# include	"AComponent.hpp"
-# include	"ISerializableComponent.hh"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		CollisionPowerComponent : public AComponent<CollisionPowerComponent>, public INetworkSerializableComponent
+class		CollisionPowerComponent : public ACopyableComponent<CollisionPowerComponent>
 {
 public:
 	CollisionPowerComponent(unsigned int collisionPower = 100);
