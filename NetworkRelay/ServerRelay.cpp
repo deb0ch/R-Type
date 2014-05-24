@@ -256,7 +256,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty() || 1)
+  if (this->_available_udp.isEmpty() || 1) // Temporary fix (circular buffers are broken)
     {
       buffer = new NetworkBuffer;
       // std::cout << "creating buffer udp: " << buffer << std::endl;
