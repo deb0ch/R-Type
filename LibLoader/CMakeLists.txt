@@ -9,11 +9,14 @@ SET(HEADER_FILES
 	LibLoaderException.hh)
 
 SET(SOURCES
-	LibLoaderException.cpp)
-      
-SET (LIB_TYPE STATIC)
+	LibLoaderException.cpp
+	main.cpp)
 
-ADD_LIBRARY(LibLoader ${LIB_TYPE} ${SOURCES} ${HEADER_FILES})
+ADD_SUBDIRECTORY("test")
+
+INCLUDE_DIRECTORIES(test)
+	
+ADD_EXECUTABLE(LibLoader ${SOURCES} ${HEADER_FILES})
 
 if (UNIX)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
