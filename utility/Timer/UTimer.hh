@@ -1,5 +1,5 @@
-#ifndef		TIMER_H_
-# define	TIMER_H_
+#ifndef UTIMER_H_
+# define UTIMER_H_
 
 # define _XOPEN_SOURCE 700
 
@@ -13,32 +13,33 @@
 
 # endif /* !_WIN32 */
 
-#  include <string>
-#  include <time.h>
+# include <string>
+# include <time.h>
 
+# include "ITimer.hh"
 # include "RTException.hh"
 
 /**
  * All time units in this class are in microseconds
 */
-class Timer
+class Timer : public ITimer
 {
 public:
-  void			startFrame();
-  void			endFrame();
-  bool			canTick() const;
-  unsigned long		getDeltaTime() const;
+  virtual void			startFrame();
+  virtual void			endFrame();
+  virtual bool			canTick() const;
+  virtual unsigned long		getDeltaTime() const;
 
-  unsigned long		getFps() const;
-  unsigned long		getCurrentFps() const;
-  void			setFps(unsigned long fps);
+  virtual unsigned long		getFps() const;
+  virtual unsigned long		getCurrentFps() const;
+  virtual void			setFps(unsigned long fps);
 
-  unsigned long		getTime();
-  void			sleep(unsigned long delay) const;
+  virtual unsigned long		getTime();
+  virtual void			sleep(unsigned long delay) const;
 
 public:
   Timer(unsigned long fps = 60);
-  ~Timer() {}
+  virtual ~Timer() {}
 
 private:
   Timer(const Timer &) = delete;
@@ -55,4 +56,4 @@ private:
   unsigned long		_previousTime;
 };
 
-#endif /* !TIMER_H_ */
+#endif /* !UTIMER_H_ */

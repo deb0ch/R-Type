@@ -1,6 +1,8 @@
 
-#include <iostream>
-#include "Timer.hh"
+#ifdef __linux__
+
+# include <iostream>
+# include "Timer.hh"
 
 // Public:
 
@@ -72,3 +74,5 @@ inline unsigned long	Timer::bufToTime(const struct timespec & timeBuff) const
 {
 return ((timeBuff.tv_sec * 1000000) + (timeBuff.tv_nsec / 1000));
 }
+
+#endif /* !__linux__ */

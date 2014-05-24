@@ -153,6 +153,7 @@ int		main(int ac, char **av)
   addSystems(world);
   addSharedObjetcs(world);
   // addEntities(world);
+
   sf::Music music;
 
   if (music.openFromFile("Ressources/Sound/music.ogg"))
@@ -170,8 +171,11 @@ int		main(int ac, char **av)
   while (42)
     {
       timer.startFrame();
-      if (timer.canTick())
-	world.process(timer.getDeltaTime() / 1000000.f);
+	  if (timer.canTick())
+	  {
+		  //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+		  world.process(timer.getDeltaTime() / 1000000.f);
+	  }
       timer.endFrame();
     }
   world.stop();
