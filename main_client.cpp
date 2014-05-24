@@ -60,6 +60,9 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
+#include	"ClientRelay.hh"
+#include	"Threads.hh"
+
 #include	"Timer.hh"
 
 void		addSystems(World &world)
@@ -109,16 +112,24 @@ void		addSystems(World &world)
   world.addSystem(new NetworkSendActionSystem(serializable_action));
 }
 
+static std::string g_ip = "127.0.0.1";
+
 void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
+  ClientRelay *client = new ClientRelay(g_ip, 6667);
   EntityFactory *entityFactory = new EntityFactory();
+  Thread<ClientRelay> *thread = new Thread<ClientRelay>();
+  Any tmp;
 
+  thread->start(client, &ClientRelay::start, tmp);
   compos->init();
   entityFactory->init();
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
   world.setSharedObject("entityFactory", entityFactory);
+  world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(client));
+  world.setSharedObject("RoomName", new std::string("default"));
 }
 
 // void		addEntities(World &world)
@@ -134,11 +145,13 @@ void		addSharedObjetcs(World &world)
 //   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 // }
 
-int		main()
+int		main(int ac, char **av)
 {
   World		world;
   Timer		timer;
 
+  if (ac >= 2)
+    g_ip = av[1]; // Master flemme
   addSystems(world);
   addSharedObjetcs(world);
   // addEntities(world);
