@@ -38,7 +38,7 @@ private:
   Timer &operator=(const Timer &) = delete;
 
 private:
-	virtual inline unsigned long	bufToTime(const struct timespec & timebuff) const;
+	inline unsigned long	bufToTime(const struct timespec & timebuff) const;
 
 private:
   unsigned long			_fps;

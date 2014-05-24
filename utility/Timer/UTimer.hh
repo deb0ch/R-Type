@@ -25,21 +25,21 @@
 class Timer : public ITimer
 {
 public:
-  void			startFrame();
-  void			endFrame();
-  bool			canTick() const;
-  unsigned long		getDeltaTime() const;
+  virtual void			startFrame();
+  virtual void			endFrame();
+  virtual bool			canTick() const;
+  virtual unsigned long		getDeltaTime() const;
 
-  unsigned long		getFps() const;
-  unsigned long		getCurrentFps() const;
-  void			setFps(unsigned long fps);
+  virtual unsigned long		getFps() const;
+  virtual unsigned long		getCurrentFps() const;
+  virtual void			setFps(unsigned long fps);
 
-  unsigned long		getTime();
-  void			sleep(unsigned long delay) const;
+  virtual unsigned long		getTime();
+  virtual void			sleep(unsigned long delay) const;
 
 public:
   Timer(unsigned long fps = 60);
-  ~Timer() {}
+  virtual ~Timer() {}
 
 private:
   Timer(const Timer &) = delete;
