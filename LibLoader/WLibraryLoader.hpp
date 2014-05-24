@@ -58,9 +58,9 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	HINSTANCE Handle = NULL;
 
 	auto it = this->libs.find(path);
+	std::cout << "PATH : " << path.c_str() << std::endl;
 	if (it == this->libs.end())
 	{
-		std::cout << "PATH : " << path.c_str() << std::endl;
 		std::cout << "toto" << std::endl;
 		Handle = LoadLibrary(path.c_str());
 		if (Handle != NULL && Handle != INVALID_HANDLE_VALUE)
