@@ -1,61 +1,134 @@
 SET(HEADER_S
    ${HEADER_S}
-	PARENT_SCOPE)
-
-SET(SOURCE_S
-	${SOURCE_S}
-	PARENT_SCOPE)
-
-SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/plugin)
-
-SET(HEADER_C
-   ${HEADER_C}
-   	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
    	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/ISerializableComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ASerializableComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ACopyableComponent.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
-	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh	
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
+	PARENT_SCOPE)
+
+SET(SOURCE_S
+	${SOURCE_S}
+	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ASerializableComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
+	PARENT_SCOPE)
+
+
+SET(HEADER_C
+   ${HEADER_C}
+   	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ASerializableComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ACopyableComponent.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
 	PARENT_SCOPE
 )
 
 SET(SOURCE_C
 	${SOURCE_C}
-	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ASerializableComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendActionComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveFollowComponent.cpp
-	PARENT_SCOPE)
-	
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ECS)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/utility)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/include)
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/Network)
-
-SET (LIB_TYPE SHARED)
-
-ADD_LIBRARY(ActionComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/ActionComponent.cpp)
-ADD_LIBRARY(Speed2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp)
-#ADD_LIBRARY(SFMLSpriteComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp)
-ADD_LIBRARY(Pos2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.cpp)
-#ADD_LIBRARY(NetworkUpdateComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUpdateComponent.cpp)
-ADD_LIBRARY(Box2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Box2DComponent.cpp)
-ADD_LIBRARY(Friction2DComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.cpp)
-ADD_LIBRARY(SFMLInputComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.cpp)
-ADD_LIBRARY(MovementSpeedComponent ${LIB_TYPE} ${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh ${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/NetworkPlayerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveForwardComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MoveSequenceComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifeComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPowerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MovementLimitFrame2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EntitySpawnerComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FireAlwaysComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TagComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TeamComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
+	PARENT_SCOPE
+)

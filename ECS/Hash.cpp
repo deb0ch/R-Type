@@ -8,7 +8,7 @@ Hash::~Hash()
 {
 }
 
-unsigned long	Hash::operator()(const std::string &str)
+unsigned long	Hash::operator()(const std::string &str) const
 {
   unsigned long	result;
 

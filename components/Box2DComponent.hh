@@ -1,16 +1,13 @@
 #ifndef BOX2DCOMPONENT_H_
 # define BOX2DCOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "INetworkSerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class Box2DComponent : public AComponent<Box2DComponent>, public INetworkSerializableComponent
+class Box2DComponent : public ACopyableComponent<Box2DComponent>
 {
 public:
-  Box2DComponent(float width, float height);
+  Box2DComponent(float width = 0.0f, float height = 0.0f);
   virtual	~Box2DComponent();
-  		Box2DComponent(const Box2DComponent&);
-  Box2DComponent	&operator=(const Box2DComponent&);
 
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);

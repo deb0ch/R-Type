@@ -1,7 +1,7 @@
 #include	"SFMLInputComponent.hh"
 
 SFMLInputComponent::SFMLInputComponent()
-  : AComponent("SFMLInputComponent")
+  : ACopyableComponent("SFMLInputComponent")
 {
   this->_inputs["UP"]		= {sf::Keyboard::Key::Up, sf::Keyboard::Key::Z};
   this->_inputs["LEFT"]		= {sf::Keyboard::Key::Left, sf::Keyboard::Key::Q};

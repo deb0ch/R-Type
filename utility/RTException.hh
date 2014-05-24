@@ -27,7 +27,6 @@ protected:
 private:
   void addError(const int error);
   std::string		_info;
-
 };
 
 #endif /* !RTEXCEPTION_H_ */

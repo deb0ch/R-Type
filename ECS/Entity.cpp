@@ -1,15 +1,17 @@
-#include	<algorithm>
 #include	"Entity.hh"
 #include	"VectorDeleter.hpp"
 
 //----- ----- Constructors ----- ----- //
 Entity::Entity()
-{}
+{
+  this->_id = 0;
+}
 
 Entity::Entity(const Entity& ref)
 {
   this->_id = ref._id;
-  this->_components = ref._components;
+  for (unsigned int i = 0 ; i < ref._components.size() ; ++i)
+    this->_components.push_back(ref._components[i]->clone());
 }
 
 //----- ----- Destructor ----- ----- //
@@ -22,17 +24,25 @@ Entity::~Entity()
 Entity&		Entity::operator=(const Entity& ref)
 {
   this->_id = ref._id;
-  this->_components = ref._components;
+  for (unsigned int i = 0 ; i < ref._components.size() ; ++i)
+    this->_components.push_back(ref._components[i]->clone());
   return (*this);
 }
 
 //----- ----- Getters ----- ----- //
+unsigned int	Entity::getId() const
+{
+  return (this->_id);
+}
+
 //----- ----- Setters ----- ----- //
 /**
  * @todo Throw an exception if the component already exists in the Entity.
  */
 Entity		*Entity::addComponent(IComponent *component)
 {
+  if (!component)
+    abort();
   if (component && !this->hasComponent(component->getType()))
     this->_components.push_back(component);
   return (this);
@@ -113,4 +123,9 @@ IComponent	*Entity::getComponent(const std::string &type) const
 bool		Entity::hasComponent(const std::string &string_type) const
 {
   return (this->getComponent(string_type) != NULL);
+}
+
+Entity*		Entity::clone() const
+{
+  return (new Entity(*this));
 }

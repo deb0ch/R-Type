@@ -25,7 +25,7 @@ SocketTCP::~SocketTCP()
 {
 }
 
-const int		SocketTCP::getHandle() const
+int		SocketTCP::getHandle() const
 {
 	return (this->socket);
 }
@@ -55,7 +55,7 @@ int SocketTCP::receive(IBuffer &data)
 		throw TCPException(WSAGetLastError());
 	}
 	data.setLength(data.getLength() + received);
-	data.setPosition(data.getLength());
+	// data.setPosition(data.getLength());
 	return (received);
 }
 
@@ -154,7 +154,7 @@ void SocketTCP::init()
 	//::setsockopt(this->socket, SOL_SOCKET, SO_REUSEADDR &reuseAddr, sizeof(reuseAddr));
 }
 
-const bool	SocketTCP::isBlocking() const
+bool	SocketTCP::isBlocking() const
 {
 	return (this->blockingSocket);
 }

@@ -1,6 +1,7 @@
 #include "NetworkSendUpdateComponent.hh"
 
-NetworkSendUpdateComponent::NetworkSendUpdateComponent() : AComponent("NetworkSendUpdateComponent")
+NetworkSendUpdateComponent::NetworkSendUpdateComponent()
+  : ACopyableComponent("NetworkSendUpdateComponent")
 {
   this->_packet_number = 0;
 }

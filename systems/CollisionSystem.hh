@@ -2,8 +2,7 @@
 # define COLLISIONSYSTEM_H_
 
 # include "ASystem.hh"
-# include "Box2DComponent.hh"
-# include "Pos2DComponent.hh"
+# include "CollisionComponent.hh"
 
 class CollisionSystem : public ASystem
 {
@@ -11,13 +10,16 @@ public:
 		CollisionSystem();
   virtual	~CollisionSystem();
 
-  void		collision_event(IEvent *);
-
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
 protected:
-   bool		isColliding(const Pos2DComponent &pos1, const Box2DComponent &box1,
-			    const Pos2DComponent &pos2, const Box2DComponent &box2) const;
+  bool		isColliding(Pos2DComponent const &pos1, Box2DComponent const &box1,
+			    Pos2DComponent const &pos2, Box2DComponent const &box2) const;
+
+  bool		isCollidingAny(std::list<CollisionPoint *> const &Fpoints,
+			       std::list<CollisionPoint *> const &Lpoints,
+			       Pos2DComponent *posF, Pos2DComponent *posL);
+
 };
 
 #endif /* !COLLISIONSYSTEM_H_ */

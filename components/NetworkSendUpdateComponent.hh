@@ -1,10 +1,9 @@
 #ifndef NETWORKUPDATECOMPONENT_H_
 # define NETWORKUPDATECOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "ISerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class NetworkSendUpdateComponent : public AComponent<NetworkSendUpdateComponent>, public ISerializableComponent
+class NetworkSendUpdateComponent : public ACopyableComponent<NetworkSendUpdateComponent>
 {
 public:
   NetworkSendUpdateComponent();

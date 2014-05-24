@@ -2,30 +2,15 @@
 
 //----- ----- Constructors ----- ----- //
 Pos2DComponent::Pos2DComponent(float x, float y)
-  : AComponent("Pos2DComponent")
+  : ACopyableComponent("Pos2DComponent")
 {
   this->_x = x;
   this->_y = y;
 }
 
-Pos2DComponent::Pos2DComponent(const Pos2DComponent &ref)
-  : AComponent("Pos2DComponent")
-{
-  this->_x = ref._x;
-  this->_y = ref._y;
-}
-
 //----- ----- Destructor ----- ----- //
 Pos2DComponent::~Pos2DComponent()
 {}
-
-//----- ----- Operators ----- ----- //
-Pos2DComponent	&Pos2DComponent::operator=(const Pos2DComponent &ref)
-{
-  this->_x = ref._x;
-  this->_y = ref._y;
-  return (*this);
-}
 
 //----- ----- Getters ----- ----- //
 float	Pos2DComponent::getX() const
@@ -59,4 +44,9 @@ void		Pos2DComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_x;
   buffer >> this->_y;
+}
+
+Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
+{
+  return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));
 }

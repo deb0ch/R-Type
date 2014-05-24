@@ -9,43 +9,52 @@ template <typename T>
 class Thread : public IThread<T>
 {
 public:
-  virtual void	start(Any arg, T* obj, void (T::*fct)(Any &))
+  virtual void				start(T* obj, void (T::*fct)(Any), Any arg)
   {
     _container.obj = obj;
     _container.fct = fct;
     _container.arg = arg;
-    if ((_ret = pthread_create(&_thread, NULL,
-			       reinterpret_cast<void* (*)(void*)>(_threadEntry),
-			       (void*)&_container))
+    if ((_ret = pthread_create(&(this->_thread),
+			       NULL,
+			       static_cast<void* (*)(void*)>(this->_threadEntry),
+			       static_cast<void*>(&this->_container)))
 	!= 0)
-      throw ThreadException(ThreadException::THREAD, _ret, ThreadException::S_ERROR);
-	_status = IThread<T>::RUNNING;
+      throw ThreadException(_ret);
+    this->_status = IThread<T>::RUNNING;
   }
 
-  virtual void	exit()
+  virtual void				start(void* (*fct)(void*), void* arg)
+  {
+    if ((_ret = pthread_create(&(this->_thread), NULL, fct, arg)) != 0)
+      throw ThreadException(_ret);
+    this->_status = IThread<T>::RUNNING;
+  }
+
+  virtual void				exit()
   {
     pthread_exit(NULL);
-    _status = IThread<T>::DEAD;
+    this->_status = IThread<T>::DEAD;
   }
 
-  virtual void	wait()
+  virtual void				wait()
   {
-    if ((_ret = pthread_join(_thread, NULL)) != 0)
-      throw ThreadException(ThreadException::THREAD, _ret, ThreadException::S_ERROR);
-    _status = IThread<T>::DEAD;
+    if ((this->_ret = pthread_join(this->_thread, NULL)) != 0)
+      throw ThreadException(_ret);
+    this->_status = IThread<T>::DEAD;
   }
 
   virtual typename IThread<T>::STATUS	status() const
   {
-    return (_status);
+    return (this->_status);
   }
 
 public:
-					Thread() { _status = IThread<T>::UNSTARTED; }
+					Thread() { this->_status = IThread<T>::UNSTARTED; }
+
   virtual				~Thread() {}
 
 private:
-  					Thread(const Thread &) = delete;
+  Thread(const Thread &) = delete;
   Thread &				operator=(const Thread &) = delete;
 
 private:
@@ -54,19 +63,21 @@ private:
   typename IThread<T>::STATUS		_status;
 
 private:
-  struct Container
+  struct	Container
   {
-    T *obj;
-    void (T::*fct)(Any &);
-    Any arg;
+    T *		obj;
+    void 	(T::*fct)(Any);
+    Any		arg;
   };
-  struct Container				_container;
-  static void*				_threadEntry(void* args)
+
+  struct Container			_container;
+
+  static void *				_threadEntry(void* args)
   {
-    Thread<T>::Container	*container = reinterpret_cast<Thread<T>::Container*>(args);
+    Thread<T>::Container *	container = reinterpret_cast<Thread<T>::Container*>(args);
 
     (container->obj->*(container->fct))(container->arg);
-	return (NULL);
+    return (NULL);
   }
 };
 

@@ -1,15 +1,16 @@
 #ifndef NETWORKRECEIVEUPDATECOMPONENT_H_
 # define NETWORKRECEIVEUPDATECOMPONENT_H_
 
-# include "AComponent.hpp"
-# include "ISerializableComponent.hh"
+# include "ACopyableComponent.hpp"
 
-class NetworkReceiveUpdateComponent : public AComponent<NetworkReceiveUpdateComponent>
+class NetworkReceiveUpdateComponent : public ACopyableComponent<NetworkReceiveUpdateComponent>
 {
 public:
 		NetworkReceiveUpdateComponent(unsigned int remote_id = 0,
 					      unsigned int packet_num = 0);
   virtual	~NetworkReceiveUpdateComponent();
+  virtual	void serialize(IBuffer &) const;
+  virtual	void unserialize(IBuffer &);
   unsigned int	getRemoteID() const;
   void		setRemoteID(unsigned int);
   unsigned int	getPacketNum() const;

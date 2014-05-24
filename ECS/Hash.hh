@@ -8,7 +8,7 @@ class Hash
 public:
   Hash();
   virtual ~Hash();
-  unsigned long operator()(const std::string &);
+  unsigned long operator()(const std::string &) const;
 protected:
 
 };
