@@ -1,3 +1,4 @@
+#include	<numeric>
 #include	"EntitySpawnerComponent.hh"
 
 #include	"EntityFactory.hpp"
@@ -122,7 +123,6 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
     {
       unsigned int	max;
       unsigned int	r;
-
       max = std::accumulate(this->_entities.begin(),
 			    this->_entities.end(),
 			    std::make_pair("", 0),
