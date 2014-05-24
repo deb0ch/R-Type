@@ -7,6 +7,10 @@ SFMLSpriteComponent::SFMLSpriteComponent()
 	: ACopyableComponent("SFMLSpriteComponent")
 {
   this->_mapexist = false;
+  this->_currentSprite = 0;
+  this->_sprites.nbSprintX = 0;
+  this->_sprites.nbSprintY = 0;
+  this->_fileName = "";
 }
 
 SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, const ImageLoader::NbSprite& sprites,
@@ -18,6 +22,7 @@ SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, const Imag
 	this->_tickChange = tickChange;
 	this->_counter = 0;
 	this->_tickCounter = 0;
+	this->_currentSprite = 0;
 	this->_map = map;
 	this->_previousAction = "";
 	this->_mapexist = true;

@@ -29,6 +29,7 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"SpawnPlayerSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -84,6 +85,7 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new SpawnPlayerSystem());
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
@@ -109,6 +111,7 @@ void		addSystems(World &world)
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
+      "NetworkPlayerComponent",
       "SFMLInputComponent" };
   world.addSystem(new NetworkSendUpdateSystem(arg));
   std::vector<std::string> serializable_action =
@@ -146,7 +149,7 @@ void		addEntities(World &world)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
   world.addEntity(entityFactory->create("BACKGROUND_2"));
-  world.addEntity(entityFactory->create("PLAYER_RED"));
+  // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }

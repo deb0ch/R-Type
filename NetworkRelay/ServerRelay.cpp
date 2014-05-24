@@ -149,9 +149,9 @@ void		ServerRelay::receiveUDP()
   remote = this->getRemote(id);
   if (remote)
     {
-      remote->setReady(true);
       remote->setIP(ip);
       remote->setPort(port);
+      remote->setReady(true);
       if (buffer->end())
 	{
 	  this->udpConnect(remote);
@@ -256,7 +256,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty())
+  if (this->_available_udp.isEmpty() || 1)
     {
       buffer = new NetworkBuffer;
       std::cout << "creating buffer udp: " << buffer << std::endl;

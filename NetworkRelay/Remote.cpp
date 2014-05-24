@@ -82,10 +82,13 @@ void			Remote::sendTCP(IBuffer *buffer)
 
 void			Remote::sendUDP(IBuffer *buffer)
 {
-  buffer->rewind();
-  *buffer << this->_private_hash;
-  buffer->rewind();
-  this->_send_buffer_udp.push(buffer);
+  if (this->isReady() || buffer->getLength() == sizeof(unsigned int))
+    {
+      buffer->rewind();
+      *buffer << this->_private_hash;
+      buffer->rewind();
+      this->_send_buffer_udp.push(buffer);
+    }
 }
 
 LockVector<IBuffer *>	&Remote::getRecvBufferUDP()

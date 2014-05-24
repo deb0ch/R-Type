@@ -36,9 +36,6 @@ IBuffer		&NetworkBuffer::operator=(const IBuffer &buffer)
     {
       this->_buffer_size = buffer.getLength();
       this->_current_pos = buffer.getPosition();
-      if (this->_buffer)
-	delete this->_buffer;
-      this->_buffer = new char[bufferMaxSize];
       cpy = buffer.getBuffer();
       this->_offset = buffer.getOffset();
       for (unsigned int i = 0; i < this->_buffer_size; ++i)

@@ -25,6 +25,12 @@ NetworkPlayerComponent &NetworkPlayerComponent::operator=(const NetworkPlayerCom
   if (this != &e)
     {
       this->_remote_hash = e._remote_hash;
+      std::for_each(this->_components.begin(), this->_components.end(),
+		    [] (ASerializableComponent *comp)
+		    {
+		      delete comp;
+		    });
+      this->_components.clear();
       std::for_each(e._components.begin(), e._components.end(),
 		    [this] (const ASerializableComponent *comp)
 		    {
