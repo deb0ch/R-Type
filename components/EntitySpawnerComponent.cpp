@@ -1,3 +1,5 @@
+#include	<numeric>
+
 #include	"EntitySpawnerComponent.hh"
 
 #include	"EntityFactory.hpp"
