@@ -107,6 +107,12 @@ void		addSystems(World &world)
 
 void		addSharedObjetcs(World &world)
 {
+	SoundLoader *soundLoader = new SoundLoader();
+	soundLoader->addSound("Ressources/Sound/Silencer.wav");
+	/*
+
+	*/
+
   ComponentFactory *compos = new ComponentFactory();
   compos->init();
   EntityFactory *entityFactory = new EntityFactory();
@@ -114,6 +120,7 @@ void		addSharedObjetcs(World &world)
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
   world.setSharedObject("entityFactory", entityFactory);
+  world.setSharedObject("soundLoader", soundLoader);
 }
 
 void		addEntities(World &world)
@@ -139,18 +146,12 @@ int		main()
 	world.start();
 
 	sf::Music music;
-
-	if (music.openFromFile("Ressources/Sound/music.ogg")) {
+	
+	if (music.openFromFile("Ressources/Sound/music.ogg"))
+	{
 	  music.setLoop(true);
 	  music.play();
 	}
-
-	/*
-	SoundLoader *s = new SoundLoader();
-	s->addSound("Ressources/Sound/laser.wav");
-	sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-	sound->play();
-	*/
 
 	for (;;)
 	{
