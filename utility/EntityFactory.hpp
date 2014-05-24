@@ -533,7 +533,7 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
