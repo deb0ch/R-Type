@@ -29,6 +29,7 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"NetworkSendDieEntitySystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -67,6 +68,7 @@
 
 void		addSystems(World &world)
 {
+  //world.addSystem(new NetworkSendDieEntitySystem());
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
@@ -92,14 +94,19 @@ void		addSystems(World &world)
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-  EntityDeleterSystem *entityDeleterSystem;
-
-  entityDeleterSystem = new EntityDeleterSystem();
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
+
+  /*
+  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
+  world.addSystem(networkSendDieEntitySystem);
+  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
+			&NetworkSendDieEntitySystem::addEntityToDelete);
+  */
 
   std::vector<std::string> arg =
     { "Pos2DComponent",
