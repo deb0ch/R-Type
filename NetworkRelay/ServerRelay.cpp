@@ -2,8 +2,10 @@
 #include "ServerRelay.hh"
 #include "NetworkBuffer.hh"
 #include "Unistd.hh"
+#include "NewPlayerEvent.hh"
 
-ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer(), _select(0, 100000)
+ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
+  : _network_initializer(), _select(0, 100000), _world(world)
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -147,12 +149,13 @@ void		ServerRelay::receiveUDP()
   remote = this->getRemote(id);
   if (remote)
     {
-      remote->setReady(true);
       remote->setIP(ip);
       remote->setPort(port);
+      remote->setReady(true);
       if (buffer->end())
 	{
 	  this->udpConnect(remote);
+	  this->_world->sendEvent(new NewPlayerEvent(remote->getPrivateHash()));
 	}
       else
 	{
@@ -253,7 +256,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty())
+  if (this->_available_udp.isEmpty() || 1)
     {
       buffer = new NetworkBuffer;
       std::cout << "creating buffer udp: " << buffer << std::endl;

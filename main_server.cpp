@@ -29,6 +29,8 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"SpawnPlayerSystem.hh"
+#include	"NetworkSendDieEntitySystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -67,6 +69,7 @@
 
 void		addSystems(World &world)
 {
+  world.addSystem(new NetworkSendDieEntitySystem());
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
@@ -84,6 +87,7 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new SpawnPlayerSystem());
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
@@ -92,14 +96,17 @@ void		addSystems(World &world)
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-  EntityDeleterSystem *entityDeleterSystem;
-
-  entityDeleterSystem = new EntityDeleterSystem();
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
+
+  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
+  world.addSystem(networkSendDieEntitySystem);
+  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
+			&NetworkSendDieEntitySystem::addEntityToDelete);
 
   std::vector<std::string> arg =
     {
@@ -110,7 +117,8 @@ void		addSystems(World &world)
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
-      "SFMLInputComponent"
+      "SFMLInputComponent",
+      "NetworkPlayerComponent",
       "Box2DComponent"
     };
 
@@ -132,7 +140,7 @@ void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
   EntityFactory *entityFactory = new EntityFactory();
-  ServerRelay *server = new ServerRelay(6667, 42);
+  ServerRelay *server = new ServerRelay(&world, 6667, 42);
   Thread<ServerRelay> *thread = new Thread<ServerRelay>();
   Any tmp;
 
@@ -154,7 +162,7 @@ void		addEntities(World &world)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
   world.addEntity(entityFactory->create("BACKGROUND_2"));
-  world.addEntity(entityFactory->create("PLAYER_RED"));
+  // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }

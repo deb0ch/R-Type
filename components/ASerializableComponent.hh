@@ -14,14 +14,16 @@ public:
   virtual ~ASerializableComponent()
   {}
 
-  ASerializableComponent *sendUpdate(bool);
+  ASerializableComponent *setNetworkSendUpdate(bool);
+  ASerializableComponent *setNetworkSend(bool);
   virtual void serialize(IBuffer &) const = 0;
   virtual void unserialize(IBuffer &) = 0;
-  virtual void networkSerialize(Remote *remote, IBuffer &) const;
+  virtual void networkSerialize(Remote *remote, IBuffer &, bool force_send = false) const;
   virtual ASerializableComponent *cloneSerializable() const = 0;
   virtual IComponent *clone() const;
-private:
+protected:
   bool	_sendUpdate;
+  bool	_send;
 };
 
 #endif /* !ASERIALIZABLECOMPONENT_H_ */
