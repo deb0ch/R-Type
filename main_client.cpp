@@ -173,7 +173,7 @@ int		main(int ac, char **av)
       timer.startFrame();
 	  if (timer.canTick())
 	  {
-		  std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+		  //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
 		  world.process(timer.getDeltaTime() / 1000000.f);
 	  }
       timer.endFrame();
