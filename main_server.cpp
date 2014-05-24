@@ -102,21 +102,29 @@ void		addSystems(World &world)
 	  &LifeSystem::delete_entity);
 
   std::vector<std::string> arg =
-    { "Pos2DComponent",
+    {
+      "Pos2DComponent",
       "SFMLSpriteComponent",
       "Speed2DComponent",
       "Friction2DComponent",
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
-      "SFMLInputComponent" };
+      "SFMLInputComponent"
+      "Box2DComponent"
+    };
+
   world.addSystem(new NetworkSendUpdateSystem(arg));
+
   std::vector<std::string> serializable_action =
-    { "UP",
+    {
+      "UP",
       "RIGHT",
       "DOWN",
       "LEFT",
-      "FIRE" };
+      "FIRE"
+    };
+
   world.addSystem(new NetworkReceiveActionSystem(serializable_action));
 }
 
