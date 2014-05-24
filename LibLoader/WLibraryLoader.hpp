@@ -60,8 +60,8 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	auto it = this->libs.find(path);
 	if (it == this->libs.end())
 	{
-		std::cout << "toto" << std::endl;
 		std::cout << "PATH : " << path.c_str() << std::endl;
+		std::cout << "toto" << std::endl;
 		Handle = LoadLibrary(path.c_str());
 		if (Handle != NULL && Handle != INVALID_HANDLE_VALUE)
 			this->libs[path] = Handle;
@@ -75,14 +75,7 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
 	}
 	instancier = reinterpret_cast<T *(*)()>(GetProcAddress(Handle, entry.c_str()));
 	if (instancier)
-	{
-		std::cout << "INSTANCE" << std::endl;
 		res = instancier();
-		if (res == NULL)
-			std::cout << "BUG" << std::endl;
-		else
-			std::cout << res << std::endl;
-	}
 	return (res);
 }
 
