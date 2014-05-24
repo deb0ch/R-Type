@@ -29,17 +29,20 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
   this->_counter = 0;
   this->_tick = 0;
 
+  this->_maxWeight = 0;
   std::for_each(this->_entities.begin(),
 		this->_entities.end(),
-		[] (std::pair<std::string, unsigned int> &p) {
+		[this] (std::pair<std::string, unsigned int> &p) {
 		  if (p.second <= 0)
 		    p.second = 1;
+		  this->_maxWeight += p.second;
 		});
 }
 
 EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
   : ACopyableComponent("EntitySpawnerComponent"),
     _entities(ref._entities),
+    _maxWeight(ref._maxWeight),
     _nb(ref._nb),
     _delay(ref._delay),
     _min_pos(ref._min_pos),
@@ -121,20 +124,20 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
     }
   else
     {
-      unsigned int	max;
       unsigned int	r;
-      max = std::accumulate(this->_entities.begin(),
-			    this->_entities.end(),
-			    std::make_pair("", 0),
-			    [] (std::pair<std::string, unsigned int> n1, std::pair<std::string, unsigned int> n2) {
-			      return std::make_pair("", n1.second + n2.second);
-			    }).second;
+      unsigned int	cumul = 0;
 
-      r = RandomInt().operator() <unsigned long>(1, max);
+      r = RandomInt().operator() <unsigned long>(1, this->_maxWeight);
 
       for (unsigned int i = 0 ; i < this->_entities.size() ; ++i)
-	if (r <= this->_entities[i].second)
-	  this->_next = i;
+	{
+	  if (r <= this->_entities[i].second + cumul)
+	    {
+	      this->_next = i;
+	      break ;
+	    }
+	  cumul += this->_entities[i].second;
+	}
     }
 
   if (!res)
