@@ -6,6 +6,7 @@
 #include "Hash.hh"
 #include "EntityDeletedEvent.hh"
 #include "NetworkReceiveDieEntitySystem.hh"
+#include "NetworkReceiveUpdateComponent.hh"
 
 NetworkReceiveDieEntitySystem::NetworkReceiveDieEntitySystem()
   : ASystem("NetworkReceiveDieEntitySystem")
@@ -59,9 +60,23 @@ void NetworkReceiveDieEntitySystem::parsePacket(LockVector<IBuffer *> &vector,
   if (packet_type == KILL_ENTITY)
     {
       *buffer >> id_entity;
-      Entity *entity = this->_world->getEntity(id_entity);
-      if (entity)
-	this->_world->sendEvent(new EntityDeletedEvent(entity));
+      std::vector<Entity *> &entites = this->_world->getEntities();
+      std::for_each(entites.begin(), entites.end(),
+		    [&id_entity, this] (Entity *entity)
+		    {
+		      NetworkReceiveUpdateComponent *update_comp;
+
+		      update_comp =
+			entity->getComponent<NetworkReceiveUpdateComponent>
+			("NetworkReceiveUpdateComponent");
+		      if (update_comp)
+			{
+			  if (update_comp->getRemoteID() == id_entity)
+			    {
+			      this->_world->sendEvent(new EntityDeletedEvent(entity));
+			    }
+			}
+		    });
       this->_network->disposeUDPBuffer(buffer);
       it = vector.erase(it);
     }

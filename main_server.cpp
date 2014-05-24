@@ -68,7 +68,7 @@
 
 void		addSystems(World &world)
 {
-  //world.addSystem(new NetworkSendDieEntitySystem());
+  world.addSystem(new NetworkSendDieEntitySystem());
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
@@ -101,12 +101,10 @@ void		addSystems(World &world)
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
 
-  /*
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
   world.addSystem(networkSendDieEntitySystem);
   world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
 			&NetworkSendDieEntitySystem::addEntityToDelete);
-  */
 
   std::vector<std::string> arg =
     { "Pos2DComponent",

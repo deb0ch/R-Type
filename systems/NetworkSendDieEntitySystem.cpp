@@ -38,10 +38,10 @@ void	NetworkSendDieEntitySystem::afterProcess() {
     std::for_each(remotes.begin(), remotes.end(),
 		  [this, &it, &itEnd] (Remote *remote) {
 		    for (it = this->_toDelete.begin(); it != itEnd; ++it) {
-		      IBuffer *buffer = this->_network->getUDPBuffer();
-		      *buffer << static_cast<char>(KILL_ENTITY);
-		      *buffer << (*it)->_id;
 		      for (int i = 0; i < 50; ++i) {
+			IBuffer *buffer = this->_network->getUDPBuffer();
+			*buffer << static_cast<char>(KILL_ENTITY);
+			*buffer << (*it)->_id;
 			remote->sendUDP(buffer);
 		      }
 		    }

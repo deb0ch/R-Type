@@ -467,7 +467,7 @@ public:
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		    ->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_2" }, {}, 0, 100,
+		    ->addComponent(new EntitySpawnerComponent({ "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_1", "MONSTER_2" }, {}, 0, 100,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
 		    );
   }
