@@ -11,6 +11,8 @@ class CollisionComponent : public AComponent<CollisionComponent>
 
 protected:
   std::list<CollisionPoint *>	_collisionPoints;
+  std::list<std::string>	_toCollide;
+  std::list<std::string>	_toNotCollide;
 
 public:
   CollisionComponent();
@@ -21,6 +23,11 @@ public:
   std::list<CollisionPoint *>	const &getCollisionPoints() const;
   CollisionComponent		*addCollisionPoint(CollisionPoint *);
 
+  std::list<std::string>	const &getToCollide() const;
+  std::list<std::string>	const &getToNotCollide() const;
+
+  CollisionComponent	       *addToCollideItem(std::string const &);
+  CollisionComponent	       *addNotToCollideItem(std::string const &);
 };
 
 #endif /* !COLLISIONCOMPONENT_H_ */
