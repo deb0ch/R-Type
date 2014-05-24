@@ -55,7 +55,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
 
@@ -64,7 +64,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(1095.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
   }
