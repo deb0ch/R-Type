@@ -31,6 +31,7 @@
 #include	"NetworkReceiveActionSystem.hh"
 #include	"SpawnPlayerSystem.hh"
 #include	"NetworkSendDieEntitySystem.hh"
+#include	"DisconnectPlayerSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -87,6 +88,7 @@ void		addSystems(World &world)
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
   world.addSystem(new SpawnPlayerSystem());
+  world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;

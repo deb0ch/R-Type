@@ -15,6 +15,8 @@ public:
   {}
 
   ASerializableComponent	*setNetworkSendUpdateException(unsigned int);
+  ASerializableComponent	*setNetworkCanSendUpdate(bool);
+  ASerializableComponent	*setNetworkCanSend(bool);
   ASerializableComponent	*setNetworkSendException(unsigned int);
   bool				canSend(unsigned int) const;
   bool				canSendUpdate(unsigned int) const;
@@ -27,6 +29,8 @@ public:
 protected:
   std::vector<unsigned int>	_exception_send_update;
   std::vector<unsigned int>	_exception_send;
+  bool				_can_send_update;
+  bool				_can_send;
 };
 
 #endif /* !ASERIALIZABLECOMPONENT_H_ */

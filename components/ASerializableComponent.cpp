@@ -3,7 +3,7 @@
 #include "Hash.hh"
 
 ASerializableComponent::ASerializableComponent(const std::string &type)
-  : AComponent(type)
+  : AComponent(type), _can_send_update(true), _can_send(true)
 {}
 
 void	ASerializableComponent::networkSerialize(Remote *remote, IBuffer &buffer, bool force_send) const
@@ -33,6 +33,18 @@ ASerializableComponent *ASerializableComponent::setNetworkSendException(unsigned
   return this;
 }
 
+ASerializableComponent	*ASerializableComponent::setNetworkCanSendUpdate(bool value)
+{
+  this->_can_send_update = value;
+  return this;
+}
+
+ASerializableComponent	*ASerializableComponent::setNetworkCanSend(bool value)
+{
+  this->_can_send = value;
+  return this;
+}
+
 IComponent		*ASerializableComponent::clone() const
 {
   return (this->cloneSerializable());
@@ -40,18 +52,22 @@ IComponent		*ASerializableComponent::clone() const
 
 bool			ASerializableComponent::canSend(unsigned int remote_id) const
 {
-  return (!std::any_of(this->_exception_send.begin(), this->_exception_send.end(),
-	      [&remote_id] (unsigned int id)
-	      {
-		return (remote_id == id);
-	      }));
+  if (std::any_of(this->_exception_send.begin(), this->_exception_send.end(),
+		  [&remote_id] (unsigned int id)
+		  {
+		    return (remote_id == id);
+		  }))
+    return (!this->_can_send);
+  return (this->_can_send);
 }
 
 bool			ASerializableComponent::canSendUpdate(unsigned int remote_id) const
 {
-  return (!std::any_of(this->_exception_send_update.begin(), this->_exception_send_update.end(),
-	      [&remote_id] (unsigned int id)
-	      {
-		return (remote_id == id);
-	      }));
+  if (std::any_of(this->_exception_send_update.begin(), this->_exception_send_update.end(),
+		  [&remote_id] (unsigned int id)
+		  {
+		    return (remote_id == id);
+		  }))
+    return (!this->_can_send_update);
+  return (this->_can_send_update);
 }

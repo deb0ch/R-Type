@@ -30,6 +30,7 @@
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
 #include	"NetworkReceiveDieEntitySystem.hh"
+#include	"SyncPos2DSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"

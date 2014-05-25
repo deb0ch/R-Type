@@ -5,6 +5,7 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NewPlayerEvent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerEvent.hh
 	PARENT_SCOPE
 )
 
@@ -15,6 +16,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NewPlayerEvent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerEvent.cpp
 	PARENT_SCOPE
 )
 
@@ -25,6 +27,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NewPlayerEvent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerEvent.hh
 	PARENT_SCOPE
 )
 	
@@ -35,5 +38,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLKeyEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/InputChangedEvent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NewPlayerEvent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerEvent.cpp
 	PARENT_SCOPE
 )

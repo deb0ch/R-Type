@@ -3,6 +3,7 @@
 #include "NetworkBuffer.hh"
 #include "Unistd.hh"
 #include "NewPlayerEvent.hh"
+#include "DisconnectPlayerEvent.hh"
 
 ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
   : _network_initializer(), _world(world)
@@ -103,8 +104,9 @@ void		ServerRelay::manageRemotes()
 	{
 	  std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
 	  std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
-			[&room] (Remote *remote) -> void
+			[&room, this] (Remote *remote) -> void
 			{
+			  this->removeRemote(remote);
 			  room->removeRemote(remote);
 			});
 	  remotes_disconnect.clear();
@@ -130,7 +132,7 @@ void		ServerRelay::removeRemote(Remote *remote)
 {
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
-  delete remote;
+  this->_world->sendEvent(new DisconnectPlayerEvent(remote->getPrivateHash()));
 }
 
 /**

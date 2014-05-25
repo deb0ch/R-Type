@@ -84,6 +84,8 @@ void				Room::sendBroadcastUDP(INetworkRelay &network,
 	tmp_buffer = buffer;
       tmp->sendUDP(tmp_buffer);
     }
+  if (this->_remotes.empty())
+    network.disposeUDPBuffer(buffer);
 }
 
 void				Room::sendBroadcastTCP(INetworkRelay &network,
@@ -104,6 +106,8 @@ void				Room::sendBroadcastTCP(INetworkRelay &network,
 	}
       else
 	tmp_buffer = buffer;
-     tmp->sendTCP(tmp_buffer);
+      tmp->sendTCP(tmp_buffer);
     }
+  if (this->_remotes.empty())
+    network.disposeTCPBuffer(buffer);
 }

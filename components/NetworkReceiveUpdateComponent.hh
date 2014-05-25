@@ -18,10 +18,12 @@ public:
   void		resetLastUpdate();
   void		increaseLastUpdate();
   unsigned int	getLastUpdate() const;
+  unsigned int	getPreviousUpdateTime() const;
 protected:
   unsigned int	_remote_id;
   unsigned int	_packet_num;
   unsigned int	_last_update;
+  unsigned int	_previous_update_time;
 };
 
 #endif /* !NETWORKRECEIVEUPDATECOMPONENT_H_ */
