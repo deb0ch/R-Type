@@ -42,8 +42,8 @@ protected:
   Select				_select;
   Mutex					_mutex_room;
   std::map<std::string, Room>		_remotes; // String: Nom de la room
-  SafeFifo<IBuffer *>			_available_udp;
-  SafeFifo<IBuffer *>			_available_tcp;
+  LockVector<IBuffer *>			_available_udp;
+  LockVector<IBuffer *>			_available_tcp;
   // temporary
   World					*_world;
 };
