@@ -30,7 +30,7 @@
 # include "Hash.hh"
 # include "NetworkReceiveActionComponent.hh"
 
-class EntityFactory : public Factory<Entity, unsigned long>
+class EntityFactory : public Factory<Entity, hash_t>
 {
 public:
   EntityFactory()
@@ -54,7 +54,7 @@ public:
     return (this->create(Hash()(key)));
   }
 
-  virtual Entity*	create(const unsigned long &key) const
+  virtual Entity*	create(const hash_t &key) const
   {
     const Entity	*tmp;
 

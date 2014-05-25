@@ -175,7 +175,7 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
 void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 										 IBuffer &buffer)
 {
-  unsigned long			component_hash;
+  hash_t			component_hash;
   ASerializableComponent	*serializable_component;
   bool				update = true;
 
@@ -193,7 +193,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
     }
   it->second = true;
   serializable_component =
-    entity->getComponent<ASerializableComponent, unsigned long, Hash>(component_hash, Hash());
+    entity->getComponent<ASerializableComponent, hash_t, Hash>(component_hash, Hash());
   if (!serializable_component || update == false)
     {
       ComponentFactory *fact = this->_world->getSharedObject<ComponentFactory>("componentFactory");

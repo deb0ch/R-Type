@@ -17,7 +17,7 @@
 # include "NetworkSendActionComponent.hh"
 # include "Hash.hh"
 
-class ComponentFactory : public Factory<ASerializableComponent, unsigned long>
+class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
 private :
   void addComponent(ASerializableComponent *input)
@@ -47,7 +47,7 @@ public :
     this->addComponent(new NetworkSendActionComponent());
   }
 
-  virtual ASerializableComponent	*create(const unsigned long &key) const
+  virtual ASerializableComponent	*create(const hash_t &key) const
   {
     const ASerializableComponent *tmp;
 

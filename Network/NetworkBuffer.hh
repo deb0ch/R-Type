@@ -24,14 +24,14 @@ public:
 
   virtual IBuffer	&operator<<(const int &);
   virtual IBuffer	&operator<<(const unsigned int &);
-  virtual IBuffer	&operator<<(const unsigned long &);
+  virtual IBuffer	&operator<<(const uint64_t &);
   virtual IBuffer	&operator<<(const float &);
   virtual IBuffer	&operator<<(const std::string &);
   virtual IBuffer	&operator<<(const char &);
 
   virtual IBuffer	&operator>>(int &);
   virtual IBuffer	&operator>>(unsigned int &);
-  virtual IBuffer	&operator>>(unsigned long &);
+  virtual IBuffer	&operator>>(uint64_t &);
   virtual IBuffer	&operator>>(float &);
   virtual IBuffer	&operator>>(std::string &);
   virtual IBuffer	&operator>>(char &);

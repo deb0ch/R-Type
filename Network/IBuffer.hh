@@ -10,14 +10,14 @@ public:
   {}
   virtual IBuffer &operator<<(const int &) = 0;
   virtual IBuffer &operator<<(const unsigned int &) = 0;
-  virtual IBuffer &operator<<(const unsigned long &) = 0;
+  virtual IBuffer &operator<<(const uint64_t &) = 0;
   virtual IBuffer &operator<<(const float &) = 0;
   virtual IBuffer &operator<<(const std::string &) = 0;
   virtual IBuffer &operator<<(const char &) = 0;
 
   virtual IBuffer &operator>>(int &) = 0;
   virtual IBuffer &operator>>(unsigned int &) = 0;
-  virtual IBuffer &operator>>(unsigned long &) = 0;
+  virtual IBuffer &operator>>(uint64_t &) = 0;
   virtual IBuffer &operator>>(float &) = 0;
   virtual IBuffer &operator>>(std::string &) = 0;
   virtual IBuffer &operator>>(char &) = 0;

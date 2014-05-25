@@ -35,7 +35,7 @@
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
-/* should be in some equivalent to <sys/types.h> */
+// /* should be in some equivalent to <sys/types.h> */
 typedef __int8            int8_t;
 typedef __int16           int16_t;
 typedef __int32           int32_t;
@@ -49,6 +49,7 @@ typedef unsigned __int64  uint64_t;
 
 #elif __linux__
 #include <unistd.h>
+#include <cstdint>
 #endif /* _WIN32*/
 
 #endif /* !UNISTD_H_ */
