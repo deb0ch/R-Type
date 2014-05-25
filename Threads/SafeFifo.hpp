@@ -17,6 +17,11 @@ public:
     this->fifo.push_back(value);
   }
 
+  unsigned int	size() {
+    ScopedMutex p(&(this->_mutex));
+    return this->fifo.size();
+  }
+
   bool	tryPop(const T &value) {
     ScopedMutex p(&(this->_mutex));
 

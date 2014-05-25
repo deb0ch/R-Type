@@ -18,11 +18,11 @@ public:
   NetworkException(const std::string &error);
   ~NetworkException() throw() {}
 
+  const char* what() const throw();
+
 protected:
   NetworkException(const std::string &prefix, const int error);
   NetworkException(const std::string &prefix, const std::string &error);
-
-  const char* what() const throw();
 
 private:
   void addError(const int error);
