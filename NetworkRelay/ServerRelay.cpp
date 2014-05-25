@@ -5,7 +5,7 @@
 #include "NewPlayerEvent.hh"
 
 ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
-  : _network_initializer(), _select(0, 100000), _world(world)
+  : _network_initializer(), _world(world)
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -47,6 +47,7 @@ void	ServerRelay::waitForEvent()
 				    }
 				});
 		});
+  this->_select.setTimeOut(0, 10000);
   this->_select.doSelect();
 }
 
@@ -160,7 +161,7 @@ void		ServerRelay::receiveUDP()
       else
 	{
 	  remote->getRecvBufferUDP().lock();
-	  buffer->setOffset(sizeof(unsigned int));
+	  buffer->addOffset(sizeof(unsigned int));
 	  remote->getRecvBufferUDP().push_back(buffer);
 	  remote->getRecvBufferUDP().unlock();
 	}
@@ -256,7 +257,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty() || 1) // Temporary fix (circular buffers are broken)
+  if (this->_available_udp.isEmpty() || 1)
     {
       buffer = new NetworkBuffer;
       // std::cout << "creating buffer udp: " << buffer << std::endl;

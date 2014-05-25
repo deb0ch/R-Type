@@ -7,7 +7,7 @@ all:		$(NAME_C) $(NAME_S)
 
 		mkdir -p build
 		cd build && cmake ..
-		$(MAKE) -j 8 -C build
+		$(MAKE) -C build
 		ln -sf build/$(NAME_C) .
 		ln -sf build/$(NAME_S) .
 

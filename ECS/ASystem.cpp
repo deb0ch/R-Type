@@ -41,9 +41,9 @@ void		ASystem::process(std::vector<Entity *> &entities, const float delta)
 	  if (this->canProcess(entity))
 	    this->processEntity(entity, delta);
 	}
-      catch (std::exception &e)
+      catch (const std::exception &e)
 	{
-	  std::cerr << e.what() << std::endl;
+	  std::cerr << "Error in system " << this->getType() << ":" << std::endl << e.what() << std::endl;
 	}
     });
   this->afterProcess();
