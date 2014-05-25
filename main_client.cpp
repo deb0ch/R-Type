@@ -96,7 +96,8 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent",
-      "Box2DComponent"
+      "Box2DComponent",
+      "SyncPos2DComponent"
     };
 
   world.addSystem(new NetworkReceiveUpdateSystem(arg));

@@ -23,7 +23,7 @@ public:
 
 private:
   void		unserializeComponent(Entity *, IBuffer &buffer);
-  void		updateEntity(Entity *, IBuffer &buffer);
+  void		updateEntity(Entity *, NetworkReceiveUpdateComponent *receive_component, IBuffer &buffer);
   void		getEntityInfos(IBuffer &buffer,
 			       unsigned int &id_entity, unsigned int &num_packet);
   bool		remoteEntityExists(unsigned int);

@@ -15,9 +15,13 @@ public:
   void		setRemoteID(unsigned int);
   unsigned int	getPacketNum() const;
   void		setPacketNum(unsigned int);
+  void		resetLastUpdate();
+  void		increaseLastUpdate();
+  unsigned int	getLastUpdate() const;
 protected:
   unsigned int	_remote_id;
   unsigned int	_packet_num;
+  unsigned int	_last_update;
 };
 
 #endif /* !NETWORKRECEIVEUPDATECOMPONENT_H_ */

@@ -15,6 +15,7 @@
 # include "ActionComponent.hh"
 # include "PlayerMovementComponent.hh"
 # include "NetworkSendActionComponent.hh"
+# include "SyncPos2DComponent.hh"
 # include "Hash.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
@@ -45,6 +46,7 @@ public :
     this->addComponent(new ActionComponent());
     this->addComponent(new PlayerMovementComponent());
     this->addComponent(new NetworkSendActionComponent());
+    this->addComponent(new SyncPos2DComponent());
   }
 
   virtual ASerializableComponent	*create(const hash_t &key) const

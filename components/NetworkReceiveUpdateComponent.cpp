@@ -6,6 +6,7 @@ NetworkReceiveUpdateComponent::NetworkReceiveUpdateComponent(unsigned int remote
 {
   this->_remote_id = remote_id;
   this->_packet_num = packet_num;
+  this->_last_update = 0;
 }
 
 NetworkReceiveUpdateComponent::~NetworkReceiveUpdateComponent()
@@ -36,3 +37,18 @@ void NetworkReceiveUpdateComponent::serialize(IBuffer &) const
 
 void NetworkReceiveUpdateComponent::unserialize(IBuffer &)
 {}
+
+void		NetworkReceiveUpdateComponent::resetLastUpdate()
+{
+  this->_last_update = 0;
+}
+
+void		NetworkReceiveUpdateComponent::increaseLastUpdate()
+{
+  ++this->_last_update;
+}
+
+unsigned int	NetworkReceiveUpdateComponent::getLastUpdate() const
+{
+  return this->_last_update;
+}

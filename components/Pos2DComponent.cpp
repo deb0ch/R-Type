@@ -46,6 +46,12 @@ void		Pos2DComponent::unserialize(IBuffer &buffer)
   buffer >> this->_y;
 }
 
+void		Pos2DComponent::additionalNetworkSerialize(IBuffer &buffer) const
+{
+  buffer << Hash()("SyncPos2DComponent");
+  this->serialize(buffer);
+}
+
 Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
 {
   return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));

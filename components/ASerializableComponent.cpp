@@ -14,8 +14,12 @@ void	ASerializableComponent::networkSerialize(Remote *remote, IBuffer &buffer, b
 	buffer << static_cast<hash_t>(0);
       buffer << Hash()(this->getType());
       this->serialize(buffer);
+      this->additionalNetworkSerialize(buffer);
     }
 }
+
+void	ASerializableComponent::additionalNetworkSerialize(IBuffer &) const
+{}
 
 ASerializableComponent	*ASerializableComponent::setNetworkSendUpdateException(unsigned int id)
 {

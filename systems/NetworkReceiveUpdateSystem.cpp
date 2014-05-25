@@ -75,6 +75,7 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
   Room				*room;
 
   receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+  receive_component->increaseLastUpdate();
   room = this->_network->getRoom(*this->_room_name);
 
   std::vector<Remote *> &remotes = room->getRemotes();
@@ -125,7 +126,7 @@ void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
 	{
 	  if (num_packet > receive_component->getPacketNum())
 	    {
-	      this->updateEntity(entity, *buffer);
+	      this->updateEntity(entity, receive_component, *buffer);
 	      receive_component->setPacketNum(num_packet);
 	    }
 	  else
@@ -159,8 +160,9 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
       if (!this->remoteEntityExists(id_entity))
 	{
 	  entity = this->_world->createEntity();
-	  entity->addComponent(new NetworkReceiveUpdateComponent(id_entity, num_packet));
-	  this->updateEntity(entity, *buffer);
+	  NetworkReceiveUpdateComponent *tmp = new NetworkReceiveUpdateComponent(id_entity, num_packet);
+	  entity->addComponent(tmp);
+	  this->updateEntity(entity, tmp, *buffer);
 	  this->_world->addEntity(entity);
 	  this->_network->disposeUDPBuffer(buffer);
 	  it = vector.erase(it);
@@ -212,8 +214,10 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 }
 
 void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
+									 NetworkReceiveUpdateComponent *receive_comp,
 									 IBuffer &buffer)
 {
+  receive_comp->resetLastUpdate();
   resetSerializable();
   while (!buffer.end())
     {
