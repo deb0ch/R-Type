@@ -27,6 +27,7 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnPlayerSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -58,6 +59,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnPlayerSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.cpp
 	PARENT_SCOPE
 	)
 
@@ -89,6 +91,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.hh
 	PARENT_SCOPE
 )
 
@@ -120,5 +123,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendDieEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.cpp
 	PARENT_SCOPE
 )
