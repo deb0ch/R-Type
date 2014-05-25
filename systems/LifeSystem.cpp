@@ -58,7 +58,7 @@ void			LifeSystem::collision_event(IEvent *e)
 
 void			LifeSystem::delete_entity(IEvent *e)
 {
-  EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
+    EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
   if (event_catch == NULL)
     return;
   Entity *dyingEntity = event_catch->getEntity();

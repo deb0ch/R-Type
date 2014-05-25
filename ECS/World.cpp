@@ -88,7 +88,7 @@ World	*World::removeEntity(Entity *entity)
   return (this);
 }
 
-World	*World::removeEntity(unsigned long id)
+World	*World::removeEntity(unsigned int id)
 {
   auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
 			 [id] (Entity *entity) -> bool
@@ -132,7 +132,7 @@ std::vector<Entity *> &World::getEntities()
   return (this->_entities);
 }
 
-Entity		*World::getEntity(unsigned long id)
+Entity		*World::getEntity(unsigned int id)
 {
   auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
 			 [id] (Entity *entity) -> bool

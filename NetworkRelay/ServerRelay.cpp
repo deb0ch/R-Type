@@ -2,8 +2,11 @@
 #include "ServerRelay.hh"
 #include "NetworkBuffer.hh"
 #include "Unistd.hh"
+#include "NewPlayerEvent.hh"
+#include "DisconnectPlayerEvent.hh"
 
-ServerRelay::ServerRelay(int port, int nb_pending_connection) : _network_initializer(), _select(0, 100000)
+ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
+  : _network_initializer(), _world(world)
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -45,6 +48,7 @@ void	ServerRelay::waitForEvent()
 				    }
 				});
 		});
+  this->_select.setTimeOut(0, 10000);
   this->_select.doSelect();
 }
 
@@ -100,8 +104,9 @@ void		ServerRelay::manageRemotes()
 	{
 	  std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
 	  std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
-			[&room] (Remote *remote) -> void
+			[&room, this] (Remote *remote) -> void
 			{
+			  this->removeRemote(remote);
 			  room->removeRemote(remote);
 			});
 	  remotes_disconnect.clear();
@@ -127,7 +132,7 @@ void		ServerRelay::removeRemote(Remote *remote)
 {
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
-  delete remote;
+  this->_world->sendEvent(new DisconnectPlayerEvent(remote->getPrivateHash()));
 }
 
 /**
@@ -147,17 +152,18 @@ void		ServerRelay::receiveUDP()
   remote = this->getRemote(id);
   if (remote)
     {
-      remote->setReady(true);
       remote->setIP(ip);
       remote->setPort(port);
+      remote->setReady(true);
       if (buffer->end())
 	{
 	  this->udpConnect(remote);
+	  this->_world->sendEvent(new NewPlayerEvent(remote->getPrivateHash()));
 	}
       else
 	{
 	  remote->getRecvBufferUDP().lock();
-	  buffer->setOffset(sizeof(unsigned int));
+	  buffer->addOffset(sizeof(unsigned int));
 	  remote->getRecvBufferUDP().push_back(buffer);
 	  remote->getRecvBufferUDP().unlock();
 	}
@@ -235,16 +241,19 @@ IBuffer			*ServerRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_tcp.isEmpty())
+  this->_available_tcp.lock();
+  if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
       std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
-      buffer = this->_available_tcp.getNextPop();
+      buffer = this->_available_tcp.front();
+      this->_available_tcp.erase(this->_available_tcp.begin());
       buffer->reset();
     }
+  this->_available_tcp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
@@ -253,28 +262,35 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty())
+  this->_available_udp.lock();
+  if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
       std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {
-      buffer = this->_available_udp.getNextPop();
+      buffer = this->_available_udp.front();
+      this->_available_udp.erase(this->_available_udp.begin());
       buffer->reset();
     }
+  this->_available_udp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
 
 void			ServerRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  this->_available_udp.push(buffer);
+  this->_available_udp.lock();
+  this->_available_udp.push_back(buffer);
+  this->_available_udp.unlock();
 }
 
 void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  this->_available_tcp.push(buffer);
+  this->_available_tcp.lock();
+  this->_available_tcp.push_back(buffer);
+  this->_available_tcp.unlock();
 }
 
 Room			*ServerRelay::getRoom(const std::string &room_name)

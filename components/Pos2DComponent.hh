@@ -14,6 +14,7 @@ public:
   virtual	~Pos2DComponent();
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
+  virtual void	additionalNetworkSerialize(IBuffer &) const;
 
   float		getX() const;
   float		getY() const;

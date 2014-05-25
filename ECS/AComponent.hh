@@ -4,6 +4,10 @@
 # include	<string>
 # include	"IComponent.hh"
 
+
+# include <iostream>
+# include "Hash.hh"
+
 class		AComponent : public IComponent
 {
 protected:

@@ -6,6 +6,7 @@ Pos2DComponent::Pos2DComponent(float x, float y)
 {
   this->_x = x;
   this->_y = y;
+  // this->setNetworkCanSendUpdate(false);
 }
 
 //----- ----- Destructor ----- ----- //
@@ -44,6 +45,12 @@ void		Pos2DComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_x;
   buffer >> this->_y;
+}
+
+void		Pos2DComponent::additionalNetworkSerialize(IBuffer &) const
+{
+  // buffer << Hash()("SyncPos2DComponent");
+  // this->serialize(buffer);
 }
 
 Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)

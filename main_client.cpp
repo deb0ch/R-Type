@@ -29,6 +29,8 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"NetworkReceiveDieEntitySystem.hh"
+#include	"SyncPos2DSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -77,6 +79,7 @@ void		addSystems(World &world)
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
   world.addSystem(new BackgroundSystem());
+  world.addSystem(new NetworkReceiveDieEntitySystem());
 
   CollisionSystem *collision;
 
@@ -85,22 +88,36 @@ void		addSystems(World &world)
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
   std::vector<std::string> arg =
-    { "Pos2DComponent",
+    {
+      "Pos2DComponent",
       "SFMLSpriteComponent",
       "Speed2DComponent",
       "Friction2DComponent",
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
-      "SFMLInputComponent" };
+      "SFMLInputComponent",
+      "Box2DComponent",
+      "SyncPos2DComponent"
+    };
+
   world.addSystem(new NetworkReceiveUpdateSystem(arg));
+
   std::vector<std::string> serializable_action =
-    { "UP",
+    {
+      "UP",
       "RIGHT",
       "DOWN",
       "LEFT",
-      "FIRE" };
+      "FIRE"
+    };
+
   world.addSystem(new NetworkSendActionSystem(serializable_action));
+
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
 }
 
 static std::string g_ip = "127.0.0.1";
@@ -130,18 +147,15 @@ void		addSharedObjetcs(World &world)
   world.setSharedObject("RoomName", new std::string("default"));
 }
 
-// void		addEntities(World &world)
-// {
-//   EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
+void		addEntities(World &world)
+{
+  EntityFactory *entityFactory = world.getSharedObject<EntityFactory>("entityFactory");
 
-//   if (entityFactory == NULL)
-//     return;
-//   world.addEntity(entityFactory->create("BACKGROUND_1"));
-//   world.addEntity(entityFactory->create("BACKGROUND_2"));
-//   world.addEntity(entityFactory->create("PLAYER_RED"));
-//   world.addEntity(entityFactory->create("BOSS_1"));
-//   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
-// }
+  if (entityFactory == NULL)
+    return;
+  world.addEntity(entityFactory->create("BACKGROUND_1"));
+  world.addEntity(entityFactory->create("BACKGROUND_2"));
+}
 
 int		main(int ac, char **av)
 {
@@ -152,7 +166,7 @@ int		main(int ac, char **av)
     g_ip = av[1]; // Master flemme
   addSystems(world);
   addSharedObjetcs(world);
-  // addEntities(world);
+  addEntities(world);
 
   sf::Music music;
 

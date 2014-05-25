@@ -82,10 +82,13 @@ void			Remote::sendTCP(IBuffer *buffer)
 
 void			Remote::sendUDP(IBuffer *buffer)
 {
-  buffer->rewind();
-  *buffer << this->_private_hash;
-  buffer->rewind();
-  this->_send_buffer_udp.push(buffer);
+  if (this->isReady() || buffer->getLength() == sizeof(unsigned int))
+    {
+      buffer->rewind();
+      *buffer << this->_private_hash;
+      buffer->rewind();
+      this->_send_buffer_udp.push(buffer);
+    }
 }
 
 LockVector<IBuffer *>	&Remote::getRecvBufferUDP()
@@ -171,7 +174,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	    }
 	  else
 	    {
-	      buffer->setOffset(sizeof(size));
+	      buffer->addOffset(sizeof(size));
 	      this->_recv_buffer_tcp.push_back(buffer);
 	    }
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +

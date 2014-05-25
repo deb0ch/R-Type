@@ -28,8 +28,9 @@
 # include "MoveFollowComponent.hh"
 # include "ExplosionComponent.hh"
 # include "Hash.hh"
+# include "NetworkReceiveActionComponent.hh"
 
-class EntityFactory : public Factory<Entity, unsigned long>
+class EntityFactory : public Factory<Entity, hash_t>
 {
 public:
   EntityFactory()
@@ -53,7 +54,7 @@ public:
     return (this->create(Hash()(key)));
   }
 
-  virtual Entity*	create(const unsigned long &key) const
+  virtual Entity*	create(const hash_t &key) const
   {
     const Entity	*tmp;
 
@@ -136,7 +137,7 @@ public:
 		    ->addComponent(new Box2DComponent(250.0f, 280.0f))
 		    ->addComponent(new CollisionPowerComponent(500))
 		    ->addComponent(new SFMLSpriteComponent("BigExplosion.png", ImageLoader::NbSprite{ 10, 1 },
-							   { { "", { 0, 5 } } }))
+		    					   { { "", { 0, 5 } } }))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 250.0f, 280.0f)))
 		    ->addComponent(new AutoDestructComponent(50))
@@ -146,6 +147,7 @@ public:
   void		initPlayer()
   {
     this->addEntity("PLAYER_BLUE", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -169,6 +171,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_PURPLE", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -192,6 +195,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_GREEN", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -215,6 +219,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_RED", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new MovementLimitFrame2DComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
