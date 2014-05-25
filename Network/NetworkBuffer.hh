@@ -51,11 +51,12 @@ public:
   virtual void		setPosition(unsigned int);
 
   virtual unsigned int	getOffset() const;
-  virtual void		setOffset(unsigned int);
+  virtual void		addOffset(int);
 
 protected:
-  const unsigned int	bufferMaxSize;
+  unsigned int		_buffer_max_size;
   char			*_buffer;
+  char			*_buffer_original;
   unsigned int		_buffer_size;
   unsigned int		_current_pos;
   unsigned int		_offset;
@@ -68,7 +69,7 @@ private:
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
-    if (this->_buffer_size + sizeof(T) > bufferMaxSize)
+    if (this->_buffer_size + sizeof(T) > this->_buffer_max_size)
       {
 	throw BufferException(this, std::string("Serialize: no more space; Size = ") + std::to_string(sizeof(T)));
       }

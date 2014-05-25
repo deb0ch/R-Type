@@ -174,7 +174,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	    }
 	  else
 	    {
-	      buffer->setOffset(sizeof(size));
+	      buffer->addOffset(sizeof(size));
 	      this->_recv_buffer_tcp.push_back(buffer);
 	    }
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +

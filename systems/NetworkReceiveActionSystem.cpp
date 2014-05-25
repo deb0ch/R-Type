@@ -86,7 +86,7 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 	      network->setPacketNum(packet_number);
 	      this->parseActions(*buffer, action);
 	    }
-	  // this->_network->disposeUDPBuffer(buffer);
+	  this->_network->disposeUDPBuffer(buffer);
 	  it = buffers.erase(it);
 	}
       else

@@ -55,9 +55,10 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 			    {
 			      this->parsePacket(recv_buffer, it);
 			    }
-			  catch (std::exception &e)
+			  catch (const std::exception &e)
 			    {
-			      std::cerr << e.what() << std::endl;
+			      std::cerr << "Error while parsing for new entity packet: " << std::endl
+					<< e.what() << std::endl;
 			      this->_network->disposeUDPBuffer(*it);
 			      it = recv_buffer.erase(it);
 			    }
@@ -89,9 +90,10 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
 			{
 			  this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
 			}
-		      catch (std::exception &e)
+		      catch (const std::exception &e)
 			{
-			  std::cerr << e.what() << std::endl;
+			  std::cerr << "Error while parsing entity packet: " << std::endl
+				    << e.what() << std::endl;
 			  this->_network->disposeUDPBuffer(*it);
 			  it = recv_buffer.erase(it);
 			}
