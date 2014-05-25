@@ -59,16 +59,6 @@ void			Remote::setPrivateHash(const unsigned int hash)
   this->_private_hash = hash;
 }
 
-SafeFifo<IBuffer *>	&Remote::getSendBufferUDP()
-{
-  return (this->_send_buffer_udp);
-}
-
-SafeFifo<IBuffer *>	&Remote::getSendBufferTCP()
-{
-  return (this->_send_buffer_tcp);
-}
-
 void			Remote::sendTCP(IBuffer *buffer)
 {
   unsigned int		size;
@@ -77,7 +67,9 @@ void			Remote::sendTCP(IBuffer *buffer)
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
-  this->_send_buffer_tcp.push(buffer);
+  this->_send_buffer_tcp.lock();
+  this->_send_buffer_tcp.push_back(buffer);
+  this->_send_buffer_tcp.unlock();
 }
 
 void			Remote::sendUDP(IBuffer *buffer)
@@ -87,7 +79,11 @@ void			Remote::sendUDP(IBuffer *buffer)
       buffer->rewind();
       *buffer << this->_private_hash;
       buffer->rewind();
-      this->_send_buffer_udp.push(buffer);
+      this->_send_buffer_udp.lock();
+      this->_send_buffer_udp.push_back(buffer);
+      if (this->_send_buffer_udp.size() > 1000)
+	this->_send_buffer_udp.erase(this->_send_buffer_udp.begin());
+      this->_send_buffer_udp.unlock();
     }
 }
 
@@ -115,14 +111,17 @@ void			Remote::networkSendTCP(INetworkRelay &network)
 {
   IBuffer		*buffer;
 
-  if (this->_send_buffer_tcp.isEmpty())
-    return ;
-  buffer = this->_send_buffer_tcp.getNext();
-  if (this->_tcp->send(*buffer))
+  this->_send_buffer_tcp.lock();
+  if (!this->_send_buffer_tcp.empty())
     {
-      network.disposeTCPBuffer(buffer);
-      this->_send_buffer_tcp.pop();
+      buffer = this->_send_buffer_tcp.front();
+      if (this->_tcp->send(*buffer))
+	{
+	  network.disposeTCPBuffer(buffer);
+	  this->_send_buffer_tcp.erase(this->_send_buffer_tcp.begin());
+	}
     }
+  this->_send_buffer_tcp.unlock();
 }
 
 bool			Remote::networkReceiveTCP(INetworkRelay &network)
@@ -191,27 +190,33 @@ void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 {
   IBuffer	*buffer;
 
-  if (this->_send_buffer_udp.isEmpty())
-    return ;
-  buffer = this->_send_buffer_udp.getNext();
-  udp.send(*buffer,
-	   this->_ip, this->_port);
-  network.disposeUDPBuffer(buffer);
-  this->_send_buffer_udp.pop();
+  this->_send_buffer_udp.lock();
+  if (!this->_send_buffer_udp.empty())
+    {
+      std::cout << "Remaining packet: " << this->_send_buffer_udp.size() << std::endl;
+      buffer = this->_send_buffer_udp.front();
+      udp.send(*buffer,
+	       this->_ip, this->_port);
+      network.disposeUDPBuffer(buffer);
+      this->_send_buffer_udp.erase(this->_send_buffer_udp.begin());
+    }
+  this->_send_buffer_udp.unlock();
 }
 
 bool		Remote::canSendUDP()
 {
-  if (!this->_send_buffer_udp.isEmpty())
-    return (true);
-  return (false);
+  this->_send_buffer_udp.lock();
+  bool result = this->_send_buffer_udp.empty();
+  this->_send_buffer_udp.unlock();
+  return (!result);
 }
 
 bool		Remote::canSendTCP()
 {
-  if (!this->_send_buffer_tcp.isEmpty())
-    return (true);
-  return (false);
+  this->_send_buffer_tcp.lock();
+  bool result = this->_send_buffer_tcp.empty();
+  this->_send_buffer_tcp.unlock();
+  return (!result);
 }
 
 void		Remote::setReady(bool ready)
