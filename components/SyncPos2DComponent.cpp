@@ -11,7 +11,6 @@ const Pos2DComponent	&SyncPos2DComponent::getSyncPos() const
   return this->_sync_pos;
 }
 
-// We should never serialize this component
 void		SyncPos2DComponent::serialize(IBuffer &buffer) const
 {
   this->_sync_pos.serialize(buffer);
