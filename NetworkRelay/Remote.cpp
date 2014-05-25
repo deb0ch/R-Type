@@ -2,6 +2,7 @@
 #include "Remote.hh"
 #include "INetworkRelay.hh"
 #include "Unistd.hh"
+#include "TCPException.hh"
 
 Remote::Remote(ISocketTCP &socket, unsigned int hash) : _temporary_tcp_buffer(4096)
 {
@@ -131,7 +132,16 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
   if (this->_recv_buffer_tcp.trylock())
     {
       this->_temporary_tcp_buffer.gotoEnd();
-      size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
+      try
+	{
+	  size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
+	}
+      catch (const TCPException &e)
+	{
+	  this->_recv_buffer_tcp.unlock();
+	  std::cerr << e.what() << std::endl;
+	  return false;
+	}
       while (this->extractTCPPacket(network))
 	;
       memmove(this->_temporary_tcp_buffer.getBuffer(),
