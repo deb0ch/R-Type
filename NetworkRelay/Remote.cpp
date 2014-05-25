@@ -193,7 +193,6 @@ void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
   this->_send_buffer_udp.lock();
   if (!this->_send_buffer_udp.empty())
     {
-      std::cout << "Remaining packet: " << this->_send_buffer_udp.size() << std::endl;
       buffer = this->_send_buffer_udp.front();
       udp.send(*buffer,
 	       this->_ip, this->_port);
