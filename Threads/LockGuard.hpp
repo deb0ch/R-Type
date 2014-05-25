@@ -11,13 +11,11 @@ public:
   {
     if (!already_owned)
       this->_mutex.lock();
-    std::cout << "LOCK" << std::endl;
   }
 
   virtual ~LockGuard()
   {
     this->_mutex.unlock();
-    std::cout << "UNLOCK" << std::endl;
   }
 
   LockGuard(const LockGuard &&lock) : _mutex(lock._mutex)
@@ -30,6 +28,6 @@ private:
   T&  _mutex;
 };
 
-# define create_lock(mutex, ...) LockGuard<decltype(mutex)>(mutex, __VA_ARGS__);
+# define create_lock(mutex, ...) LockGuard<decltype(mutex)>(mutex, ## __VA_ARGS__)
 
 #endif /* !LOCKGUARD_H_ */
