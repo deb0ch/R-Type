@@ -4,6 +4,7 @@
 #include "Unistd.hh"
 #include "NewPlayerEvent.hh"
 #include "DisconnectPlayerEvent.hh"
+#include "LockGuard.hpp"
 
 ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
   : _network_initializer(), _world(world)
@@ -114,10 +115,10 @@ void		ServerRelay::manageRemotes()
 	    {
 	      if (this->_mutex_room.trylock())
 		{
+		  auto guard = create_lock(this->_mutex_room, true);
 		  it = this->_remotes.erase(it);
 		  room = NULL;
 		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-		  this->_mutex_room.unlock();
 		}
 	    }
 	  if (room)
@@ -162,10 +163,9 @@ void		ServerRelay::receiveUDP()
 	}
       else
 	{
-	  remote->getRecvBufferUDP().lock();
+	  auto guard = create_lock(remote->getRecvBufferUDP());
 	  buffer->addOffset(sizeof(unsigned int));
 	  remote->getRecvBufferUDP().push_back(buffer);
-	  remote->getRecvBufferUDP().unlock();
 	}
     }
   else
@@ -241,7 +241,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  this->_available_tcp.lock();
+  auto guard = create_lock(this->_available_tcp);
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
@@ -253,7 +253,6 @@ IBuffer			*ServerRelay::getTCPBuffer()
       this->_available_tcp.erase(this->_available_tcp.begin());
       buffer->reset();
     }
-  this->_available_tcp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
@@ -262,7 +261,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  this->_available_udp.lock();
+  auto guard = create_lock(this->_available_udp);
   if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
@@ -274,37 +273,29 @@ IBuffer			*ServerRelay::getUDPBuffer()
       this->_available_udp.erase(this->_available_udp.begin());
       buffer->reset();
     }
-  this->_available_udp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
 
 void			ServerRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  this->_available_udp.lock();
+  auto guard = create_lock(this->_available_udp);
   this->_available_udp.push_back(buffer);
-  this->_available_udp.unlock();
 }
 
 void			ServerRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  this->_available_tcp.lock();
+  auto guard = create_lock(this->_available_tcp);
   this->_available_tcp.push_back(buffer);
-  this->_available_tcp.unlock();
 }
 
 Room			*ServerRelay::getRoom(const std::string &room_name)
 {
-  this->_mutex_room.lock();
+  auto guard = create_lock(this->_mutex_room);
   auto it = this->_remotes.find(room_name);
 
   if (it == this->_remotes.end())
-    {
-      this->_mutex_room.unlock();
-      return (NULL);
-    }
-  it->second.lock();
-  this->_mutex_room.unlock();
+    return (NULL);
   return &(it->second);
 }
 

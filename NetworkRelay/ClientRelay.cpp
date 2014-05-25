@@ -1,6 +1,7 @@
 #include "ClientRelay.hh"
 #include "TCPException.hh"
 #include "UDPException.hh"
+#include "LockGuard.hpp"
 
 ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select()
 {
@@ -70,10 +71,9 @@ void			ClientRelay::start()
 	  if (!buffer->end())
 	    {
 	      buffer->rewind();
-	      this->_remote->getRecvBufferUDP().lock();
+	      auto guard = create_lock(this->_remote->getRecvBufferUDP());
 	      buffer->addOffset(sizeof(unsigned int));
 	      this->_remote->getRecvBufferUDP().push_back(buffer);
-	      this->_remote->getRecvBufferUDP().unlock();
 	    }
 	}
 
@@ -98,7 +98,6 @@ void			ClientRelay::start()
 
 Room	*ClientRelay::getRoom(const std::string &)
 {
-  this->_room.lock();
   return (&this->_room);
 }
 
@@ -106,7 +105,7 @@ IBuffer			*ClientRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  this->_available_tcp.lock();
+  auto guard = create_lock(this->_available_tcp);
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
@@ -118,7 +117,6 @@ IBuffer			*ClientRelay::getTCPBuffer()
       this->_available_tcp.erase(this->_available_tcp.begin());
       buffer->reset();
     }
-  this->_available_tcp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
@@ -127,7 +125,7 @@ IBuffer			*ClientRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  this->_available_udp.lock();
+  auto guard = create_lock(this->_available_udp);
   if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
@@ -139,7 +137,6 @@ IBuffer			*ClientRelay::getUDPBuffer()
       this->_available_udp.erase(this->_available_udp.begin());
       buffer->reset();
     }
-  this->_available_udp.unlock();
   buffer->setPosition(sizeof(unsigned int));
   return (buffer);
 }
@@ -156,16 +153,14 @@ Remote			*ClientRelay::getRemote(const std::string &, const int)
 
 void			ClientRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  this->_available_udp.lock();
+  auto guard = create_lock(this->_available_udp);
   this->_available_udp.push_back(buffer);
-  this->_available_udp.unlock();
 }
 
 void			ClientRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  this->_available_udp.lock();
+  auto guard = create_lock(this->_available_tcp);
   this->_available_tcp.push_back(buffer);
-  this->_available_udp.unlock();
 }
 
 void			ClientRelay::udpConnect()

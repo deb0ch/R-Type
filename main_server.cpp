@@ -184,15 +184,6 @@ int		main()
 
   sf::Music music;
 
-  Mutex test_mutex;
-  std::cout << "Before" << std::endl;
-  {
-    auto a = create_lock(test_mutex, true);
-    std::cout << "OUATE DE FUCK." << std::endl;
-  }
-  std::cout << "After" << std::endl;
-  return 0;
-
   if (music.openFromFile("Ressources/Sound/music.ogg"))
     {
       music.setLoop(true);
