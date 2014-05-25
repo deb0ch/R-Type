@@ -103,19 +103,19 @@ unsigned int		NetworkBuffer::getMaxSize() const
 
 IBuffer		&NetworkBuffer::operator<<(const int &value)
 {
-  this->serialize(value);
+  this->serialize<int32_t>(value);
   return (*this);
 }
 
 IBuffer		&NetworkBuffer::operator<<(const unsigned int &value)
 {
-  this->serialize(value);
+  this->serialize<uint32_t>(value);
   return (*this);
 }
 
-IBuffer		&NetworkBuffer::operator<<(const unsigned long &value)
+IBuffer		&NetworkBuffer::operator<<(const uint64_t &value)
 {
-  this->serialize(value);
+  this->serialize<uint64_t>(value);
   return (*this);
 }
 
@@ -139,19 +139,19 @@ IBuffer		&NetworkBuffer::operator<<(const char &value)
 
 IBuffer		&NetworkBuffer::operator>>(int &value)
 {
-  this->unserialize(value);
+  this->unserialize<int32_t>(value);
   return (*this);
 }
 
 IBuffer		&NetworkBuffer::operator>>(unsigned int &value)
 {
-  this->unserialize(value);
+  this->unserialize<uint32_t>(value);
   return (*this);
 }
 
-IBuffer		&NetworkBuffer::operator>>(unsigned long &value)
+IBuffer		&NetworkBuffer::operator>>(uint64_t &value)
 {
-  this->unserialize(value);
+  this->unserialize<uint64_t>(value);
   return (*this);
 }
 

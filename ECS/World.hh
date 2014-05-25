@@ -24,7 +24,7 @@ private:
   /** @brief A map of object pointers that can be shared between systems. */
   std::map<std::string, Any>		_shared_objs;
   /** @brief The next Entity::_id that will be attributed when calling createEntity(). */
-  unsigned long				_nextEntityID;
+  unsigned int				_nextEntityID;
   /** An event manager that allows systems to comunicate together. */
   EventManager<ISystem>			_event_manager;
   //Factory<IComponent, std::size_t>	_component_factory;
@@ -56,9 +56,9 @@ public:
    * @return A pointer to the World to concatenate method calls.
    */
   World		*addSystem(ISystem *);
-  /** @see World::removeEntity(unsigned long id); */
+  /** @see World::removeEntity(unsigned int id); */
   World		*removeEntity(Entity *);
-  World		*removeEntity(unsigned long id);
+  World		*removeEntity(unsigned int id);
     /** @see World::removeSystem(const std::string &type) */
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
@@ -75,7 +75,7 @@ public:
   void		sendEvent(IEvent *event);
 
   std::vector<Entity *>	&getEntities();
-  Entity	*getEntity(unsigned long id);
+  Entity	*getEntity(unsigned int id);
 
   void		process(const float delta);
   /** @brief Init all the systems. */

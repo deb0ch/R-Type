@@ -11,7 +11,7 @@ void	ASerializableComponent::networkSerialize(Remote *remote, IBuffer &buffer, b
   if (this->canSend(remote->getPrivateHash()) || force_send)
     {
       if (!this->canSendUpdate(remote->getPrivateHash()))
-	buffer << static_cast<unsigned long>(0);
+	buffer << static_cast<hash_t>(0);
       buffer << Hash()(this->getType());
       this->serialize(buffer);
     }

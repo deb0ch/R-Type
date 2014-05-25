@@ -33,7 +33,7 @@ void		SpawnPlayerSystem::processEntity(Entity *, const float)
 
 void		SpawnPlayerSystem::beforeProcess()
 {
-  unsigned long	hash;
+  unsigned int	hash;
   bool		player_found;
 
   while (!this->_players_to_spawn.isEmpty())

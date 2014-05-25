@@ -13,12 +13,12 @@ MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
 MoveFollowComponent::~MoveFollowComponent()
 {}
 
-unsigned long	MoveFollowComponent::getIdToFollow() const
+unsigned int	MoveFollowComponent::getIdToFollow() const
 {
   return this->_idToFollow;
 }
 
-void		MoveFollowComponent::setIdToFollow(unsigned long idToFollow)
+void		MoveFollowComponent::setIdToFollow(unsigned int idToFollow)
 {
   this->_idToFollow = idToFollow;
 }
