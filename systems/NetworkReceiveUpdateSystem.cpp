@@ -5,6 +5,7 @@
 #include "NetworkBuffer.hh"
 #include "ComponentFactory.hpp"
 #include "Hash.hh"
+#include "LockGuard.hpp"
 
 NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem(const std::vector<std::string> &serializable_component)
   : ASystem("NetworkReceiveUpdateSystem")
@@ -42,12 +43,15 @@ void				NetworkReceiveUpdateSystem::afterProcess()
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
 		    [this] (Remote *remote) -> void
 		    {
 		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		      recv_buffer.lock();
+		      auto guard = create_lock(recv_buffer);
+
 		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
 		      while (it != recv_buffer.end())
 			{
@@ -63,9 +67,7 @@ void				NetworkReceiveUpdateSystem::afterProcess()
 			      it = recv_buffer.erase(it);
 			    }
 			}
-		      recv_buffer.unlock();
 		    });
-      room->unlock();
     }
 }
 
@@ -78,30 +80,34 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
   receive_component->increaseLastUpdate();
   room = this->_network->getRoom(*this->_room_name);
 
-  std::vector<Remote *> &remotes = room->getRemotes();
-  std::for_each(remotes.begin(), remotes.end(),
-		[this, &entity, &receive_component] (Remote *remote) -> void
-		{
-		  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		  recv_buffer.lock();
-		  LockVector<IBuffer *>::iterator it = recv_buffer.begin();
-		  while (it != recv_buffer.end())
+  if (room)
+    {
+      auto guard = create_lock(*room);
+
+      std::vector<Remote *> &remotes = room->getRemotes();
+      std::for_each(remotes.begin(), remotes.end(),
+		    [this, &entity, &receive_component] (Remote *remote) -> void
 		    {
-		      try
+		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
+		      auto guard = create_lock(recv_buffer);
+
+		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
+		      while (it != recv_buffer.end())
 			{
-			  this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
+			  try
+			    {
+			      this->parsePacketOnEntity(entity, receive_component, recv_buffer, it);
+			    }
+			  catch (const std::exception &e)
+			    {
+			      std::cerr << "Error while parsing entity packet: " << std::endl
+					<< e.what() << std::endl;
+			      this->_network->disposeUDPBuffer(*it);
+			      it = recv_buffer.erase(it);
+			    }
 			}
-		      catch (const std::exception &e)
-			{
-			  std::cerr << "Error while parsing entity packet: " << std::endl
-				    << e.what() << std::endl;
-			  this->_network->disposeUDPBuffer(*it);
-			  it = recv_buffer.erase(it);
-			}
-		    }
-		  recv_buffer.unlock();
-		});
-  room->unlock();
+		    });
+    }
 }
 
 // -------------- Private functions --------------
