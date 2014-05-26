@@ -103,6 +103,8 @@ void		ServerRelay::manageRemotes()
 		    });
       if (room->trylock())
 	{
+	  auto guard_room = create_lock(*room, true);
+
 	  std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
 	  std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
 			[&room, this] (Remote *remote) -> void
@@ -116,13 +118,13 @@ void		ServerRelay::manageRemotes()
 	      if (this->_mutex_room.trylock())
 		{
 		  auto guard = create_lock(this->_mutex_room, true);
+
+		  guard_room.setUnLocked();
 		  it = this->_remotes.erase(it);
 		  room = NULL;
 		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 		}
 	    }
-	  if (room)
-	    room->unlock();
 	}
       if (room)
 	++it;
