@@ -6,7 +6,7 @@
 class NetworkSendUpdateComponent : public ACopyableComponent<NetworkSendUpdateComponent>
 {
 public:
-  NetworkSendUpdateComponent(const float update_rate = 0.2f);
+  NetworkSendUpdateComponent(const float update_rate = 1.f);
   virtual	~NetworkSendUpdateComponent();
   unsigned int	getPacketNumber() const;
   void		increasePacketNumber();

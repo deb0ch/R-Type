@@ -123,7 +123,9 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkPlayerComponent",
       "MoveForwardComponent",
+      "MoveFollowComponent",
       "MoveSequenceComponent",
+      "TagComponent",
       "Box2DComponent"
     };
 

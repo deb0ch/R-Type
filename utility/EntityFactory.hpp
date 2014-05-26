@@ -88,7 +88,7 @@ public:
   void		initOthers()
   {
     this->addEntity("EXPLOSION", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
@@ -97,7 +97,7 @@ public:
 		    );
 
     this->addEntity("BULLET_EXPLOSION", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
@@ -464,7 +464,7 @@ public:
 				   ));
 
     this->addEntity("TRACKER_MISSILE", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent(0.05f))
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent(1))

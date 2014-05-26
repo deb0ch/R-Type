@@ -73,6 +73,7 @@ void		addSystems(World &world)
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
   world.addSystem(new MoveSequenceSystem());
   world.addSystem(new ActionMovementSystem());
@@ -105,7 +106,9 @@ void		addSystems(World &world)
       "Box2DComponent",
       "MovementSpeedComponent",
       "MoveForwardComponent",
+      "MoveFollowComponent",
       "MoveSequenceComponent",
+      "TagComponent",
       "SyncPos2DComponent"
     };
 
@@ -173,6 +176,11 @@ int		main(int ac, char **av)
   try {
     if (ac >= 2)
       g_ip = av[1]; // Master flemme
+    else
+      {
+	std::cout << "Serveur IP: ";
+	std::cin >> g_ip;
+      }
     addSystems(world);
     addSharedObjetcs(world);
     addEntities(world);
