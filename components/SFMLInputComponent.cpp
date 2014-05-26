@@ -28,3 +28,11 @@ void SFMLInputComponent::serialize(IBuffer &) const
 
 void SFMLInputComponent::unserialize(IBuffer &)
 {}
+
+extern "C"
+{
+	DECLSPEC SFMLInputComponent *getInstance()
+	{
+		return new SFMLInputComponent();
+	}
+}

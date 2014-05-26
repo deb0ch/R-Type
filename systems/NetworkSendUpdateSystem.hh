@@ -23,7 +23,7 @@ public:
 
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
-  virtual void	beforeProcess();
+  virtual void	beforeProcess(const float);
 
 private:
   void		serializeComponents(Entity *, Remote *, IBuffer &buffer);

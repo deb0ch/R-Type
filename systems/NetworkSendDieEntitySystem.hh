@@ -11,7 +11,7 @@ class NetworkSendDieEntitySystem : public ASystem
 protected:
   virtual bool canProcess(Entity *);
   virtual void processEntity(Entity *, const float);
-  virtual void beforeProcess();
+  virtual void beforeProcess(const float);
 
 public:
   void addEntityToDelete(IEvent *entity);
@@ -19,7 +19,7 @@ public:
 public:
   NetworkSendDieEntitySystem();
   virtual ~NetworkSendDieEntitySystem();
-  virtual void afterProcess();
+  virtual void afterProcess(const float);
 
 private:
   std::vector<Entity *> _toDelete;

@@ -16,8 +16,8 @@ public:
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
 
-  virtual void	beforeProcess();
-  virtual void	afterProcess();
+  virtual void	beforeProcess(const float);
+  virtual void	afterProcess(const float);
 
 private:
   void		parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);

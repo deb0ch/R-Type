@@ -13,7 +13,7 @@ public:
   NetworkReceiveActionSystem(const std::vector<std::string> &);
   virtual	~NetworkReceiveActionSystem();
   virtual	bool canProcess(Entity *);
-  virtual	void beforeProcess();
+  virtual	void beforeProcess(const float);
   virtual	void processEntity(Entity *, const float);
   void		parsePacket(Entity *, ActionComponent *action, NetworkReceiveActionComponent *network,
 			    LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);

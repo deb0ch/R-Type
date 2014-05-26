@@ -20,8 +20,8 @@ protected:
   /* Theses method CAN be overloaded in the derived classes  */
   virtual void		sortEntities(std::vector<Entity *>&);
 
-  virtual void		beforeProcess();
-  virtual void		afterProcess();
+  virtual void		beforeProcess(const float);
+  virtual void		afterProcess(const float);
 
 public:
   ASystem() = delete;

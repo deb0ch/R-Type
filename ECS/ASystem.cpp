@@ -33,7 +33,7 @@ void		ASystem::setWorld(World *world)
 //----- ----- Methods ----- ----- //
 void		ASystem::process(std::vector<Entity *> &entities, const float delta)
 {
-  this->beforeProcess();
+  this->beforeProcess(delta);
   this->sortEntities(entities);
   std::for_each(entities.begin(), entities.end(), [this, delta] (Entity *entity) -> void {
       try
@@ -46,16 +46,16 @@ void		ASystem::process(std::vector<Entity *> &entities, const float delta)
 	  std::cerr << "Error in system " << this->getType() << ":" << std::endl << e.what() << std::endl;
 	}
     });
-  this->afterProcess();
+  this->afterProcess(delta);
 }
 
 void		ASystem::sortEntities(std::vector<Entity *>&)
 {}
 
-void		ASystem::beforeProcess()
+void		ASystem::beforeProcess(const float)
 {}
 
-void		ASystem::afterProcess()
+void		ASystem::afterProcess(const float)
 {}
 
 void		ASystem::init()
