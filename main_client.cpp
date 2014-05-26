@@ -165,36 +165,41 @@ int		main(int ac, char **av)
   World		world;
   Timer		timer;
 
-  if (ac >= 2)
-    g_ip = av[1]; // Master flemme
-  addSystems(world);
-  addSharedObjetcs(world);
-  addEntities(world);
+  try {
+    if (ac >= 2)
+      g_ip = av[1]; // Master flemme
+    addSystems(world);
+    addSharedObjetcs(world);
+    addEntities(world);
 
-  sf::Music music;
+    sf::Music music;
 
-  if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-      music.setLoop(true);
-      music.play();
-    }
-  /*
-    SoundLoader *s = new SoundLoader();
-    s->addSound("Ressources/Sound/laser.wav");
-    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-    sound->play();
-  */
-  world.start();
-  while (42)
-    {
-      timer.startFrame();
-	  if (timer.canTick())
+    if (music.openFromFile("Ressources/Sound/music.ogg"))
+      {
+	music.setLoop(true);
+	music.play();
+      }
+    /*
+      SoundLoader *s = new SoundLoader();
+      s->addSound("Ressources/Sound/laser.wav");
+      sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+      sound->play();
+    */
+    world.start();
+    while (42)
+      {
+	timer.startFrame();
+	if (timer.canTick())
 	  {
-		  //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
-		  world.process(timer.getDeltaTime() / 1000000.f);
+	    //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+	    world.process(timer.getDeltaTime() / 1000000.f);
 	  }
-      timer.endFrame();
+	timer.endFrame();
+      }
+    world.stop();
+  } catch (const std::exception &e)
+    {
+      std::cerr << e.what() << std::endl;
     }
-  world.stop();
   return (0);
 }
