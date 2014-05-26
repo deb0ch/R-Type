@@ -8,21 +8,23 @@
 class		SFMLSpriteComponent : public ACopyableComponent<SFMLSpriteComponent>
 {
 protected:
-	std::string					_fileName;
-	ImageLoader::NbSprite				_sprites;
+	std::string				_fileName;
+	ImageLoader::NbSprite	_sprites;
 	int						_counter;
-	unsigned int					_tickCounter;
-	unsigned int					_tickChange;
-	std::string					_previousAction;
+	unsigned int			_tickCounter;
+	unsigned int			_tickChange;
+	std::string				_previousAction;
 	int						_currentSprite;
 	std::map<std::string, std::pair<int, int> >	_map;
-	bool						_mapexist;
+	bool					_mapexist;
+	int						_first;
+	int						_nbSprite;
 
 public:
 	SFMLSpriteComponent();
 	SFMLSpriteComponent(const std::string &filename, const ImageLoader::NbSprite& sprites,
-			    const std::map<std::string, std::pair<int, int> > &map,
-			    unsigned int tickChange = 10);
+		const std::map<std::string, std::pair<int, int> > &map,
+		unsigned int tickChange = 10);
 
 	virtual		~SFMLSpriteComponent();
 
@@ -31,6 +33,10 @@ public:
 
 	sf::Sprite	*getSprite(ImageLoader &imageLoader, const std::string & action = "");
 	bool		hasAction(const std::string & action);
+
+private:
+	sf::Sprite	*getSpriteWithoutMap(ImageLoader &imageLoader, const std::string & action = "");
+	sf::Sprite	*getSpriteFromMap(ImageLoader &imageLoader, const std::string & action = "");
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */
