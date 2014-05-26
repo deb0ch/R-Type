@@ -1,6 +1,7 @@
 #include <iostream>
 #include "CollisionSystem.hh"
 #include "CollisionEvent.hh"
+#include "TagComponent.hh"
 #include "TeamComponent.hh"
 
 CollisionSystem::CollisionSystem() : ASystem("CollisionSystem")
@@ -14,6 +15,17 @@ CollisionSystem::~CollisionSystem()
 bool	CollisionSystem::canProcess(Entity *entity)
 {
   if (entity->hasComponent("CollisionComponent"))
+    return (true);
+  return (false);
+}
+
+static bool	checkTags(TagComponent const *tags, CollisionComponent const *col)
+{
+  bool	collide, notCollide;
+
+  collide = (tags) ? std::any_of(col->getToCollide().begin(), col->getToCollide().end(), [tags] (std::string tag) -> bool {return tags->hasTag(tag);}) : false;
+  notCollide = (tags) ? std::any_of(col->getToNotCollide().begin(), col->getToNotCollide().end(), [tags] (std::string tag) -> bool {return tags->hasTag(tag);}) : false;
+  if ((col->getToCollide().empty() && !notCollide) || (collide && !notCollide && !col->getToCollide().empty()))
     return (true);
   return (false);
 }
@@ -35,7 +47,8 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
       world_entity_col = (*it)->getComponent<CollisionComponent>("CollisionComponent");
       worldEntityTeam = (*it)->getComponent<TeamComponent>("TeamComponent");
       if (world_entity_col && *it != entity &&
-	  worldEntityTeam && worldEntityTeam->getTeam() != entityTeam->getTeam() &&
+	  ((worldEntityTeam && worldEntityTeam->getTeam() != entityTeam->getTeam()) || !worldEntityTeam) &&
+	  checkTags((*it)->getComponent<TagComponent>("TagComponent"), entity_col) &&
 	  isCollidingAny(entity_col->getCollisionPoints(), world_entity_col->getCollisionPoints(),
 			 entity->getComponent<Pos2DComponent>("Pos2DComponent"),
 			 (*it)->getComponent<Pos2DComponent>("Pos2DComponent")))

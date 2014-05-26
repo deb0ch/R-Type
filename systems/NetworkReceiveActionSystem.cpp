@@ -13,7 +13,7 @@ NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::st
 NetworkReceiveActionSystem::~NetworkReceiveActionSystem()
 {}
 
-void NetworkReceiveActionSystem::beforeProcess()
+void NetworkReceiveActionSystem::beforeProcess(const float)
 {
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");

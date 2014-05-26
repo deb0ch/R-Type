@@ -21,8 +21,8 @@ public:
   virtual		~SFMLRenderSystem();
 
   virtual void		start();
-  virtual void		beforeProcess();
-  virtual void		afterProcess();
+  virtual void		beforeProcess(const float);
+  virtual void		afterProcess(const float);
 
   void			displayCollision(Entity *entity);
   void			displayBox2D(float width, float height, Pos2DComponent *pos);

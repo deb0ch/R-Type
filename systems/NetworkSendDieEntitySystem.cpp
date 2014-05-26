@@ -15,7 +15,7 @@ NetworkSendDieEntitySystem::~NetworkSendDieEntitySystem() {
 
 }
 
-void NetworkSendDieEntitySystem::beforeProcess() {
+void NetworkSendDieEntitySystem::beforeProcess(const float) {
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
@@ -29,7 +29,7 @@ bool		NetworkSendDieEntitySystem::canProcess(Entity *) {
 void	NetworkSendDieEntitySystem::processEntity(Entity *, const float){
 }
 
-void	NetworkSendDieEntitySystem::afterProcess() {
+void	NetworkSendDieEntitySystem::afterProcess(const float) {
   Room *room = NULL;
   auto itEnd = this->_toDelete.end();
   auto it = this->_toDelete.begin();

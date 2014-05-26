@@ -17,7 +17,7 @@ NetworkReceiveDieEntitySystem::NetworkReceiveDieEntitySystem()
 NetworkReceiveDieEntitySystem::~NetworkReceiveDieEntitySystem() {}
 
 
-void NetworkReceiveDieEntitySystem::beforeProcess() {
+void NetworkReceiveDieEntitySystem::beforeProcess(const float) {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
@@ -26,7 +26,7 @@ void NetworkReceiveDieEntitySystem::beforeProcess() {
 bool NetworkReceiveDieEntitySystem::canProcess(Entity *) {return (false);}
 void NetworkReceiveDieEntitySystem::processEntity(Entity *, const float) {}
 
-void NetworkReceiveDieEntitySystem::afterProcess()
+void NetworkReceiveDieEntitySystem::afterProcess(const float)
 {
   Room *room;
 

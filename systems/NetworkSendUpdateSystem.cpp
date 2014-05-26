@@ -24,7 +24,7 @@ bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void				NetworkSendUpdateSystem::beforeProcess()
+void				NetworkSendUpdateSystem::beforeProcess(const float)
 {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");

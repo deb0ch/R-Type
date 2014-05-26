@@ -11,7 +11,7 @@ public:
   virtual		~SpawnPlayerSystem();
   virtual void		init();
   virtual bool		canProcess(Entity *);
-  virtual void		beforeProcess();
+  virtual void		beforeProcess(const float);
   virtual void		processEntity(Entity *, const float delta);
   void			newPlayerHandler(IEvent *event);
 protected:
