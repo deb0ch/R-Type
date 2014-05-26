@@ -6,6 +6,7 @@
 # include "LockVector.hpp"
 # include "INetworkRelay.hh"
 # include "Room.hh"
+# include "Hash.hh"
 
 class NetworkBuffer;
 
@@ -22,7 +23,7 @@ public:
 
 private:
   void		unserializeComponent(Entity *, IBuffer &buffer);
-  void		updateEntity(Entity *, IBuffer &buffer);
+  void		updateEntity(Entity *, NetworkReceiveUpdateComponent *receive_component, IBuffer &buffer);
   void		getEntityInfos(IBuffer &buffer,
 			       unsigned int &id_entity, unsigned int &num_packet);
   bool		remoteEntityExists(unsigned int);
@@ -33,7 +34,7 @@ private:
 
 
 protected:
-  std::map<unsigned long, bool>	_serializable_component;
+  std::map<hash_t, bool>	_serializable_component;
   INetworkRelay			*_network;
   std::string			*_room_name;
 };

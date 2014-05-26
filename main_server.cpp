@@ -29,6 +29,9 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
+#include	"SpawnPlayerSystem.hh"
+#include	"NetworkSendDieEntitySystem.hh"
+#include	"DisconnectPlayerSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -70,7 +73,7 @@ void		addSystems(World &world)
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
-  world.addSystem(new SFMLInputSystem());
+  // world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
@@ -84,6 +87,8 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new SpawnPlayerSystem());
+  world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
 
   CollisionSystem *collision;
@@ -92,9 +97,13 @@ void		addSystems(World &world)
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-  EntityDeleterSystem *entityDeleterSystem;
 
-  entityDeleterSystem = new EntityDeleterSystem();
+  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
+  world.addSystem(networkSendDieEntitySystem);
+  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
+			&NetworkSendDieEntitySystem::addEntityToDelete);
+
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
   world.addSystem(entityDeleterSystem);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
@@ -102,21 +111,30 @@ void		addSystems(World &world)
 	  &LifeSystem::delete_entity);
 
   std::vector<std::string> arg =
-    { "Pos2DComponent",
+    {
+      "Pos2DComponent",
       "SFMLSpriteComponent",
       "Speed2DComponent",
       "Friction2DComponent",
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
-      "SFMLInputComponent" };
+      "SFMLInputComponent",
+      "NetworkPlayerComponent",
+      "Box2DComponent"
+    };
+
   world.addSystem(new NetworkSendUpdateSystem(arg));
+
   std::vector<std::string> serializable_action =
-    { "UP",
+    {
+      "UP",
       "RIGHT",
       "DOWN",
       "LEFT",
-      "FIRE" };
+      "FIRE"
+    };
+
   world.addSystem(new NetworkReceiveActionSystem(serializable_action));
 }
 
@@ -124,7 +142,7 @@ void		addSharedObjetcs(World &world)
 {
   ComponentFactory *compos = new ComponentFactory();
   EntityFactory *entityFactory = new EntityFactory();
-  ServerRelay *server = new ServerRelay(6667, 42);
+  ServerRelay *server = new ServerRelay(&world, 6667, 42);
   Thread<ServerRelay> *thread = new Thread<ServerRelay>();
   Any tmp;
 
@@ -146,11 +164,13 @@ void		addEntities(World &world)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
   world.addEntity(entityFactory->create("BACKGROUND_2"));
-  world.addEntity(entityFactory->create("PLAYER_RED"));
+  // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
+  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
+#include "LockGuard.hpp"
 int		main()
 {
   World		world;

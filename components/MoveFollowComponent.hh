@@ -8,7 +8,7 @@
 class		MoveFollowComponent : public ACopyableComponent<MoveFollowComponent>
 {
 protected:
-  unsigned long		_idToFollow;
+  unsigned int		_idToFollow;
   std::string		_tagToFollow;
 
 public:
@@ -17,8 +17,8 @@ public:
 
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
-  unsigned long		getIdToFollow() const;
-  void			setIdToFollow(const unsigned long idToFollow);
+  unsigned int		getIdToFollow() const;
+  void			setIdToFollow(const unsigned int idToFollow);
   const std::string &	getTagToFollow() const;
   void			setTagToFollow(const std::string & idToFollow);
 };

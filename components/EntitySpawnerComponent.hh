@@ -15,6 +15,7 @@ class		EntitySpawnerComponent : public ACopyableComponent<EntitySpawnerComponent
 {
 protected:
   std::vector<std::pair<std::string, unsigned int>>	_entities;
+  unsigned int			_maxWeight;
   std::vector<IComponent*>	_components;
   unsigned int			_next;
   unsigned long			_nb;

@@ -1,3 +1,5 @@
+#include	<algorithm>
+
 #include "CollisionComponent.hh"
 
 CollisionComponent::CollisionComponent() : ASerializableComponent("CollisionComponent")
@@ -12,18 +14,18 @@ CollisionComponent::~CollisionComponent()
 
 CollisionComponent::CollisionComponent(const CollisionComponent &e) : ASerializableComponent("CollisionComponent")
 {
-  this->_collisionPoints = e._collisionPoints;
-  this->_toCollide = e._toCollide;
-  this->_toNotCollide = e._toNotCollide;
+  this->operator=(e);
 }
 
 CollisionComponent	&CollisionComponent::operator=(const CollisionComponent &e)
 {
   if (this != &e)
     {
-      this->_collisionPoints = e._collisionPoints;
-      this->_toCollide = e._toCollide;
-      this->_toNotCollide = e._toNotCollide;
+      std::for_each(e._collisionPoints.begin(),
+		    e._collisionPoints.end(),
+		    [this] (CollisionPoint *cp) {
+		      this->_collisionPoints.push_back(new CollisionPoint(*cp));
+		    });
     }
   return (*this);
 }

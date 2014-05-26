@@ -36,8 +36,15 @@ void		ASystem::process(std::vector<Entity *> &entities, const float delta)
   this->beforeProcess();
   this->sortEntities(entities);
   std::for_each(entities.begin(), entities.end(), [this, delta] (Entity *entity) -> void {
-      if (this->canProcess(entity))
-	this->processEntity(entity, delta);
+      try
+	{
+	  if (this->canProcess(entity))
+	    this->processEntity(entity, delta);
+	}
+      catch (const std::exception &e)
+	{
+	  std::cerr << "Error in system " << this->getType() << ":" << std::endl << e.what() << std::endl;
+	}
     });
   this->afterProcess();
 }

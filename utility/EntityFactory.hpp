@@ -28,8 +28,9 @@
 # include "MoveFollowComponent.hh"
 # include "ExplosionComponent.hh"
 # include "Hash.hh"
+# include "NetworkReceiveActionComponent.hh"
 
-class EntityFactory : public Factory<Entity, unsigned long>
+class EntityFactory : public Factory<Entity, hash_t>
 {
 public:
   EntityFactory()
@@ -53,7 +54,7 @@ public:
     return (this->create(Hash()(key)));
   }
 
-  virtual Entity*	create(const unsigned long &key) const
+  virtual Entity*	create(const hash_t &key) const
   {
     const Entity	*tmp;
 
@@ -70,7 +71,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-75.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
 
@@ -79,7 +80,7 @@ public:
 				   ->addTag("do_not_delete")
 				   ->addTag("BackgroundSystem"))
 		    ->addComponent(new Pos2DComponent(1095.0f, 0.0f))
-		    ->addComponent(new Speed2DComponent(-50.f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-75.f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("background.png", ImageLoader::NbSprite{ 1, 1 },
 							   { { "", { 0, 0 } } })));
   }
@@ -136,7 +137,7 @@ public:
 		    ->addComponent(new Box2DComponent(250.0f, 280.0f))
 		    ->addComponent(new CollisionPowerComponent(500))
 		    ->addComponent(new SFMLSpriteComponent("BigExplosion.png", ImageLoader::NbSprite{ 10, 1 },
-							   { { "", { 0, 5 } } }))
+		    					   { { "", { 0, 5 } } }))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 250.0f, 280.0f)))
 		    ->addComponent(new AutoDestructComponent(50))
@@ -146,6 +147,7 @@ public:
   void		initPlayer()
   {
     this->addEntity("PLAYER_BLUE", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -175,6 +177,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_PURPLE", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -204,6 +207,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_GREEN", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
@@ -233,6 +237,7 @@ public:
 				   ));
 
     this->addEntity("PLAYER_RED", (new Entity())
+		    ->addComponent(new NetworkReceiveActionComponent())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new MovementLimitFrame2DComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
@@ -509,7 +514,7 @@ public:
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET", 0}, {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 20))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 50))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 50))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -557,7 +562,7 @@ public:
     this->addEntity("MONSTER_SPAWNER", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 100,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 75,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
 		    );
   }
@@ -589,7 +594,7 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -622,7 +627,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Boss.png",
 							   ImageLoader::NbSprite{ 4, 9 },
 							   { { "", { 4, 4 } } }))
-		    ->addComponent(new MoveSequenceComponent(MoveSequenceComponent::Sens::UP_DOWN, 185))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 185))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("DOWN")

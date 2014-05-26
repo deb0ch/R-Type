@@ -15,9 +15,10 @@
 # include "ActionComponent.hh"
 # include "PlayerMovementComponent.hh"
 # include "NetworkSendActionComponent.hh"
+# include "SyncPos2DComponent.hh"
 # include "Hash.hh"
 
-class ComponentFactory : public Factory<ASerializableComponent, unsigned long>
+class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
 private :
   void addComponent(ASerializableComponent *input)
@@ -45,9 +46,10 @@ public :
     this->addComponent(new ActionComponent());
     this->addComponent(new PlayerMovementComponent());
     this->addComponent(new NetworkSendActionComponent());
+    this->addComponent(new SyncPos2DComponent());
   }
 
-  virtual ASerializableComponent	*create(const unsigned long &key) const
+  virtual ASerializableComponent	*create(const hash_t &key) const
   {
     const ASerializableComponent *tmp;
 
