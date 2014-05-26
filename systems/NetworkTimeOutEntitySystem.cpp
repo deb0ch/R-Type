@@ -19,6 +19,6 @@ void		NetworkTimeOutEntitySystem::processEntity(Entity *entity, const float) {
   NetworkReceiveUpdateComponent *tmp;
   tmp = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
 
-  if (tmp && tmp->getLastUpdate() >= 50)
+  if (tmp && tmp->getLastUpdate() >= tmp->getUpdateRate() * 3.f)
     this->_world->sendEvent(new EntityDeletedEvent(entity));
 }

@@ -276,7 +276,7 @@ public:
   void		initBullet()
   {
     this->addEntity("MONSTER_BASIC_BULLET", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent((new TagComponent())
@@ -301,7 +301,7 @@ public:
 				   ));
 
     this->addEntity("MONSTER_BASIC_BULLET_3", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent((new TagComponent())
@@ -326,7 +326,7 @@ public:
 				   ));
 
     this->addEntity("MONSTER_BASIC_BULLET_4", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(10.0f, 10.0f))
 		    ->addComponent(new TeamComponent())
@@ -353,7 +353,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_1", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -381,7 +381,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_2", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -409,7 +409,7 @@ public:
 				   ));
 
     this->addEntity("BOMB_BULLET_3", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent())
@@ -437,7 +437,7 @@ public:
 				   ));
 
     this->addEntity("BASIC_BULLET", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(20.0f, 20.0f))
 		    ->addComponent(new TeamComponent(1))
