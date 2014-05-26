@@ -294,7 +294,7 @@ public:
 				   ->addToCollideItem("MONSTER")
 				   ->addToCollideItem("PLAYER"))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}, 0, 10,
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}, 0, 20,
 							      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -522,7 +522,7 @@ public:
 		    ->addComponent(new Speed2DComponent(1000.0f, 0.0f))
 		    ->addComponent(new Friction2DComponent(0.07f))
 		    ->addComponent(new MovementSpeedComponent(60.f))
-		    ->addComponent(new MoveFollowComponent("Ennemy"))
+		    ->addComponent(new MoveFollowComponent("MONSTER"))
 		    ->addComponent(new LifeComponent(100))
 		    ->addComponent(new AutoDestructComponent(120))
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
