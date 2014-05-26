@@ -1,6 +1,7 @@
 #include "NetworkReceiveActionSystem.hh"
 #include "Room.hh"
 #include "NetworkSendUpdateSystem.hh"
+#include "LockGuard.hpp"
 
 NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::string> &serializable_action)
   : ASystem("NetworkReceiveActionSystem"), _serializable_action(serializable_action)
@@ -42,21 +43,22 @@ void NetworkReceiveActionSystem::processEntity(Entity *entity, const float)
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
 		    [this, &entity, &action_component, &network_component] (Remote *remote) -> void
 		    {
 		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		      recv_buffer.lock();
+		      auto guard = create_lock(recv_buffer);
+
 		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
 		      while (it != recv_buffer.end())
 			{
 			  this->parsePacket(entity, action_component, network_component,
 					    recv_buffer, it);
 			}
-		      recv_buffer.unlock();
 		    });
-      room->unlock();
     }
 }
 
@@ -82,14 +84,11 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 	  *buffer >> packet_number;
 	  if (packet_number > network->getPacketNum())
 	    {
+	      // std::cout << "Parsing action" << std::endl;
 	      network->setPacketNum(packet_number);
-	      std::for_each(this->_serializable_action.begin(), this->_serializable_action.end(),
-			    [&action] (const std::string &action_name)
-			    {
-			      action->setAction(action_name, false);
-			    });
 	      this->parseActions(*buffer, action);
 	    }
+	  this->_network->disposeUDPBuffer(buffer);
 	  it = buffers.erase(it);
 	}
       else
@@ -102,10 +101,13 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 void		NetworkReceiveActionSystem::parseActions(IBuffer &buffer, ActionComponent *action)
 {
   std::string	action_name;
+  char		active;
 
   while (!buffer.end())
     {
       buffer >> action_name;
-      action->setAction(action_name, true);
+      buffer >> active;
+      // std::cout << action_name << " " << (int)active << std::endl;
+      action->setAction(action_name, active != 0);
     }
 }

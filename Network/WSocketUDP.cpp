@@ -140,12 +140,12 @@ void		SocketUDP::setBlocking(const bool block)
 	ioctlsocket(this->socket, FIONBIO, &blocking);
 }
 
-const bool	SocketUDP::isBlocking() const
+bool	SocketUDP::isBlocking() const
 {
 	return (this->blockSocket);
 }
 
-const int	SocketUDP::getHandle() const
+int	SocketUDP::getHandle() const
 {
 	return (this->socket);
 }

@@ -17,7 +17,8 @@ SET(HEADERS
   SafeFifo.hpp
   ICondVar.hh
   UCondVar.hh
-  WCondVar.hh)
+  WCondVar.hh
+  LockGuard.hpp)
 
 SET(SOURCES
   ThreadException.cpp

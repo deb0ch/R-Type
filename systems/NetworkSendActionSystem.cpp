@@ -4,6 +4,7 @@
 #include "NetworkSendUpdateSystem.hh"
 #include "ActionComponent.hh"
 #include "NetworkSendActionComponent.hh"
+#include "LockGuard.hpp"
 
 NetworkSendActionSystem::NetworkSendActionSystem(const std::vector<std::string> &serializable_action,
 						 unsigned int spam_count)
@@ -48,21 +49,25 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
   std::for_each(this->_serializable_action.begin(), this->_serializable_action.end(),
 		[&tmp, &changed, &action_component] (const std::string &action_name)
 		{
-		  if (action_component->hasChanged(action_name) && action_component->isActive(action_name))
+		  if (action_component->hasChanged(action_name))
 		    {
 		      changed = true;
-		      *tmp << action_name;
 		    }
+		  *tmp << action_name;
+		  *tmp << static_cast<char>(action_component->isActive(action_name));
+		  action_component->resetChange(action_name);
 		});
   if (changed)
     {
       Room *room = this->_network->getRoom(*this->_room_name);
       if (room)
 	{
+	  auto guard = create_lock(*room);
+
 	  for(unsigned int i = 0; i < this->_spam_count; i++)
 	    room->sendBroadcastUDP(*this->_network, tmp, true);
-	  room->unlock();
 	}
+      network_component->increasePacketNumber();
     }
   this->_network->disposeUDPBuffer(tmp);
 }

@@ -1,8 +1,9 @@
 #include "ClientRelay.hh"
 #include "TCPException.hh"
 #include "UDPException.hh"
+#include "LockGuard.hpp"
 
-ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select(0, 100000)
+ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select()
 {
   SocketTCP	*sock = new SocketTCP;
 
@@ -31,14 +32,13 @@ void			ClientRelay::waitForEvent()
   this->_select.addRead(this->_socket_udp.getHandle());
   if (this->_remote->canSendTCP())
     {
-      //std::cout << "Add write TCP" << std::endl;
       this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
     }
   if (this->_remote->canSendUDP() || (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0))
     {
-      //std::cout << "Add write UDP" << std::endl;
       this->_select.addWrite(this->_socket_udp.getHandle());
     }
+  this->_select.setTimeOut(0, 10000);
   this->_select.doSelect();
 }
 
@@ -66,16 +66,14 @@ void			ClientRelay::start()
 	  if (!this->_remote->isReady())
 	    {
 	      this->_remote->setReady(true);
-	      //std::cout << "CLIENT READY" << std::endl;
+	      std::cout << "CLIENT READY" << std::endl;
 	    }
 	  if (!buffer->end())
 	    {
-	      //std::cout << "Received smth" << std::endl;
 	      buffer->rewind();
-	      this->_remote->getRecvBufferUDP().lock();
-	      buffer->setOffset(sizeof(unsigned int));
+	      auto guard = create_lock(this->_remote->getRecvBufferUDP());
+	      buffer->addOffset(sizeof(unsigned int));
 	      this->_remote->getRecvBufferUDP().push_back(buffer);
-	      this->_remote->getRecvBufferUDP().unlock();
 	    }
 	}
 
@@ -100,7 +98,6 @@ void			ClientRelay::start()
 
 Room	*ClientRelay::getRoom(const std::string &)
 {
-  this->_room.lock();
   return (&this->_room);
 }
 
@@ -108,14 +105,16 @@ IBuffer			*ClientRelay::getTCPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_tcp.isEmpty())
+  auto guard = create_lock(this->_available_tcp);
+  if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
-      //std::cout << "creating buffer tcp: " << buffer << std::endl;
+      std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
-      buffer = this->_available_tcp.getNextPop();
+      buffer = this->_available_tcp.front();
+      this->_available_tcp.erase(this->_available_tcp.begin());
       buffer->reset();
     }
   buffer->setPosition(sizeof(unsigned int));
@@ -126,14 +125,16 @@ IBuffer			*ClientRelay::getUDPBuffer()
 {
   IBuffer		*buffer;
 
-  if (this->_available_udp.isEmpty())
+  auto guard = create_lock(this->_available_udp);
+  if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
-      //std::cout << "creating buffer udp: " << buffer << std::endl;
+      std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {
-      buffer = this->_available_udp.getNextPop();
+      buffer = this->_available_udp.front();
+      this->_available_udp.erase(this->_available_udp.begin());
       buffer->reset();
     }
   buffer->setPosition(sizeof(unsigned int));
@@ -152,12 +153,14 @@ Remote			*ClientRelay::getRemote(const std::string &, const int)
 
 void			ClientRelay::disposeUDPBuffer(IBuffer *buffer)
 {
-  this->_available_udp.push(buffer);
+  auto guard = create_lock(this->_available_udp);
+  this->_available_udp.push_back(buffer);
 }
 
 void			ClientRelay::disposeTCPBuffer(IBuffer *buffer)
 {
-  this->_available_tcp.push(buffer);
+  auto guard = create_lock(this->_available_tcp);
+  this->_available_tcp.push_back(buffer);
 }
 
 void			ClientRelay::udpConnect()

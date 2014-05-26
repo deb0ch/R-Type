@@ -25,7 +25,7 @@ SocketTCP::~SocketTCP()
 {
 }
 
-const int		SocketTCP::getHandle() const
+int		SocketTCP::getHandle() const
 {
 	return (this->socket);
 }
@@ -154,7 +154,7 @@ void SocketTCP::init()
 	//::setsockopt(this->socket, SOL_SOCKET, SO_REUSEADDR &reuseAddr, sizeof(reuseAddr));
 }
 
-const bool	SocketTCP::isBlocking() const
+bool	SocketTCP::isBlocking() const
 {
 	return (this->blockingSocket);
 }

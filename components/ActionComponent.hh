@@ -4,10 +4,9 @@
 # include	<map>
 # include	<string>
 
-# include	"AComponent.hpp"
-# include	"INetworkSerializableComponent.hh"
+# include	"ACopyableComponent.hpp"
 
-class		ActionComponent : public AComponent<ActionComponent>, public INetworkSerializableComponent
+class		ActionComponent : public ACopyableComponent<ActionComponent>
 {
 private:
   std::map<std::string, bool>	_actions;
@@ -38,8 +37,8 @@ public:
    */
   void			setAction(const std::string &, const bool status);
 
-  void			serialize(IBuffer &) const;
-  void			unserialize(IBuffer &);
+  virtual void		serialize(IBuffer &) const;
+  virtual void		unserialize(IBuffer &);
 };
 
 #endif /* !ACTIONCOMPONENT_H_ */

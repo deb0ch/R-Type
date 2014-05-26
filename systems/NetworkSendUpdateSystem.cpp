@@ -1,11 +1,11 @@
 #include <iostream>
 #include "NetworkSendUpdateSystem.hh"
-#include "ISerializableComponent.hh"
-#include "INetworkSerializableComponent.hh"
+#include "ASerializableComponent.hh"
 #include "IComponent.hh"
 #include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
 #include "Hash.hh"
+#include "LockGuard.hpp"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
@@ -31,19 +31,17 @@ void				NetworkSendUpdateSystem::beforeProcess()
 }
 
 void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
+									     Remote *remote,
 									     IBuffer &buffer)
 {
-  INetworkSerializableComponent	*serializable_component;
-  IComponent			*component;
+  ASerializableComponent	*serializable_component;
   Hash				hash;
 
   for (auto it = this->_component_to_send.begin(); it != this->_component_to_send.end(); ++it)
     {
-      if ((serializable_component = entity->getComponent<INetworkSerializableComponent>(*it)) &&
-	  (component = dynamic_cast<IComponent *>(serializable_component)))
+      if ((serializable_component = entity->getComponent<ASerializableComponent>(*it)))
 	{
-	  buffer << static_cast<std::size_t>(hash(component->getType()));
-	  serializable_component->serialize(buffer);
+	  serializable_component->networkSerialize(remote, buffer);
 	}
     }
 }
@@ -51,21 +49,26 @@ void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 {
   NetworkSendUpdateComponent	*network_component;
-  IBuffer			*buffer;
   Room				*room;
 
-  buffer = this->_network->getUDPBuffer();
-  network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
-  *buffer << static_cast<char>(ENTITY_UPDATE);
-  *buffer << entity->_id;
-  *buffer << network_component->getPacketNumber();
-  *buffer << static_cast<char>(1);
-  this->serializeComponents(entity, *buffer);
-  network_component->increasePacketNumber();
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
-      room->sendBroadcastUDP(*this->_network, buffer);
-      room->unlock();
+      auto guard = create_lock(*room);
+
+      std::vector<Remote *> &remotes = room->getRemotes();
+      network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
+      std::for_each(remotes.begin(), remotes.end(),
+		    [this, &entity, &network_component] (Remote *remote)
+		    {
+		      IBuffer *buffer = this->_network->getUDPBuffer();
+		      *buffer << static_cast<char>(ENTITY_UPDATE);
+		      *buffer << entity->_id;
+		      *buffer << network_component->getPacketNumber();
+		      *buffer << static_cast<char>(1);
+		      this->serializeComponents(entity, remote, *buffer);
+		      remote->sendUDP(buffer);
+		    });
+      network_component->increasePacketNumber();
     }
 }

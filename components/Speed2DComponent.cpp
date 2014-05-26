@@ -2,30 +2,15 @@
 
 //----- ----- Constructors ----- ----- //
 Speed2DComponent::Speed2DComponent(float x, float y)
-  : AComponent("Speed2DComponent")
+  : ACopyableComponent("Speed2DComponent")
 {
   this->_vX = x;
   this->_vY = y;
 }
 
-Speed2DComponent::Speed2DComponent(const Speed2DComponent &ref)
-  : AComponent("Speed2DComponent")
-{
-  this->_vX = ref._vX;
-  this->_vY = ref._vY;
-}
-
 //----- ----- Destructor ----- ----- //
 Speed2DComponent::~Speed2DComponent()
 {}
-
-//----- ----- Operators ----- ----- //
-Speed2DComponent	&Speed2DComponent::operator=(const Speed2DComponent &ref)
-{
-  this->_vX = ref._vX;
-  this->_vY = ref._vY;
-  return (*this);
-}
 
 //----- ----- Getters ----- ----- //
 float	Speed2DComponent::getVX() const

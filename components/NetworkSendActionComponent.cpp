@@ -1,9 +1,9 @@
 #include "NetworkSendActionComponent.hh"
 
 NetworkSendActionComponent::NetworkSendActionComponent(unsigned int id)
-  : AComponent<NetworkSendActionComponent>("NetworkSendActionComponent")
+  : ACopyableComponent("NetworkSendActionComponent")
 {
-  this->_packet_number = 0;
+  this->_packet_number = 1;
   this->_remote_id = id;
 }
 

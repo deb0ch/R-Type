@@ -15,7 +15,8 @@ SET(HEADER_FILES
   Select.hh
   IBuffer.hh
   NetworkBuffer.hh
-  NetworkInitializer.hh)
+  NetworkInitializer.hh
+  BufferException.hh)
 
 SET(SOURCES
   USocketTCP.cpp
@@ -29,7 +30,8 @@ SET(SOURCES
   Select.cpp
   NetworkBuffer.cpp
   WNetworkInitializer.cpp
-  UNetworkInitializer.cpp)
+  UNetworkInitializer.cpp
+  BufferException.cpp)
 
 SET (LIB_TYPE STATIC)
 
@@ -38,5 +40,5 @@ FILE(GLOB_RECURSE ${SOURCES} ${HEADER_FILES})
 ADD_LIBRARY(Networklib ${LIB_TYPE} ${SOURCES})
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -W -Wall -Wextra -Werror")
 endif (UNIX)

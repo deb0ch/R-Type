@@ -2,7 +2,7 @@
 #include	"ActionComponent.hh"
 
 ActionComponent::ActionComponent()
-  : AComponent("ActionComponent")
+  : ACopyableComponent("ActionComponent")
 {}
 
 ActionComponent::~ActionComponent()
@@ -12,7 +12,7 @@ bool		ActionComponent::hasChanged(const std::string &action) const
 {
   auto it = this->_actions_changed.find(action);
   if (it != this->_actions_changed.end())
-    return (it->second);
+    return (this->_actions_changed.at(action));
   return (false);
 }
 
@@ -20,7 +20,7 @@ void		ActionComponent::resetChange(const std::string &action)
 {
   auto it = this->_actions_changed.find(action);
   if (it != this->_actions_changed.end())
-    it->second = false;
+    this->_actions_changed[action] = false;
 }
 
 bool		ActionComponent::isActive(const std::string &action) const

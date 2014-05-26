@@ -2,6 +2,8 @@
 #include "Remote.hh"
 #include "INetworkRelay.hh"
 #include "Unistd.hh"
+#include "TCPException.hh"
+#include "LockGuard.hpp"
 
 Remote::Remote(ISocketTCP &socket, unsigned int hash) : _temporary_tcp_buffer(4096)
 {
@@ -59,36 +61,30 @@ void			Remote::setPrivateHash(const unsigned int hash)
   this->_private_hash = hash;
 }
 
-SafeFifo<IBuffer *>	&Remote::getSendBufferUDP()
-{
-  return (this->_send_buffer_udp);
-}
-
-SafeFifo<IBuffer *>	&Remote::getSendBufferTCP()
-{
-  return (this->_send_buffer_tcp);
-}
-
 void			Remote::sendTCP(IBuffer *buffer)
 {
   unsigned int		size;
 
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   size = buffer->getLength();
   buffer->rewind();
   *buffer << size;
   buffer->rewind();
-  //std::cout << "sending size: " << size << " " << buffer->getLength() << std::endl;
-  this->_send_buffer_tcp.push(buffer);
+  auto guard = create_lock(this->_send_buffer_tcp);
+  this->_send_buffer_tcp.push_back(buffer);
 }
 
 void			Remote::sendUDP(IBuffer *buffer)
 {
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
-  buffer->rewind();
-  *buffer << this->_private_hash;
-  buffer->rewind();
-  this->_send_buffer_udp.push(buffer);
+  if (this->isReady() || buffer->getLength() == sizeof(unsigned int))
+    {
+      buffer->rewind();
+      *buffer << this->_private_hash;
+      buffer->rewind();
+      auto guard = create_lock(this->_send_buffer_udp);
+      this->_send_buffer_udp.push_back(buffer);
+      if (this->_send_buffer_udp.size() > 1000)
+	this->_send_buffer_udp.erase(this->_send_buffer_udp.begin());
+    }
 }
 
 LockVector<IBuffer *>	&Remote::getRecvBufferUDP()
@@ -115,15 +111,15 @@ void			Remote::networkSendTCP(INetworkRelay &network)
 {
   IBuffer		*buffer;
 
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
-  if (this->_send_buffer_tcp.isEmpty())
-    return ;
-  buffer = this->_send_buffer_tcp.getNext();
-  //std::cout << "sending: " << buffer << std::endl;
-  if (this->_tcp->send(*buffer))
+  auto guard = create_lock(this->_send_buffer_tcp);
+  if (!this->_send_buffer_tcp.empty())
     {
-      network.disposeTCPBuffer(buffer);
-      this->_send_buffer_tcp.pop();
+      buffer = this->_send_buffer_tcp.front();
+      if (this->_tcp->send(*buffer))
+	{
+	  network.disposeTCPBuffer(buffer);
+	  this->_send_buffer_tcp.erase(this->_send_buffer_tcp.begin());
+	}
     }
 }
 
@@ -131,11 +127,20 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 {
   unsigned int		size_read;
 
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_recv_buffer_tcp.trylock())
     {
+      auto guard = create_lock(this->_recv_buffer_tcp, true);
+
       this->_temporary_tcp_buffer.gotoEnd();
-      size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
+      try
+	{
+	  size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
+	}
+      catch (const TCPException &e)
+	{
+	  std::cerr << e.what() << std::endl;
+	  return false;
+	}
       while (this->extractTCPPacket(network))
 	;
       memmove(this->_temporary_tcp_buffer.getBuffer(),
@@ -143,7 +148,6 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 	      this->_temporary_tcp_buffer.getRemainingLength());
       this->_temporary_tcp_buffer.setLength(this->_temporary_tcp_buffer.getRemainingLength());
       this->_temporary_tcp_buffer.rewind();
-      this->_recv_buffer_tcp.unlock();
       return (size_read > 0);
     }
   return (true);
@@ -156,7 +160,6 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
   unsigned int	size;
   IBuffer	*buffer;
 
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (this->_temporary_tcp_buffer.getRemainingLength() >= sizeof(unsigned int))
     {
       old_pos = this->_temporary_tcp_buffer.getPosition();
@@ -178,7 +181,7 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	    }
 	  else
 	    {
-	      buffer->setOffset(sizeof(size));
+	      buffer->addOffset(sizeof(size));
 	      this->_recv_buffer_tcp.push_back(buffer);
 	    }
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +
@@ -195,28 +198,27 @@ void		Remote::networkSendUDP(INetworkRelay &network, SocketUDP &udp)
 {
   IBuffer	*buffer;
 
-  //std::cout << __PRETTY_FUNCTION__ << std::endl;
-  if (this->_send_buffer_udp.isEmpty())
-    return ;
-  buffer = this->_send_buffer_udp.getNext();
-  udp.send(*buffer,
-	   this->_ip, this->_port);
-  network.disposeUDPBuffer(buffer);
-  this->_send_buffer_udp.pop();
+  auto guard = create_lock(this->_send_buffer_udp);
+  if (!this->_send_buffer_udp.empty())
+    {
+      buffer = this->_send_buffer_udp.front();
+      udp.send(*buffer,
+	       this->_ip, this->_port);
+      network.disposeUDPBuffer(buffer);
+      this->_send_buffer_udp.erase(this->_send_buffer_udp.begin());
+    }
 }
 
 bool		Remote::canSendUDP()
 {
-  if (!this->_send_buffer_udp.isEmpty())
-    return (true);
-  return (false);
+  auto guard = create_lock(this->_send_buffer_udp);
+  return (!this->_send_buffer_udp.empty());
 }
 
 bool		Remote::canSendTCP()
 {
-  if (!this->_send_buffer_tcp.isEmpty())
-    return (true);
-  return (false);
+  auto guard = create_lock(this->_send_buffer_tcp);
+  return (!this->_send_buffer_tcp.empty());
 }
 
 void		Remote::setReady(bool ready)

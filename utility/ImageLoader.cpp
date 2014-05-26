@@ -3,6 +3,7 @@
 #include "ImageLoader.hh"
 
 static std::string NAME_CLASS = "RT::ImageLoader";
+static const std::string imageFolder = "Ressources/Images/";
 
 ImageLoader::ImageLoader() {
   this->_images = std::map<std::string, std::pair<sf::Texture *, ImageLoader::InfImg> >();
@@ -16,15 +17,17 @@ ImageLoader::~ImageLoader() {
   }
 }
 
-void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite) {
-  auto it = this->_images.find(fileImage);
+void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite)
+{
+	std::string imagePath = imageFolder + fileImage;
+	auto it = this->_images.find(imagePath);
 
   if (it == this->_images.end()) {
     sf::Texture	*image = new sf::Texture();
 
-    if (access(fileImage.c_str(), R_OK) == -1)
+	if (access(imagePath.c_str(), R_OK) == -1)
       throw ImageLoaderException(errno);
-    if (!image->loadFromFile(fileImage))
+	if (!image->loadFromFile(imagePath))
       throw ImageLoaderException("loadFromFile failed");
     if (nbSprite.nbSprintX == 0 || nbSprite.nbSprintY == 0)
       throw ImageLoaderException("Invalide ImageLoader::NbSprite");
@@ -32,14 +35,14 @@ void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite n
     ImageLoader::InfImg infoImg;
     infoImg.nbSprite = nbSprite;
     infoImg.rect = v;
-    this->_images[fileImage] = std::pair<sf::Texture *, ImageLoader::InfImg>(image, infoImg);
+	this->_images[imagePath] = std::pair<sf::Texture *, ImageLoader::InfImg>(image, infoImg);
   }
 }
 
 const std::pair<sf::Texture *, ImageLoader::InfImg> &ImageLoader::getPair(const std::string
 									  &fileImage) const
 {
-  auto it = this->_images.find(fileImage);
+	auto it = this->_images.find(imageFolder + fileImage);
 
   if (it != this->_images.end()) {
     return ((it->second));

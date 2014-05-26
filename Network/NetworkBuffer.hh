@@ -2,7 +2,9 @@
 # define NETWORKBUFFER_H_
 
 # include <iostream>
+# include <typeinfo>
 # include "IBuffer.hh"
+# include "BufferException.hh"
 
 class NetworkBuffer : public IBuffer
 {
@@ -22,14 +24,14 @@ public:
 
   virtual IBuffer	&operator<<(const int &);
   virtual IBuffer	&operator<<(const unsigned int &);
-  virtual IBuffer	&operator<<(const unsigned long &);
+  virtual IBuffer	&operator<<(const uint64_t &);
   virtual IBuffer	&operator<<(const float &);
   virtual IBuffer	&operator<<(const std::string &);
   virtual IBuffer	&operator<<(const char &);
 
   virtual IBuffer	&operator>>(int &);
   virtual IBuffer	&operator>>(unsigned int &);
-  virtual IBuffer	&operator>>(unsigned long &);
+  virtual IBuffer	&operator>>(uint64_t &);
   virtual IBuffer	&operator>>(float &);
   virtual IBuffer	&operator>>(std::string &);
   virtual IBuffer	&operator>>(char &);
@@ -49,11 +51,12 @@ public:
   virtual void		setPosition(unsigned int);
 
   virtual unsigned int	getOffset() const;
-  virtual void		setOffset(unsigned int);
+  virtual void		addOffset(int);
 
 protected:
-  const unsigned int	bufferMaxSize;
+  unsigned int		_buffer_max_size;
   char			*_buffer;
+  char			*_buffer_original;
   unsigned int		_buffer_size;
   unsigned int		_current_pos;
   unsigned int		_offset;
@@ -66,16 +69,15 @@ private:
     const char	*tab;
 
     tab = reinterpret_cast<const char *>(&elements);
-    if (this->_buffer_size + sizeof(T) > bufferMaxSize)
+    if (this->_buffer_size + sizeof(T) > this->_buffer_max_size)
       {
-	std::cout << "Not enough space" << std::endl; // raise exception
-	return ;
+	throw BufferException(this, std::string("Serialize: no more space; Size = ") + std::to_string(sizeof(T)));
       }
     if (isBigEndian())
       i = 0;
     else
       i = sizeof(T) - 1;
-    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
+    while ((isBigEndian() && i < static_cast<int>(sizeof(T))) || (!isBigEndian() && i >= 0))
       {
 	this->_buffer[this->_current_pos] = tab[i];
 	if (isBigEndian())
@@ -95,14 +97,13 @@ private:
     tab = reinterpret_cast<char *>(&elements);
     if (this->_buffer_size - this->_current_pos < sizeof(T))
       {
-	std::cout << "Not enough space" << std::endl; // raise exception
-	return ;
+	throw BufferException(this, std::string("Unserialize: no more space; Size = ") + std::to_string(sizeof(T)));
       }
     if (isBigEndian())
       i = 0;
     else
       i = sizeof(T) - 1;
-    while ((isBigEndian() && i < sizeof(T)) || (!isBigEndian() && i >= 0))
+    while ((isBigEndian() && i < static_cast<int>(sizeof(T))) || (!isBigEndian() && i >= 0))
       {
 	tab[i] = this->_buffer[this->_current_pos];
 	if (isBigEndian())

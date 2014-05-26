@@ -1,45 +1,42 @@
+
 #include	"MoveFollowComponent.hh"
 #include	"Pos2DComponent.hh"
 
 //----- ----- Constructors ----- ----- //
-MoveFollowComponent::MoveFollowComponent(Entity *target)
-  : AComponent("MoveFollowComponent")
+MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
+  : ACopyableComponent("MoveFollowComponent"), _idToFollow(-1)
 {
-  this->_target = target;
-}
-
-MoveFollowComponent::MoveFollowComponent(const MoveFollowComponent &ref)
-  : AComponent("MoveFollowComponent")
-{
-  this->_target = ref._target;
+  this->_tagToFollow = tagToFollow;
 }
 
 //----- ----- Destructor ----- ----- //
 MoveFollowComponent::~MoveFollowComponent()
 {}
 
-//----- ----- Operators ----- ----- //
-MoveFollowComponent	&MoveFollowComponent::operator=(const MoveFollowComponent &ref)
+unsigned int	MoveFollowComponent::getIdToFollow() const
 {
-  this->_target = ref._target;
-  return (*this);
+  return this->_idToFollow;
 }
 
-//----- ----- Getters ----- ----- //
-float	MoveFollowComponent::getX() const
+void		MoveFollowComponent::setIdToFollow(unsigned int idToFollow)
 {
-  auto	pos = this->_target->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!pos)
-    return (0);
-  return (pos->getX());
+  this->_idToFollow = idToFollow;
 }
 
-float	MoveFollowComponent::getY() const
+const std::string &	MoveFollowComponent::getTagToFollow() const
 {
-  auto	pos = this->_target->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (!pos)
-    return (0);
-  return (pos->getY());
+  return this->_tagToFollow;
 }
+
+void		MoveFollowComponent::serialize(IBuffer &) const
+{}
+
+void		MoveFollowComponent::unserialize(IBuffer &)
+{}
 
 //----- ----- Setters ----- ----- //
+
+void		MoveFollowComponent::setTagToFollow(const std::string & tagToFollow)
+{
+  this->_tagToFollow = tagToFollow;
+}

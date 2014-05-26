@@ -5,18 +5,18 @@
 #include "EntityDeletedEvent.hh"
 
 EntityDeleterSystem::EntityDeleterSystem()
-  : ASystem("EntityDeleterSystem")
+  : ASystem("EntityDeleterSystem", 0)
 {
 }
 
 EntityDeleterSystem::~EntityDeleterSystem()
 {}
 
-bool		EntityDeleterSystem::canProcess(Entity *e) {
+bool		EntityDeleterSystem::canProcess(Entity *) {
   return (false);
 }
 
-void	EntityDeleterSystem::processEntity(Entity *e, const float){
+void	EntityDeleterSystem::processEntity(Entity *, const float){
 }
 
 void	EntityDeleterSystem::afterProcess() {

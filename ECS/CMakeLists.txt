@@ -1,5 +1,5 @@
 SET(HEADERS
-  AComponent.hpp
+  AComponent.hh
   AEvent.hh
   ASystem.hh
   Entity.hh
