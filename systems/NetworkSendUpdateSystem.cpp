@@ -11,6 +11,7 @@ NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> 
   : ASystem("NetworkSendUpdateSystem")
 {
   this->_component_to_send = component_to_send;
+  this->_last_update_time = 0;
 }
 
 NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
@@ -18,16 +19,24 @@ NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
 
 bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("NetworkSendUpdateComponent") &&
+  if (this->_last_update_time >= 0.05f &&
+      entity->hasComponent("NetworkSendUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)
     return (true);
   return (false);
 }
 
-void				NetworkSendUpdateSystem::beforeProcess(const float)
+void				NetworkSendUpdateSystem::beforeProcess(const float delta)
 {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
+  this->_last_update_time += delta;
+}
+
+void				NetworkSendUpdateSystem::afterProcess(const float)
+{
+  if (this->_last_update_time >= 0.05f)
+    this->_last_update_time = 0;
 }
 
 void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
