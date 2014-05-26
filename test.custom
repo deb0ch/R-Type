@@ -1,0 +1,17 @@
+ENTITY:monster1
+	COMPONENT:Pos2DComponent
+		x=4
+		y=2
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entities=
+			bullet1
+			bullet2
+		components=p
+			COMPONENT:MoveForwardComponent
+				action=UP
+			!COMPONENT
+			COMPONENT:FireAlwaysComponent
+			!COMPONENT
+	!COMPONENT
+!ENTITY
