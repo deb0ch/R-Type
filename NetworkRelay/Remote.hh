@@ -23,9 +23,6 @@ public:
   void				setIP(const std::string &ip);
   void				setPort(const int);
   void				setPrivateHash(const unsigned int);
-  SafeFifo<IBuffer *>		&getSendBufferUDP();
-  SafeFifo<IBuffer *>		&getSendBufferTCP();
-  // TODO:
   void				sendTCP(IBuffer *);
   void				sendUDP(IBuffer *);
   LockVector<IBuffer *>		&getRecvBufferUDP();
@@ -53,8 +50,8 @@ protected:
   std::string			_room;
   int				_port;
   unsigned int			_private_hash;
-  SafeFifo<IBuffer *>		_send_buffer_tcp;
-  SafeFifo<IBuffer *>		_send_buffer_udp;
+  LockVector<IBuffer *>		_send_buffer_tcp;
+  LockVector<IBuffer *>		_send_buffer_udp;
   NetworkBuffer			_temporary_tcp_buffer;
   LockVector<IBuffer *>		_recv_buffer_tcp;
   LockVector<IBuffer *>		_recv_buffer_udp;

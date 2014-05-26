@@ -5,6 +5,7 @@
 #include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
 #include "Hash.hh"
+#include "LockGuard.hpp"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
@@ -53,6 +54,8 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
       std::for_each(remotes.begin(), remotes.end(),
@@ -67,6 +70,5 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 		      remote->sendUDP(buffer);
 		    });
       network_component->increasePacketNumber();
-      room->unlock();
     }
 }

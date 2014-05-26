@@ -10,6 +10,7 @@ enum PacketType
   {
     ENTITY_UPDATE,
     ACTION_UPDATE,
+    KILL_ENTITY
   };
 
 class NetworkBuffer;
