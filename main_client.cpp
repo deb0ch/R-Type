@@ -74,7 +74,7 @@ void		addSystems(World &world)
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new ActionMovementSystem());
   world.addSystem(new ActionFireSystem());
-  // world.addSystem(new SyncPos2DSystem());
+  world.addSystem(new SyncPos2DSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
   world.addSystem(new ResetActionSystem());
