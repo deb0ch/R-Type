@@ -18,6 +18,15 @@ void	ASerializableComponent::networkSerialize(Remote *remote, IBuffer &buffer, b
     }
 }
 
+void	ASerializableComponent::networkUnSerialize(IBuffer &buffer, World *world)
+{
+  this->unserialize(buffer);
+  this->networkUnserializeCallback(world);
+}
+
+void	ASerializableComponent::networkUnserializeCallback(World *)
+{}
+
 void	ASerializableComponent::additionalNetworkSerialize(IBuffer &) const
 {}
 

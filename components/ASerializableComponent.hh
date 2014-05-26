@@ -5,6 +5,7 @@
 # include "AComponent.hh"
 # include "IBuffer.hh"
 # include "Remote.hh"
+# include "World.hh"
 
 class ASerializableComponent : public AComponent
 {
@@ -23,6 +24,8 @@ public:
   virtual void serialize(IBuffer &) const = 0;
   virtual void unserialize(IBuffer &) = 0;
   virtual void networkSerialize(Remote *remote, IBuffer &, bool force_send = false) const;
+  virtual void networkUnSerialize(IBuffer &, World *);
+  virtual void networkUnserializeCallback(World *world);
   virtual void additionalNetworkSerialize(IBuffer &) const;
   virtual ASerializableComponent *cloneSerializable() const = 0;
   virtual IComponent *clone() const;
