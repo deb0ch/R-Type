@@ -492,7 +492,7 @@ public:
   void		initMonster()
   {
     this->addEntity("MONSTER_1", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(2.f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 40.0f))
 		    ->addComponent(new TeamComponent())
@@ -556,7 +556,7 @@ public:
 		    );
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 75,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
