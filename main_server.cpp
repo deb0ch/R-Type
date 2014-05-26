@@ -115,7 +115,7 @@ void		addSystems(World &world)
       "Pos2DComponent",
       "SFMLSpriteComponent",
       "Speed2DComponent",
-      "Friction2DComponent",
+      // "Friction2DComponent",
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
@@ -166,8 +166,8 @@ void		addEntities(World &world)
   world.addEntity(entityFactory->create("BACKGROUND_2"));
   // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 #include "LockGuard.hpp"

@@ -67,6 +67,7 @@ void		SpawnPlayerSystem::beforeProcess(const float)
 	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Pos2DComponent"))
 	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Speed2DComponent"))
 	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("ActionComponent"))
+	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Friction2DComponent"))
 	      				  ->addPlayerComponent(send_action));
 
 	      std::cout << "Created entity" << std::endl;

@@ -464,7 +464,7 @@ public:
 				   ));
 
     this->addEntity("TRACKER_MISSILE", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.05f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent(1))

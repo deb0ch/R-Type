@@ -28,13 +28,13 @@ void		SyncPos2DSystem::processEntity(Entity *entity, const float)
   float			delta_y;
   float			ratio;
 
-  if (network_comp->getPreviousUpdateTime() <= 1)
+  if (network_comp->getUpdateRate() == 0.f || network_comp->getLastUpdate() > network_comp->getUpdateRate())
     {
       pos_comp->setX(sync_comp->getSyncPos().getX());
       pos_comp->setY(sync_comp->getSyncPos().getY());
       return ;
     }
-  ratio = static_cast<float>(network_comp->getLastUpdate()) / network_comp->getPreviousUpdateTime();
+  ratio = network_comp->getLastUpdate() / network_comp->getUpdateRate(); // Radio need to count the amount of space already moved (this is broken)
   delta_x = (sync_comp->getSyncPos().getX() - pos_comp->getX()) * ratio;
   delta_y = (sync_comp->getSyncPos().getY() - pos_comp->getY()) * ratio;
   pos_comp->setX(pos_comp->getX() + delta_x);
