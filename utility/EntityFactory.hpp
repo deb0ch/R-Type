@@ -497,6 +497,7 @@ public:
 		    ->addComponent(new Box2DComponent(40.0f, 40.0f))
 		    ->addComponent(new TeamComponent())
 		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy")
 				   ->addTag("MONSTER"))
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent(new FireAlwaysComponent())
@@ -521,8 +522,6 @@ public:
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   ->addAction("FIRE"))
-		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy"))
 		    );
 
     this->addEntity("MONSTER_2", (new Entity())
@@ -531,6 +530,7 @@ public:
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent())
 		    ->addComponent((new TagComponent())
+				   ->addTag("Ennemy")
 				   ->addTag("MONSTER"))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.9f))
@@ -555,8 +555,6 @@ public:
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   ->addAction("FIRE"))
-		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy"))
 		    );
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
@@ -575,7 +573,8 @@ public:
 		    ->addComponent(new Box2DComponent(40.0f, 25.0f))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent((new TagComponent())
-				   ->addTag("MONSTER"))
+				   ->addTag("MONSTER")
+				   ->addTag("Ennemy"))
 		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent(new SFMLSpriteComponent("Monster3.png",
 							   ImageLoader::NbSprite{ 5, 1 },
@@ -601,8 +600,6 @@ public:
 				   ->addAction("DOWN")
 				   ->addAction("LEFT")
 				   ->addAction("FIRE"))
-		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy"))
 		    );
 
     this->addEntity("BOSS_1", (new Entity())
@@ -613,7 +610,8 @@ public:
 		    ->addComponent(new MovementSpeedComponent(60.f))
 		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent((new TagComponent())
-				   ->addTag("MONSTER"))
+				   ->addTag("MONSTER")
+				   ->addTag("Ennemy"))
 		    ->addComponent(new ExplosionComponent("BOSS_EXPLOSION"))
 		    ->addComponent(new FireAlwaysComponent())
 		    ->addComponent(new LifeComponent(7500))
@@ -635,8 +633,6 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_FROM_BOSS", 0}, {"MONSTER_BASIC_BULLET_4", 0},
 								{"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET", 0} }, {}, 0, 40,
 			{ (-5.0f), (0.0f) }, { (-5.0f), (0.0f) }, true, false))
-		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy"))
 		    );
   }
 
