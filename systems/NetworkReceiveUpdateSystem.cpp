@@ -28,13 +28,13 @@ bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void				NetworkReceiveUpdateSystem::beforeProcess()
+void				NetworkReceiveUpdateSystem::beforeProcess(const float)
 {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-void				NetworkReceiveUpdateSystem::afterProcess()
+void				NetworkReceiveUpdateSystem::afterProcess(const float)
 {
   Room				*room;
 

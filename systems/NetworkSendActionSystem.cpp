@@ -17,7 +17,7 @@ NetworkSendActionSystem::NetworkSendActionSystem(const std::vector<std::string> 
 NetworkSendActionSystem::~NetworkSendActionSystem()
 {}
 
-void NetworkSendActionSystem::beforeProcess()
+void NetworkSendActionSystem::beforeProcess(const float)
 {
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");

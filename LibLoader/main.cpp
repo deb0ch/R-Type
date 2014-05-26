@@ -6,7 +6,7 @@
 
 	#include "WLibraryLoader.hpp"
 #elif __linux__
-	# define _BSD_SOURCE
+	// # define _BSD_SOURCE
 	static const std::string pathLib = "../plugin/lib";
 	static const std::string extension = ".so";
 

@@ -16,7 +16,7 @@ public:
 public:
   EntityDeleterSystem();
   virtual ~EntityDeleterSystem();
-  virtual void afterProcess();
+  virtual void afterProcess(const float);
 
 private:
   std::vector<Entity *> _toDelete;

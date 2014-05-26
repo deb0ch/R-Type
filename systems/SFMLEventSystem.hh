@@ -11,7 +11,7 @@ class		SFMLEventSystem : public ASystem
 protected:
   sf::RenderWindow	*_window;
 
-  virtual void	beforeProcess();
+  virtual void	beforeProcess(const float);
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
 
