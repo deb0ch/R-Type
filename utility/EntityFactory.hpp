@@ -580,6 +580,7 @@ public:
 							   }))
 		    ->addComponent(new MovementSpeedComponent(60.f))
 		    ->addComponent(new LifeComponent(200))
+		    ->addComponent(new TeamComponent())
 		    ->addComponent(new FireAlwaysComponent())
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent((new CollisionComponent())
