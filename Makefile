@@ -11,6 +11,9 @@ all:		$(NAME_C) $(NAME_S)
 		ln -sf build/$(NAME_C) .
 		ln -sf build/$(NAME_S) .
 
+fast:
+		make -j 8
+
 clean:
 		$(MAKE) clean -C build
 
