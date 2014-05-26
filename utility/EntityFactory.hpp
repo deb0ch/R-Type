@@ -238,7 +238,7 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"TRACKER_MISSILE", 0} }, {}, 0, 20,
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}, 0, 10,
 							      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
 		    // ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
 		    // 					      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
