@@ -28,11 +28,17 @@ const std::string &	MoveFollowComponent::getTagToFollow() const
   return this->_tagToFollow;
 }
 
-void		MoveFollowComponent::serialize(IBuffer &) const
-{}
+void		MoveFollowComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_idToFollow;
+  buffer << this->_tagToFollow;
+}
 
-void		MoveFollowComponent::unserialize(IBuffer &)
-{}
+void		MoveFollowComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_idToFollow;
+  buffer >> this->_tagToFollow;
+}
 
 //----- ----- Setters ----- ----- //
 

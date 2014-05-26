@@ -120,7 +120,12 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent",
+      "MovementSpeedComponent",
       "NetworkPlayerComponent",
+      "MoveForwardComponent",
+      "MoveFollowComponent",
+      "MoveSequenceComponent",
+      "TagComponent",
       "Box2DComponent"
     };
 
@@ -167,7 +172,7 @@ void		addEntities(World &world)
   // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("BOSS_1"));
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 #include "LockGuard.hpp"
@@ -183,13 +188,13 @@ int		main()
   std::cout << "b" << std::endl;
   addEntities(world);
 
-  sf::Music music;
+  // sf::Music music;
 
-  if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-      music.setLoop(true);
-      music.play();
-    }
+  // if (music.openFromFile("Ressources/Sound/music.ogg"))
+  //   {
+  //     music.setLoop(true);
+  //     music.play();
+  //   }
   /*
     SoundLoader *s = new SoundLoader();
     s->addSound("Ressources/Sound/laser.wav");

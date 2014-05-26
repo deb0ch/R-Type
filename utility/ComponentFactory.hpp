@@ -16,6 +16,11 @@
 # include "PlayerMovementComponent.hh"
 # include "NetworkSendActionComponent.hh"
 # include "SyncPos2DComponent.hh"
+# include "MovementSpeedComponent.hh"
+# include "MoveForwardComponent.hh"
+# include "MoveSequenceComponent.hh"
+# include "MoveFollowComponent.hh"
+# include "TagComponent.hh"
 # include "Hash.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
@@ -47,6 +52,11 @@ public :
     this->addComponent(new PlayerMovementComponent());
     this->addComponent(new NetworkSendActionComponent());
     this->addComponent(new SyncPos2DComponent());
+    this->addComponent(new MoveForwardComponent());
+    this->addComponent(new MovementSpeedComponent());
+    this->addComponent(new MoveSequenceComponent());
+    this->addComponent(new MoveFollowComponent());
+    this->addComponent(new TagComponent());
   }
 
   virtual ASerializableComponent	*create(const hash_t &key) const

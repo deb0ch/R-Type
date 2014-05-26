@@ -5,7 +5,8 @@
 MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir)
 : ACopyableComponent("MoveForwardComponent")
 {
-	this->_direction = dir;
+	this->_direction1 = dir;
+	this->_direction2 = NONE;
 	if (dir == MoveForwardComponent::UP)
 		this->_actions.push_back("UP");
 	else if (dir == MoveForwardComponent::DOWN)
@@ -21,7 +22,8 @@ MoveForwardComponent::MoveForwardComponent(MoveForwardComponent::Direction dir,
 	const Direction seconddir)
 	: ACopyableComponent("MoveForwardComponent")
 {
-	this->_direction = dir;
+	this->_direction1 = dir;
+	this->_direction2 = seconddir;
 	if (dir == MoveForwardComponent::UP || seconddir == MoveForwardComponent::UP)
 		this->_actions.push_back("UP");
 	if (dir == MoveForwardComponent::DOWN || seconddir == MoveForwardComponent::DOWN)
@@ -43,13 +45,32 @@ const std::vector<std::string> & MoveForwardComponent::getDirection() const
 	return (this->_actions);
 }
 
-void MoveForwardComponent::setDirection(const MoveForwardComponent::Direction dir)
+// void MoveForwardComponent::setDirection(const MoveForwardComponent::Direction dir)
+// {
+// 	this->_direction = dir;
+// }
+
+void	MoveForwardComponent::serialize(IBuffer &buffer) const
 {
-	this->_direction = dir;
+  buffer << static_cast<char>(this->_direction1);
+  buffer << static_cast<char>(this->_direction2);
 }
 
-void	MoveForwardComponent::serialize(IBuffer &) const
-{}
+void		MoveForwardComponent::unserialize(IBuffer &buffer)
+{
+  char		tmp;
 
-void	MoveForwardComponent::unserialize(IBuffer &)
-{}
+  buffer >> tmp;
+  this->_direction1 = static_cast<Direction>(tmp);
+  buffer >> tmp;
+  this->_direction2 = static_cast<Direction>(tmp);
+
+  if (this->_direction1 == MoveForwardComponent::UP || this->_direction2 == MoveForwardComponent::UP)
+    this->_actions.push_back("UP");
+  if (this->_direction1 == MoveForwardComponent::DOWN || this->_direction2 == MoveForwardComponent::DOWN)
+    this->_actions.push_back("DOWN");
+  if (this->_direction1 == MoveForwardComponent::RIGHT || this->_direction2 == MoveForwardComponent::RIGHT)
+    this->_actions.push_back("RIGHT");
+  if (this->_direction1 == MoveForwardComponent::LEFT || this->_direction2 == MoveForwardComponent::LEFT)
+    this->_actions.push_back("LEFT");
+}

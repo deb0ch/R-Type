@@ -12,7 +12,7 @@ protected:
   std::string		_tagToFollow;
 
 public:
-			MoveFollowComponent(const std::string & tagToFollow);
+			MoveFollowComponent(const std::string & tagToFollow = "unknown");
   virtual		~MoveFollowComponent();
 
   virtual void		serialize(IBuffer &) const;

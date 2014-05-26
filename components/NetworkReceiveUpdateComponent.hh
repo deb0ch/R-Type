@@ -7,7 +7,7 @@ class NetworkReceiveUpdateComponent : public ACopyableComponent<NetworkReceiveUp
 {
 public:
 		NetworkReceiveUpdateComponent(unsigned int remote_id = 0,
-					      unsigned int packet_num = 0);
+					      unsigned int packet_num = 0, float update_rate = 0.05f);
   virtual	~NetworkReceiveUpdateComponent();
   virtual	void serialize(IBuffer &) const;
   virtual	void unserialize(IBuffer &);
@@ -15,15 +15,16 @@ public:
   void		setRemoteID(unsigned int);
   unsigned int	getPacketNum() const;
   void		setPacketNum(unsigned int);
+  void		addLastUpdate(const float);
+  float		getLastUpdate() const;
   void		resetLastUpdate();
-  void		increaseLastUpdate();
-  unsigned int	getLastUpdate() const;
-  unsigned int	getPreviousUpdateTime() const;
+  void		setUpdateRate(const float);
+  float		getUpdateRate() const;
 protected:
   unsigned int	_remote_id;
   unsigned int	_packet_num;
-  unsigned int	_last_update;
-  unsigned int	_previous_update_time;
+  float		_last_update;
+  float		_update_rate;
 };
 
 #endif /* !NETWORKRECEIVEUPDATECOMPONENT_H_ */

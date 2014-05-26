@@ -25,7 +25,8 @@ private:
   void		unserializeComponent(Entity *, IBuffer &buffer);
   void		updateEntity(Entity *, NetworkReceiveUpdateComponent *receive_component, IBuffer &buffer);
   void		getEntityInfos(IBuffer &buffer,
-			       unsigned int &id_entity, unsigned int &num_packet);
+			       unsigned int &id_entity, unsigned int &num_packet,
+			       float &update_rate);
   bool		remoteEntityExists(unsigned int);
   void		parsePacketOnEntity(Entity *entity, NetworkReceiveUpdateComponent *receive_component,
 				    LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);

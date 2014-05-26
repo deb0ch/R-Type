@@ -88,6 +88,7 @@ NetworkPlayerComponent	*NetworkPlayerComponent::addPlayerComponent(ASerializable
 {
   if (component)
     {
+      component->setNetworkCanSend(false);
       component->setNetworkSendException(this->_remote_hash);
       if (std::find(this->_non_update_component.begin(),
 		    this->_non_update_component.end(),
