@@ -116,7 +116,7 @@ public:
 		    );
 
     this->addEntity("ALIEN_BOMB_EXPLOSION", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.0f))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(0.0f, 0.0f))
 		    ->addComponent(new TeamComponent())
@@ -471,7 +471,7 @@ public:
 		    ->addComponent(new Speed2DComponent(1000.0f, 0.0f))
 		    ->addComponent(new Friction2DComponent(0.07f))
 		    ->addComponent(new MovementSpeedComponent(60.f))
-		    ->addComponent(new MoveFollowComponent("Ennemy"))
+		    ->addComponent(new MoveFollowComponent("MONSTER"))
 		    ->addComponent(new LifeComponent(100))
 		    ->addComponent(new AutoDestructComponent(120))
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
@@ -497,7 +497,6 @@ public:
 		    ->addComponent(new Box2DComponent(40.0f, 40.0f))
 		    ->addComponent(new TeamComponent())
 		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy")
 				   ->addTag("MONSTER"))
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent(new FireAlwaysComponent())
@@ -525,12 +524,11 @@ public:
 		    );
 
     this->addEntity("MONSTER_2", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(2.0f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent())
 		    ->addComponent((new TagComponent())
-				   ->addTag("Ennemy")
 				   ->addTag("MONSTER"))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.9f))
@@ -573,8 +571,7 @@ public:
 		    ->addComponent(new Box2DComponent(40.0f, 25.0f))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent((new TagComponent())
-				   ->addTag("MONSTER")
-				   ->addTag("Ennemy"))
+				   ->addTag("MONSTER"))
 		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent(new SFMLSpriteComponent("Monster3.png",
 							   ImageLoader::NbSprite{ 5, 1 },
@@ -603,7 +600,7 @@ public:
 		    );
 
     this->addEntity("BOSS_1", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.0f))
 		    ->addComponent(new Pos2DComponent(700.0f, 590.0f))
 		    ->addComponent(new Box2DComponent(130.0f, 205.0f))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
