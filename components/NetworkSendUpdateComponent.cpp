@@ -1,6 +1,7 @@
 #include "NetworkSendUpdateComponent.hh"
 
-NetworkSendUpdateComponent::NetworkSendUpdateComponent() : AComponent("NetworkSendUpdateComponent")
+NetworkSendUpdateComponent::NetworkSendUpdateComponent()
+  : ACopyableComponent("NetworkSendUpdateComponent")
 {
   this->_packet_number = 0;
 }
@@ -17,3 +18,9 @@ void	NetworkSendUpdateComponent::increasePacketNumber()
 {
   ++this->_packet_number;
 }
+
+void NetworkSendUpdateComponent::serialize(IBuffer &) const
+{}
+
+void NetworkSendUpdateComponent::unserialize(IBuffer &)
+{}

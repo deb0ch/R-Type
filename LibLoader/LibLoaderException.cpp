@@ -1,3 +1,7 @@
+#ifdef __linux__
+	#define _XOPEN_SOURCE 601
+#endif
+
 #include <sstream>
 #include <cstring>
 #include "LibLoaderException.hh"
@@ -12,8 +16,7 @@ void LibLoaderException::addError(const int error)
   strerror_s(buffer, sizeof(buffer), error);
   this->_info += buffer;
 #elif __linux__
-  strerror_r(error, buffer, sizeof(buffer));
-  this->_info += buffer;
+  this->_info += strerror_r(error, buffer, sizeof(buffer));
 #endif
 }
 

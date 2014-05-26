@@ -23,36 +23,39 @@ SocketTCP::SocketTCP(const SOCKET &sock)
 
 SocketTCP::~SocketTCP()
 {
-	WSACleanup();
 }
 
-const int		SocketTCP::getHandle() const
+int		SocketTCP::getHandle() const
 {
 	return (this->socket);
 }
 
-int SocketTCP::send(const IBuffer &data)
+bool SocketTCP::send(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw TCPException(MSG_INVALID_SOCKET);
-	int res = ::send(this->socket, data.getBuffer(), data.getLength(), 0);
+	  throw TCPException(MSG_INVALID_SOCKET);
+	int res = ::send(this->socket, data.getBuffer() + data.getPosition(),
+			 data.getLength() - data.getPosition(), 0);
 	if (res == SOCKET_ERROR)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	return (res);
+	data.setPosition(data.getPosition() + res);
+	return (data.end());
 }
 
 int SocketTCP::receive(IBuffer &data)
 {
 	if (this->socket == INVALID_SOCKET)
-		throw TCPException(MSG_INVALID_SOCKET);
-	int received = ::recv(this->socket, data.getBuffer(), data.getMaxSize(), 0);
+	  throw TCPException(MSG_INVALID_SOCKET);
+	int received = ::recv(this->socket, data.getBuffer() + data.getPosition(),
+			      data.getMaxSize() - data.getPosition(), 0);
 	if (received == SOCKET_ERROR)
 	{
 		throw TCPException(WSAGetLastError());
 	}
-	data.setLength(received);
+	data.setLength(data.getLength() + received);
+	// data.setPosition(data.getLength());
 	return (received);
 }
 
@@ -142,12 +145,7 @@ void SocketTCP::connect(const int address, const int port)
 
 void SocketTCP::init()
 {
-	int iResult = WSAStartup(MAKEWORD(2, 2), &(this->wsaData));
 	int reuseAddr = 1;
-	if (iResult != 0)
-	{
-		throw TCPException(WSAGetLastError());
-	}
 	this->socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->socket == INVALID_SOCKET)
 	{
@@ -156,7 +154,7 @@ void SocketTCP::init()
 	//::setsockopt(this->socket, SOL_SOCKET, SO_REUSEADDR &reuseAddr, sizeof(reuseAddr));
 }
 
-const bool	SocketTCP::isBlocking() const
+bool	SocketTCP::isBlocking() const
 {
 	return (this->blockingSocket);
 }

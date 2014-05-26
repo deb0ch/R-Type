@@ -1,9 +1,9 @@
 #ifndef MOVEMENTSPEEDCOMPONENT_H_
 # define MOVEMENTSPEEDCOMPONENT_H_
 
-# include "AComponent.hpp"
+# include "ACopyableComponent.hpp"
 
-class MovementSpeedComponent : public AComponent<MovementSpeedComponent>
+class MovementSpeedComponent : public ACopyableComponent<MovementSpeedComponent>
 {
 public:
 		MovementSpeedComponent(float movement_speed = 1.f);
@@ -11,6 +11,9 @@ public:
 
   void		setSpeed(float);
   float		getSpeed() const;
+
+  virtual void	serialize(IBuffer &) const;
+  virtual void	unserialize(IBuffer &);
 
 protected:
   float		_movement_speed;

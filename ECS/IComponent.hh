@@ -3,10 +3,15 @@
 
 # include <string>
 
+#if _WIN32
+	#define DECLSPEC __declspec(dllexport)
+#elif __linux__
+	#define DECLSPEC
+#endif
+
 class		IComponent
 {
 public:
-		IComponent() {};
   virtual	~IComponent() {};
 
   virtual const std::string	&getType() const = 0;

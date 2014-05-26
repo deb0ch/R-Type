@@ -19,14 +19,15 @@ public:
   SocketUDP();
 
 public:
-  virtual void		setBlocking(const bool blocking);
-  virtual const bool	isBlocking() const;
-  virtual const int		getHandle() const;
+  virtual void	setBlocking(const bool blocking);
+  virtual bool	isBlocking() const;
+  virtual int	getHandle() const;
 
   virtual void	bind(const int port, const std::string &address = "");
   virtual int	send(const IBuffer &, const int address, const int port);
   virtual int	send(const IBuffer &, const std::string & address, const int port);
   virtual int	receive(IBuffer &, std::string& address, int& port);
+
   virtual void	close();
   virtual void	init();
 

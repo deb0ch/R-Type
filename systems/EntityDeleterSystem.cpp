@@ -5,21 +5,21 @@
 #include "EntityDeletedEvent.hh"
 
 EntityDeleterSystem::EntityDeleterSystem()
-  : ASystem("EntityDeleterSystem")
+  : ASystem("EntityDeleterSystem", 0)
 {
 }
 
 EntityDeleterSystem::~EntityDeleterSystem()
 {}
 
-bool		EntityDeleterSystem::canProcess(Entity *e) {
+bool		EntityDeleterSystem::canProcess(Entity *) {
   return (false);
 }
 
-void	EntityDeleterSystem::processEntity(Entity *e, const float){
+void	EntityDeleterSystem::processEntity(Entity *, const float){
 }
 
-void	EntityDeleterSystem::afterProcess() {
+void	EntityDeleterSystem::afterProcess(const float) {
   for_each(this->_toDelete.begin(),
 	   this->_toDelete.end(),
 	   [this] (Entity *entity) {

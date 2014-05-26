@@ -3,23 +3,24 @@
 *.lo
 *.o
 *.obj
+*.gch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
-*.lib
 
 # Core files
 core
+vgcore.*
 
 # Executables
-RType
+RType_Client
+RType_Server
 *.exe
 *.out
 *.app

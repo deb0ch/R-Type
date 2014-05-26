@@ -6,6 +6,6 @@ UDPException::UDPException(const int error)
   : NetworkException("UDPException : ", error)
 {}
 
-UDPException::UDPException(const std::string &info)
-  : NetworkException("UDPException : " + info)
+UDPException::UDPException(const std::string &error)
+  : NetworkException("UDPException : ", error)
 {}

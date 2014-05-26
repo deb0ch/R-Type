@@ -1,15 +1,21 @@
 #ifndef PLAYERMOVEMENTCOMPONENT_H_
 # define PLAYERMOVEMENTCOMPONENT_H_
 
-# include "AComponent.hpp"
+# include "ACopyableComponent.hpp"
 
-class PlayerMovementComponent : public AComponent<PlayerMovementComponent>
+class PlayerMovementComponent : public ACopyableComponent<PlayerMovementComponent>
 {
 public:
-  PlayerMovementComponent() : AComponent("PlayerMovementComponent")
+  PlayerMovementComponent() : ACopyableComponent("PlayerMovementComponent")
   {}
 
   virtual ~PlayerMovementComponent()
+  {}
+
+  virtual void serialize(IBuffer &) const
+  {}
+
+  virtual void unserialize(IBuffer &)
   {}
 };
 
