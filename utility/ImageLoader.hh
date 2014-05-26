@@ -32,16 +32,16 @@ public:
   void addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite);
 
   /**
-   * @brief Allocate Sprite OR throw ImageLoaderException
-   * @throw ImageLoaderException throw execption when: fileImage has not been add
+   * @brief Allocates Sprite OR throw ImageLoaderException
+   * @throw ImageLoaderException throw exception when: fileImage has not been added
    */
   sf::Sprite *createSprite(const std::string &fileImage, const unsigned int numSprite) const;
 
 private:
   /**
-   * @brief get paire if exist or throw ImageLoaderException
+   * @brief get pair if exist or throw ImageLoaderException
    * @throw ImageLoaderException throw execption when: loadFromFile failed OR
-   * NbSprite.nbSprint = 0 OR fileName dosn't exist
+   * NbSprite.nbSprint = 0 OR fileName doesn't exist
    */
   const std::pair<sf::Texture *, ImageLoader::InfImg> &getPair(const std::string &fileImage) const;
 

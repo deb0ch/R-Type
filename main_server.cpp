@@ -171,6 +171,7 @@ void		addEntities(World &world)
 }
 
 #include "LockGuard.hpp"
+
 int		main()
 {
   World		world;
