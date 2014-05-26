@@ -2,7 +2,6 @@
 # define __ILIBRARYLOADER_H_
 
 # include <string>
-# include "IAnimal.hh"
 
 template <typename T>
 class ILibraryLoader

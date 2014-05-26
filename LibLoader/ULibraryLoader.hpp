@@ -65,6 +65,7 @@ T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &ent
   handle	Handle = NULL;
 
   auto it = this->libs.find(path);
+  std::cout << "PATH :" << path << std::endl;
   if (it == this->libs.end())
     {
       std::cout << "toto" << std::endl;

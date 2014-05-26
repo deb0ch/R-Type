@@ -170,6 +170,7 @@ void		addEntities(World &world)
   world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
+#include "LockGuard.hpp"
 int		main()
 {
   World		world;

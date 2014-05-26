@@ -7,6 +7,7 @@
 #include "EntityDeletedEvent.hh"
 #include "NetworkReceiveDieEntitySystem.hh"
 #include "NetworkReceiveUpdateComponent.hh"
+#include "LockGuard.hpp"
 
 NetworkReceiveDieEntitySystem::NetworkReceiveDieEntitySystem()
   : ASystem("NetworkReceiveDieEntitySystem")
@@ -16,7 +17,7 @@ NetworkReceiveDieEntitySystem::NetworkReceiveDieEntitySystem()
 NetworkReceiveDieEntitySystem::~NetworkReceiveDieEntitySystem() {}
 
 
-void NetworkReceiveDieEntitySystem::beforeProcess() {
+void NetworkReceiveDieEntitySystem::beforeProcess(const float) {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
@@ -25,25 +26,26 @@ void NetworkReceiveDieEntitySystem::beforeProcess() {
 bool NetworkReceiveDieEntitySystem::canProcess(Entity *) {return (false);}
 void NetworkReceiveDieEntitySystem::processEntity(Entity *, const float) {}
 
-void NetworkReceiveDieEntitySystem::afterProcess()
+void NetworkReceiveDieEntitySystem::afterProcess(const float)
 {
   Room *room;
 
   if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name)))
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
 		    [this] (Remote *remote) -> void
 		    {
 		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		      recv_buffer.lock();
+		      auto guard = create_lock(recv_buffer);
+
 		      for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
 			{
 			  this->parsePacket(recv_buffer, it);
 			}
-		      recv_buffer.unlock();
 		    });
-      room->unlock();
     }
 }
 

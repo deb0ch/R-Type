@@ -1,6 +1,7 @@
 #include "NetworkReceiveActionSystem.hh"
 #include "Room.hh"
 #include "NetworkSendUpdateSystem.hh"
+#include "LockGuard.hpp"
 
 NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::string> &serializable_action)
   : ASystem("NetworkReceiveActionSystem"), _serializable_action(serializable_action)
@@ -12,7 +13,7 @@ NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::st
 NetworkReceiveActionSystem::~NetworkReceiveActionSystem()
 {}
 
-void NetworkReceiveActionSystem::beforeProcess()
+void NetworkReceiveActionSystem::beforeProcess(const float)
 {
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
@@ -42,21 +43,22 @@ void NetworkReceiveActionSystem::processEntity(Entity *entity, const float)
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
 		    [this, &entity, &action_component, &network_component] (Remote *remote) -> void
 		    {
 		      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferUDP();
-		      recv_buffer.lock();
+		      auto guard = create_lock(recv_buffer);
+
 		      LockVector<IBuffer *>::iterator it = recv_buffer.begin();
 		      while (it != recv_buffer.end())
 			{
 			  this->parsePacket(entity, action_component, network_component,
 					    recv_buffer, it);
 			}
-		      recv_buffer.unlock();
 		    });
-      room->unlock();
     }
 }
 

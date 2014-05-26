@@ -4,6 +4,7 @@
 #include "EntityDeletedEvent.hh"
 #include "NetworkSendUpdateSystem.hh"
 #include "NetworkSendDieEntitySystem.hh"
+#include "LockGuard.hpp"
 
 NetworkSendDieEntitySystem::NetworkSendDieEntitySystem() : ASystem("NetworkSendDieEntitySystem", 0) {
   this->_network = NULL;
@@ -14,7 +15,7 @@ NetworkSendDieEntitySystem::~NetworkSendDieEntitySystem() {
 
 }
 
-void NetworkSendDieEntitySystem::beforeProcess() {
+void NetworkSendDieEntitySystem::beforeProcess(const float) {
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
@@ -28,26 +29,28 @@ bool		NetworkSendDieEntitySystem::canProcess(Entity *) {
 void	NetworkSendDieEntitySystem::processEntity(Entity *, const float){
 }
 
-void	NetworkSendDieEntitySystem::afterProcess() {
+void	NetworkSendDieEntitySystem::afterProcess(const float) {
   Room *room = NULL;
   auto itEnd = this->_toDelete.end();
   auto it = this->_toDelete.begin();
 
-  if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name))) {
-    std::vector<Remote *> &remotes = room->getRemotes();
-    std::for_each(remotes.begin(), remotes.end(),
-		  [this, &it, &itEnd] (Remote *remote) {
-		    for (it = this->_toDelete.begin(); it != itEnd; ++it) {
-		      for (int i = 0; i < 50; ++i) {
-			IBuffer *buffer = this->_network->getUDPBuffer();
-			*buffer << static_cast<char>(KILL_ENTITY);
-			*buffer << (*it)->_id;
-			remote->sendUDP(buffer);
+  if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name)))
+    {
+      auto guard = create_lock(*room);
+
+      std::vector<Remote *> &remotes = room->getRemotes();
+      std::for_each(remotes.begin(), remotes.end(),
+		    [this, &it, &itEnd] (Remote *remote) {
+		      for (it = this->_toDelete.begin(); it != itEnd; ++it) {
+			for (int i = 0; i < 50; ++i) {
+			  IBuffer *buffer = this->_network->getUDPBuffer();
+			  *buffer << static_cast<char>(KILL_ENTITY);
+			  *buffer << (*it)->_id;
+			  remote->sendUDP(buffer);
+			}
 		      }
-		    }
-		  });
-    room->unlock();
-  }
+		    });
+    }
   this->_toDelete.clear();
 }
 

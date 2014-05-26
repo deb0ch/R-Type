@@ -107,12 +107,12 @@ void		SFMLRenderSystem::start()
   this->_world->setSharedObject("sfmlwindow", this->_window);
 }
 
-void		SFMLRenderSystem::beforeProcess()
+void		SFMLRenderSystem::beforeProcess(const float)
 {
   this->_window->clear();
 }
 
-void		SFMLRenderSystem::afterProcess()
+void		SFMLRenderSystem::afterProcess(const float)
 {
   this->_window->display();
 }

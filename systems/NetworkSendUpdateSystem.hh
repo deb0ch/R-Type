@@ -23,7 +23,8 @@ public:
 
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
-  virtual void	beforeProcess();
+  virtual void	beforeProcess(const float);
+  virtual void	afterProcess(const float);
 
 private:
   void		serializeComponents(Entity *, Remote *, IBuffer &buffer);
@@ -32,6 +33,7 @@ private:
   INetworkRelay				*_network;
   std::string				*_room_name;
   static const int			_buffer_size = 512;
+  float					_last_update_time;
 };
 
 #endif /* !NETWORKSENDUPDATESYSTEM_H_ */

@@ -5,11 +5,13 @@
 #include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
 #include "Hash.hh"
+#include "LockGuard.hpp"
 
 NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send)
   : ASystem("NetworkSendUpdateSystem")
 {
   this->_component_to_send = component_to_send;
+  this->_last_update_time = 0;
 }
 
 NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
@@ -17,16 +19,24 @@ NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
 
 bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("NetworkSendUpdateComponent") &&
+  if (this->_last_update_time >= 0.05f &&
+      entity->hasComponent("NetworkSendUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)
     return (true);
   return (false);
 }
 
-void				NetworkSendUpdateSystem::beforeProcess()
+void				NetworkSendUpdateSystem::beforeProcess(const float delta)
 {
   this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
+  this->_last_update_time += delta;
+}
+
+void				NetworkSendUpdateSystem::afterProcess(const float)
+{
+  if (this->_last_update_time >= 0.05f)
+    this->_last_update_time = 0;
 }
 
 void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
@@ -53,6 +63,8 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
+      auto guard = create_lock(*room);
+
       std::vector<Remote *> &remotes = room->getRemotes();
       network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
       std::for_each(remotes.begin(), remotes.end(),
@@ -67,6 +79,5 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float)
 		      remote->sendUDP(buffer);
 		    });
       network_component->increasePacketNumber();
-      room->unlock();
     }
 }
