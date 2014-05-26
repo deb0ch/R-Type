@@ -31,6 +31,7 @@
 #include	"NetworkReceiveActionSystem.hh"
 #include	"NetworkReceiveDieEntitySystem.hh"
 #include	"SyncPos2DSystem.hh"
+#include	"NetworkTimeOutEntitySystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -81,6 +82,7 @@ void		addSystems(World &world)
   world.addSystem(new MovementLimitFrame2DSystem());
   world.addSystem(new BackgroundSystem());
   world.addSystem(new NetworkReceiveDieEntitySystem());
+  world.addSystem(new NetworkTimeOutEntitySystem());
 
   CollisionSystem *collision;
 
