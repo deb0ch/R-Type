@@ -238,7 +238,7 @@ public:
 
     this->addEntity("PLAYER_RED", (new Entity())
 		    ->addComponent(new NetworkReceiveActionComponent())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.2f))
 		    ->addComponent(new MovementLimitFrame2DComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 20.0f))
