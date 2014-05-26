@@ -12,7 +12,6 @@ public:
   virtual	~MovementLimitFrame2DComponent();
   		MovementLimitFrame2DComponent(const MovementLimitFrame2DComponent&);
   MovementLimitFrame2DComponent	&operator=(const MovementLimitFrame2DComponent&);
-  virtual ASerializableComponent *cloneSerializable() const;
 
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
