@@ -115,12 +115,15 @@ void		addSystems(World &world)
       "Pos2DComponent",
       "SFMLSpriteComponent",
       "Speed2DComponent",
-      // "Friction2DComponent",
+      "Friction2DComponent",
       "ActionComponent",
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent",
+      "MovementSpeedComponent",
       "NetworkPlayerComponent",
+      "MoveForwardComponent",
+      "MoveSequenceComponent",
       "Box2DComponent"
     };
 
@@ -182,13 +185,13 @@ int		main()
   std::cout << "b" << std::endl;
   addEntities(world);
 
-  sf::Music music;
+  // sf::Music music;
 
-  if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-      music.setLoop(true);
-      music.play();
-    }
+  // if (music.openFromFile("Ressources/Sound/music.ogg"))
+  //   {
+  //     music.setLoop(true);
+  //     music.play();
+  //   }
   /*
     SoundLoader *s = new SoundLoader();
     s->addSound("Ressources/Sound/laser.wav");

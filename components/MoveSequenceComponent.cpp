@@ -37,8 +37,33 @@ const std::string &MoveSequenceComponent::getAction() const
   return (this->_actions[this->_index]);
 }
 
-void		MoveSequenceComponent::serialize(IBuffer &) const
-{}
+void		MoveSequenceComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_tick;
+  buffer << this->_tickToChange;
+  buffer << this->_index;
+  buffer << static_cast<unsigned int>(this->_actions.size());
+  std::for_each(this->_actions.begin(), this->_actions.end(),
+		[&buffer] (const std::string &action)
+		{
+		  buffer << action;
+		});
+}
 
-void		MoveSequenceComponent::unserialize(IBuffer &)
-{}
+void		MoveSequenceComponent::unserialize(IBuffer &buffer)
+{
+  unsigned int	nb;
+
+  buffer >> this->_tick;
+  buffer >> this->_tickToChange;
+  buffer >> this->_index;
+  buffer >> nb;
+  this->_actions.clear();
+  for(unsigned int i = 0; i < nb; ++i)
+    {
+      std::string str;
+
+      buffer >> str;
+      this->_actions.push_back(str);
+    }
+}

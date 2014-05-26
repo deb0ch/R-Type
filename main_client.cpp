@@ -73,9 +73,11 @@ void		addSystems(World &world)
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new MoveForwardSystem());
+  world.addSystem(new MoveSequenceSystem());
   world.addSystem(new ActionMovementSystem());
-  world.addSystem(new ActionFireSystem());
   // world.addSystem(new SyncPos2DSystem());
+  world.addSystem(new ActionFireSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
   world.addSystem(new ResetActionSystem());
@@ -101,6 +103,9 @@ void		addSystems(World &world)
       "NetworkSendActionComponent",
       "SFMLInputComponent",
       "Box2DComponent",
+      "MovementSpeedComponent",
+      "MoveForwardComponent",
+      "MoveSequenceComponent",
       "SyncPos2DComponent"
     };
 
@@ -172,13 +177,13 @@ int		main(int ac, char **av)
     addSharedObjetcs(world);
     addEntities(world);
 
-    sf::Music music;
+    // sf::Music music;
 
-    if (music.openFromFile("Ressources/Sound/music.ogg"))
-      {
-	music.setLoop(true);
-	music.play();
-      }
+    // if (music.openFromFile("Ressources/Sound/music.ogg"))
+    //   {
+    // 	music.setLoop(true);
+    // 	music.play();
+    //   }
     /*
       SoundLoader *s = new SoundLoader();
       s->addSound("Ressources/Sound/laser.wav");
