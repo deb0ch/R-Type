@@ -67,7 +67,7 @@ sf::Sprite	*SFMLSpriteComponent::getSpriteFromMap(ImageLoader &imageLoader, cons
 	return (sprite);
 }
 
-sf::Sprite	*SFMLSpriteComponent::getSpriteWithoutMap(ImageLoader &imageLoader, const std::string &action)
+sf::Sprite	*SFMLSpriteComponent::getSpriteWithoutMap(ImageLoader &imageLoader, const std::string &)
 {
 	if (this->_tickCounter >= this->_tickChange)
 	{
