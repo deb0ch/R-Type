@@ -17,7 +17,7 @@ void	SFMLEventSystem::init()
   this->_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
 }
 
-void	SFMLEventSystem::beforeProcess()
+void	SFMLEventSystem::beforeProcess(const float)
 {
   if (!this->_window)
     this->_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");

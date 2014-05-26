@@ -31,7 +31,7 @@ bool		SpawnPlayerSystem::canProcess(Entity *)
 void		SpawnPlayerSystem::processEntity(Entity *, const float)
 {}
 
-void		SpawnPlayerSystem::beforeProcess()
+void		SpawnPlayerSystem::beforeProcess(const float)
 {
   unsigned int	hash;
   bool		player_found;

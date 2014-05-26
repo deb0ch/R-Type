@@ -11,7 +11,7 @@ public:
 			  unsigned int spam_count = 10);
   virtual ~NetworkSendActionSystem();
   virtual bool canProcess(Entity *);
-  virtual void beforeProcess();
+  virtual void beforeProcess(const float);
   virtual void processEntity(Entity *, const float);
 protected:
   std::vector<std::string> _serializable_action;

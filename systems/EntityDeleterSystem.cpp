@@ -19,7 +19,7 @@ bool		EntityDeleterSystem::canProcess(Entity *) {
 void	EntityDeleterSystem::processEntity(Entity *, const float){
 }
 
-void	EntityDeleterSystem::afterProcess() {
+void	EntityDeleterSystem::afterProcess(const float) {
   for_each(this->_toDelete.begin(),
 	   this->_toDelete.end(),
 	   [this] (Entity *entity) {
