@@ -45,7 +45,7 @@ void			SyncPos2DComponent::networkUnserializeCallback(IBuffer &, World *, Entity
       this->_sync_pos.setX(this->_sync_pos.getX() - pos_component->getX());
       this->_sync_pos.setY(this->_sync_pos.getY() - pos_component->getY());
       if (network_comp->getUpdateRate() != 0)
-	this->_ratio = (1.f / network_comp->getUpdateRate()) * 20;
+	this->_ratio = (1.f / network_comp->getUpdateRate()) * 15;
       else
 	this->_ratio = 1.f;
     }
