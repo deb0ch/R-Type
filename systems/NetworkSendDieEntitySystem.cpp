@@ -47,7 +47,7 @@ void	NetworkSendDieEntitySystem::afterProcess(const float)
 		    {
 		      for (it = this->_toDelete.begin(); it != itEnd; ++it)
 			{
-			  for (int i = 0; i < 50; ++i)
+			  for (int i = 0; i < 5; ++i)
 			    {
 			      IBuffer *buffer = this->_network->getUDPBuffer();
 			      *buffer << static_cast<char>(KILL_ENTITY);

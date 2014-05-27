@@ -50,6 +50,7 @@ void	TagComponent::unserialize(IBuffer &buffer)
   unsigned int nb_string;
   buffer >> nb_string;
 
+  this->_tags.clear();
   for (unsigned int i = 0; i < nb_string; ++i) {
     std::string s;
     buffer >> s;

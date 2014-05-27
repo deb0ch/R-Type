@@ -123,8 +123,11 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkPlayerComponent",
       "MoveForwardComponent",
+      "MoveFollowComponent",
       "MoveSequenceComponent",
-      "Box2DComponent"
+      "TagComponent",
+      "Box2DComponent",
+      "MovementLimitFrame2DComponent"
     };
 
   world.addSystem(new NetworkSendUpdateSystem(arg));
@@ -174,6 +177,7 @@ void		addEntities(World &world)
 }
 
 #include "LockGuard.hpp"
+
 int		main()
 {
   World		world;

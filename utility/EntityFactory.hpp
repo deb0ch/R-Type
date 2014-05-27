@@ -88,7 +88,7 @@ public:
   void		initOthers()
   {
     this->addEntity("EXPLOSION", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
@@ -97,7 +97,7 @@ public:
 		    );
 
     this->addEntity("BULLET_EXPLOSION", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
@@ -238,7 +238,7 @@ public:
 
     this->addEntity("PLAYER_RED", (new Entity())
 		    ->addComponent(new NetworkReceiveActionComponent())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.2f))
 		    ->addComponent(new MovementLimitFrame2DComponent())
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 20.0f))
@@ -464,7 +464,7 @@ public:
 				   ));
 
     this->addEntity("TRACKER_MISSILE", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent(0.05f))
+		    ->addComponent(new NetworkSendUpdateComponent(1.f))
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -492,7 +492,7 @@ public:
   void		initMonster()
   {
     this->addEntity("MONSTER_1", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(2.f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(40.0f, 40.0f))
 		    ->addComponent(new TeamComponent())
@@ -556,7 +556,7 @@ public:
 		    );
 
     this->addEntity("MONSTER_SPAWNER", (new Entity())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 75,
 							      { (0.0f), (-270.0f) }, { (0.0f), (270.0f) }, true, false))
@@ -580,6 +580,7 @@ public:
 							   }))
 		    ->addComponent(new MovementSpeedComponent(60.f))
 		    ->addComponent(new LifeComponent(200))
+		    ->addComponent(new TeamComponent())
 		    ->addComponent(new FireAlwaysComponent())
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent((new CollisionComponent())
