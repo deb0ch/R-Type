@@ -7,7 +7,7 @@
 #include "LockGuard.hpp"
 
 ServerRelay::ServerRelay(World *world, int port, int nb_pending_connection)
-  : _network_initializer(), _world(world)
+  : _network_initializer()
 {
   srand(static_cast<unsigned int>(time(NULL)));
   this->_server_socket_tcp.init();
@@ -135,6 +135,7 @@ void		ServerRelay::removeRemote(Remote *remote)
 {
   this->_select.removeRead(remote->getTCPSocket().getHandle());
   this->_select.removeWrite(remote->getTCPSocket().getHandle());
+  //TODO
   this->_world->sendEvent(new DisconnectPlayerEvent(remote->getPrivateHash()));
 }
 
@@ -161,6 +162,7 @@ void		ServerRelay::receiveUDP()
       if (buffer->end())
 	{
 	  this->udpConnect(remote);
+	  //TODO
 	  this->_world->sendEvent(new NewPlayerEvent(remote->getPrivateHash()));
 	}
       else

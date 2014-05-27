@@ -12,10 +12,9 @@
 
 class ServerRelay : public INetworkRelay
 {
-private:
+
 public:
-  // World * is temporary, we will need to create a new world each time we create a room
-  ServerRelay(World *, int port = 4011, int nb_pending_connection = 42);
+  ServerRelay(int port = 4011, int nb_pending_connection = 42);
   virtual				~ServerRelay();
   virtual void				start();
   virtual void				start(Any);
@@ -26,6 +25,7 @@ public:
   virtual Remote			*getRemote(const std::string &ip, const int port);
   virtual void				disposeUDPBuffer(IBuffer *);
   virtual void				disposeTCPBuffer(IBuffer *);
+
 private:
   void					waitForEvent();
   void					addClient();
@@ -44,8 +44,7 @@ protected:
   std::map<std::string, Room>		_remotes; // String: Nom de la room
   LockVector<IBuffer *>			_available_udp;
   LockVector<IBuffer *>			_available_tcp;
-  // temporary
-  World					*_world;
+
 };
 
 #endif /* !SERVERRELAY_H_ */
