@@ -260,8 +260,8 @@ public:
 				   ->addToCollideItem("MONSTER")
 				   ->addToCollideItem("PLAYER"))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"TRACKER_MISSILE", 0} }, {}, 0, 20,
-							      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}, 0, 20,
+			{ 5.0f, 0.0f }, { 5.0f, 0.0f }))
 		    // ->addComponent(new EntitySpawnerComponent({ "BASIC_BULLET" }, {}, 0, 10,
 		    // 					      { 40.0f, 0.0f }, { 40.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
@@ -441,10 +441,8 @@ public:
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(20.0f, 20.0f))
 		    ->addComponent(new TeamComponent(1))
-		    ->addComponent((new TagComponent())
-				   ->addTag("BULLET"))
 		    ->addComponent(new ExplosionComponent("BULLET_EXPLOSION"))
-		    ->addComponent(new Speed2DComponent(0.f, 0.f))
+			->addComponent(new Speed2DComponent(1000.0f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent(new MovementSpeedComponent(200.f))
 		    ->addComponent(new CollisionPowerComponent(25))
