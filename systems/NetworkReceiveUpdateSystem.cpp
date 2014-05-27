@@ -217,7 +217,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 				std::to_string(component_hash));
 	}
     }
-  serializable_component->networkUnSerialize(buffer, this->_world);
+  serializable_component->networkUnSerialize(buffer, this->_world, entity);
   if (!entity->hasComponent(serializable_component->getType()))
     entity->addComponent(serializable_component);
   else if (update == false)
