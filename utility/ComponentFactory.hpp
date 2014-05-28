@@ -21,6 +21,7 @@
 # include "MoveSequenceComponent.hh"
 # include "MoveFollowComponent.hh"
 # include "TagComponent.hh"
+# include "MovementLimitFrame2DComponent.hh"
 # include "Hash.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
@@ -57,6 +58,7 @@ public :
     this->addComponent(new MoveSequenceComponent());
     this->addComponent(new MoveFollowComponent());
     this->addComponent(new TagComponent());
+    this->addComponent(new MovementLimitFrame2DComponent());
   }
 
   virtual ASerializableComponent	*create(const hash_t &key) const

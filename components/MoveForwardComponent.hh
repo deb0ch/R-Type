@@ -18,7 +18,7 @@ public:
 	};
 
 public:
-	MoveForwardComponent(const Direction = LEFT);
+	MoveForwardComponent(const Direction = NONE);
 	MoveForwardComponent(const Direction, const Direction);
 	virtual	~MoveForwardComponent();
 

@@ -77,7 +77,7 @@ void		addSystems(World &world)
   world.addSystem(new MoveForwardSystem());
   world.addSystem(new MoveSequenceSystem());
   world.addSystem(new ActionMovementSystem());
-  // world.addSystem(new SyncPos2DSystem());
+  world.addSystem(new SyncPos2DSystem());
   world.addSystem(new ActionFireSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
@@ -109,7 +109,8 @@ void		addSystems(World &world)
       "MoveFollowComponent",
       "MoveSequenceComponent",
       "TagComponent",
-      "SyncPos2DComponent"
+      "SyncPos2DComponent",
+      "MovementLimitFrame2DComponent"
     };
 
   world.addSystem(new NetworkReceiveUpdateSystem(arg));

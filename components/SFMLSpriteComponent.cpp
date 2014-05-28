@@ -69,24 +69,17 @@ sf::Sprite	*SFMLSpriteComponent::getSpriteFromMap(ImageLoader &imageLoader, cons
 
 sf::Sprite	*SFMLSpriteComponent::getSpriteWithoutMap(ImageLoader &imageLoader, const std::string &)
 {
-	if (this->_tickCounter >= this->_tickChange)
-	{
-		this->_tickCounter = 0;
-		if (this->_counter >= this->_nbSprite)
-		{
-			this->_counter = 0;
-			this->_currentSprite = this->_first;
-		}
-		else
-		{
-			++this->_counter;
-			++this->_currentSprite;
-		}
-	}
-	else
-		++this->_tickCounter;
-	sf::Sprite *sprite = imageLoader.createSprite(this->_fileName, this->_currentSprite);
-	return (sprite);
+  ++this->_tickCounter;
+  if (this->_tickCounter > this->_tickChange)
+    {
+      ++(this->_counter);
+      if (this->_counter >= this->_nbSprite)
+	this->_counter = 0;
+      this->_tickCounter = 0;
+    }
+  this->_currentSprite = this->_counter + this->_first;
+  sf::Sprite *sprite = imageLoader.createSprite(this->_fileName, this->_currentSprite);
+  return (sprite);
 }
 
 //----- ----- Getters ----- ----- //
@@ -110,16 +103,32 @@ bool		SFMLSpriteComponent::hasAction(const std::string & action)
 
 void		SFMLSpriteComponent::serialize(IBuffer &buffer) const
 {
+	int	first;
+	int	nb_sprites;
 	auto it = this->_map.find(this->_previousAction);
-	if (it == this->_map.end())
-		return;
+
+	 // DANGEROUS (if you return here, unserialize cannot know it and will try to read more than it has)
+	// if (it == this->_map.end())
+	// 	return;
+
+	if (it != this->_map.end())
+	  {
+	    first = it->second.first;
+	    nb_sprites = it->second.second;
+	  }
+	else
+	  {
+	    first = 0;
+	    nb_sprites = 0;
+	  }
 	buffer << this->_fileName;
 	buffer << this->_sprites.nbSprintX;
 	buffer << this->_sprites.nbSprintY;
 	buffer << this->_tickChange;
+	buffer << this->_tickCounter;
 	buffer << this->_currentSprite;
-	buffer << it->second.first;
-	buffer << it->second.second;
+	buffer << first;
+	buffer << nb_sprites;
 }
 
 void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
@@ -128,6 +137,7 @@ void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 	buffer >> this->_sprites.nbSprintX;
 	buffer >> this->_sprites.nbSprintY;
 	buffer >> this->_tickChange;
+	buffer >> this->_tickCounter;
 	buffer >> this->_currentSprite;
 	buffer >> this->_first;
 	buffer >> this->_nbSprite;
