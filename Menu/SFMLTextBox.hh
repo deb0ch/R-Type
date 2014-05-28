@@ -6,8 +6,8 @@
 class SFMLTextBox
 {
 public:
-	SFMLTextBox(sf::RenderWindow *window, float posX, float posY,
-		int charSize = 40, int maxCharacters = 16);
+	SFMLTextBox(sf::RenderWindow *window, float posX, float posY, bool hasBorder,
+		int charSize = 50, int maxCharacters = 16);
 	~SFMLTextBox();
 
 	void	draw();
@@ -17,8 +17,11 @@ public:
 	const std::string &getString() const;
 	void setString(const std::string & string);
 	void setColor(const sf::Color &color);
+	void setBorderColor(const sf::Color &color);
+	void setBorderOutLineColor(const sf::Color &color);
 
 protected:
+	bool				_hasBorder;
 	int					_charSize;
 	int					_maxCharacters;
 	std::string			_string;

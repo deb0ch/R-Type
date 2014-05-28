@@ -23,8 +23,10 @@ protected:
 	void init();
 
 	sf::Sprite *_background;
+	sf::Sprite *_logo;
 	SFMLButton *_buttonplay;
 	SFMLTextBox *_textboxIP;
+	SFMLTextBox *_ipServer;
 	sf::RenderWindow *_window;
 };
 

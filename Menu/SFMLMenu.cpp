@@ -24,17 +24,31 @@ SFMLMenu::~SFMLMenu()
 void SFMLMenu::init()
 {
 	this->_background = NULL;
-	this->_buttonplay = new SFMLButton(this->_window, 10, 270, 240, 100);
-	this->_textboxIP = new SFMLTextBox(this->_window, 10, 200);
+	this->_buttonplay = new SFMLButton(this->_window, 25, 425, 400, 150);
+	this->_ipServer = new SFMLTextBox(this->_window, 5, 350, false, 30);
+	this->_ipServer->setString("ip server :");
+	this->_ipServer->setColor(sf::Color(227, 55, 32));
+	this->_textboxIP = new SFMLTextBox(this->_window, 170, 350, true, 30);
 	this->_textboxIP->setColor(sf::Color::Color(255, 100, 100));
+	this->_textboxIP->setBorderOutLineColor(sf::Color(227, 55, 32, 200));
+	this->_textboxIP->setBorderColor(sf::Color::Color(255, 255, 255, 160));
 	this->_buttonplay->addTexture("Ressources/Images/playgameButton.png", 250, 80);
 	sf::Texture *texture = new sf::Texture();
-	if (texture->loadFromFile("Ressources/Images/menu.jpg"))
+	if (texture->loadFromFile("Ressources/Images/menuBackground.jpg"))
 	{
 		this->_background = new sf::Sprite();
 		this->_background->setTexture(*texture, true);
 		this->_background->setScale(WINDOW_WIDTH / this->_background->getLocalBounds().width,
 			WINDOW_HEIGHT / this->_background->getLocalBounds().height);
+	}
+	sf::Texture *logo = new sf::Texture();
+	if (logo->loadFromFile("Ressources/Images/logo.png"))
+	{
+		this->_logo = new sf::Sprite();
+		this->_logo->setTexture(*logo, true);
+		this->_logo->setPosition({ 100.0f, 0.0f });
+		this->_logo->setScale(600 / this->_logo->getLocalBounds().width,
+			100 / this->_logo->getLocalBounds().height);
 	}
 	/*
 	this->_font = new sf::Font();
@@ -56,22 +70,20 @@ char SFMLMenu::update()
 			break;
 
 		case sf::Event::TextEntered:
-			std::cout << "ASCII character typed: " << static_cast<char>(event.text.unicode) << std::endl;
-			std::cout << event.text.unicode << std::endl;
 			if (event.text.unicode == 13)
 				return (0);
 			else if (event.text.unicode == 8)
 				this->_textboxIP->removelastCharacter();
-			//this->_ipAddress = this->_ipAddress.substr(0, this->_ipAddress.size() - 1);
 			else
+			{
+				if ((event.text.unicode < '0' || event.text.unicode > '9') && event.text.unicode != '.')
+					return (1);
 				this->_textboxIP->addCharacter(static_cast<char>(event.text.unicode));
-				//this->_ipAddress += static_cast<char>(event.text.unicode);
+			}
 			break;
 
 		case sf::Event::MouseButtonPressed:
-			std::cout << "MOUSE CLICK [" << sf::Mouse::getPosition(*this->_window).x << ";" << sf::Mouse::getPosition(*this->_window).y << "]" << std::endl;
 			return (!this->_buttonplay->isMouseOnButton());
-			break;
 
 		default:
 			break;
@@ -87,6 +99,8 @@ void SFMLMenu::render()
 
 	if (this->_background)
 		this->_window->draw(*this->_background);
+	this->_window->draw(*this->_logo);
+	this->_ipServer->draw();
 	this->_buttonplay->draw();
 	this->_textboxIP->draw();
 	/*if (this->_font)
