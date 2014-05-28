@@ -176,6 +176,7 @@ void		menutest(World &world)
 
 	while (menu.update())
 		menu.render();
+	g_ip = menu.getIpAddress();
 	world.setSharedObject<sf::RenderWindow>("sfmlwindow", menu.getWindow());
 }
 
@@ -219,6 +220,7 @@ int		main(int ac, char **av)
 
   try
   {
+	  /*
     if (ac >= 2)
       g_ip = av[1]; // Master flemme
     else
@@ -226,7 +228,7 @@ int		main(int ac, char **av)
 		std::cout << "Serveur IP: ";
 		std::cin >> g_ip;
       }
-
+	*/
 	menutest(world);
 	rungame(world, timer);
 	
