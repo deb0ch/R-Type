@@ -6,7 +6,7 @@
 class SFMLButton
 {
 public:
-	SFMLButton(sf::RenderWindow *window, int posX, int posY, int width, int height);
+	SFMLButton(sf::RenderWindow *window, float posX, float posY, float width, float height);
 	~SFMLButton();
 
 	void	addTexture(const std::string &path, int width, int height);

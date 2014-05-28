@@ -3,6 +3,7 @@
 
 #include	"SFML/Graphics.hpp"
 #include	"SFMLButton.hh"
+#include	"SFMLTextBox.hh"
 
 class SFMLMenu
 {
@@ -21,12 +22,10 @@ public:
 protected:
 	void init();
 
-	std::string _ipAddress;
-
 	sf::Sprite *_background;
 	SFMLButton *_buttonplay;
+	SFMLTextBox *_textboxIP;
 	sf::RenderWindow *_window;
-	sf::Font *_font;
 };
 
-#endif /* !COLLISIONEVENT_H_ */
+#endif /* !SFMLMENU_H_ */

@@ -3,7 +3,7 @@
 #include "SFMLButton.hh"
 
 
-SFMLButton::SFMLButton(sf::RenderWindow *window, int posX, int posY, int width, int height)
+SFMLButton::SFMLButton(sf::RenderWindow *window, float posX, float posY, float width, float height)
 : _window(window)
 {
 	this->_button = new sf::RectangleShape(sf::Vector2f(width, height));
