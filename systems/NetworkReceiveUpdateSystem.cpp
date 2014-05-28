@@ -71,13 +71,13 @@ void				NetworkReceiveUpdateSystem::afterProcess(const float)
     }
 }
 
-void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float)
+void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float delta)
 {
   NetworkReceiveUpdateComponent	*receive_component;
   Room				*room;
 
   receive_component = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
-  receive_component->increaseLastUpdate();
+  receive_component->addLastUpdate(delta);
   room = this->_network->getRoom(*this->_room_name);
 
   if (room)
@@ -121,17 +121,19 @@ void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
   unsigned int	num_packet;
   char		packet_type;
   IBuffer	*buffer;
+  float		update_rate;
 
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
   if (packet_type == ENTITY_UPDATE)
     {
-      this->getEntityInfos(*buffer, id_entity, num_packet);
+      this->getEntityInfos(*buffer, id_entity, num_packet, update_rate);
       if (id_entity == receive_component->getRemoteID())
 	{
 	  if (num_packet > receive_component->getPacketNum())
 	    {
+	      receive_component->setUpdateRate(update_rate);
 	      this->updateEntity(entity, receive_component, *buffer);
 	      receive_component->setPacketNum(num_packet);
 	    }
@@ -156,17 +158,20 @@ void		NetworkReceiveUpdateSystem::parsePacket(LockVector<IBuffer *> &vector,
   char		packet_type;
   Entity	*entity;
   IBuffer	*buffer;
+  float		update_rate;
 
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
   if (packet_type == ENTITY_UPDATE)
     {
-      this->getEntityInfos(*buffer, id_entity, num_packet);
+      this->getEntityInfos(*buffer, id_entity, num_packet, update_rate);
       if (!this->remoteEntityExists(id_entity))
 	{
 	  entity = this->_world->createEntity();
-	  NetworkReceiveUpdateComponent *tmp = new NetworkReceiveUpdateComponent(id_entity, num_packet);
+	  NetworkReceiveUpdateComponent *tmp = new NetworkReceiveUpdateComponent(id_entity,
+										 num_packet,
+										 update_rate);
 	  entity->addComponent(tmp);
 	  this->updateEntity(entity, tmp, *buffer);
 	  this->_world->addEntity(entity);
@@ -212,7 +217,7 @@ void				NetworkReceiveUpdateSystem::unserializeComponent(Entity *entity,
 				std::to_string(component_hash));
 	}
     }
-  serializable_component->unserialize(buffer);
+  serializable_component->networkUnSerialize(buffer, this->_world, entity);
   if (!entity->hasComponent(serializable_component->getType()))
     entity->addComponent(serializable_component);
   else if (update == false)
@@ -246,13 +251,12 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
 
 void				NetworkReceiveUpdateSystem::getEntityInfos(IBuffer &buffer,
 									   unsigned int &id_entity,
-									   unsigned int &num_packet)
+									   unsigned int &num_packet,
+									   float &update_rate)
 {
-  char				force_byte;
-
   buffer >> id_entity;
   buffer >> num_packet;
-  buffer >> force_byte;
+  buffer >> update_rate;
 }
 
 bool				NetworkReceiveUpdateSystem::remoteEntityExists(unsigned int id)

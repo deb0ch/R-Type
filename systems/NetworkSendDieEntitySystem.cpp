@@ -15,21 +15,24 @@ NetworkSendDieEntitySystem::~NetworkSendDieEntitySystem() {
 
 }
 
-void NetworkSendDieEntitySystem::beforeProcess(const float) {
+void NetworkSendDieEntitySystem::beforeProcess(const float)
+{
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
     this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool		NetworkSendDieEntitySystem::canProcess(Entity *) {
+bool		NetworkSendDieEntitySystem::canProcess(Entity *)
+{
   return (false);
 }
 
-void	NetworkSendDieEntitySystem::processEntity(Entity *, const float){
-}
+void	NetworkSendDieEntitySystem::processEntity(Entity *, const float)
+{}
 
-void	NetworkSendDieEntitySystem::afterProcess(const float) {
+void	NetworkSendDieEntitySystem::afterProcess(const float)
+{
   Room *room = NULL;
   auto itEnd = this->_toDelete.end();
   auto it = this->_toDelete.begin();
@@ -40,21 +43,25 @@ void	NetworkSendDieEntitySystem::afterProcess(const float) {
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
-		    [this, &it, &itEnd] (Remote *remote) {
-		      for (it = this->_toDelete.begin(); it != itEnd; ++it) {
-			for (int i = 0; i < 50; ++i) {
-			  IBuffer *buffer = this->_network->getUDPBuffer();
-			  *buffer << static_cast<char>(KILL_ENTITY);
-			  *buffer << (*it)->_id;
-			  remote->sendUDP(buffer);
+		    [this, &it, &itEnd] (Remote *remote)
+		    {
+		      for (it = this->_toDelete.begin(); it != itEnd; ++it)
+			{
+			  for (int i = 0; i < 5; ++i)
+			    {
+			      IBuffer *buffer = this->_network->getUDPBuffer();
+			      *buffer << static_cast<char>(KILL_ENTITY);
+			      *buffer << (*it)->_id;
+			      remote->sendUDP(buffer);
+			    }
 			}
-		      }
 		    });
     }
   this->_toDelete.clear();
 }
 
-void NetworkSendDieEntitySystem::addEntityToDelete(IEvent *event) {
+void NetworkSendDieEntitySystem::addEntityToDelete(IEvent *event)
+{
   EntityDeletedEvent *entityDeletedEvent = dynamic_cast<EntityDeletedEvent *>(event);
   Entity *entity = NULL;
 
@@ -64,8 +71,9 @@ void NetworkSendDieEntitySystem::addEntityToDelete(IEvent *event) {
     {
       std::vector<Entity *>::iterator it = std::find(this->_toDelete.begin(),
 						     this->_toDelete.end(), entity);
-      if (it == this->_toDelete.end()) {
-	this->_toDelete.push_back(entity);
-      }
+      if (it == this->_toDelete.end())
+	{
+	  this->_toDelete.push_back(entity);
+	}
     }
 }

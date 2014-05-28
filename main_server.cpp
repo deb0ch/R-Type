@@ -120,8 +120,14 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent",
+      "MovementSpeedComponent",
       "NetworkPlayerComponent",
-      "Box2DComponent"
+      "MoveForwardComponent",
+      "MoveFollowComponent",
+      "MoveSequenceComponent",
+      "TagComponent",
+      "Box2DComponent",
+      "MovementLimitFrame2DComponent"
     };
 
   world.addSystem(new NetworkSendUpdateSystem(arg));
@@ -164,13 +170,16 @@ void		addEntities(World &world)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
   world.addEntity(entityFactory->create("BACKGROUND_2"));
+  world.addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
+  world.addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   // world.addEntity(entityFactory->create("PLAYER_RED"));
-  world.addEntity(entityFactory->create("BOSS_1"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
-  world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  world.addEntity(entityFactory->create("GAME"));
+  //world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 #include "LockGuard.hpp"
+
 int		main()
 {
   World		world;
@@ -182,13 +191,13 @@ int		main()
   std::cout << "b" << std::endl;
   addEntities(world);
 
-  sf::Music music;
+  // sf::Music music;
 
-  if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-      music.setLoop(true);
-      music.play();
-    }
+  // if (music.openFromFile("Ressources/Sound/music.ogg"))
+  //   {
+  //     music.setLoop(true);
+  //     music.play();
+  //   }
   /*
     SoundLoader *s = new SoundLoader();
     s->addSound("Ressources/Sound/laser.wav");

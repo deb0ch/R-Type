@@ -14,15 +14,16 @@ public:
 		RIGHT,
 		LEFT,
 		DOWN,
+		NONE
 	};
 
 public:
-	MoveForwardComponent(const Direction = LEFT);
+	MoveForwardComponent(const Direction = NONE);
 	MoveForwardComponent(const Direction, const Direction);
 	virtual	~MoveForwardComponent();
 
 	const std::vector<std::string> &getDirection() const;
-	void setDirection(const Direction);
+	// void setDirection(const Direction);
 
 	virtual void	serialize(IBuffer &) const;
 	virtual void	unserialize(IBuffer &);
@@ -30,7 +31,8 @@ public:
 protected:
 	std::vector<std::string> _actions;
 	unsigned int _index;
-	Direction _direction;
+	Direction _direction1;
+	Direction _direction2;
 };
 
 #endif /* !MOVEMENTFORWARDCOMPONENT_H_ */

@@ -73,9 +73,12 @@ void		addSystems(World &world)
   world.addSystem(new SFMLEventSystem());
   world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new MoveFollowSystem());
+  world.addSystem(new MoveForwardSystem());
+  world.addSystem(new MoveSequenceSystem());
   world.addSystem(new ActionMovementSystem());
-  world.addSystem(new ActionFireSystem());
   world.addSystem(new SyncPos2DSystem());
+  world.addSystem(new ActionFireSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
   world.addSystem(new ResetActionSystem());
@@ -101,7 +104,13 @@ void		addSystems(World &world)
       "NetworkSendActionComponent",
       "SFMLInputComponent",
       "Box2DComponent",
-      "SyncPos2DComponent"
+      "MovementSpeedComponent",
+      "MoveForwardComponent",
+      "MoveFollowComponent",
+      "MoveSequenceComponent",
+      "TagComponent",
+      "SyncPos2DComponent",
+      "MovementLimitFrame2DComponent"
     };
 
   world.addSystem(new NetworkReceiveUpdateSystem(arg));
@@ -165,36 +174,46 @@ int		main(int ac, char **av)
   World		world;
   Timer		timer;
 
-  if (ac >= 2)
-    g_ip = av[1]; // Master flemme
-  addSystems(world);
-  addSharedObjetcs(world);
-  addEntities(world);
+  try {
+    if (ac >= 2)
+      g_ip = av[1]; // Master flemme
+    else
+      {
+	std::cout << "Serveur IP: ";
+	std::cin >> g_ip;
+      }
+    addSystems(world);
+    addSharedObjetcs(world);
+    addEntities(world);
 
-  sf::Music music;
+    // sf::Music music;
 
-  if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-      music.setLoop(true);
-      music.play();
-    }
-  /*
-    SoundLoader *s = new SoundLoader();
-    s->addSound("Ressources/Sound/laser.wav");
-    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-    sound->play();
-  */
-  world.start();
-  while (42)
-    {
-      timer.startFrame();
-	  if (timer.canTick())
+    // if (music.openFromFile("Ressources/Sound/music.ogg"))
+    //   {
+    // 	music.setLoop(true);
+    // 	music.play();
+    //   }
+    /*
+      SoundLoader *s = new SoundLoader();
+      s->addSound("Ressources/Sound/laser.wav");
+      sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+      sound->play();
+    */
+    world.start();
+    while (42)
+      {
+	timer.startFrame();
+	if (timer.canTick())
 	  {
-		  //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
-		  world.process(timer.getDeltaTime() / 1000000.f);
+	    //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+	    world.process(timer.getDeltaTime() / 1000000.f);
 	  }
-      timer.endFrame();
+	timer.endFrame();
+      }
+    world.stop();
+  } catch (const std::exception &e)
+    {
+      std::cerr << e.what() << std::endl;
     }
-  world.stop();
   return (0);
 }

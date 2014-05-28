@@ -1,13 +1,14 @@
 #include "NetworkReceiveUpdateComponent.hh"
 
 NetworkReceiveUpdateComponent::NetworkReceiveUpdateComponent(unsigned int remote_id,
-							     unsigned int packet_num)
+							     unsigned int packet_num,
+							     float update_rate)
   : ACopyableComponent("NetworkReceiveUpdateComponent")
 {
   this->_remote_id = remote_id;
   this->_packet_num = packet_num;
+  this->_update_rate = update_rate;
   this->_last_update = 0;
-  this->_previous_update_time = 0;
 }
 
 NetworkReceiveUpdateComponent::~NetworkReceiveUpdateComponent()
@@ -39,23 +40,27 @@ void		NetworkReceiveUpdateComponent::serialize(IBuffer &) const
 void		NetworkReceiveUpdateComponent::unserialize(IBuffer &)
 {}
 
-void		NetworkReceiveUpdateComponent::resetLastUpdate()
+void		NetworkReceiveUpdateComponent::addLastUpdate(const float value)
 {
-  this->_previous_update_time = this->_last_update;
-  this->_last_update = 0;
+  this->_last_update += value;
 }
 
-void		NetworkReceiveUpdateComponent::increaseLastUpdate()
-{
-  ++this->_last_update;
-}
-
-unsigned int	NetworkReceiveUpdateComponent::getLastUpdate() const
+float		NetworkReceiveUpdateComponent::getLastUpdate() const
 {
   return this->_last_update;
 }
 
-unsigned int	NetworkReceiveUpdateComponent::getPreviousUpdateTime() const
+void		NetworkReceiveUpdateComponent::resetLastUpdate()
 {
-  return this->_previous_update_time;
+  this->_last_update = 0;
+}
+
+void		NetworkReceiveUpdateComponent::setUpdateRate(const float value)
+{
+  this->_last_update = value;
+}
+
+float		NetworkReceiveUpdateComponent::getUpdateRate() const
+{
+  return this->_update_rate;
 }

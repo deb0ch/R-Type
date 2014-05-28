@@ -1,10 +1,11 @@
 
 #include	"MoveFollowComponent.hh"
 #include	"Pos2DComponent.hh"
+#include	"NetworkReceiveUpdateComponent.hh"
 
 //----- ----- Constructors ----- ----- //
 MoveFollowComponent::MoveFollowComponent(const std::string & tagToFollow)
-  : ACopyableComponent("MoveFollowComponent"), _idToFollow(-1)
+  : ACopyableComponent("MoveFollowComponent"), _idToFollow(0)
 {
   this->_tagToFollow = tagToFollow;
 }
@@ -28,11 +29,40 @@ const std::string &	MoveFollowComponent::getTagToFollow() const
   return this->_tagToFollow;
 }
 
-void		MoveFollowComponent::serialize(IBuffer &) const
-{}
+void		MoveFollowComponent::serialize(IBuffer &buffer) const
+{
+  buffer << this->_idToFollow;
+  buffer << this->_tagToFollow;
+}
 
-void		MoveFollowComponent::unserialize(IBuffer &)
-{}
+void		MoveFollowComponent::unserialize(IBuffer &buffer)
+{
+  buffer >> this->_idToFollow;
+  buffer >> this->_tagToFollow;
+}
+
+void		MoveFollowComponent::networkUnserializeCallback(IBuffer &, World *world, Entity *)
+{
+  auto it = std::find_if(world->getEntities().begin(), world->getEntities().end(),
+			 [this] (const Entity *entity)
+			 {
+			   NetworkReceiveUpdateComponent *network_comp;
+
+			   network_comp =
+			   entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+			   if (network_comp)
+			     {
+			       if (network_comp->getRemoteID() == this->_idToFollow)
+				 return true;
+			     }
+			   return false;
+			 });
+  if (it != world->getEntities().end())
+    {
+      this->_idToFollow = (*it)->_id;
+    }
+}
+
 
 //----- ----- Setters ----- ----- //
 

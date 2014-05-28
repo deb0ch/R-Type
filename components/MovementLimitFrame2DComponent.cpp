@@ -33,11 +33,6 @@ MovementLimitFrame2DComponent	&MovementLimitFrame2DComponent::operator=(const Mo
   return (*this);
 }
 
-ASerializableComponent		*MovementLimitFrame2DComponent::cloneSerializable() const
-{
-  return new MovementLimitFrame2DComponent(*this);
-}
-
 float		MovementLimitFrame2DComponent::getPosX() const
 {
   return (this->_posX);

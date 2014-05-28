@@ -12,11 +12,12 @@ protected:
   std::string		_tagToFollow;
 
 public:
-			MoveFollowComponent(const std::string & tagToFollow);
+			MoveFollowComponent(const std::string & tagToFollow = "unknown");
   virtual		~MoveFollowComponent();
 
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
+  virtual void		networkUnserializeCallback(IBuffer &, World *world, Entity *);
   unsigned int		getIdToFollow() const;
   void			setIdToFollow(const unsigned int idToFollow);
   const std::string &	getTagToFollow() const;

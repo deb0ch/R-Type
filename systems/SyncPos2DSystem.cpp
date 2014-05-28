@@ -17,26 +17,25 @@ bool		SyncPos2DSystem::canProcess(Entity *entity)
   return false;
 }
 
-// Needs to be redone completly
 void		SyncPos2DSystem::processEntity(Entity *entity, const float)
 {
   SyncPos2DComponent	*sync_comp = entity->getComponent<SyncPos2DComponent>("SyncPos2DComponent");
   Pos2DComponent	*pos_comp = entity->getComponent<Pos2DComponent>("Pos2DComponent");
-  NetworkReceiveUpdateComponent *network_comp =
-    entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
   float			delta_x;
   float			delta_y;
-  float			ratio;
 
-  if (network_comp->getPreviousUpdateTime() <= 1)
+  if (sync_comp->getRatio() != 0)
     {
-      pos_comp->setX(sync_comp->getSyncPos().getX());
-      pos_comp->setY(sync_comp->getSyncPos().getY());
-      return ;
+      delta_x = sync_comp->getSyncPos().getX() / sync_comp->getRatio();
+      delta_y = sync_comp->getSyncPos().getY() / sync_comp->getRatio();
     }
-  ratio = static_cast<float>(network_comp->getLastUpdate()) / network_comp->getPreviousUpdateTime();
-  delta_x = (sync_comp->getSyncPos().getX() - pos_comp->getX()) * ratio;
-  delta_y = (sync_comp->getSyncPos().getY() - pos_comp->getY()) * ratio;
+  else
+    {
+      delta_x = 0;
+      delta_y = 0;
+    }
   pos_comp->setX(pos_comp->getX() + delta_x);
   pos_comp->setY(pos_comp->getY() + delta_y);
+  sync_comp->getSyncPos().setX(sync_comp->getSyncPos().getX() - delta_x);
+  sync_comp->getSyncPos().setY(sync_comp->getSyncPos().getY() - delta_y);
 }
