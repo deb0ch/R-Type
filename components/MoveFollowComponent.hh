@@ -17,7 +17,7 @@ public:
 
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
-  void			networkUnserializeCallback(World *world);
+  virtual void		networkUnserializeCallback(IBuffer &, World *world, Entity *);
   unsigned int		getIdToFollow() const;
   void			setIdToFollow(const unsigned int idToFollow);
   const std::string &	getTagToFollow() const;
