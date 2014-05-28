@@ -1,12 +1,14 @@
 #include <Windows.h>
 #include <iostream>
+#include "SFML\Window\WindowStyle.hpp"
 #include "SFMLMenu.hh"
 #include "Window.hh"
 
 
 SFMLMenu::SFMLMenu()
 {
-	this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius");
+	this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius",
+		sf::Style::Titlebar | sf::Style::Close);
 	this->_window->setVerticalSyncEnabled(true);
 	this->init();
 }
