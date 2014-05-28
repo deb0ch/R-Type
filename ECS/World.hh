@@ -1,9 +1,6 @@
 #ifndef WORLD_H_
 # define WORLD_H_
 
-# define WINDOW_HEIGHT	600
-# define WINDOW_WIDTH	800
-
 # include	<vector>
 
 # include	"Entity.hh"
