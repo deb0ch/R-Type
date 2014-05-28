@@ -29,6 +29,7 @@
 # include "ExplosionComponent.hh"
 # include "Hash.hh"
 # include "NetworkReceiveActionComponent.hh"
+# include "EntityFile.hh"
 
 class EntityFactory : public Factory<Entity, hash_t>
 {
@@ -839,13 +840,19 @@ public:
   void		init()
   {
     this->initBackground();
-	this->initBorders();
+    this->initBorders();
     this->initPlayer();
     this->initBullet();
     this->initMonster();
     this->initBoss();
-	this->initgame();
+    this->initgame();
     this->initOthers();
+
+    EntityFile ef;
+    std::ofstream	file;
+    file.open("PLAYER_RED.entity");
+    ef.serialize(this->create("PLAYER_RED"), "PLAYER_RED", file);
+    file.close();
   }
 };
 

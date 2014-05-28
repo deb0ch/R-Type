@@ -13,13 +13,27 @@ EntityFile::~EntityFile()
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 
-Entity		*EntityFile::deserialize(std::ifstream &input, EntityFactory &factory) {
-    entity = new Entity();
-    entity->deserialize(*this);
-    factory.addEntity(key, entity);
+std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input, const ComponentFactory &cf) {
+  Entity	*entity;
+  std::string	key;
+
+  entity = new Entity();
+  //entity->deserializeFromFile(input, cf);
+  (void)input;
+  (void)cf;
+  return (std::make_pair(key, entity));
 }
 
-void		EntityFile::serialize(const Entity &e)
+void					EntityFile::serialize(const Entity *e, const std::string &key, std::ofstream &output)
 {
-  (void)e;
+  if (!e)
+    return ;
+  output << "ENTITY:" << key << std::endl;
+  std::for_each(e->_components.begin(), e->_components.end(), [&output](IComponent *c) -> void
+		{
+		  output << "\t" << "COMPONENT:" << c->getType() << std::endl;
+		  c->serializeFromFile(output);
+		  output << "\t" << "!COMPONENT:" << std::endl;
+		});
+  output << "!ENTITY" << std::endl;
 }

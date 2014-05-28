@@ -26,6 +26,16 @@ public:
   {
     return (this->_type);
   }
+
+  virtual void		deserializeFromFile(std::ifstream &input)
+  {
+    (void)input;
+  }
+
+  virtual void		serializeFromFile(std::ofstream &output) const
+  {
+    (void)output;
+  }
 };
 
 #endif /* !ACOMPONENT_H_ */
