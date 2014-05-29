@@ -41,7 +41,7 @@ void		MoveFollowComponent::unserialize(IBuffer &buffer)
   buffer >> this->_tagToFollow;
 }
 
-void		MoveFollowComponent::networkUnserializeCallback(World *world)
+void		MoveFollowComponent::networkUnserializeCallback(IBuffer &, World *world, Entity *)
 {
   auto it = std::find_if(world->getEntities().begin(), world->getEntities().end(),
 			 [this] (const Entity *entity)
