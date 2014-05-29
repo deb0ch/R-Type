@@ -3,8 +3,10 @@
 #include	"StateGame.hh"
 
 StateRoom::StateRoom(sf::RenderWindow * window, World *world, const std::string &ipaddress)
-: _window(window), _ipAddress(ipaddress), _world(world)
 {
+	this->_window = window;
+	this->_ipAddress = ipaddress;
+	this->_world = world;
 	this->init();
 }
 
@@ -30,7 +32,7 @@ void	StateRoom::init()
 	this->_textboxRoom = new SFMLTextBox(this->_window, 350, 545, true, 40, 8);
 	this->_textboxRoom->setColor(sf::Color(100, 15, 229));
 	this->_textboxRoom->setBorderOutLineColor(sf::Color(150, 15, 250, 200));
-	this->_textboxRoom->setBorderColor(sf::Color::Color(255, 255, 255, 160));
+	this->_textboxRoom->setBorderColor(sf::Color(255, 255, 255, 160));
 	this->_textboxRoom->setBorderSize(270, 45);
 }
 

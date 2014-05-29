@@ -1,13 +1,11 @@
-#include <Windows.h>
-#include <iostream>
 #include "Window.hh"
-#include "SFML\Window\WindowStyle.hpp"
+#include "SFML/Window/WindowStyle.hpp"
 #include "StateCredit.hh"
 #include "StateManager.hh"
 
 StateCredit::StateCredit(sf::RenderWindow *window)
-:_window(window)
 {
+	this->_window = window;
 	this->init();
 }
 

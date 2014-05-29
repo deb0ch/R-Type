@@ -6,12 +6,12 @@
 #include	"StateManager.hh"
 #include	"SFMLMenu.hh"
 
-int			main(int ac, char **av)
+int			main()
 {
   World		world;
   Timer		timer;
   StateManager states;
-  
+
   states.pushState(new SFMLMenu(&world));
   try
   {
@@ -24,7 +24,7 @@ int			main(int ac, char **av)
 			  states.render(timer);
 		  }
 		  timer.endFrame();
-	  }	
+	  }
   }
   catch (const std::exception &e)
     {

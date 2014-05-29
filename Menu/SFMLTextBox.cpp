@@ -1,15 +1,13 @@
-#include <Windows.h>
-#include <iostream>
 #include "SFMLTextBox.hh"
 
 
-SFMLTextBox::SFMLTextBox(sf::RenderWindow *window, float posX, float posY, 
-	bool hasBorder, int charSize, int maxCharacters)
-	: _window(window),
-	_maxCharacters(maxCharacters),
-	_charSize(charSize),
-	_hasBorder(hasBorder)
+SFMLTextBox::SFMLTextBox(sf::RenderWindow *window, float posX, float posY,
+	bool hasBorder, int charSize, unsigned int maxCharacters)
+	: _hasBorder(hasBorder)
 {
+	this->_window = window;
+	this->_maxCharacters = maxCharacters;
+	this->_charSize = charSize;
 	this->_text.setPosition(posX, posY);
 	this->_text.setCharacterSize(charSize);
 	this->_borders.setPosition(posX, posY);

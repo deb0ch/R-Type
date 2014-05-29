@@ -7,7 +7,7 @@ class SFMLTextBox
 {
 public:
 	SFMLTextBox(sf::RenderWindow *window, float posX, float posY, bool hasBorder,
-		int charSize = 50, int maxCharacters = 16);
+		int charSize = 50, unsigned int maxCharacters = 16);
 	~SFMLTextBox();
 
 	void	draw();
@@ -22,14 +22,14 @@ public:
 	void setBorderSize(float width, float height);
 
 protected:
-	bool				_hasBorder;
-	int					_charSize;
-	int					_maxCharacters;
-	std::string			_string;
-	sf::Text			_text;
+	bool			_hasBorder;
+	int			_charSize;
+	unsigned int			_maxCharacters;
+	std::string		_string;
+	sf::Text		_text;
 	sf::RectangleShape	_borders;
 	sf::RenderWindow	*_window;
-	sf::Font			*_font;
+	sf::Font		*_font;
 };
 
 #endif /* !SFMLTEXTBOX_H_ */

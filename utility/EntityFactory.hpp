@@ -368,7 +368,7 @@ public:
 				   ->addTag("PLAYER"))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.5f))
-		    ->addComponent(new LifeComponent(1000, 20))
+		    ->addComponent(new LifeComponent(1, 20))
 		    ->addComponent(new ExplosionComponent("PLAYER_EXPLOSION"))
 		    ->addComponent(new SFMLSpriteComponent("players.png",
 							   ImageLoader::NbSprite{ 5, 5 },

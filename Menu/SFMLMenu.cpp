@@ -1,4 +1,4 @@
-#include "SFML\Window\WindowStyle.hpp"
+#include "SFML/Window/WindowStyle.hpp"
 #include "SFMLMenu.hh"
 #include "Window.hh"
 #include "StateManager.hh"
@@ -36,9 +36,9 @@ void SFMLMenu::init()
 	this->_ipServer->setString("IP server :");
 	this->_ipServer->setColor(sf::Color(229, 8, 54));
 	this->_textboxIP = new SFMLTextBox(this->_window, 170, 350, true, 30);
-	this->_textboxIP->setColor(sf::Color::Color(255, 100, 100));
+	this->_textboxIP->setColor(sf::Color(255, 100, 100));
 	this->_textboxIP->setBorderOutLineColor(sf::Color(227, 55, 32, 200));
-	this->_textboxIP->setBorderColor(sf::Color::Color(255, 255, 255, 160));
+	this->_textboxIP->setBorderColor(sf::Color(255, 255, 255, 160));
 	sf::Texture *texture = new sf::Texture();
 	if (texture->loadFromFile("Ressources/Images/menuBackground.jpg"))
 	{
