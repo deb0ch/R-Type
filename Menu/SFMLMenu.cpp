@@ -30,7 +30,9 @@ void SFMLMenu::init()
 {
 	this->_background = NULL;
 	this->_buttonplay = new SFMLButton(this->_window, 25, 425, 400, 150);
-	this->_buttonCredit = new SFMLButton(this->_window, 600, 500, 150, 75);
+	this->_buttonplay->addTexture("Ressources/Images/playgameButton.png", 250, 80);
+	this->_buttonCredit = new SFMLButton(this->_window, 540, 490, 250, 100);
+	this->_buttonCredit->addTexture("Ressources/Images/creditsButton.png", 338, 94);
 	this->_ipServer = new SFMLTextBox(this->_window, 5, 350, false, 30);
 	this->_ipServer->setString("IP server :");
 	this->_ipServer->setColor(sf::Color(229, 8, 54));
@@ -38,7 +40,6 @@ void SFMLMenu::init()
 	this->_textboxIP->setColor(sf::Color::Color(255, 100, 100));
 	this->_textboxIP->setBorderOutLineColor(sf::Color(227, 55, 32, 200));
 	this->_textboxIP->setBorderColor(sf::Color::Color(255, 255, 255, 160));
-	this->_buttonplay->addTexture("Ressources/Images/playgameButton.png", 250, 80);
 	sf::Texture *texture = new sf::Texture();
 	if (texture->loadFromFile("Ressources/Images/menuBackground.jpg"))
 	{
