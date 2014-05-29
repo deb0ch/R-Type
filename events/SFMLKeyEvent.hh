@@ -2,7 +2,6 @@
 # define	SFMLKEYEVENT_H_
 
 # include	"SFML/Window/Keyboard.hpp"
-
 # include	"AEvent.hh"
 
 class		SFMLKeyEvent : public AEvent
