@@ -1,9 +1,8 @@
-#include <Windows.h>
-#include <iostream>
 #include "SFML\Window\WindowStyle.hpp"
 #include "SFMLMenu.hh"
 #include "Window.hh"
-#include "StateGame.hh"
+#include "StateManager.hh"
+#include "StateRoom.hh"
 #include "StateCredit.hh"
 
 SFMLMenu::SFMLMenu(World *world)
@@ -73,7 +72,7 @@ void SFMLMenu::update(StateManager& manager)
 
 		case sf::Event::TextEntered:
 			if (event.text.unicode == 13)
-				manager.pushState(new StateGame(this->_world, this->_textboxIP->getString()));
+				manager.pushState(new StateRoom(this->_window, this->_world, this->_textboxIP->getString()));
 			else if (event.text.unicode == 8)
 				this->_textboxIP->removelastCharacter();
 			else
@@ -86,7 +85,7 @@ void SFMLMenu::update(StateManager& manager)
 
 		case sf::Event::MouseButtonPressed:
 			if (this->_buttonplay->isMouseOnButton())
-				manager.pushState(new StateGame(this->_world, this->_textboxIP->getString()));
+				manager.pushState(new StateRoom(this->_window, this->_world, this->_textboxIP->getString()));
 			else if (this->_buttonCredit->isMouseOnButton())
 				manager.pushState(new StateCredit(this->_window));
 			return;

@@ -10,7 +10,7 @@
 class StateRoom : public IState
 {
 public:
-	StateRoom(World *world);
+	StateRoom(sf::RenderWindow * window, World *world, const std::string &);
 	virtual ~StateRoom();
 
 	virtual void update(StateManager&);
@@ -19,12 +19,13 @@ public:
 protected:
 	void init();
 
+	std::string	_ipAddress;
 	World		*_world;
 	sf::Sprite *_background;
 	sf::Sprite *_logo;
 	SFMLButton *_buttonplay;
-	SFMLTextBox *_textboxIP;
-	SFMLTextBox *_ipServer;
+	SFMLTextBox *_textboxRoom;
+	SFMLTextBox *_serverRooms;
 	sf::RenderWindow *_window;
 };
 

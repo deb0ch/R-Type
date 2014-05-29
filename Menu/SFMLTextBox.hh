@@ -19,6 +19,7 @@ public:
 	void setColor(const sf::Color &color);
 	void setBorderColor(const sf::Color &color);
 	void setBorderOutLineColor(const sf::Color &color);
+	void setBorderSize(float width, float height);
 
 protected:
 	bool				_hasBorder;

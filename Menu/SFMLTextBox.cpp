@@ -67,6 +67,11 @@ void SFMLTextBox::setColor(const sf::Color &color)
 	this->_text.setColor(color);
 }
 
+void SFMLTextBox::setBorderSize(float width, float height)
+{
+	this->_borders.setSize({ width, height });
+}
+
 void SFMLTextBox::setBorderColor(const sf::Color &color)
 {
 	this->_borders.setFillColor(color);
