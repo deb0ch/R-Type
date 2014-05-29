@@ -1,30 +1,37 @@
 #ifndef SFMLMENU_H_
 # define SFMLMENU_H_
 
+#include	"IState.hh"
 #include	"SFML/Graphics.hpp"
 #include	"SFMLButton.hh"
 #include	"SFMLTextBox.hh"
+#include	"World.hh"
 
-class SFMLMenu
+class SFMLMenu : public IState
 {
-public:
-	SFMLMenu();
-	SFMLMenu(sf::RenderWindow *window);
-	~SFMLMenu();
+private :
+	SFMLMenu(const SFMLMenu &) = delete;
+	SFMLMenu&	operator=(const SFMLMenu&) = delete;
 
-	sf::RenderWindow *getWindow() const;
+public:
+	SFMLMenu(World *world);
+	SFMLMenu(World *world, sf::RenderWindow *window);
+	virtual ~SFMLMenu();
+
 	const std::string &getIpAddress() const;
 
-	char update();
-	void render();
+	virtual void update(StateManager&);
+	virtual void render(const Timer&);
 
 
 protected:
 	void init();
 
+	World		*_world;
 	sf::Sprite *_background;
 	sf::Sprite *_logo;
 	SFMLButton *_buttonplay;
+	SFMLButton *_buttonCredit;
 	SFMLTextBox *_textboxIP;
 	SFMLTextBox *_ipServer;
 	sf::RenderWindow *_window;

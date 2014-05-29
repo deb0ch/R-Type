@@ -3,17 +3,20 @@
 #include "SFML\Window\WindowStyle.hpp"
 #include "SFMLMenu.hh"
 #include "Window.hh"
+#include "StateGame.hh"
+#include "StateCredit.hh"
 
-
-SFMLMenu::SFMLMenu()
+SFMLMenu::SFMLMenu(World *world)
+	: _world(world)
 {
-	this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius",
-		sf::Style::Titlebar | sf::Style::Close);
+	this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),
+		"EpicGradius", sf::Style::Titlebar | sf::Style::Close);
 	this->_window->setVerticalSyncEnabled(true);
 	this->init();
 }
 
-SFMLMenu::SFMLMenu(sf::RenderWindow *window)
+SFMLMenu::SFMLMenu(World *world, sf::RenderWindow *window)
+	: _world(world)
 {
 	this->_window = window;
 	this->_window->setVerticalSyncEnabled(true);
@@ -27,9 +30,10 @@ void SFMLMenu::init()
 {
 	this->_background = NULL;
 	this->_buttonplay = new SFMLButton(this->_window, 25, 425, 400, 150);
+	this->_buttonCredit = new SFMLButton(this->_window, 600, 500, 150, 75);
 	this->_ipServer = new SFMLTextBox(this->_window, 5, 350, false, 30);
-	this->_ipServer->setString("ip server :");
-	this->_ipServer->setColor(sf::Color(227, 55, 32));
+	this->_ipServer->setString("IP server :");
+	this->_ipServer->setColor(sf::Color(229, 8, 54));
 	this->_textboxIP = new SFMLTextBox(this->_window, 170, 350, true, 30);
 	this->_textboxIP->setColor(sf::Color::Color(255, 100, 100));
 	this->_textboxIP->setBorderOutLineColor(sf::Color(227, 55, 32, 200));
@@ -52,15 +56,10 @@ void SFMLMenu::init()
 		this->_logo->setScale(600 / this->_logo->getLocalBounds().width,
 			100 / this->_logo->getLocalBounds().height);
 	}
-	/*
-	this->_font = new sf::Font();
-	if (!this->_font->loadFromFile("Ressources/Fonts/comic.ttf"))
-	{
-		this->_font = NULL;
-	}*/
+	this->_world->setSharedObject<sf::RenderWindow>("sfmlwindow", this->_window);
 }
 
-char SFMLMenu::update()
+void SFMLMenu::update(StateManager& manager)
 {
 	sf::Event	event;
 	while (this->_window->pollEvent(event))
@@ -73,30 +72,32 @@ char SFMLMenu::update()
 
 		case sf::Event::TextEntered:
 			if (event.text.unicode == 13)
-				return (0);
+				manager.pushState(new StateGame(this->_world, this->_textboxIP->getString()));
 			else if (event.text.unicode == 8)
 				this->_textboxIP->removelastCharacter();
 			else
 			{
 				if ((event.text.unicode < '0' || event.text.unicode > '9') && event.text.unicode != '.')
-					return (1);
+					return;
 				this->_textboxIP->addCharacter(static_cast<char>(event.text.unicode));
 			}
 			break;
 
 		case sf::Event::MouseButtonPressed:
-			return (!this->_buttonplay->isMouseOnButton());
+			if (this->_buttonplay->isMouseOnButton())
+				manager.pushState(new StateGame(this->_world, this->_textboxIP->getString()));
+			else if (this->_buttonCredit->isMouseOnButton())
+				manager.pushState(new StateCredit(this->_window));
+			return;
 
 		default:
 			break;
 		}
 	}
-	return (1);
 }
 
-void SFMLMenu::render()
+void SFMLMenu::render(const Timer&)
 {
-	Sleep(50);
 	this->_window->clear();
 
 	if (this->_background)
@@ -105,22 +106,8 @@ void SFMLMenu::render()
 	this->_ipServer->draw();
 	this->_buttonplay->draw();
 	this->_textboxIP->draw();
-	/*if (this->_font)
-	{
-		sf::Text Text;
-		Text.setFont(*this->_font);
-		Text.setString("ip address : " + this->_ipAddress);
-		Text.setCharacterSize(50);
-		Text.setPosition(0, 200);
-		Text.setColor(sf::Color::Color(255, 100, 100));
-		this->_window->draw(Text);
-	}*/
+	this->_buttonCredit->draw();
 	this->_window->display();
-}
-
-sf::RenderWindow *SFMLMenu::getWindow() const
-{
-	return (this->_window);
 }
 
 const std::string &SFMLMenu::getIpAddress() const
