@@ -72,9 +72,9 @@ void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
-  world.addSystem(new SFMLEventSystem());
+  //world.addSystem(new SFMLEventSystem());
   // world.addSystem(new SFMLInputSystem());
-  world.addSystem(new SFMLRenderSystem());
+  //world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
@@ -214,11 +214,11 @@ int		main()
       }
     world.stop();
   }
-  catch (std::exception e)
+  catch (const std::exception &e)
     {
       std::cerr << e.what() << std::endl;
     }
-  catch (std::string str)
+  catch (const std::string &str)
     {
       std::cerr << str << std::endl;
     }
