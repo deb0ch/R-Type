@@ -48,10 +48,10 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
       worldEntityTeam = (*it)->getComponent<TeamComponent>("TeamComponent");
       if (world_entity_col && *it != entity &&
 	  ((worldEntityTeam && worldEntityTeam->getTeam() != entityTeam->getTeam()) || !worldEntityTeam) &&
-	  checkTags((*it)->getComponent<TagComponent>("TagComponent"), entity_col) &&
 	  isCollidingAny(entity_col->getCollisionPoints(), world_entity_col->getCollisionPoints(),
-			 entity->getComponent<Pos2DComponent>("Pos2DComponent"),
-			 (*it)->getComponent<Pos2DComponent>("Pos2DComponent")))
+	  entity->getComponent<Pos2DComponent>("Pos2DComponent"),
+	  (*it)->getComponent<Pos2DComponent>("Pos2DComponent")) &&
+	  checkTags((*it)->getComponent<TagComponent>("TagComponent"), entity_col))
 	this->_world->sendEvent(new CollisionEvent(entity, *it));
     }
 }

@@ -98,6 +98,16 @@ void			EntitySpawnerComponent::setActive(bool active)
   this->_active = active;
 }
 
+void			EntitySpawnerComponent::clearEntities()
+{
+	this->_entities.clear();
+}
+
+void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned int> &value)
+{
+	this->_entities.push_back(value);
+}
+
 //----- ----- Methods ----- ----- //
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 {
