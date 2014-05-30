@@ -744,7 +744,7 @@ public:
 		    ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		    ->addComponent(new Box2DComponent(30.0f, 30.0f))
 			->addComponent(new TeamComponent(2))
-		    ->addComponent(new Speed2DComponent(-3000.0f, 0.0f))
+		    ->addComponent(new Speed2DComponent(-300.0f, 0.0f))
 		    ->addComponent(new Friction2DComponent(0.3f))
 		    ->addComponent(new MovementSpeedComponent(60.f))
 		    ->addComponent(new MoveFollowComponent("PLAYER"))

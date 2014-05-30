@@ -17,9 +17,9 @@ MoveSequenceComponent::~MoveSequenceComponent()
 //----- ----- Operators ----- ----- //
 //----- ----- Methods ----- ----- //
 
-void  MoveSequenceComponent::incrementTick(float delta)
+void  MoveSequenceComponent::incrementTick(float dt)
 {
-  this->_tick += delta;
+  this->_tick += dt;
   if (this->_tick >= this->_tickToChange)
     {
       this->_tick -= this->_tickToChange;

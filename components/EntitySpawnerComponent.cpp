@@ -6,7 +6,8 @@
 #include	"RandomReal.hpp"
 
 //----- ----- Constructors ----- ----- //
-EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities,
+EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string,
+					       unsigned int>> entities,
 					       std::vector<IComponent*> components,
 					       unsigned long nb,
 					       float delay,
@@ -105,29 +106,25 @@ void			EntitySpawnerComponent::clearEntities()
 
 void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned int> &value)
 {
-	this->_entities.push_back(value);
+  this->_entities.push_back(value);
 }
 
 //----- ----- Methods ----- ----- //
-Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
+Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float dt)
 {
   Entity		*res = NULL;
 
   if (this->_tick < this->_delay)
     {
-      this->_tick += delta;
+      this->_tick += dt;
       return (NULL);
     }
-  // return ((Entity *) (0 * ++this->_tick)); // wtf seriously?
-
-  if (!this->_active ||
-      (this->_nb > 0 && this->_counter >= _nb) ||
-      this->_entities.size() == 0)
-    return (NULL);
-
   this->_tick -= this->_delay;
-
-  if (facto)
+  if (!this->_active
+      || (this->_nb > 0 && this->_counter >= _nb)
+      || this->_entities.size() == 0)
+    return (NULL);
+  if (facto != NULL)
     res = facto->create(this->_entities[this->_next].first);
   if (!this->_random)
     {
@@ -152,10 +149,8 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 	  cumul += this->_entities[i].second;
 	}
     }
-
   if (!res)
     return (NULL);
-
   ++this->_counter;
   return (res);
 }

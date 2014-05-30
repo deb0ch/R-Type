@@ -10,7 +10,7 @@ public:
   void		setFrictionCoef(float coef);
 
 public:
-		Friction2DComponent(float coef = 0.01);
+		Friction2DComponent(float coef = 0.1);
   virtual	~Friction2DComponent();
 
   virtual void	serialize(IBuffer &buffer) const;

@@ -187,7 +187,7 @@ int		main()
 {
   try {
     World		world;
-    Timer		timer;
+    Timer		timer(60);
 
     addSystems(world);
     addSharedObjetcs(world);
