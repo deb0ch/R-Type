@@ -26,8 +26,8 @@ CollisionComponent	&CollisionComponent::operator=(const CollisionComponent &e)
 		    [this] (CollisionPoint *cp) {
 		      this->_collisionPoints.push_back(new CollisionPoint(*cp));
 		    });
-	  this->_toCollide = e._toCollide;
-	  this->_toNotCollide = e._toNotCollide;
+      this->_toCollide = e._toCollide;
+      this->_toNotCollide = e._toNotCollide;
     }
   return (*this);
 }
@@ -66,7 +66,7 @@ std::list<std::string>	const &CollisionComponent::getToNotCollide() const
 
 CollisionComponent	       *CollisionComponent::addToCollideItem(std::string const &item)
 {
-  this->_toCollide.push_front(item);
+  this->_toCollide.push_back(item);
   return (this);
 }
 
@@ -74,4 +74,22 @@ CollisionComponent	       *CollisionComponent::addNotToCollideItem(std::string c
 {
   this->_toNotCollide.push_front(item);
   return (this);
+}
+
+void	CollisionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  std::for_each(this->_collisionPoints.begin(), this->_collisionPoints.end(), [&output, indent](const CollisionPoint *cp)
+		{
+		  output << std::string(indent, '\t') << "collisionPoints=COMPONENT:" << cp->getType() << std::endl;
+		  cp->serializeFromFile(output, indent + 1);
+		  output << std::string(indent, '\t') << "!COMPONENT" << std::endl;
+		});
+  std::for_each(this->_toCollide.begin(), this->_toCollide.end(), [&output, indent](const std::string &s)
+		{
+		  output << std::string(indent, '\t') << "toCollide=" << s << std::endl;
+		});
+  std::for_each(this->_toNotCollide.begin(), this->_toNotCollide.end(), [&output, indent](const std::string &s)
+		{
+		  output << std::string(indent, '\t') << "toNotCollide=" << s << std::endl;
+		});
 }

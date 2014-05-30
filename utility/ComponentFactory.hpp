@@ -13,7 +13,6 @@
 # include "SFMLSpriteComponent.hh"
 # include "NetworkSendUpdateComponent.hh"
 # include "ActionComponent.hh"
-# include "PlayerMovementComponent.hh"
 # include "NetworkSendActionComponent.hh"
 # include "SyncPos2DComponent.hh"
 # include "MovementSpeedComponent.hh"
@@ -23,6 +22,9 @@
 # include "TagComponent.hh"
 # include "MovementLimitFrame2DComponent.hh"
 # include "Hash.hh"
+# include "CollisionComponent.hh"
+# include "CollisionPoint.hh"
+# include "CollisionPowerComponent.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
@@ -50,7 +52,6 @@ public :
     this->addComponent(new SFMLSpriteComponent());
     this->addComponent(new NetworkSendUpdateComponent());
     this->addComponent(new ActionComponent());
-    this->addComponent(new PlayerMovementComponent());
     this->addComponent(new NetworkSendActionComponent());
     this->addComponent(new SyncPos2DComponent());
     this->addComponent(new MoveForwardComponent());
@@ -59,6 +60,9 @@ public :
     this->addComponent(new MoveFollowComponent());
     this->addComponent(new TagComponent());
     this->addComponent(new MovementLimitFrame2DComponent());
+    this->addComponent(new CollisionComponent());
+    this->addComponent(new CollisionPoint());
+    this->addComponent(new CollisionPowerComponent());
   }
 
   virtual ASerializableComponent	*create(const hash_t &key) const

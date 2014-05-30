@@ -57,3 +57,9 @@ Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
 {
   return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));
 }
+
+void		Pos2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "x=" << this->_x << std::endl;
+  output << std::string(indent, '\t') << "y=" << this->_y << std::endl;
+}

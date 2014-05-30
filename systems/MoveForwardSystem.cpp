@@ -25,8 +25,6 @@ void MoveForwardSystem::processEntity(Entity *entity, const float)
   action = entity->getComponent<ActionComponent>("ActionComponent");
   moveEntity = entity->getComponent<MoveForwardComponent>("MoveForwardComponent");
 
-  std::vector<std::string> movements = moveEntity->getDirection();
-
-  for (unsigned int i = 0; i < movements.size(); i++)
-    action->setAction(movements[i], true);
+  action->setAction(moveEntity->getDirection().first, true);
+  action->setAction(moveEntity->getDirection().second, true);
 }

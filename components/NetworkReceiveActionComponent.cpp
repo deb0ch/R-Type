@@ -24,3 +24,8 @@ void		NetworkReceiveActionComponent::serialize(IBuffer &) const
 
 void		NetworkReceiveActionComponent::unserialize(IBuffer &)
 {}
+
+void	NetworkReceiveActionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "packet_num=" << this->_packet_num << std::endl;
+}

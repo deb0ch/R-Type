@@ -15,6 +15,8 @@ public:
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
 
+  void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   float		_movement_speed;
 };

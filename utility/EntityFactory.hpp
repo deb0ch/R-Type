@@ -13,7 +13,6 @@
 # include "SFMLSpriteComponent.hh"
 # include "NetworkSendUpdateComponent.hh"
 # include "ActionComponent.hh"
-# include "PlayerMovementComponent.hh"
 # include "CollisionPowerComponent.hh"
 # include "Entity.hh"
 # include "LifeComponent.hh"
@@ -30,9 +29,12 @@
 # include "PowerUpComponent.hh"
 # include "Hash.hh"
 # include "NetworkReceiveActionComponent.hh"
+# include "EntityFile.hh"
 
 class EntityFactory : public Factory<Entity, hash_t>
 {
+  std::vector<std::string>	_keys;
+
 public:
   EntityFactory()
   {}
@@ -43,6 +45,7 @@ public:
   void		addEntity(const std::string &key, Entity *input)
   {
     this->add(Hash()(key), input);
+    this->_keys.push_back(key);
   }
 
   Entity*	create(const std::string &key) const
@@ -381,7 +384,7 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {}, 0, 10,
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {new MoveForwardComponent("RIGHT ")}, 0, 10,
 			{ 5.0f, 0.0f }, { 5.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -485,7 +488,7 @@ public:
 		  ->addComponent(new SFMLSpriteComponent("ShotBig1.png",
 		  ImageLoader::NbSprite{ 2, 1 },
 		  { { "", { 1, 0 } } }))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
+		  ->addComponent(new MoveForwardComponent("RIGHT"))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 20.0f, 20.0f))
 		  ->addNotToCollideItem("BULLET")
@@ -513,7 +516,7 @@ public:
 		  ->addComponent(new SFMLSpriteComponent("ShotBig2.png",
 		  ImageLoader::NbSprite{ 2, 1 },
 		  { { "", { 1, 0 } } }))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
+		  ->addComponent(new MoveForwardComponent("RIGHT"))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 20.0f, 20.0f))
 		  ->addNotToCollideItem("BULLET")
@@ -541,7 +544,7 @@ public:
 		  ->addComponent(new SFMLSpriteComponent("ShotBig3.png",
 		  ImageLoader::NbSprite{ 2, 1 },
 		  { { "", { 1, 0 } } }))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
+		  ->addComponent(new MoveForwardComponent("RIGHT"))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 20.0f, 20.0f))
 		  ->addNotToCollideItem("BULLET")
@@ -569,7 +572,7 @@ public:
 		  ->addComponent(new SFMLSpriteComponent("ShotBig4.png",
 		  ImageLoader::NbSprite{ 2, 1 },
 		  { { "", { 1, 0 } } }))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
+		  ->addComponent(new MoveForwardComponent("RIGHT"))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 20.0f, 20.0f))
 		  ->addNotToCollideItem("BULLET")
@@ -596,7 +599,7 @@ public:
 		  ->addComponent(new SFMLSpriteComponent("Laser.png",
 		  ImageLoader::NbSprite{ 8, 1 },
 		  { { "", { 0, 4 } } }))
-		  ->addComponent(new MoveForwardComponent(MoveForwardComponent::RIGHT))
+		  ->addComponent(new MoveForwardComponent("RIGHT"))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 50.0f, 15.0f))
 		  ->addNotToCollideItem("BOOST"))
@@ -625,7 +628,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("ShotBasic.png",
 							   ImageLoader::NbSprite{ 4, 1 },
 							   { { "", { 0, 4 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f))
 				   ->addNotToCollideItem("BULLET"))
@@ -651,7 +654,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("ShotBasic.png",
 							   ImageLoader::NbSprite{ 4, 1 },
 							   { { "", { 0, 4 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT, MoveForwardComponent::DOWN))
+		    ->addComponent(new MoveForwardComponent("LEFT", "DOWN"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f))
 				   ->addNotToCollideItem("BULLET"))
@@ -677,7 +680,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("ShotBasic.png",
 							   ImageLoader::NbSprite{ 4, 1 },
 							   { { "", { 0, 4 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT, MoveForwardComponent::UP))
+		    ->addComponent(new MoveForwardComponent("LEFT", "UP"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f))
 				   ->addNotToCollideItem("BULLET")
@@ -705,7 +708,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
 		    ->addComponent((new ActionComponent())
@@ -731,7 +734,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT, MoveForwardComponent::UP))
+		    ->addComponent(new MoveForwardComponent("LEFT", "UP"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
 		    ->addComponent((new ActionComponent())
@@ -758,7 +761,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT, MoveForwardComponent::DOWN))
+		    ->addComponent(new MoveForwardComponent("LEFT", "DOWN"))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 10.0f, 10.0f)))
 		    ->addComponent((new ActionComponent())
@@ -806,7 +809,7 @@ public:
 		->addComponent(new SFMLSpriteComponent("ShotBoss.png",
 		ImageLoader::NbSprite{ 4, 1 },
 		{ { "", { 0, 4 } } }))
-		->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		->addComponent(new MoveForwardComponent("LEFT"))
 		->addComponent((new CollisionComponent())
 		->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 25.0f, 25.0f))
 			->addNotToCollideItem("BULLET")
@@ -839,14 +842,13 @@ public:
 		    ->addComponent(new LifeComponent())
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 40.0f))
-				   ->addToCollideItem("PLAYER")
 				   ->addNotToCollideItem("MONSTER"))
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new EntitySpawnerComponent({
 				{"MONSTER_BASIC_BULLET", 0},
 				{"MONSTER_BASIC_BULLET_3", 0},
 				{"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 20))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -871,15 +873,15 @@ public:
 		    ->addComponent(new MovementSpeedComponent(50.f))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 50.0f, 50.0f))
-				   ->addToCollideItem("PLAYER")
-				   ->addNotToCollideItem("MONSTER"))
+				   ->addNotToCollideItem("MONSTER")
+				   )
 		    ->addComponent(new LifeComponent(500))
 		    ->addComponent(new ExplosionComponent())
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new FireAlwaysComponent())
 		    ->addComponent(new EntitySpawnerComponent({ {"BOMB_BULLET_1", 0}, {"BOMB_BULLET_2", 0}, {"BOMB_BULLET_3", 0} },
 							      {}, 0, 60, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -922,7 +924,7 @@ public:
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
-		    ->addComponent(new MoveForwardComponent(MoveForwardComponent::LEFT))
+		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -1006,16 +1008,27 @@ public:
 
   void		init()
   {
+    // TODO : IMPORT FROM entities/ folder
     this->initBackground();
-	this->initBorders();
+    this->initBorders();
     this->initPlayer();
 	this->initPlayerBullet();
     this->initBullet();
     this->initMonster();
     this->initBoss();
-	this->initgame();
+    this->initgame();
     this->initOthers();
 	this->initPowerUp();
+
+    // OH YEAH
+    EntityFile ef;
+    std::ofstream	file;
+    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &file](const std::string &key)
+		  {
+		        file.open("entities/"+key+".entity");
+			ef.serialize(this->create(key), key, file);
+			file.close();
+		  });
   }
 };
 

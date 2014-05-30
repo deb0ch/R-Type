@@ -17,6 +17,8 @@ public:
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
 
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   std::vector<std::string>	_actions;
   unsigned int			_index;

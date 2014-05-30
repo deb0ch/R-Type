@@ -22,6 +22,8 @@ public:
   void			setIdToFollow(const unsigned int idToFollow);
   const std::string &	getTagToFollow() const;
   void			setTagToFollow(const std::string & idToFollow);
+
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !MOVEFOLLOWCOMPONENT_H_ */

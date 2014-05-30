@@ -27,3 +27,8 @@ void	MovementSpeedComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_movement_speed;
 }
+
+void	MovementSpeedComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "speed_coef=" << this->_movement_speed << std::endl;
+}

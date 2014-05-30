@@ -56,3 +56,8 @@ void NetworkSendUpdateComponent::serialize(IBuffer &) const
 
 void NetworkSendUpdateComponent::unserialize(IBuffer &)
 {}
+
+void	NetworkSendUpdateComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "update_rate=" << this->_update_rate << std::endl;
+}

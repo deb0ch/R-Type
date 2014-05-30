@@ -25,3 +25,8 @@ void	PowerUpComponent::unserialize(IBuffer &buffer)
 {
 	buffer >> this->_newWeapon;
 }
+
+void	PowerUpComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+	output << std::string(indent, '\t') << "weapon=" << this->_newWeapon << std::endl;
+}

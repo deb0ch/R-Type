@@ -68,3 +68,11 @@ void	MovementLimitFrame2DComponent::unserialize(IBuffer &buffer)
   buffer >> this->_width;
   buffer >> this->_height;
 }
+
+void	MovementLimitFrame2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "posX=" << this->_posX << std::endl;
+  output << std::string(indent, '\t') << "posY=" << this->_posY << std::endl;
+  output << std::string(indent, '\t') << "width=" << this->_width << std::endl;
+  output << std::string(indent, '\t') << "height=" << this->_height << std::endl;
+}

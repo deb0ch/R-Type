@@ -20,6 +20,8 @@ public:
   void		resetLastUpdate();
   void		setUpdateRate(const float);
   float		getUpdateRate() const;
+  void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   unsigned int	_remote_id;
   unsigned int	_packet_num;

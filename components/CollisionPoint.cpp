@@ -50,8 +50,16 @@ Box2DComponent		*CollisionPoint::getBox() const
   return (this->_box);
 }
 
-void			CollisionPoint::serialize(IBuffer &) const
+void		CollisionPoint::serialize(IBuffer &) const
 {}
 
-void			CollisionPoint::unserialize(IBuffer &)
+void		CollisionPoint::unserialize(IBuffer &)
 {}
+
+void		CollisionPoint::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "x=" << this->getPos()->getX() << std::endl;
+  output << std::string(indent, '\t') << "y=" << this->getPos()->getY() << std::endl;
+  output << std::string(indent, '\t') << "width=" << this->getBox()->getWidth() << std::endl;
+  output << std::string(indent, '\t') << "height=" << this->getBox()->getHeight() << std::endl;
+}

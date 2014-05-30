@@ -32,3 +32,9 @@ void	Box2DComponent::unserialize(IBuffer &buffer)
   buffer >> this->_width;
   buffer >> this->_height;
 }
+
+void	Box2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "width=" << this->_width << std::endl;
+  output << std::string(indent, '\t') << "height=" << this->_height << std::endl;
+}

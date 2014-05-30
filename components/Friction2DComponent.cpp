@@ -30,3 +30,8 @@ void	Friction2DComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_frictionCoef;
 }
+
+void	Friction2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "coef=" << this->_frictionCoef << std::endl;
+}
