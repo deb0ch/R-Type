@@ -1007,7 +1007,14 @@ public:
 	if (file->d_name[0] == '.')
 	  continue ;
 	input.open("./entities/" + std::string(file->d_name));
-	res = ef.deserialize(input);
+	try {
+	  res = ef.deserialize(input);
+	}
+	catch (EntityFileException &efe)
+	  {
+	    efe.setFilename(file->d_name);
+	    throw;
+	  }
 	this->addEntity("FOO"+res.first, res.second);
 	input.close();
       }

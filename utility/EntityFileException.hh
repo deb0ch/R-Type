@@ -6,6 +6,8 @@
 class EntityFileException : public std::exception
 {
 protected:
+  std::string	_filename;
+  std::string	_component;
   std::string	_message;
   unsigned int	_lineno;
 
@@ -14,7 +16,8 @@ public:
   ~EntityFileException();
 
   virtual const char*	what() const noexcept;
-
+  void			setFilename(const std::string &);
+  void			setComponent(const std::string &);
 };
 
 #endif /* !ENTITYFILEEXCEPTION_H_ */

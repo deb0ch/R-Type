@@ -40,21 +40,26 @@ public:
 	if (std::regex_match(line, std::regex("!COMPONENT")))
 	    return ;
 	else
-	  this->deserializeFromFileSpecial(line, input);
+	  {
+	    try {
+	      this->deserializeFromFileSpecial(line, input);
+	    }
+	    catch (EntityFileException &efe)
+	      {
+		efe.setComponent(this->_type);
+		throw;
+	      }
+	  }
       }
   }
 
-  virtual void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+  virtual void		deserializeFromFileSpecial(const std::string &, std::ifstream &)
   {
-    (void)lastline;
-    (void)input;
     throw "deserializeFromFileSpecial() not defined for " + this->_type;
   }
 
-  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const
+  virtual void		serializeFromFile(std::ofstream &, unsigned char) const
   {
-    (void)output;
-    (void)indent;
     throw "serializeFromFile() not defined for " + this->_type;
   }
 };
