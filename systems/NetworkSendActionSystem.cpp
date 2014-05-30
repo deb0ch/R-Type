@@ -6,9 +6,8 @@
 #include "NetworkSendActionComponent.hh"
 #include "LockGuard.hpp"
 
-NetworkSendActionSystem::NetworkSendActionSystem(const std::vector<std::string> &serializable_action,
-						 unsigned int spam_count)
-  : ASystem("NetworkSendActionSystem"), _serializable_action(serializable_action), _spam_count(spam_count)
+NetworkSendActionSystem::NetworkSendActionSystem(const std::vector<std::string> &serializable_action)
+  : ASystem("NetworkSendActionSystem"), _serializable_action(serializable_action)
 {
   this->_network = NULL;
   this->_room_name = NULL;
@@ -49,25 +48,16 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
   std::for_each(this->_serializable_action.begin(), this->_serializable_action.end(),
 		[&tmp, &changed, &action_component] (const std::string &action_name)
 		{
-		  if (action_component->hasChanged(action_name))
-		    {
-		      changed = true;
-		    }
 		  *tmp << action_name;
 		  *tmp << static_cast<char>(action_component->isActive(action_name));
 		  action_component->resetChange(action_name);
 		});
-  if (changed)
+  Room *room = this->_network->getRoom(*this->_room_name);
+  if (room)
     {
-      Room *room = this->_network->getRoom(*this->_room_name);
-      if (room)
-	{
-	  auto guard = create_lock(*room);
+      auto guard = create_lock(*room);
 
-	  for(unsigned int i = 0; i < this->_spam_count; i++)
-	    room->sendBroadcastUDP(*this->_network, tmp, true);
-	}
-      network_component->increasePacketNumber();
+      room->sendBroadcastUDP(*this->_network, tmp);
     }
-  this->_network->disposeUDPBuffer(tmp);
+  network_component->increasePacketNumber();
 }

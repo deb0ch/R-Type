@@ -4,7 +4,7 @@
 # include	<string>
 # include	"IComponent.hh"
 
-
+# include <fstream>
 # include <iostream>
 # include "Hash.hh"
 
