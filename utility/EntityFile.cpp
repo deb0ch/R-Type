@@ -1,4 +1,8 @@
+#include	<regex>
+
 #include	"EntityFile.hh"
+#include	"ComponentFactory.hpp"
+#include	"EntityFileException.hh"
 
 //----- ----- Constructors ----- ----- //
 EntityFile::EntityFile()
@@ -13,14 +17,45 @@ EntityFile::~EntityFile()
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 
-std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input, const ComponentFactory &cf) {
-  Entity	*entity;
-  std::string	key;
+std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
+  Entity				*entity;
+  std::string				key;
+  ComponentFactory			cf;
+  std::string				line;
+  unsigned int				lineno = 1;
+  bool					closed = false;
+  IComponent				*component;
 
+  cf.init();
   entity = new Entity();
-  //entity->deserializeFromFile(input, cf);
-  (void)input;
-  (void)cf;
+
+  std::getline(input, line);
+  line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
+  if (!std::regex_match(line, std::regex("ENTITY:.+")))
+    throw EntityFileException("Bad Header", lineno);
+  key = line.substr(7);
+
+  while (std::getline(input, line))
+    {
+      ++lineno;
+      line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
+
+      if (std::regex_match(line, std::regex("COMPONENT:.+")))
+	{
+	  component = cf.create(line.substr(10));
+	  if (!component)
+	    throw EntityFileException("Component not found in factory : \"" + line.substr(10) + "\"", lineno);
+	  component->deserializeFromFile(input);
+	  entity->addComponent(component);
+	}
+      else if (std::regex_match(line, std::regex("!ENTITY")))
+	closed = true;
+      else
+	throw EntityFileException("Syntax error : \"" + line + "\"", lineno);
+    }
+  if (!closed)
+    throw EntityFileException("No closind tag", lineno);
+
   return (std::make_pair(key, entity));
 }
 

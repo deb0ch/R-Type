@@ -5,7 +5,6 @@
 # include	<utility>
 
 # include	"Entity.hh"
-# include	"ComponentFactory.hpp"
 
 class EntityFile
 {
@@ -13,7 +12,7 @@ public:
   EntityFile();
   ~EntityFile();
 
-  std::pair<std::string, Entity*>	deserialize(std::ifstream &input, const ComponentFactory &cf);
+  std::pair<std::string, Entity*>	deserialize(std::ifstream &input);
   void					serialize(const Entity *e, const std::string &key, std::ofstream &output);
 };
 

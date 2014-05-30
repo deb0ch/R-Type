@@ -30,6 +30,8 @@
 # include "NetworkReceiveActionComponent.hh"
 # include "EntityFile.hh"
 
+# include <dirent.h>
+
 class EntityFactory : public Factory<Entity, hash_t>
 {
   std::vector<std::string>	_keys;
@@ -841,9 +843,43 @@ public:
 		  );
   }
 
+  void			serializeAll()
+  {
+    EntityFile		ef;
+    std::ofstream	output;
+
+    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &output](const std::string &key)
+		  {
+		        output.open("entities/"+key+".entity");
+			ef.serialize(this->create(key), key, output);
+			output.close();
+		  });
+  }
+
+  void					deserializeAll()
+  {
+    EntityFile				ef;
+    DIR					*dir;
+    struct dirent			*file;
+    std::ifstream			input;
+    std::pair<std::string, Entity*>	res;
+
+    dir = opendir("./entities/");
+
+    while ((file = readdir(dir)))
+      {
+	if (file->d_name[0] == '.')
+	  continue ;
+	input.open("./entities/" + std::string(file->d_name));
+	res = ef.deserialize(input);
+	this->addEntity("FOO"+res.first, res.second);
+	input.close();
+	break;
+      }
+  }
+
   void		init()
   {
-    // TODO : IMPORT FROM entities/ folder
     this->initBackground();
     this->initBorders();
     this->initPlayer();
@@ -853,15 +889,9 @@ public:
     this->initgame();
     this->initOthers();
 
-    // OH YEAH
-    EntityFile ef;
-    std::ofstream	file;
-    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &file](const std::string &key)
-		  {
-		        file.open("entities/"+key+".entity");
-			ef.serialize(this->create(key), key, file);
-			file.close();
-		  });
+    this->deserializeAll();
+    this->serializeAll();
+
   }
 };
 
