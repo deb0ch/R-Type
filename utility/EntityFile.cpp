@@ -29,11 +29,11 @@ void					EntityFile::serialize(const Entity *e, const std::string &key, std::ofs
   if (!e)
     return ;
   output << "ENTITY:" << key << std::endl;
-  std::for_each(e->_components.begin(), e->_components.end(), [&output](IComponent *c) -> void
+  std::for_each(e->_components.begin(), e->_components.end(), [&output](const IComponent *c)
 		{
-		  output << "\t" << "COMPONENT:" << c->getType() << std::endl;
-		  c->serializeFromFile(output);
-		  output << "\t" << "!COMPONENT:" << std::endl;
+		  output << std::string(1, '\t') << "COMPONENT:" << c->getType() << std::endl;
+		  c->serializeFromFile(output, 2);
+		  output << std::string(1, '\t') << "!COMPONENT" << std::endl;
 		});
   output << "!ENTITY" << std::endl;
 }
