@@ -103,6 +103,11 @@ void			EntitySpawnerComponent::clearEntities()
 	this->_entities.clear();
 }
 
+void			EntitySpawnerComponent::setDelay(float delay)
+{
+	this->_delay = delay;
+}
+
 void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned int> &value)
 {
 	this->_entities.push_back(value);

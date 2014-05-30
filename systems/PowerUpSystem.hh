@@ -1,6 +1,8 @@
 #ifndef POWERUPSYSTEM_H_
 # define POWERUPSYSTEM_H_
 
+# include <vector>
+# include <string>
 # include "ASystem.hh"
 
 class PowerUpSystem : public ASystem
@@ -10,6 +12,7 @@ public:
 	virtual ~PowerUpSystem();
 
 	void	collision_event(IEvent *);
+	void	delete_entity(IEvent *);
 
 protected:
 	virtual bool canProcess(Entity *);

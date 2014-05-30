@@ -112,6 +112,8 @@ void		addSystems(World &world)
 			&EntityDeleterSystem::addEntityToDelete);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+	  &PowerUpSystem::delete_entity);
 
   std::vector<std::string> arg =
     {
