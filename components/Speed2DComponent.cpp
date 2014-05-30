@@ -56,7 +56,7 @@ void	Speed2DComponent::unserialize(IBuffer &buffer)
   buffer >> this->_vY;
 }
 
-void	Speed2DComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	Speed2DComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
@@ -65,7 +65,7 @@ void	Speed2DComponent::deserializeFromFileSpecial(const std::string &lastline, s
   else if (std::regex_match(lastline, std::regex("vy=.+")))
     this->_vY = std::stof(lastline.substr(3));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	Speed2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

@@ -56,7 +56,7 @@ void		CollisionPoint::serialize(IBuffer &) const
 void		CollisionPoint::unserialize(IBuffer &)
 {}
 
-void	CollisionPoint::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	CollisionPoint::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
@@ -69,7 +69,7 @@ void	CollisionPoint::deserializeFromFileSpecial(const std::string &lastline, std
   else if (std::regex_match(lastline, std::regex("height=.+")))
     this->_box->setHeight(std::stof(lastline.substr(7)));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void		CollisionPoint::serializeFromFile(std::ofstream &output, unsigned char indent) const

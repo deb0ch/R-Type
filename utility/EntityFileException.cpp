@@ -33,7 +33,6 @@ const char*	EntityFileException::what() const noexcept
   res << "What ?\t" << this->_message << std::endl;
 
   return (res.str().c_str());
-  //  return (std::string("EntityFileException: }[Line #" + std::to_string(this->_lineno) + "] " + this->_message ).c_str());
 }
 
 //----- ----- Setters ----- ----- //
@@ -45,4 +44,9 @@ void		EntityFileException::setFilename(const std::string &filename)
 void		EntityFileException::setComponent(const std::string &component)
 {
   this->_component = component;
+}
+
+void		EntityFileException::setLineNo(unsigned int lineno)
+{
+  this->_lineno = lineno;
 }

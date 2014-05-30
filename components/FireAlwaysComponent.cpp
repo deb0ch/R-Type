@@ -17,7 +17,7 @@ void	FireAlwaysComponent::serialize(IBuffer &) const
 void	FireAlwaysComponent::unserialize(IBuffer &)
 {}
 
-void	FireAlwaysComponent::deserializeFromFileSpecial(const std::string &, std::ifstream &)
+void	FireAlwaysComponent::deserializeFromFileSpecial(const std::string &, std::ifstream &, unsigned int &)
 {}
 
 void	FireAlwaysComponent::serializeFromFile(std::ofstream &, unsigned char) const

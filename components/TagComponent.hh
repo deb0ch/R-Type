@@ -17,7 +17,7 @@ public:
   bool		hasTag(const std::string& tag) const;
   void		removeTag(const std::string& tag);
 
-  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:

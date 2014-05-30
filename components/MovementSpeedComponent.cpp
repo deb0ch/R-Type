@@ -28,14 +28,14 @@ void	MovementSpeedComponent::unserialize(IBuffer &buffer)
   buffer >> this->_movement_speed;
 }
 
-void	MovementSpeedComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	MovementSpeedComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
   if (std::regex_match(lastline, std::regex("speed_coef=.+")))
     this->_movement_speed = std::stof(lastline.substr(11));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	MovementSpeedComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

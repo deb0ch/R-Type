@@ -15,7 +15,8 @@ public:
 	void	serialize(IBuffer &buffer) const;
 	void	unserialize(IBuffer &buffer);
 
-	virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:
 	std::string _newWeapon;

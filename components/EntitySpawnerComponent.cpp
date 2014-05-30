@@ -167,7 +167,7 @@ void			EntitySpawnerComponent::serialize(IBuffer &) const
 void			EntitySpawnerComponent::unserialize(IBuffer &)
 {}
 
-void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   ComponentFactory	cf;
   cf.init();
@@ -196,12 +196,12 @@ void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastl
 
       compo = cf.create(lastline.substr(20));
       if (!compo)
-	throw EntityFileException("Component doesn't exist in Factory : \"" + lastline.substr(20) + "\"");
-      compo->deserializeFromFile(input);
+	throw EntityFileException("Component doesn't exist in Factory : \"" + lastline.substr(20) + "\"", lineno);
+      compo->deserializeFromFile(input, lineno);
       this->_components.push_back(compo);
     }
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

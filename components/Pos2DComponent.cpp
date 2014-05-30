@@ -58,7 +58,7 @@ Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
   return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));
 }
 
-void	Pos2DComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	Pos2DComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
@@ -67,7 +67,7 @@ void	Pos2DComponent::deserializeFromFileSpecial(const std::string &lastline, std
   else if (std::regex_match(lastline, std::regex("y=.+")))
     this->_y = std::stof(lastline.substr(2));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void		Pos2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

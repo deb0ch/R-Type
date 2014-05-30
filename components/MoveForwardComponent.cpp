@@ -32,7 +32,7 @@ void	MoveForwardComponent::unserialize(IBuffer &buffer)
   buffer >> this->_direction2;
 }
 
-void	MoveForwardComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	MoveForwardComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
@@ -41,7 +41,7 @@ void	MoveForwardComponent::deserializeFromFileSpecial(const std::string &lastlin
   else if (std::regex_match(lastline, std::regex("dir2=.+")))
     this->_direction2 = lastline.substr(5);
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void		MoveForwardComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

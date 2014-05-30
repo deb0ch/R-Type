@@ -45,7 +45,7 @@ std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
 	  component = cf.create(line.substr(10));
 	  if (!component)
 	    throw EntityFileException("Component not found in factory : \"" + line.substr(10) + "\"", lineno);
-	  component->deserializeFromFile(input);
+	  component->deserializeFromFile(input, lineno);
 	  entity->addComponent(component);
 	}
       else if (std::regex_match(line, std::regex("!ENTITY")))

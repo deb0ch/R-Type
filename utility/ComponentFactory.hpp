@@ -32,6 +32,7 @@
 # include "NetworkReceiveActionComponent.hh"
 # include "EntitySpawnerComponent.hh"
 # include "FireAlwaysComponent.hh"
+# include "PowerUpComponent.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
@@ -77,6 +78,7 @@ public :
     this->addComponent(new NetworkReceiveActionComponent());
     this->addComponent(new EntitySpawnerComponent());
     this->addComponent(new FireAlwaysComponent());
+    this->addComponent(new PowerUpComponent());
   }
 
   virtual ASerializableComponent	*create(const std::string &key) const

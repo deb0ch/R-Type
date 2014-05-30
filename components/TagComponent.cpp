@@ -59,14 +59,14 @@ void	TagComponent::unserialize(IBuffer &buffer)
     }
 }
 
-void	TagComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	TagComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
   if (std::regex_match(lastline, std::regex("tag=.+")))
     this->addTag(lastline.substr(4));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	TagComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

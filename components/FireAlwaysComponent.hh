@@ -12,7 +12,7 @@ public:
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);
 
-  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 

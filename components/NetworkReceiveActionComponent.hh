@@ -13,7 +13,7 @@ public:
   unsigned int	getPacketNum() const;
   void		setPacketNum(unsigned int);
 
-  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 protected:
   unsigned int	_packet_num;

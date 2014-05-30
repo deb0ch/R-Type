@@ -32,7 +32,7 @@ void ExplosionComponent::serialize(IBuffer &) const
 void ExplosionComponent::unserialize(IBuffer &)
 {}
 
-void	ExplosionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	ExplosionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
@@ -43,7 +43,7 @@ void	ExplosionComponent::deserializeFromFileSpecial(const std::string &lastline,
   else if (std::regex_match(lastline, std::regex("offsetY=.+")))
     this->_offsetY = std::stof(lastline.substr(8));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	ExplosionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

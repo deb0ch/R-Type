@@ -12,12 +12,13 @@ protected:
   unsigned int	_lineno;
 
 public:
-  EntityFileException(std::string message = "", unsigned int lineno = 0);;
+  EntityFileException(std::string message = "", unsigned int lineno = 0);
   ~EntityFileException();
 
   virtual const char*	what() const noexcept;
   void			setFilename(const std::string &);
   void			setComponent(const std::string &);
+  void			setLineNo(unsigned int);
 };
 
 #endif /* !ENTITYFILEEXCEPTION_H_ */

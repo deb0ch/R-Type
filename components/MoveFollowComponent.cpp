@@ -71,14 +71,14 @@ void		MoveFollowComponent::setTagToFollow(const std::string & tagToFollow)
   this->_tagToFollow = tagToFollow;
 }
 
-void	MoveFollowComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	MoveFollowComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
   if (std::regex_match(lastline, std::regex("tagToFollow=.+")))
     this->_tagToFollow = lastline.substr(12);
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	MoveFollowComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

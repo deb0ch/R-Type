@@ -143,7 +143,7 @@ void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 	buffer >> this->_nbSprite;
 }
 
-void	SFMLSpriteComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	SFMLSpriteComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   if (std::regex_match(lastline, std::regex("filename=.+")))
     this->_fileName = lastline.substr(9);
@@ -171,11 +171,11 @@ void	SFMLSpriteComponent::deserializeFromFileSpecial(const std::string &lastline
 	      break ;
 	    }
 	  else
-	    throw EntityFileException("Bad argument for ANIM : \"" + line + "\"");
+	    throw EntityFileException("Bad argument for ANIM : \"" + line + "\"", lineno);
 	}
     }
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void		SFMLSpriteComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

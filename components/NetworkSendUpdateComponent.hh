@@ -17,7 +17,7 @@ public:
   void		addLastUpdateDelay(const float);
   bool		canSend();
   void		resetLastUpdateDelay();
-  void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
+  void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:

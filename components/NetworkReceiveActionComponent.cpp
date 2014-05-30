@@ -25,14 +25,14 @@ void		NetworkReceiveActionComponent::serialize(IBuffer &) const
 void		NetworkReceiveActionComponent::unserialize(IBuffer &)
 {}
 
-void	NetworkReceiveActionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+void	NetworkReceiveActionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
 {
   (void)input;
 
   if (std::regex_match(lastline, std::regex("packet_num=.+")))
     this->_packet_num = std::stoul(lastline.substr(11));
   else
-    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
 
 void	NetworkReceiveActionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
