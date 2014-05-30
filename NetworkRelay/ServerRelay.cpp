@@ -19,8 +19,6 @@ ServerRelay::ServerRelay(int port, int nb_pending_connection)
   this->_server_socket_udp.bind(port);
   this->_select.initReads();
   this->_select.initWrites();
-  this->_rooms.insert(std::pair<std::string, RoomServer *>
-		      ("test", new RoomServer(this, "test")));
 }
 
 ServerRelay::~ServerRelay()
@@ -65,7 +63,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
-      std::cout << "creating buffer tcp: " << buffer << std::endl;
+      //std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -85,7 +83,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
   if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
-      std::cout << "creating buffer udp: " << buffer << std::endl;
+      //std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {
@@ -230,18 +228,15 @@ void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 		      remote->sendTCP(buffer);
 		      remote->setRoom(nameRoom);
 		      itBuff = recv_buffer.erase(itBuff);
-		      if (room)
-			{
-			  auto itRoom = std::find(room->getRemotes().begin(),
-						  room->getRemotes().end(), remote);
-			  if (itRoom != room->getRemotes().end())
-			    room->getRemotes().erase(itRoom);
-			}
-		      else
-			{
-			  it = remotes.erase(it);
-			  continue;
-			}
+		      if (room) {
+			auto itRoom = std::find(room->getRemotes().begin(),
+						room->getRemotes().end(), remote);
+			if (itRoom != room->getRemotes().end())
+			  room->getRemotes().erase(itRoom);
+		      } else {
+			it = remotes.erase(it);
+			continue;
+		      }
 		    }
 		  else
 		    ++itBuff;
@@ -249,11 +244,12 @@ void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 	    }
 	  else
 	    {
-	      if (!room)
+	      if (!room) {
 		it = remotes.erase(it);
-	      else
+		continue;
+	      } else {
 		room->disconnectRemote(remote);
-	      continue;
+	      }
 	    }
 	}
       ++it;
@@ -271,44 +267,29 @@ void		ServerRelay::manageRemotesInRooms()
       auto guard = create_lock(*room);
 
       this->manageRemotes(room->getRemotes(), room);
+
       //Clean room empty
-      if (room->trylock())
+      auto guard_room = create_lock(*room, true);
+      std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
+      std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
+		    [&room, this] (Remote *remote) -> void
+		    {
+		      room->removeRemote(remote);
+		    });
+      remotes_disconnect.clear();
+      if (room->getRemotes().empty() && this->_mutex_room.trylock())
 	{
-	  auto guard_room = create_lock(*room, true);
+	  auto guard = create_lock(this->_mutex_room, true);
 
-	  std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
-	  std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
-			[&room, this] (Remote *remote) -> void
-			{
-			  this->removeRemote(remote);
-			  room->removeRemote(remote);
-			});
-	  remotes_disconnect.clear();
-	  if (room->getRemotes().empty())
-	    {
-	      if (this->_mutex_room.trylock())
-		{
-		  auto guard = create_lock(this->_mutex_room, true);
+	  guard_room.setUnLocked();
 
-		  guard_room.setUnLocked();
-
-		  it = this->_rooms.erase(it);
-		  room = NULL;
-		  std::cout << "!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-		}
-	    }
+	  it = this->_rooms.erase(it);
+	  room = NULL;
+	  std::cout << "!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 	}
       if (room)
 	++it;
     }
-}
-
-void		ServerRelay::removeRemote(Remote *remote)
-{
-  this->_select.removeRead(remote->getTCPSocket().getHandle());
-  this->_select.removeWrite(remote->getTCPSocket().getHandle());
-  //TODO
-  //this->_world->sendEvent(new DisconnectPlayerEvent(remote->getPrivateHash()));
 }
 
 /**
@@ -358,8 +339,10 @@ void		ServerRelay::addClient()
   hash = this->generateHash();
   std::cout << "GENERATING HASH: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
-  this->_rooms["test"]->addRemote(remote);
-  //this->_remotsWithoutRoom.push_back(remote);
+  //TODO remove next line
+  //this->_rooms["test"]->addRemote(remote);
+  //TODO decomment next line
+  this->_remotsWithoutRoom.push_back(remote);
   buffer = this->getTCPBuffer();
   *buffer << hash;
   remote->sendTCP(buffer);

@@ -27,7 +27,10 @@ void				Room::disconnectRemote(Remote *remote)
   if (std::find(this->_pending_disconnect_remotes.begin(),
 		this->_pending_disconnect_remotes.end(), remote) ==
       this->_pending_disconnect_remotes.end())
-    this->_pending_disconnect_remotes.push_back(remote);
+    {
+      std::cout << "_______________________ DisconnectRemote________________________" << std::endl;
+      this->_pending_disconnect_remotes.push_back(remote);
+    }
 }
 
 void				Room::removeRemote(Remote *remote)
