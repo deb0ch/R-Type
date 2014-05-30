@@ -12,9 +12,6 @@ ENTITY:MONSTER_SPAWNER_GAME
 	COMPONENT:EntitySpawnerComponent
 		entity=MONSTER_1;1
 		entity=MONSTER_2;1
-		entity=POWERUP_1;1
-		entity=POWERUP_2;1
-		entity=POWERUP_3;1
 		nb=0
 		delay=1.1
 		minPosX=0

@@ -20,8 +20,9 @@ ENTITY:POWERUP_2
 	COMPONENT:TeamComponent
 		team=2
 	!COMPONENT
-	COMPONENT:PowerUpComponent
+	COMPONENT:APowerUpComponent
 		weapon=BOMB_BULLET
+		delay=0.75
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=1

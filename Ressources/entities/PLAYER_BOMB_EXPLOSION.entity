@@ -14,18 +14,18 @@ ENTITY:PLAYER_BOMB_EXPLOSION
 		team=1
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=200
-		height=200
+		width=100
+		height=100
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=70
+		collisionPower=5
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=200
-			height=200
+			width=100
+			height=100
 		!COMPONENT
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent

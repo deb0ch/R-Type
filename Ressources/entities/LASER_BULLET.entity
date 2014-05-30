@@ -10,11 +10,17 @@ ENTITY:LASER_BULLET
 		width=50
 		height=15
 	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=LASER_EXPLOSION
+		offsetX=0
+		offsetY=0
+	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1
 	!COMPONENT
 	COMPONENT:TagComponent
 		tag=BULLET
+		tag=LASER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=1000
@@ -24,10 +30,10 @@ ENTITY:LASER_BULLET
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=400
+		speed_coef=500
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=2
+		collisionPower=5
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Laser.png
