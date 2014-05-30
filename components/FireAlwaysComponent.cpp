@@ -16,3 +16,6 @@ void	FireAlwaysComponent::serialize(IBuffer &) const
 
 void	FireAlwaysComponent::unserialize(IBuffer &)
 {}
+
+void	FireAlwaysComponent::serializeFromFile(std::ofstream &, unsigned char) const
+{}

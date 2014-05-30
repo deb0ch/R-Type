@@ -22,6 +22,8 @@ public:
   float		getWidth() const;
   float		getHeight() const;
 
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   float		_posX;
   float		_posY;

@@ -57,3 +57,11 @@ void	TagComponent::unserialize(IBuffer &buffer)
     this->_tags.push_back(s);
   }
 }
+
+void	TagComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  std::for_each(this->_tags.begin(), this->_tags.end(), [&output, indent](const std::string &tag)
+		{
+		  output << std::string(indent, '\t') << "tag=" << tag << std::endl;
+		});
+}

@@ -14,6 +14,8 @@ public:
   void		setRemoteId(unsigned int);
   virtual void	serialize(IBuffer &) const;
   virtual void	unserialize(IBuffer &);
+
+  void	serializeFromFile(std::ofstream &, unsigned char) const;
 protected:
   unsigned int	_packet_number;
   unsigned int	_remote_id;

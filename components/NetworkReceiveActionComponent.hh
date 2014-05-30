@@ -12,6 +12,8 @@ public:
   virtual	void unserialize(IBuffer &);
   unsigned int	getPacketNum() const;
   void		setPacketNum(unsigned int);
+
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 protected:
   unsigned int	_packet_num;
 };

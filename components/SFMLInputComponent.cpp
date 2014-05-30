@@ -28,3 +28,6 @@ void SFMLInputComponent::serialize(IBuffer &) const
 
 void SFMLInputComponent::unserialize(IBuffer &)
 {}
+
+void	SFMLInputComponent::serializeFromFile(std::ofstream &, unsigned char) const
+{}

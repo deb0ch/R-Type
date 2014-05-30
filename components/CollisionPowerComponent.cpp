@@ -29,3 +29,8 @@ void		CollisionPowerComponent::unserialize(IBuffer &buffer)
 {
 	buffer >> this->_collisionPower;
 }
+
+void	CollisionPowerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "collisionPower=" << this->_collisionPower << std::endl;
+}
