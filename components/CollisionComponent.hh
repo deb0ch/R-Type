@@ -32,7 +32,8 @@ public:
   CollisionComponent	       *addToCollideItem(std::string const &);
   CollisionComponent	       *addNotToCollideItem(std::string const &);
 
-  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !COLLISIONCOMPONENT_H_ */

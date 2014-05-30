@@ -56,6 +56,22 @@ void		CollisionPoint::serialize(IBuffer &) const
 void		CollisionPoint::unserialize(IBuffer &)
 {}
 
+void	CollisionPoint::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("x=.+")))
+    this->_pos->setX(std::stof(lastline.substr(2)));
+  else if (std::regex_match(lastline, std::regex("y=.+")))
+    this->_pos->setY(std::stof(lastline.substr(2)));
+  else if (std::regex_match(lastline, std::regex("width=.+")))
+    this->_box->setWidth(std::stof(lastline.substr(6)));
+  else if (std::regex_match(lastline, std::regex("height=.+")))
+    this->_box->setHeight(std::stof(lastline.substr(7)));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void		CollisionPoint::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "x=" << this->getPos()->getX() << std::endl;

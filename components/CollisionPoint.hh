@@ -23,6 +23,7 @@ public:
   Box2DComponent	*getBox() const;
   Pos2DComponent	*getPos() const;
 
+  virtual void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input);
   virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 };

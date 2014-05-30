@@ -143,12 +143,51 @@ void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 	buffer >> this->_nbSprite;
 }
 
+void	SFMLSpriteComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  if (std::regex_match(lastline, std::regex("filename=.+")))
+    this->_fileName = lastline.substr(9);
+  else if (std::regex_match(lastline, std::regex("nbSpritesX=.+")))
+    this->_sprites.nbSprintX = std::stoi(lastline.substr(11));
+  else if (std::regex_match(lastline, std::regex("nbSpritesY=.+")))
+    this->_sprites.nbSprintY = std::stoi(lastline.substr(11));
+  else if (std::regex_match(lastline, std::regex("anim=ANIM")))
+    {
+      std::string		line;
+      std::string		action;
+      std::pair<int, int>	pair;
+      while (std::getline(input, line))
+	{
+	  line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
+	  if (std::regex_match(line, std::regex("action=.*")))
+	    action = line.substr(7);
+	  else if (std::regex_match(line, std::regex("start=.+")))
+	    pair.first = std::stoi(line.substr(6));
+	  else if (std::regex_match(line, std::regex("length=.+")))
+	    pair.second = std::stoi(line.substr(7));
+	  else if (std::regex_match(line, std::regex("!ANIM")))
+	    {
+	      this->_map[action] = pair;
+	      break ;
+	    }
+	  else
+	    throw EntityFileException("Bad argument for ANIM : \"" + line + "\"");
+	}
+    }
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void		SFMLSpriteComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "filename=" << this->_fileName << std::endl;
   output << std::string(indent, '\t') << "nbSpritesX=" << this->_sprites.nbSprintX << std::endl;
   output << std::string(indent, '\t') << "nbSpritesY=" << this->_sprites.nbSprintY << std::endl;
-  std::for_each(this->_map.begin(), this->_map.end(), [&output, indent](const std::pair<std::string, std::pair<int, int> > &pair){
-      output << std::string(indent, '\t') << "anim=" << pair.first << ";" << pair.second.first << ";" << pair.second.second << std::endl;
+  std::for_each(this->_map.begin(), this->_map.end(), [&output, indent](const std::pair<std::string, std::pair<int, int> > &pair) {
+      output << std::string(indent, '\t') << "anim=ANIM" << std::endl;
+      output << std::string(indent + 1, '\t') << "action=" << pair.first << std::endl;
+      output << std::string(indent + 1, '\t') << "start=" << pair.second.first << std::endl;
+      output << std::string(indent + 1, '\t') << "length="<< pair.second.second << std::endl;
+      output << std::string(indent, '\t') << "!ANIM" << std::endl;
     });
 }
