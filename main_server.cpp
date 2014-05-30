@@ -73,9 +73,9 @@ void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
-  //world.addSystem(new SFMLEventSystem());
+  world.addSystem(new SFMLEventSystem());
   // world.addSystem(new SFMLInputSystem());
-  //world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());

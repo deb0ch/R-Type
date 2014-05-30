@@ -389,7 +389,7 @@ public:
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.5f))
 		    ->addComponent(new LifeComponent(1, 20))
-			->addComponent(new CollisionPowerComponent(100))
+		    ->addComponent(new CollisionPowerComponent(100))
 		    ->addComponent(new ExplosionComponent("PLAYER_EXPLOSION"))
 		    ->addComponent(new SFMLSpriteComponent("players.png",
 							   ImageLoader::NbSprite{ 5, 5 },
@@ -400,7 +400,7 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {new MoveForwardComponent("RIGHT ")}, 0, 0.15f,
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {new MoveForwardComponent("RIGHT")}, 0, 0.15f,
 			{ 5.0f, 0.0f }, { 5.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -986,7 +986,7 @@ public:
 
     std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &output](const std::string &key)
 		  {
-		        output.open("entities/"+key+".entity");
+		        output.open("Ressources/entities/"+key+".entity");
 			ef.serialize(this->create(key), key, output);
 			output.close();
 		  });
@@ -1000,13 +1000,13 @@ public:
     std::ifstream			input;
     std::pair<std::string, Entity*>	res;
 
-    dir = opendir("./entities/");
+    dir = opendir("Ressources/entities/");
 
-    while ((file = readdir(dir)))
+    while (dir && (file = readdir(dir)))
       {
 	if (file->d_name[0] == '.')
 	  continue ;
-	input.open("./entities/" + std::string(file->d_name));
+	input.open("./Ressources/entities/" + std::string(file->d_name));
 	try {
 	  res = ef.deserialize(input);
 	}
@@ -1015,24 +1015,26 @@ public:
 	    efe.setFilename(file->d_name);
 	    throw;
 	  }
-	this->addEntity("FOO"+res.first, res.second);
+	this->addEntity(res.first, res.second);
 	input.close();
       }
   }
 
   void		init()
   {
-    this->initBackground();
-    this->initBorders();
-    this->initPlayer();
-	this->initPlayerBullet();
-    this->initBullet();
-    this->initMonster();
-    this->initBoss();
-    this->initgame();
-    this->initOthers();
-	this->initPowerUp();
 
+    // this->initBackground();
+    // this->initBorders();
+    // this->initPlayer();
+    // this->initPlayerBullet();
+    // this->initBullet();
+    // this->initMonster();
+    // this->initBoss();
+    // this->initgame();
+    // this->initOthers();
+    // this->initPowerUp();
+
+    this->serializeAll();
     this->deserializeAll();
     this->serializeAll();
 

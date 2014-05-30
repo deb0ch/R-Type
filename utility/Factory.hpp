@@ -14,9 +14,9 @@ public:
 
   void	add(const Key &key, const U *obj)
   {
-    auto it = this->_types.find(key);
+    /*auto it = this->_types.find(key);
 
-    if (it == this->_types.end())
+      if (it == this->_types.end())*/
       this->_types.insert(std::make_pair(key, obj));
   }
 
