@@ -54,3 +54,13 @@ void	PlayerLifeSystem::entityDeathEvent(IEvent *event)
 	}
     }
 }
+
+unsigned int	PlayerLifeSystem::getNbLives() const
+{
+  return this->_nb_lives;
+}
+
+void		PlayerLifeSystem::setNbLives(unsigned int lives)
+{
+  this->_nb_lives = lives;
+}

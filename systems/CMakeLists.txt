@@ -101,6 +101,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	PARENT_SCOPE
 )
 
@@ -135,5 +136,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	PARENT_SCOPE
 )

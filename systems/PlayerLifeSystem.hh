@@ -12,6 +12,8 @@ public:
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
   void		entityDeathEvent(IEvent *event);
+  unsigned int	getNbLives() const;
+  void		setNbLives(unsigned int);
 protected:
   unsigned int _nb_lives;
 };

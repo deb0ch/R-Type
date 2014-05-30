@@ -26,10 +26,11 @@
 # include "AutoDestructComponent.hh"
 # include "MoveFollowComponent.hh"
 # include "ExplosionComponent.hh"
-# include "PowerUpComponent.hh"
+# include "WeaponPowerUpComponent.hh"
 # include "Hash.hh"
 # include "NetworkReceiveActionComponent.hh"
 # include "EntityFile.hh"
+# include "LifePowerUpComponent.hh"
 
 class EntityFactory : public Factory<Entity, hash_t>
 {
@@ -427,7 +428,7 @@ public:
 		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		  ->addComponent(new Speed2DComponent(-30.0f, 0.0f))
 		  ->addComponent(new TeamComponent(2))
-		  ->addComponent(new PowerUpComponent("FAT_BULLET", 0.30f))
+		  ->addComponent(new WeaponPowerUpComponent("FAT_BULLET", 0.30f))
 		  ->addComponent(new LifeComponent(1))
 		  ->addComponent((new CollisionComponent())
 			->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 25.0f, 20.0f))
@@ -445,7 +446,7 @@ public:
 		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		  ->addComponent(new Speed2DComponent(-30.0f, 0.0f))
 		  ->addComponent(new TeamComponent(2))
-		  ->addComponent(new PowerUpComponent("BOMB_BULLET", 0.75f))
+		  ->addComponent(new WeaponPowerUpComponent("BOMB_BULLET", 0.75f))
 		  ->addComponent(new LifeComponent(1))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 25.0f, 20.0f))
@@ -463,7 +464,25 @@ public:
 		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		  ->addComponent(new Speed2DComponent(-30.0f, 0.0f))
 		  ->addComponent(new TeamComponent(2))
-		  ->addComponent(new PowerUpComponent("LASER_BULLET"))
+		  ->addComponent(new WeaponPowerUpComponent("LASER_BULLET"))
+		  ->addComponent(new LifeComponent(1))
+		  ->addComponent((new CollisionComponent())
+		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 25.0f, 20.0f))
+		  ->addToCollideItem("PLAYER")
+		  ->addNotToCollideItem("BULLET")
+		  ->addNotToCollideItem("MONSTER"))
+		  ->addComponent(new SFMLSpriteComponent("SpeedUp.png", ImageLoader::NbSprite{ 4, 1 },
+		  { { "", { 3, 0 } } })));
+
+	  this->addEntity("POWERUP_LIFE", (new Entity())
+		  ->addComponent((new TagComponent())
+		  ->addTag("BOOST"))
+		  ->addComponent(new NetworkSendUpdateComponent(10.0f))
+		  ->addComponent(new Box2DComponent(25.0f, 20.0f))
+		  ->addComponent(new Pos2DComponent(0.0f, 0.0f))
+		  ->addComponent(new Speed2DComponent(-30.0f, 0.0f))
+		  ->addComponent(new LifePowerUpComponent())
+		  ->addComponent(new TeamComponent(2))
 		  ->addComponent(new LifeComponent(1))
 		  ->addComponent((new CollisionComponent())
 		  ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 25.0f, 20.0f))

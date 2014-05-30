@@ -92,7 +92,9 @@ void		addSystems(World &world)
   world.addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
   world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
-  world.addSystem(new PowerUpSystem());
+  std::vector<std::string> power_ups =
+    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+  world.addSystem(new PowerUpSystem(power_ups));
   world.addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
@@ -100,7 +102,6 @@ void		addSystems(World &world)
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
-  world.addEventHandler("CollisionEvent", collision, &PowerUpSystem::collision_event);
 
 
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
@@ -114,8 +115,6 @@ void		addSystems(World &world)
 			&EntityDeleterSystem::addEntityToDelete);
   world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 	  &LifeSystem::delete_entity);
-  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-	  &PowerUpSystem::delete_entity);
 
   std::vector<std::string> arg =
     {

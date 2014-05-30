@@ -1,19 +1,27 @@
 #include	"PowerUpSystem.hh"
 #include	"CollisionEvent.hh"
-#include	"PowerUpComponent.hh"
+#include	"APowerUpComponent.hpp"
 #include	"EntitySpawnerComponent.hh"
 #include	"EntityDeletedEvent.hh"
 #include	"TagComponent.hh"
 #include	"RandomInt.hpp"
 #include	"EntityFactory.hpp"
 
-PowerUpSystem::PowerUpSystem()
-	: ASystem("PowerUpSystem")
+PowerUpSystem::PowerUpSystem(const std::vector<std::string> &possible_powerup)
+  : ASystem("PowerUpSystem")
 {
+  this->_possible_powerup = possible_powerup;
+  std::cout << "AZJEOAZJE: " << this << std::endl;
 }
 
 PowerUpSystem::~PowerUpSystem()
 {}
+
+void	PowerUpSystem::init()
+{
+  this->_world->addEventHandler("CollisionEvent", this, &PowerUpSystem::collision_event);
+  this->_world->addEventHandler("EntityDeletedEvent", this, &PowerUpSystem::delete_entity);
+}
 
 bool PowerUpSystem::canProcess(Entity *)
 {
@@ -29,14 +37,12 @@ void PowerUpSystem::collision_event(IEvent *e)
 	Entity *firstEntity = event->getEntity1();
 	Entity *secondEntity = event->getEntity2();
 
-	PowerUpComponent *powerUp = firstEntity->getComponent<PowerUpComponent>("PowerUpComponent");
+	APowerUpComponent *powerUp = firstEntity->getComponent<APowerUpComponent>("APowerUpComponent");
 	if (powerUp == NULL)
 		return ;
-	EntitySpawnerComponent *spawner = secondEntity->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent");
-	if (spawner == NULL)
-		return;
-	powerUp->upgrade(spawner);
+	powerUp->upgrade(this->_world, secondEntity);
 }
+
 void PowerUpSystem::delete_entity(IEvent *e)
 {
 	EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
@@ -52,14 +58,13 @@ void PowerUpSystem::delete_entity(IEvent *e)
 		return;
 	if (tag->hasTag("MONSTER"))
 	{
-		if (RandomInt().operator()<unsigned long>(0, 10) == 0)
+		if (RandomInt().operator()<unsigned long>(0, 1) == 0)
 		{
-			std::vector<std::string> powerup;
-			powerup.push_back("POWERUP_1");
-			powerup.push_back("POWERUP_2");
-			powerup.push_back("POWERUP_3");
-
-			Entity *boost = entityFactory->create(powerup[RandomInt().operator()<unsigned long>(0, powerup.size() - 1)]);
+			Entity *boost =
+			  entityFactory->create(this->_possible_powerup[
+								       RandomInt().operator()<unsigned long>
+								       (0, this->_possible_powerup.size() - 1)
+								       ]);
 			if (boost == NULL)
 				return;
 			Pos2DComponent *boostPosition = boost->getComponent<Pos2DComponent>("Pos2DComponent");
