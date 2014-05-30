@@ -56,11 +56,20 @@ void		SpawnPlayerSystem::updateWorldToRemote(Remote *remote)
 void				SpawnPlayerSystem::playerRespawn(Entity *entity)
 {
   NetworkPlayerComponent	*network_player_component;
+  Entity			*new_player_entity;
+  LifeComponent			*life_component;
 
   network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
   if (network_player_component)
-    this->spawnPlayer(network_player_component->getRemoteId(),
-		      "PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+    {
+      new_player_entity = this->spawnPlayer(network_player_component->getRemoteId(),
+					    "PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+      if (!new_player_entity)
+	return ;
+      life_component = new_player_entity->getComponent<LifeComponent>("LifeComponent");
+      if (life_component)
+	life_component->setInvulnerabilityTime(3.f);
+    }
 }
 
 void		SpawnPlayerSystem::spawnNextPlayer(unsigned int hash)
@@ -75,7 +84,7 @@ void		SpawnPlayerSystem::spawnNextPlayer(unsigned int hash)
   ++this->_index;
 }
 
-void		SpawnPlayerSystem::spawnPlayer(unsigned int hash,
+Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
 					       const std::string &entity_name)
 {
   EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
@@ -100,7 +109,9 @@ void		SpawnPlayerSystem::spawnPlayer(unsigned int hash,
 				  ->addPlayerComponent(send_action));
 
       std::cout << "Created entity" << std::endl;
+      return (player_entity);
     }
+  return (NULL);
 }
 
 void		SpawnPlayerSystem::beforeProcess(const float)

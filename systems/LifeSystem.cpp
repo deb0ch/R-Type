@@ -27,7 +27,7 @@ bool		LifeSystem::canProcess(Entity *e)
   return (false);
 }
 
-void			LifeSystem::processEntity(Entity *e, const float)
+void			LifeSystem::processEntity(Entity *e, const float delta)
 {
   LifeComponent *lifecompo;
 
@@ -39,7 +39,7 @@ void			LifeSystem::processEntity(Entity *e, const float)
       return;
     }
   if (lifecompo->isInvulnerable())
-    lifecompo->decreaseInvulnerability();
+    lifecompo->decreaseInvulnerability(delta);
 }
 
 void			LifeSystem::collision_event(IEvent *e)

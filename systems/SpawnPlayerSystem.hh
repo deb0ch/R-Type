@@ -19,8 +19,8 @@ public:
   void			updateWorldToRemote(Remote *remote);
   void			playerRespawn(Entity *entity);
   void			spawnNextPlayer(unsigned int hash);
-  void			spawnPlayer(unsigned int hash,
-				    const std::string &entity_name);
+  Entity		*spawnPlayer(unsigned int hash,
+				     const std::string &entity_name);
 protected:
   SafeFifo<unsigned int>	_players_to_spawn;
   std::vector<std::string>	_entity_player_name;
