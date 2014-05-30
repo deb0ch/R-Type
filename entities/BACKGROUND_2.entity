@@ -15,6 +15,10 @@ ENTITY:BACKGROUND_2
 		filename=background.png
 		nbSpritesX=1
 		nbSpritesY=1
-		anim=;0;0
+		anim=ANIM
+			action=
+			start=0
+			length=0
+		!ANIM
 	!COMPONENT
 !ENTITY

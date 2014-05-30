@@ -32,6 +32,10 @@ ENTITY:BORDER_BOTTOM_LEVEL_2
 		filename=mangling.png
 		nbSpritesX=4
 		nbSpritesY=2
-		anim=;1;0
+		anim=ANIM
+			action=
+			start=1
+			length=0
+		!ANIM
 	!COMPONENT
 !ENTITY

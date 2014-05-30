@@ -32,7 +32,11 @@ ENTITY:ALIEN_BOMB_EXPLOSION
 		filename=Monster4.png
 		nbSpritesX=4
 		nbSpritesY=3
-		anim=;5;3
+		anim=ANIM
+			action=
+			start=5
+			length=3
+		!ANIM
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
 		delay=15

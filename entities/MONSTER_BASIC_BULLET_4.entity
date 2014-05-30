@@ -37,7 +37,11 @@ ENTITY:MONSTER_BASIC_BULLET_4
 		filename=ShotBasic.png
 		nbSpritesX=4
 		nbSpritesY=1
-		anim=;0;4
+		anim=ANIM
+			action=
+			start=0
+			length=4
+		!ANIM
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=LEFT

@@ -30,9 +30,21 @@ ENTITY:PLAYER_BLUE
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
-		anim=;2;0
-		anim=DOWN;0;2
-		anim=UP;3;2
+		anim=ANIM
+			action=
+			start=2
+			length=0
+		!ANIM
+		anim=ANIM
+			action=DOWN
+			start=0
+			length=2
+		!ANIM
+		anim=ANIM
+			action=UP
+			start=3
+			length=2
+		!ANIM
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT

@@ -27,7 +27,11 @@ ENTITY:MONSTER_2
 		filename=r-typesheet-7.png
 		nbSpritesX=4
 		nbSpritesY=3
-		anim=;8;4
+		anim=ANIM
+			action=
+			start=8
+			length=4
+		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
 		speed_coef=50

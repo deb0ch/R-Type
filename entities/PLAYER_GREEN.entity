@@ -30,9 +30,21 @@ ENTITY:PLAYER_GREEN
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
-		anim=;12;0
-		anim=DOWN;10;2
-		anim=UP;13;2
+		anim=ANIM
+			action=
+			start=12
+			length=0
+		!ANIM
+		anim=ANIM
+			action=DOWN
+			start=10
+			length=2
+		!ANIM
+		anim=ANIM
+			action=UP
+			start=13
+			length=2
+		!ANIM
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT

@@ -14,7 +14,11 @@ ENTITY:EXPLOSION
 		filename=ExplosionSmall.png
 		nbSpritesX=6
 		nbSpritesY=1
-		anim=;0;6
+		anim=ANIM
+			action=
+			start=0
+			length=6
+		!ANIM
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
 		delay=30

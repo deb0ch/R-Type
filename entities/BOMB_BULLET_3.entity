@@ -42,7 +42,11 @@ ENTITY:BOMB_BULLET_3
 		filename=Monster4.png
 		nbSpritesX=4
 		nbSpritesY=3
-		anim=;4;0
+		anim=ANIM
+			action=
+			start=4
+			length=0
+		!ANIM
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=LEFT

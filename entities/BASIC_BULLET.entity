@@ -42,7 +42,11 @@ ENTITY:BASIC_BULLET
 		filename=ShotBig1.png
 		nbSpritesX=2
 		nbSpritesY=1
-		anim=;1;0
+		anim=ANIM
+			action=
+			start=1
+			length=0
+		!ANIM
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT
