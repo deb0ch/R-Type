@@ -102,9 +102,12 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 
 void		SFMLRenderSystem::start()
 {
-  this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius");
-  this->_window->setVerticalSyncEnabled(true);
-  this->_world->setSharedObject("sfmlwindow", this->_window);
+	if ((this->_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow")) == NULL)
+	{
+		this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius");
+		this->_window->setVerticalSyncEnabled(true);
+		this->_world->setSharedObject("sfmlwindow", this->_window);
+	}
 }
 
 void		SFMLRenderSystem::beforeProcess(const float)
