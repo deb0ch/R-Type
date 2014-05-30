@@ -169,7 +169,8 @@ void			EntitySpawnerComponent::unserialize(IBuffer &)
 
 void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
 {
-  (void)input;
+  ComponentFactory	cf;
+  cf.init();
 
   if (std::regex_match(lastline, std::regex("entity=.+")))
     this->_entities.push_back(std::make_pair(lastline.substr(7, lastline.find(';') - 7), std::stoul(lastline.substr(lastline.find(';') + 1))));
@@ -192,9 +193,10 @@ void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastl
   else if (std::regex_match(lastline, std::regex("component=COMPONENT:.+")))
     {
       IComponent	*compo;
-      compo = ComponentFactory().create(lastline.substr(20));
+
+      compo = cf.create(lastline.substr(20));
       if (!compo)
-	throw EntityFileException("Bad argument : \"" + lastline + "\"");
+	throw EntityFileException("Component doesn't exist in Factory : \"" + lastline.substr(20) + "\"");
       compo->deserializeFromFile(input);
       this->_components.push_back(compo);
     }
