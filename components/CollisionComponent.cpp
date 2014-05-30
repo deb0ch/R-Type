@@ -7,12 +7,17 @@ CollisionComponent::CollisionComponent() : ASerializableComponent("CollisionComp
 
 CollisionComponent::~CollisionComponent()
 {
-  this->_collisionPoints.clear();
+  while (this->_collisionPoints.size())
+    {
+      delete (this->_collisionPoints.front());
+      this->_collisionPoints.erase(this->_collisionPoints.begin());
+    }
   this->_toCollide.clear();
   this->_toNotCollide.clear();
 }
 
-CollisionComponent::CollisionComponent(const CollisionComponent &e) : ASerializableComponent("CollisionComponent")
+CollisionComponent::CollisionComponent(const CollisionComponent &e)
+  : ASerializableComponent("CollisionComponent")
 {
   this->operator=(e);
 }
