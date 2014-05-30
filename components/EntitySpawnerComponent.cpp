@@ -179,17 +179,17 @@ void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastl
   else if (std::regex_match(lastline, std::regex("delay=.+")))
     this->_delay = std::stof(lastline.substr(6));
   else if (std::regex_match(lastline, std::regex("minPosX=.+")))
-    this->_nb = std::stof(lastline.substr(8));
+    this->_min_pos.first = std::stof(lastline.substr(8));
   else if (std::regex_match(lastline, std::regex("minPosY=.+")))
-    this->_nb = std::stof(lastline.substr(8));
+    this->_min_pos.second = std::stof(lastline.substr(8));
   else if (std::regex_match(lastline, std::regex("maxPosX=.+")))
-    this->_nb = std::stof(lastline.substr(8));
+    this->_max_pos.first = std::stof(lastline.substr(8));
   else if (std::regex_match(lastline, std::regex("maxPosY=.+")))
-    this->_nb = std::stof(lastline.substr(8));
+    this->_max_pos.second = std::stof(lastline.substr(8));
   else if (std::regex_match(lastline, std::regex("random=.+")))
-    this->_nb = (lastline.substr(7) == "true");
+    this->_random = (lastline.substr(7) == "true");
   else if (std::regex_match(lastline, std::regex("abs=.+")))
-    this->_nb = (lastline.substr(4) == "true");
+    this->_abs = (lastline.substr(4) == "true");
   else if (std::regex_match(lastline, std::regex("component=COMPONENT:.+")))
     {
       IComponent	*compo;
