@@ -64,8 +64,10 @@ void SFMLMenu::init()
 void	SFMLMenu::connect()
 {
 	this->_relay = new ClientRelay(this->_textboxIP->getString(), 6667);
+	std::cout << "begin" << std::endl;
 	if (!this->_relay->start())
 		throw "butt";
+	std::cout << "end" << std::endl;
 	this->_world->setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(this->_relay));
 }
 

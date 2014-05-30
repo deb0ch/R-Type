@@ -51,8 +51,6 @@ ENTITY:BOSS_1
 			width=100
 			height=90
 		!COMPONENT
-		toCollide=PLAYER
-		toCollide=BULLET
 		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent

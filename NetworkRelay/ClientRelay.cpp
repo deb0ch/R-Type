@@ -43,9 +43,9 @@ void			ClientRelay::waitForEvent()
   this->_select.doSelect();
 }
 
-bool			ClientRelay::start(Any)
+void			ClientRelay::start(Any)
 {
-  return this->start();
+  this->start();
 }
 
 bool			ClientRelay::start()
@@ -67,8 +67,8 @@ bool			ClientRelay::start()
 	  if (!this->_remote->isReady())
 	    {
 	      this->_remote->setReady(true);
-	      return (true);
 	      std::cout << "CLIENT READY" << std::endl;
+	      return (true);
 	    }
 	  if (!buffer->end())
 	    {

@@ -1,5 +1,10 @@
 #include	"Window.hh"
+#include	"INetworkRelay.hh"
+#include	"LockGuard.hpp"
 #include	"StateRoom.hh"
+#include	"Threads.hh"
+#include	"ClientRelay.hh"
+#include	"Any.hpp"
 #include	"StateGame.hh"
 
 StateRoom::StateRoom(sf::RenderWindow * window, World *world)
@@ -37,19 +42,71 @@ void	StateRoom::init()
 
 void	StateRoom::accessRoom()
 {
-	this->_world->setSharedObject("RoomName", new std::string(this->_textboxRoom->getString()));
-	/*
-	bool roomOk = false;
-	if (this->_textboxRoom->getString() == "")
-	{
-	this->_world
-	while (!roomOk)
-	{
+  INetworkRelay *network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
+  //ClientRelay *network = dynamic_cast<ClientRelay *>(tmpNetwork);
 
+  if (network) {
+    Remote *remote = NULL;
+    if (this->_textboxRoom->getString() != "")
+      this->_textboxRoom->setString("defaulte");
+    if (!(remote = network->getRemote(0)))
+      throw "invalide remote";
+    IBuffer *buffer = network->getTCPBuffer();
+    *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
+    *buffer << this->_textboxRoom->getString();
+    std::cout << "SEND" << std::endl;
+    remote->sendTCP(buffer);
+    Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
+
+    thread->start(network, &INetworkRelay::start, Any());
+    //network->start(Any());
+    //std::cout << "END SEND" << std::endl;
+
+    while (42) {
+      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
+      auto guard = create_lock(recv_buffer);
+
+      for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
+	{
+	  // std::cout << "receive" << std::endl;
+
+	  if (this->parsePacket(recv_buffer, it))
+	    return ;
 	}
+    }
+  } else {
+    throw "invalide network";
+  }
+}
+
+bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it)
+{
+  char		packet_type;
+  IBuffer	*buffer;
+  std::string	msg;
+
+  buffer = *it;
+  buffer->rewind();
+  *buffer >> packet_type;
+  std::cout << (int)packet_type << std::endl;
+  if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES ||
+      packet_type == INetworkRelay::CHANGE_ROOM_QUERY_NON)
+    {
+      if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES)
+	{
+	  return true;
 	}
-	if (roomOk)
-	*/
+      else
+	{
+	  *buffer >> msg;
+	  throw msg;
+	}
+      it = vector.erase(it);
+      return true;
+    }
+  else
+    ++it;
+  return false;
 }
 
 void	StateRoom::update(StateManager& manager)
@@ -66,8 +123,8 @@ void	StateRoom::update(StateManager& manager)
 	case sf::Event::TextEntered:
 	  if (event.text.unicode == 13)
 	    {
-		  this->accessRoom();
-		manager.pushState(new StateGame(this->_world));
+	      this->accessRoom();
+	      manager.pushState(new StateGame(this->_world));
 	    }
 	  else if (event.text.unicode == 8)
 	    this->_textboxRoom->removelastCharacter();

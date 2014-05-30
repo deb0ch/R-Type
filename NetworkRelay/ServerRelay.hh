@@ -16,26 +16,28 @@ class ServerRelay : public INetworkRelay
 public:
   ServerRelay(int port = 4011, int nb_pending_connection = 42);
   virtual				~ServerRelay();
-  virtual bool				start();
-  virtual bool				start(Any);
-  virtual Room				*getRoom(const std::string &room_name);
-  virtual IBuffer			*getTCPBuffer();
-  virtual IBuffer			*getUDPBuffer();
-  virtual Remote			*getRemote(unsigned int);
-  virtual Remote			*getRemote(const std::string &ip, const int port);
-  virtual void				disposeUDPBuffer(IBuffer *);
-  virtual void				disposeTCPBuffer(IBuffer *);
+  virtual bool		start();
+  virtual void		start(Any);
+  virtual Room		*getRoom(const std::string &room_name);
+  virtual IBuffer	*getTCPBuffer();
+  virtual IBuffer	*getUDPBuffer();
+  virtual Remote	*getRemote(unsigned int);
+  virtual Remote	*getRemote(const std::string &ip, const int port);
+  virtual void		disposeUDPBuffer(IBuffer *);
+  virtual void		disposeTCPBuffer(IBuffer *);
 
 private:
-  void					waitForEvent();
-  void					addClient();
-  unsigned int				generateHash();
-  void					receiveUDP();
-  void					removeRemote(Remote *remote);
-  void					manageAllRemotes();
-  void					manageRemotes(std::vector<Remote *> &remotes, Room *room = NULL);
-  void					manageRemotesInRooms();
-  void					udpConnect(Remote *remote);
+  void			waitForEvent();
+  void			addClient();
+  unsigned int		generateHash();
+  void			receiveUDP();
+  void			removeRemote(Remote *remote);
+  void			manageAllRemotes();
+  void			manageRemotes(std::vector<Remote *> &remotes, Room *room = NULL);
+  void			manageRemotesInRooms();
+  bool			manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room *room,
+						std::vector<Remote *>::iterator &it, Remote *remote);
+  void			udpConnect(Remote *remote);
 
 protected:
   NetworkInitializer			_network_initializer;

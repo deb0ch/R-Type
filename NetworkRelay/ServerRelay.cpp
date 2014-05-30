@@ -27,9 +27,9 @@ ServerRelay::~ServerRelay()
   this->_server_socket_tcp.close();
 }
 
-bool	ServerRelay::start(Any)
+void	ServerRelay::start(Any)
 {
-  return this->start();
+  this->start();
 }
 
 bool	ServerRelay::start()
@@ -64,7 +64,7 @@ IBuffer			*ServerRelay::getTCPBuffer()
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
-      //std::cout << "creating buffer tcp: " << buffer << std::endl;
+      std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -111,6 +111,15 @@ Remote		*ServerRelay::getRemote(unsigned int hash)
       if (result != remotes.end())
 	return (*result);
     }
+  auto result = std::find_if(this->_remotsWithoutRoom.begin(), this->_remotsWithoutRoom.end(),
+			     [this, &hash] (Remote *remote) -> bool
+			     {
+			       if (remote->getPrivateHash() == hash)
+				 return true;
+			       return false;
+			     });
+  if (result != this->_remotsWithoutRoom.end())
+    return (*result);
   return (NULL);
 }
 
@@ -179,17 +188,19 @@ void	ServerRelay::waitForEvent()
 
 void		ServerRelay::manageAllRemotes()
 {
-  this->manageRemotes(this->_remotsWithoutRoom, NULL);
   this->manageRemotesInRooms();
+  this->manageRemotes(this->_remotsWithoutRoom, NULL);
 }
 
 void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 {
   auto itEnd = remotes.end();
   Remote *remote;
+  bool	test = false;
 
   for (auto it = remotes.begin(); it != itEnd; )
     {
+      test = false;
       remote = *it;
       if (this->_select.issetWrites(remote->getTCPSocket().getHandle()))
 	remote->networkSendTCP(*this);
@@ -197,64 +208,79 @@ void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 	remote->networkSendUDP(*this, this->_server_socket_udp);
       if (this->_select.issetReads(remote->getTCPSocket().getHandle()))
 	{
-	  if (remote->networkReceiveTCP(*this))
-	    {
-	      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
-	      auto guard = create_lock(recv_buffer);
-	      for(auto itBuff = recv_buffer.begin(); itBuff !=  recv_buffer.end(); )
-		{
-		  IBuffer	*buffer;
-		  std::string	nameRoom;
-		  char		packet_type;
-
-		  buffer = *itBuff;
-		  buffer->rewind();
-		  *buffer >> packet_type;
-		  if (packet_type == CHANGE_ROOM_QUERY)
-		    {
-		      *buffer >> nameRoom;
-		      auto tmp = this->_rooms.find(nameRoom);
-		      if (tmp == this->_rooms.end())
-			{
-			  tmp->second->addRemote(remote);
-			}
-		      else
-			{
-			  this->_rooms.insert(std::pair<std::string, RoomServer *>
-					      (nameRoom, new RoomServer(this, nameRoom)));
-			}
-		      this->disposeTCPBuffer(buffer);
-		      buffer = this->getTCPBuffer();
-		      *buffer << CHANGE_ROOM_QUERY_YES;
-		      remote->sendTCP(buffer);
-		      remote->setRoom(nameRoom);
-		      itBuff = recv_buffer.erase(itBuff);
-		      if (room) {
-			auto itRoom = std::find(room->getRemotes().begin(),
-						room->getRemotes().end(), remote);
-			if (itRoom != room->getRemotes().end())
-			  room->getRemotes().erase(itRoom);
-		      } else {
-			it = remotes.erase(it);
-			continue;
-		      }
-		    }
-		  else
-		    ++itBuff;
-		}
+	  if (remote->networkReceiveTCP(*this)) {
+	    test = this->manageRemotesReceiveTCP(remotes, room, it, remote);
+	  } else {
+	    if (!room) {
+	      std::cout << "erase2" << std::endl;
+	      it = remotes.erase(it);
+	      test = true;
+	    } else {
+	      std::cout << "disconnectRemote" << std::endl;
+	      room->disconnectRemote(remote);
 	    }
-	  else
-	    {
-	      if (!room) {
-		it = remotes.erase(it);
-		continue;
-	      } else {
-		room->disconnectRemote(remote);
-	      }
-	    }
+	  }
+	  this->_select.removeRead(remote->getTCPSocket().getHandle());
 	}
-      ++it;
+      if (!test)
+	++it;
     }
+}
+
+bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room *room,
+						     std::vector<Remote *>::iterator &it,
+						     Remote *remote)
+{
+  std::cout << "ReceiveTCP" << std::endl;
+  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
+  auto guard = create_lock(recv_buffer);
+
+  for(auto itBuff = recv_buffer.begin(); itBuff !=  recv_buffer.end(); )
+    {
+      IBuffer	*buffer;
+      std::string	nameRoom;
+      char		packet_type;
+
+      buffer = *itBuff;
+      buffer->rewind();
+      write(1, buffer->getBuffer(), buffer->getRemainingLength());
+      std::cout << std::endl;
+      *buffer >> packet_type;
+      if (packet_type == CHANGE_ROOM_QUERY)
+	{
+	  *buffer >> nameRoom;
+	  if (room) {
+	    auto itRemote = std::find(room->getRemotes().begin(),
+				      room->getRemotes().end(), remote);
+	    if (itRemote != room->getRemotes().end())
+	      room->disconnectRemote(remote);
+	  }
+	  auto tmp = this->_rooms.find(nameRoom);
+	  if (tmp == this->_rooms.end())
+	    {
+	      std::cout << "Create Room" << std::endl;
+	      this->_rooms.insert(std::pair<std::string, RoomServer *>
+				  (nameRoom, new RoomServer(this, nameRoom)));
+	    }
+	  tmp = this->_rooms.find(nameRoom);
+	  tmp->second->addRemote(remote);
+	  this->disposeTCPBuffer(buffer);
+	  buffer = this->getTCPBuffer();
+	  *buffer << static_cast<char>(CHANGE_ROOM_QUERY_YES);
+	  remote->sendTCP(buffer);
+	  std::cout << "Send CHANGE_ROOM_QUERY_YES" << std::endl;
+	  remote->setRoom(nameRoom);
+	  itBuff = recv_buffer.erase(itBuff);
+	  if (!room) {
+	    std::cout << "remotes.erase" << std::endl;
+	    it = remotes.erase(it);
+	    return true;
+	  }
+	}
+      else
+	++itBuff;
+    }
+  return (false);
 }
 
 void		ServerRelay::manageRemotesInRooms()
@@ -275,6 +301,7 @@ void		ServerRelay::manageRemotesInRooms()
       std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
 		    [&room, this] (Remote *remote) -> void
 		    {
+		      std::cout << "removeRemote" << std::endl;
 		      room->removeRemote(remote);
 		    });
       remotes_disconnect.clear();

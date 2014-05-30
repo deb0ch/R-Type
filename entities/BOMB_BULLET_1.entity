@@ -32,7 +32,7 @@ ENTITY:BOMB_BULLET_1
 		offsetY=0
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=200
+		life=100
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent

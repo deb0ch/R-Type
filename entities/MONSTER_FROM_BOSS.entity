@@ -50,7 +50,6 @@ ENTITY:MONSTER_FROM_BOSS
 			width=40
 			height=25
 		!COMPONENT
-		toCollide=PLAYER
 		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent

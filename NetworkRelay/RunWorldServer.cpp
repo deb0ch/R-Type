@@ -43,6 +43,7 @@ RunWorldServer::RunWorldServer(ServerRelay *server, const std::string &nameRoom)
   this->addSystems();
   this->addSharedObjetcs();
   this->addEntities();
+  this->_world->start();
 }
 
 void RunWorldServer::run(Any)
@@ -51,7 +52,6 @@ void RunWorldServer::run(Any)
 }
 
 void RunWorldServer::run() {
-  this->_world->start();
   while (42) {
     this->_timer.startFrame();
     if (this->_timer.canTick())

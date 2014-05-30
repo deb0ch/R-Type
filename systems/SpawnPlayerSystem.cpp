@@ -10,7 +10,7 @@ SpawnPlayerSystem::SpawnPlayerSystem() : ASystem("SpawnPlayerSystem")
 SpawnPlayerSystem::~SpawnPlayerSystem()
 {}
 
-void SpawnPlayerSystem::init()
+void SpawnPlayerSystem::start()
 {
   this->_world->addEventHandler("NewPlayerEvent", this, &SpawnPlayerSystem::newPlayerHandler);
 }

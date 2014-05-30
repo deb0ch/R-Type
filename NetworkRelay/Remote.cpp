@@ -114,9 +114,11 @@ void			Remote::networkSendTCP(INetworkRelay &network)
   auto guard = create_lock(this->_send_buffer_tcp);
   if (!this->_send_buffer_tcp.empty())
     {
+      std::cout << "__TRY SEND TCP" << std::endl;
       buffer = this->_send_buffer_tcp.front();
       if (this->_tcp->send(*buffer))
 	{
+	  std::cout << "__SEND TCP" << std::endl;
 	  network.disposeTCPBuffer(buffer);
 	  this->_send_buffer_tcp.erase(this->_send_buffer_tcp.begin());
 	}
@@ -148,6 +150,7 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 	      this->_temporary_tcp_buffer.getRemainingLength());
       this->_temporary_tcp_buffer.setLength(this->_temporary_tcp_buffer.getRemainingLength());
       this->_temporary_tcp_buffer.rewind();
+      std::cout << "size_read:" << size_read << std::endl;
       return (size_read > 0);
     }
   return (true);
@@ -181,7 +184,6 @@ bool		Remote::extractTCPPacket(INetworkRelay &network)
 	    }
 	  else
 	    {
-	      buffer->addOffset(sizeof(size));
 	      this->_recv_buffer_tcp.push_back(buffer);
 	    }
 	  this->_temporary_tcp_buffer.setPosition(this->_temporary_tcp_buffer.getPosition() +

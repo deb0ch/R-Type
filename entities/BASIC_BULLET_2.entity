@@ -1,4 +1,4 @@
-ENTITY:LASER_BULLET
+ENTITY:BASIC_BULLET_2
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=5
 	!COMPONENT
@@ -7,14 +7,19 @@ ENTITY:LASER_BULLET
 		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=50
-		height=15
+		width=34
+		height=20
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1
 	!COMPONENT
 	COMPONENT:TagComponent
 		tag=BULLET
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=BULLET_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=1000
@@ -24,16 +29,20 @@ ENTITY:LASER_BULLET
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=400
+		speed_coef=200
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=2
+		collisionPower=40
+	!COMPONENT
+	COMPONENT:LifeComponent
+		life=5
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=Laser.png
-		nbSpritesX=8
+		filename=ShotBig2.png
+		nbSpritesX=2
 		nbSpritesY=1
-		anim=;0;4
+		anim=;1;0
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT
@@ -42,10 +51,11 @@ ENTITY:LASER_BULLET
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=50
-			height=15
+			width=20
+			height=20
 		!COMPONENT
 		toNotCollide=BOOST
+		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

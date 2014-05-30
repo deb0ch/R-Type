@@ -15,7 +15,7 @@ public:
   ClientRelay(const std::string &ip, const int port = 42);
   virtual				~ClientRelay();
   virtual bool				start();
-  virtual bool				start(Any);
+  virtual void				start(Any);
   virtual Room				*getRoom(const std::string &room_name);
   virtual IBuffer			*getTCPBuffer();
   virtual IBuffer			*getUDPBuffer();

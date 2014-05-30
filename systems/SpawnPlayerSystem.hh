@@ -9,7 +9,7 @@ class SpawnPlayerSystem : public ASystem
 public:
   SpawnPlayerSystem();
   virtual		~SpawnPlayerSystem();
-  virtual void		init();
+  virtual void		start();
   virtual bool		canProcess(Entity *);
   virtual void		beforeProcess(const float);
   virtual void		processEntity(Entity *, const float delta);

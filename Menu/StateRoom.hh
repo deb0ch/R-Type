@@ -6,6 +6,7 @@
 #include	"SFMLButton.hh"
 #include	"SFMLTextBox.hh"
 #include	"World.hh"
+#include	"LockVector.hpp"
 
 class StateRoom : public IState
 {
@@ -19,6 +20,7 @@ public:
 protected:
 	void init();
 	void accessRoom();
+	bool parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);
 
 	World		*_world;
 	sf::Sprite *_background;

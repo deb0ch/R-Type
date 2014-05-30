@@ -23,7 +23,7 @@ public:
   {}
 
   virtual bool				start() = 0;
-  virtual bool				start(Any) = 0;
+  virtual void				start(Any) = 0;
   virtual Room				*getRoom(const std::string &room_name) = 0;
   virtual IBuffer			*getTCPBuffer() = 0;
   virtual IBuffer			*getUDPBuffer() = 0;
