@@ -67,3 +67,13 @@ void		MoveSequenceComponent::unserialize(IBuffer &buffer)
       this->_actions.push_back(str);
     }
 }
+
+
+void	MoveSequenceComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  std::for_each(this->_actions.begin(), this->_actions.end(),[&output, indent](const std::string &action)
+		{
+		  output << std::string(indent, '\t') << "action=" << action << std::endl;
+		});
+  output << std::string(indent, '\t') << "tickToChange=" << this->_tickToChange << std::endl;
+}

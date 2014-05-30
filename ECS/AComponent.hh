@@ -26,6 +26,18 @@ public:
   {
     return (this->_type);
   }
+
+  virtual void		deserializeFromFile(std::ifstream &input)
+  {
+    (void)input;
+  }
+
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const
+  {
+    (void)output;
+    (void)indent;
+    throw "Not defined for  " + this->_type;
+  }
 };
 
 #endif /* !ACOMPONENT_H_ */

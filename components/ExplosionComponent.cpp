@@ -31,3 +31,10 @@ void ExplosionComponent::serialize(IBuffer &) const
 
 void ExplosionComponent::unserialize(IBuffer &)
 {}
+
+void	ExplosionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "entity=" << this->_explosionEntityName << std::endl;
+  output << std::string(indent, '\t') << "offsetX=" << this->_offsetX << std::endl;
+  output << std::string(indent, '\t') << "offsetY=" << this->_offsetY << std::endl;
+}

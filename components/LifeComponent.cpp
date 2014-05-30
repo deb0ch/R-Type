@@ -54,3 +54,9 @@ void LifeComponent::decreaseInvulnerability()
 	if (this->_invulnerability > 0)
 		--(this->_invulnerability);
 }
+
+void	LifeComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "life=" << this->_life << std::endl;
+  output << std::string(indent, '\t') << "invulnerability=" << this->_invulnerability << std::endl;
+}

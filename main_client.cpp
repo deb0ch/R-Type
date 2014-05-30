@@ -30,5 +30,13 @@ int			main()
     {
       std::cerr << e.what() << std::endl;
     }
+  catch (std::string str)
+    {
+      std::cerr << str << std::endl;
+    }
+  catch (...)
+    {
+      std::cerr << "Unknown error." << std::endl;
+    }
   return (0);
 }
