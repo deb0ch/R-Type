@@ -6,6 +6,7 @@
 #include	"CollisionPowerComponent.hh"
 #include	"EntityDeletedEvent.hh"
 #include	"EntityFactory.hpp"
+#include	"TagComponent.hh"
 
 //----- ----- Constructors ----- ----- //
 LifeSystem::LifeSystem()
@@ -54,6 +55,23 @@ void			LifeSystem::collision_event(IEvent *e)
   if (lifeFirstE == NULL || colPower == NULL)
     return;
   lifeFirstE->decreaseLife(colPower->getCollisionPower());
+  TagComponent *tag = secondEntity->getComponent<TagComponent>("TagComponent");
+  if (tag == NULL || !tag->hasTag("LASER"))
+	  return;
+  ExplosionComponent *explosionName = secondEntity->getComponent<ExplosionComponent>("ExplosionComponent");
+  Pos2DComponent *position = secondEntity->getComponent<Pos2DComponent>("Pos2DComponent");
+  EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+  if (explosionName != NULL && position != NULL && entityFactory != NULL)
+  {
+	  Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
+	  Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
+	  if (explode != NULL && explodePosition != NULL)
+	  {
+		  explodePosition->setX(position->getX() + explosionName->getOffsetX());
+		  explodePosition->setY(position->getY() + explosionName->getOffsetY());
+		  this->_world->addEntity(explode);
+	  }
+  }
 }
 
 void			LifeSystem::delete_entity(IEvent *e)

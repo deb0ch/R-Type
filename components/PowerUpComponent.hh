@@ -8,7 +8,7 @@
 class PowerUpComponent : public ACopyableComponent<PowerUpComponent>
 {
 public:
-	PowerUpComponent(const std::string weapon = "");
+	PowerUpComponent(const std::string weapon = "", float delay = 0.15f);
 	virtual	~PowerUpComponent();
 
 	void	upgrade(EntitySpawnerComponent *spawner);
@@ -19,6 +19,7 @@ public:
 
 protected:
 	std::string _newWeapon;
+	float _newdelay;
 
 };
 
