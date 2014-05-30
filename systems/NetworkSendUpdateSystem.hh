@@ -5,6 +5,7 @@
 # include "INetworkRelay.hh"
 # include "Room.hh"
 # include "LockVector.hpp"
+# include "NetworkSendUpdateComponent.hh"
 
 enum PacketType
   {
@@ -24,9 +25,10 @@ public:
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float delta);
   virtual void	beforeProcess(const float);
+  virtual void	updateEntityToRemote(Remote *, const Entity *, NetworkSendUpdateComponent *);
 
 private:
-  void		serializeComponents(Entity *, Remote *, IBuffer &buffer);
+  void		serializeComponents(const Entity *, Remote *, IBuffer &buffer);
 private:
   std::vector<std::string>		_component_to_send;
   INetworkRelay				*_network;
