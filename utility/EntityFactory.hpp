@@ -874,7 +874,6 @@ public:
 	res = ef.deserialize(input);
 	this->addEntity("FOO"+res.first, res.second);
 	input.close();
-	break;
       }
   }
 
