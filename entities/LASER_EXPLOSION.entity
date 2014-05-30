@@ -1,0 +1,22 @@
+ENTITY:LASER_EXPLOSION
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+		vx=-0.5
+		vy=0
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=laserExplode.png
+		nbSpritesX=6
+		nbSpritesY=1
+		anim=;0;3
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=0.15
+	!COMPONENT
+!ENTITY

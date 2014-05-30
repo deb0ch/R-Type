@@ -3,7 +3,7 @@ ENTITY:PLAYER_PURPLE
 		packet_num=0
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=0.2
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100

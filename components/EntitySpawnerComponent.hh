@@ -51,6 +51,7 @@ public:
   void				setActive(bool active);
   Entity			*spawnEntity(EntityFactory *facto, float delta);
   void				clearEntities();
+  void				setDelay(float delay);
   void				addEntity(const std::pair<std::string, unsigned int> &);
 
   virtual void			serialize(IBuffer &) const;

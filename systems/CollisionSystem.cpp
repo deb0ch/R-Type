@@ -64,7 +64,7 @@ bool	CollisionSystem::isCollidingAny(std::list<CollisionPoint *> const &Fpoints,
     return (false);
   for (auto itF = Fpoints.begin(); itF != Fpoints.end(); ++itF)
     for (auto itL = Lpoints.begin(); itL != Lpoints.end(); ++itL)
-      if (isColliding((*(*itF)->getPos() + *posF), *(*itF)->getBox(), (*(*itL)->getPos() + *posL), *(*itL)->getBox()))
+      if (isColliding(*(*itF)->getPos() + *posF, *(*itF)->getBox(), *(*itL)->getPos() + *posL, *(*itL)->getBox()))
 	return (true);
   return (false);
 }

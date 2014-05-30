@@ -1,11 +1,11 @@
 #include "LifeComponent.hh"
 
-LifeComponent::LifeComponent(unsigned int life, unsigned int invulnerability)
+LifeComponent::LifeComponent(unsigned int life, float invulnerability)
 	: ACopyableComponent("LifeComponent")
 {
 	this->_life = life;
 	this->_invulnerability = 0;
-	this->_invulenerabilityMaxTime = invulnerability;
+	this->_invulnerabilityMaxTime = invulnerability;
 }
 
 LifeComponent::~LifeComponent()
@@ -20,13 +20,13 @@ unsigned int	LifeComponent::getLife() const
 
 void LifeComponent::decreaseLife(const unsigned int damages)
 {
-	if (this->_invulnerability)
+	if (this->isInvulnerable())
 		return;
 	if (damages >= this->_life)
 		this->_life = 0;
 	else
 		this->_life -= damages;
-	this->_invulnerability = this->_invulenerabilityMaxTime;
+	this->_invulnerability = this->_invulnerabilityMaxTime;
 }
 
 void LifeComponent::gainLife(const unsigned int heal)
@@ -49,10 +49,15 @@ bool LifeComponent::isInvulnerable() const
 	return (this->_invulnerability > 0);
 }
 
-void LifeComponent::decreaseInvulnerability()
+void LifeComponent::setInvulnerabilityTime(float time)
+{
+  this->_invulnerability = time;
+}
+
+void LifeComponent::decreaseInvulnerability(float delta)
 {
 	if (this->_invulnerability > 0)
-		--(this->_invulnerability);
+		this->_invulnerability -= delta;
 }
 
 void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)

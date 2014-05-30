@@ -39,6 +39,9 @@ ENTITY:PLAYER_RED
 	COMPONENT:CollisionPowerComponent
 		collisionPower=100
 	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=100
+	!COMPONENT
 	COMPONENT:ExplosionComponent
 		entity=PLAYER_EXPLOSION
 		offsetX=0

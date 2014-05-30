@@ -4,8 +4,10 @@
 #include "EntityFactory.hpp"
 #include "NetworkSendActionComponent.hh"
 #include "NetworkSendUpdateSystem.hh"
+#include "IPlayerRespawner.hh"
 
-SpawnPlayerSystem::SpawnPlayerSystem() : ASystem("SpawnPlayerSystem")
+SpawnPlayerSystem::SpawnPlayerSystem(const std::vector<std::string> &entity_player_name)
+  : ASystem("SpawnPlayerSystem"), _entity_player_name(entity_player_name), _index(0)
 {}
 
 SpawnPlayerSystem::~SpawnPlayerSystem()
@@ -14,6 +16,7 @@ SpawnPlayerSystem::~SpawnPlayerSystem()
 void SpawnPlayerSystem::init()
 {
   this->_world->addEventHandler("NewPlayerEvent", this, &SpawnPlayerSystem::newPlayerHandler);
+  this->_world->setSharedObject<IPlayerRespawner>("PlayerRespawner", this);
 }
 
 void			SpawnPlayerSystem::newPlayerHandler(IEvent *event)
@@ -50,6 +53,67 @@ void		SpawnPlayerSystem::updateWorldToRemote(Remote *remote)
 		});
 }
 
+void				SpawnPlayerSystem::playerRespawn(Entity *entity)
+{
+  NetworkPlayerComponent	*network_player_component;
+  Entity			*new_player_entity;
+  LifeComponent			*life_component;
+
+  network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
+  if (network_player_component)
+    {
+      new_player_entity = this->spawnPlayer(network_player_component->getRemoteId(),
+					    "PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+      if (!new_player_entity)
+	return ;
+      life_component = new_player_entity->getComponent<LifeComponent>("LifeComponent");
+      if (life_component)
+	life_component->setInvulnerabilityTime(3.f);
+    }
+}
+
+void		SpawnPlayerSystem::spawnNextPlayer(unsigned int hash)
+{
+  if (this->_index >= this->_entity_player_name.size())
+    {
+      std::cout << "Cannot spawn more player" << std::endl;
+      std::cout << "..ok I'll do it.." << std::endl;
+      this->_index = 0;
+    }
+  this->spawnPlayer(hash, this->_entity_player_name[this->_index]);
+  ++this->_index;
+}
+
+Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
+					       const std::string &entity_name)
+{
+  EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+
+  if (entityFactory)
+    {
+      Entity *player_entity = entityFactory->create(entity_name);
+      this->_world->addEntity(player_entity);
+      NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
+      ASerializableComponent *tmp;
+      // tmp = player_entity->getComponent<ASerializableComponent>("Pos2DComponent");
+      // if (tmp)
+      // 	tmp->setNetworkSendUpdateException(hash);
+      tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
+      if (tmp)
+	tmp->setNetworkSendUpdateException(hash);
+      player_entity->addComponent((new NetworkPlayerComponent(hash))
+				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>
+						       ("ActionComponent"))
+				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>
+						       ("Friction2DComponent"))
+				  ->addPlayerComponent(send_action));
+
+      std::cout << "Created entity" << std::endl;
+      return (player_entity);
+    }
+  return (NULL);
+}
+
 void		SpawnPlayerSystem::beforeProcess(const float)
 {
   unsigned int	hash;
@@ -74,28 +138,6 @@ void		SpawnPlayerSystem::beforeProcess(const float)
 				   return false;
 				 });
       if (!player_found)
-	{
-	  EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
-
-	  if (entityFactory)
-	    {
-	      Entity *player_entity = entityFactory->create("PLAYER_RED");
-	      this->_world->addEntity(player_entity);
-	      NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
-	      ASerializableComponent *tmp;
-	      // tmp = player_entity->getComponent<ASerializableComponent>("Pos2DComponent");
-	      // if (tmp)
-	      // 	tmp->setNetworkSendUpdateException(hash);
-	      tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
-	      if (tmp)
-		tmp->setNetworkSendUpdateException(hash);
-	      player_entity->addComponent((new NetworkPlayerComponent(hash))
-	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("ActionComponent"))
-	      				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>("Friction2DComponent"))
-	      				  ->addPlayerComponent(send_action));
-
-	      std::cout << "Created entity" << std::endl;
-	    }
-	}
+	this->spawnNextPlayer(hash);
     }
 }
