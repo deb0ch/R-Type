@@ -287,7 +287,7 @@ public:
   {
     this->addEntity("PLAYER_BLUE", (new Entity())
 		    ->addComponent(new NetworkReceiveActionComponent())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.2f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -317,7 +317,7 @@ public:
 
     this->addEntity("PLAYER_PURPLE", (new Entity())
 		    ->addComponent(new NetworkReceiveActionComponent())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.2f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
@@ -347,7 +347,7 @@ public:
 
     this->addEntity("PLAYER_GREEN", (new Entity())
 		    ->addComponent(new NetworkReceiveActionComponent())
-		    ->addComponent(new NetworkSendUpdateComponent())
+		    ->addComponent(new NetworkSendUpdateComponent(0.2f))
 		    ->addComponent(new Pos2DComponent(100.0f, 100.0f))
 		    ->addComponent(new Box2DComponent(50.0f, 50.0f))
 		    ->addComponent(new TeamComponent(1))
