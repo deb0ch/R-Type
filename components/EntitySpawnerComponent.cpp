@@ -31,13 +31,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
   this->_tick = 0;
 
   this->_maxWeight = 0;
-  std::for_each(this->_entities.begin(),
-		this->_entities.end(),
-		[this] (std::pair<std::string, unsigned int> &p) {
-		  if (p.second <= 0)
-		    p.second = 1;
-		  this->_maxWeight += p.second;
-		});
+  this->fixWeights();
 }
 
 EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
@@ -56,11 +50,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref
   this->_counter = 0;
   this->_tick = 0;
 
-  std::for_each(ref.getComponents().begin(),
-		ref.getComponents().end(),
-		[this] (IComponent* comp) -> void {
-		  this->_components.push_back(comp->clone());
-		});
+  this->fixWeights();
 }
 
 //----- ----- Destructor ----- ----- //
@@ -110,6 +100,18 @@ void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned i
 }
 
 //----- ----- Methods ----- ----- //
+void			EntitySpawnerComponent::fixWeights()
+{
+  this->_maxWeight = 0;
+  std::for_each(this->_entities.begin(),
+		this->_entities.end(),
+		[this] (std::pair<std::string, unsigned int> &p) {
+		  if (p.second <= 0)
+		    p.second = 1;
+		  this->_maxWeight += p.second;
+		});
+}
+
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 {
   Entity		*res = NULL;
@@ -202,6 +204,7 @@ void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastl
     }
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+  this->fixWeights();
 }
 
 void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

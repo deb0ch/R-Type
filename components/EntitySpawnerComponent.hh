@@ -30,6 +30,8 @@ protected:
   unsigned long			_counter;
   float				_tick;
 
+  void				fixWeights();
+
 public:
   EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities = {},
 			 std::vector<IComponent*> components = {},
