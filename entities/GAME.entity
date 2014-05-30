@@ -1,0 +1,18 @@
+ENTITY:GAME
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		nb=2
+		delay=0
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
+		random=false
+		abs=false
+	!COMPONENT
+!ENTITY

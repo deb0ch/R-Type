@@ -1,0 +1,35 @@
+ENTITY:ALIEN_BOMB_EXPLOSION
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:TeamComponent
+	!COMPONENT
+	COMPONENT:Box2DComponent
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+	!COMPONENT
+	COMPONENT:CollisionComponent
+		collisionPoints=COMPONENT:CollisionPoint
+			x=0
+			y=0
+			width=100
+			height=100
+		!COMPONENT
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=Monster4.png
+		nbSpritesX=4
+		nbSpritesY=3
+		anim=ANIM:
+			start=5
+			length=3
+		!ANIM
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+!ENTITY

@@ -1,0 +1,19 @@
+ENTITY:BACKGROUND_1
+	COMPONENT:TagComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=background.png
+		nbSpritesX=1
+		nbSpritesY=1
+		anim=ANIM:
+			start=0
+			length=0
+		!ANIM
+	!COMPONENT
+!ENTITY

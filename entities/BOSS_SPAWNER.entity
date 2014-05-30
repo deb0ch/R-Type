@@ -1,0 +1,20 @@
+ENTITY:BOSS_SPAWNER
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		nb=1
+		delay=3800
+		minPosX=-100
+		minPosY=30
+		maxPosX=-100
+		maxPosY=30
+		random=true
+		abs=false
+	!COMPONENT
+!ENTITY

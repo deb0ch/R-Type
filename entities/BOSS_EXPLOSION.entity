@@ -1,0 +1,35 @@
+ENTITY:BOSS_EXPLOSION
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:TeamComponent
+	!COMPONENT
+	COMPONENT:Box2DComponent
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=BigExplosion.png
+		nbSpritesX=10
+		nbSpritesY=1
+		anim=ANIM:
+			start=0
+			length=5
+		!ANIM
+	!COMPONENT
+	COMPONENT:CollisionComponent
+		collisionPoints=COMPONENT:CollisionPoint
+			x=0
+			y=0
+			width=250
+			height=280
+		!COMPONENT
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+!ENTITY

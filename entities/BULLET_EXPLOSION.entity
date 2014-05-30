@@ -1,0 +1,21 @@
+ENTITY:BULLET_EXPLOSION
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=smallExplosion.png
+		nbSpritesX=6
+		nbSpritesY=1
+		anim=ANIM:
+			start=0
+			length=6
+		!ANIM
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+!ENTITY

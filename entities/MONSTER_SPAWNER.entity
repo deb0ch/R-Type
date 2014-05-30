@@ -1,0 +1,18 @@
+ENTITY:MONSTER_SPAWNER
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		nb=0
+		delay=75
+		minPosX=0
+		minPosY=-200
+		maxPosX=0
+		maxPosY=200
+		random=true
+		abs=false
+	!COMPONENT
+!ENTITY

@@ -1,0 +1,23 @@
+ENTITY:PLAYER_EXPLOSION
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:Box2DComponent
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=ExplosionPlayer.png
+		nbSpritesX=8
+		nbSpritesY=1
+		anim=ANIM:
+			start=2
+			length=6
+		!ANIM
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+	!COMPONENT
+!ENTITY

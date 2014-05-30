@@ -1,0 +1,18 @@
+ENTITY:BORDER_SPAWNER_BOTTOM
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=840
+		y=530
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		nb=0
+		delay=185
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
+		random=true
+		abs=false
+	!COMPONENT
+!ENTITY

@@ -1,0 +1,33 @@
+ENTITY:BORDER_TOP_LEVEL_4
+	COMPONENT:NetworkSendUpdateComponent
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:Box2DComponent
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+	!COMPONENT
+	COMPONENT:TeamComponent
+	!COMPONENT
+	COMPONENT:CollisionComponent
+		collisionPoints=COMPONENT:CollisionPoint
+			x=0
+			y=-32
+			width=100
+			height=118
+		!COMPONENT
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=mangling.png
+		nbSpritesX=4
+		nbSpritesY=2
+		anim=ANIM:
+			start=7
+			length=0
+		!ANIM
+	!COMPONENT
+!ENTITY
