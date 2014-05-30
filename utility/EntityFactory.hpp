@@ -218,7 +218,7 @@ public:
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 5))
-		    ->addComponent(new AutoDestructComponent(30))
+		    ->addComponent(new AutoDestructComponent(0.48f))
 		    );
 
     this->addEntity("BULLET_EXPLOSION", (new Entity())
@@ -227,7 +227,7 @@ public:
 		    ->addComponent(new Speed2DComponent(-0.5f, 0.0f))
 		    ->addComponent(new SFMLSpriteComponent("smallExplosion.png", ImageLoader::NbSprite{ 6, 1 },
 							   { { "", { 0, 6 } } }, 2))
-		    ->addComponent(new AutoDestructComponent(12))
+		    ->addComponent(new AutoDestructComponent(0.192f))
 		    );
 
     this->addEntity("PLAYER_EXPLOSION", (new Entity())
@@ -237,7 +237,7 @@ public:
 		    ->addComponent(new Box2DComponent(100.0f, 100.0f))
 		    ->addComponent(new SFMLSpriteComponent("ExplosionPlayer.png", ImageLoader::NbSprite{ 8, 1 },
 							   { { "", { 2, 6 } } }))
-		    ->addComponent(new AutoDestructComponent(60))
+		    ->addComponent(new AutoDestructComponent(1.0f))
 		    );
 
     this->addEntity("ALIEN_BOMB_EXPLOSION", (new Entity())
@@ -251,7 +251,7 @@ public:
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 100.0f, 100.0f)))
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png", ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 5, 3 } } }, 5))
-		    ->addComponent(new AutoDestructComponent(15))
+		    ->addComponent(new AutoDestructComponent(0.25f))
 		    );
 
 	this->addEntity("PLAYER_BOMB_EXPLOSION", (new Entity())
@@ -265,7 +265,7 @@ public:
 		->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 200.0f, 200.0f)))
 		->addComponent(new SFMLSpriteComponent("ExplosionSmall.png", ImageLoader::NbSprite{ 6, 1 },
 		{ { "", { 0, 6 } } }, 5))
-		->addComponent(new AutoDestructComponent(30))
+		->addComponent(new AutoDestructComponent(0.5f))
 		);
 
     this->addEntity("BOSS_EXPLOSION", (new Entity())
@@ -279,7 +279,7 @@ public:
 		    					   { { "", { 0, 5 } } }))
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 250.0f, 280.0f)))
-		    ->addComponent(new AutoDestructComponent(50))
+		    ->addComponent(new AutoDestructComponent(0.8f))
 		    );
   }
 
@@ -672,7 +672,7 @@ public:
 		    ->addComponent(new MovementSpeedComponent(120.f))
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
 			->addComponent(new LifeComponent(100))
-		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new AutoDestructComponent(2.0f))
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
@@ -698,7 +698,7 @@ public:
 		    ->addComponent(new MovementSpeedComponent(90.f))
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
 		    ->addComponent(new LifeComponent(100))
-		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new AutoDestructComponent(2.0f))
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
@@ -725,7 +725,7 @@ public:
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
 			->addComponent(new LifeComponent(100))
 			->addComponent(new CollisionPowerComponent(5))
-		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new AutoDestructComponent(2.0f))
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
 							   { { "", { 4, 0 } } }))
@@ -749,7 +749,7 @@ public:
 		    ->addComponent(new MovementSpeedComponent(60.f))
 		    ->addComponent(new MoveFollowComponent("PLAYER"))
 		    ->addComponent(new LifeComponent(5))
-		    ->addComponent(new AutoDestructComponent(120))
+		    ->addComponent(new AutoDestructComponent(2.0f))
 		    ->addComponent(new ExplosionComponent("ALIEN_BOMB_EXPLOSION"))
 		    ->addComponent(new SFMLSpriteComponent("Monster4.png",
 							   ImageLoader::NbSprite{ 4, 3 },
@@ -904,7 +904,7 @@ public:
 
 	this->addEntity("BOSS_1_WRATH", (new Entity())
 		   ->addComponent(new Pos2DComponent(900.0f, 300.0f))
-		   ->addComponent(new AutoDestructComponent(100))
+		   ->addComponent(new AutoDestructComponent(1.6f))
 		   ->addComponent(new EntitySpawnerComponent({
 			   { "BOSS_BULLET", 0 } }, {}, 20, 0.06f,
 		   { (0.0f), (-150.0f) }, { (0.0f), (150.0f) }, false, false))
@@ -950,7 +950,7 @@ public:
 	  this->addEntity("MONSTER_SPAWNER_GAME", (new Entity())
 		  ->addComponent(new NetworkSendUpdateComponent(5.f))
 		  ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		  ->addComponent(new AutoDestructComponent(3000))
+		  ->addComponent(new AutoDestructComponent(48.0f))
 		  ->addComponent(new EntitySpawnerComponent({
 			  { "MONSTER_1", 0 }, { "MONSTER_2", 0 },
 			  { "POWERUP_1", 0 }, { "POWERUP_2", 0 },
@@ -961,7 +961,7 @@ public:
 	  this->addEntity("BOSS_SPAWNER", (new Entity())
 		  ->addComponent(new NetworkSendUpdateComponent(5.f))
 		  ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		  ->addComponent(new AutoDestructComponent(4000))
+		  ->addComponent(new AutoDestructComponent(64.0f))
 		  ->addComponent(new EntitySpawnerComponent({
 			  { "BOSS_1", 0 } }, {}, 1, 60.f,
 			  { (-100.0f), (30.0f) }, { (-100.0f), (30.0f) }, true, false))
@@ -969,7 +969,7 @@ public:
 
 	  this->addEntity("GAME", (new Entity())
 		  ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		  ->addComponent(new AutoDestructComponent(50))
+		  ->addComponent(new AutoDestructComponent(0.8f))
 		  ->addComponent(new EntitySpawnerComponent({
 			  { "MONSTER_SPAWNER_GAME", 0 },
 			  { "BOSS_SPAWNER", 0 } }, {}, 2, 0,
