@@ -3,7 +3,7 @@ ENTITY:PLAYER_BLUE
 		packet_num=0
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=0.2
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
@@ -52,7 +52,7 @@ ENTITY:PLAYER_BLUE
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
 		nb=0
-		delay=0.2
+		delay=0.25
 		minPosX=0
 		minPosY=0
 		maxPosX=0

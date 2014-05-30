@@ -1,4 +1,4 @@
-ENTITY:BULLET_EXPLOSION
+ENTITY:LASER_EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=1
 	!COMPONENT
@@ -11,12 +11,12 @@ ENTITY:BULLET_EXPLOSION
 		vy=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=smallExplosion.png
+		filename=laserExplode.png
 		nbSpritesX=6
 		nbSpritesY=1
-		anim=;0;6
+		anim=;0;3
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=0.192
+		delay=0.15
 	!COMPONENT
 !ENTITY

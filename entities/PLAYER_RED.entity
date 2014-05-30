@@ -36,6 +36,9 @@ ENTITY:PLAYER_RED
 		life=1
 		invulnerability=0
 	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=100
+	!COMPONENT
 	COMPONENT:ExplosionComponent
 		entity=PLAYER_EXPLOSION
 		offsetX=0
@@ -58,8 +61,6 @@ ENTITY:PLAYER_RED
 			width=40
 			height=20
 		!COMPONENT
-		toCollide=MONSTER
-		toCollide=PLAYER
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
 		speed_coef=200
@@ -70,7 +71,7 @@ ENTITY:PLAYER_RED
 			dir1=RIGHT 
 		!COMPONENT
 		nb=0
-		delay=10
+		delay=0.15
 		minPosX=5
 		minPosY=0
 		maxPosX=5

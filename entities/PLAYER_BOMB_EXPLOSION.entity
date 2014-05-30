@@ -1,4 +1,4 @@
-ENTITY:ALIEN_BOMB_EXPLOSION
+ENTITY:PLAYER_BOMB_EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=1
 	!COMPONENT
@@ -11,14 +11,14 @@ ENTITY:ALIEN_BOMB_EXPLOSION
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent
-		team=2
+		team=1
 	!COMPONENT
 	COMPONENT:Box2DComponent
 		width=100
 		height=100
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=50
+		collisionPower=5
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
@@ -29,12 +29,12 @@ ENTITY:ALIEN_BOMB_EXPLOSION
 		!COMPONENT
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=Monster4.png
-		nbSpritesX=4
-		nbSpritesY=3
-		anim=;5;3
+		filename=ExplosionSmall.png
+		nbSpritesX=6
+		nbSpritesY=1
+		anim=;0;6
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=0.25
+		delay=0.5
 	!COMPONENT
 !ENTITY

@@ -33,6 +33,7 @@
 #include	"NetworkSendDieEntitySystem.hh"
 #include	"DisconnectPlayerSystem.hh"
 #include	"PowerUpSystem.hh"
+#include	"PlayerLifeSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -88,17 +89,19 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
-  world.addSystem(new SpawnPlayerSystem());
+  world.addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
   world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
-  world.addSystem(new PowerUpSystem());
+  std::vector<std::string> power_ups =
+    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+  world.addSystem(new PowerUpSystem(power_ups));
+  world.addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
 
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
-  world.addEventHandler("CollisionEvent", collision, &PowerUpSystem::collision_event);
 
 
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();

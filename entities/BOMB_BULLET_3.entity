@@ -32,11 +32,14 @@ ENTITY:BOMB_BULLET_3
 		offsetY=0
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=200
+		life=100
 		invulnerability=0
 	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=5
+	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=120
+		delay=2
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster4.png
