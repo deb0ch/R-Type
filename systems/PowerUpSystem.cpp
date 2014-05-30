@@ -58,7 +58,7 @@ void PowerUpSystem::delete_entity(IEvent *e)
 		return;
 	if (tag->hasTag("MONSTER"))
 	{
-		if (RandomInt().operator()<unsigned long>(0, 1) == 0)
+		if (RandomInt().operator()<unsigned long>(0, 10) == 0)
 		{
 			Entity *boost =
 			  entityFactory->create(this->_possible_powerup[
