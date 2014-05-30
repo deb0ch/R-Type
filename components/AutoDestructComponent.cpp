@@ -30,6 +30,16 @@ void AutoDestructComponent::serialize(IBuffer &) const
 void AutoDestructComponent::unserialize(IBuffer &)
 {}
 
+void	AutoDestructComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("delay=.+")))
+    this->_delay = std::stoul(lastline.substr(6));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void	AutoDestructComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "delay=" << this->_delay << std::endl;

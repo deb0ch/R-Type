@@ -55,6 +55,18 @@ void LifeComponent::decreaseInvulnerability()
 		--(this->_invulnerability);
 }
 
+void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("life.+")))
+    this->_life = std::stoul(lastline.substr(5));
+  else if (std::regex_match(lastline, std::regex("invulnerability=.+")))
+    this->_invulnerability = std::stoul(lastline.substr(16));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void	LifeComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "life=" << this->_life << std::endl;

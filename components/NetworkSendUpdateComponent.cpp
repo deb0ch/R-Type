@@ -57,6 +57,16 @@ void NetworkSendUpdateComponent::serialize(IBuffer &) const
 void NetworkSendUpdateComponent::unserialize(IBuffer &)
 {}
 
+void	NetworkSendUpdateComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("update_rate=.+")))
+    this->_update_rate = std::stof(lastline.substr(12));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void	NetworkSendUpdateComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "update_rate=" << this->_update_rate << std::endl;

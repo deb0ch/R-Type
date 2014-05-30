@@ -32,6 +32,20 @@ void ExplosionComponent::serialize(IBuffer &) const
 void ExplosionComponent::unserialize(IBuffer &)
 {}
 
+void	ExplosionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("entity=.+")))
+    this->_explosionEntityName = lastline.substr(7);
+  else if (std::regex_match(lastline, std::regex("offsetX=.+")))
+    this->_offsetX = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("offsetY=.+")))
+    this->_offsetY = std::stof(lastline.substr(8));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
+
 void	ExplosionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "entity=" << this->_explosionEntityName << std::endl;
