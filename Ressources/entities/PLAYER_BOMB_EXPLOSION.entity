@@ -32,6 +32,7 @@ ENTITY:PLAYER_BOMB_EXPLOSION
 		filename=ExplosionSmall.png
 		nbSpritesX=6
 		nbSpritesY=1
+		tickChange=5
 		anim=ANIM
 			action=
 			start=0

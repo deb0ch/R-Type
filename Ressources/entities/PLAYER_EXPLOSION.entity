@@ -18,6 +18,7 @@ ENTITY:PLAYER_EXPLOSION
 		filename=ExplosionPlayer.png
 		nbSpritesX=8
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=2

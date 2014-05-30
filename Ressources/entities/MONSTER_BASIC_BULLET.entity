@@ -37,6 +37,7 @@ ENTITY:MONSTER_BASIC_BULLET
 		filename=ShotBasic.png
 		nbSpritesX=4
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=0

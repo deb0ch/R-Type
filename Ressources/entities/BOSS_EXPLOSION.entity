@@ -24,6 +24,7 @@ ENTITY:BOSS_EXPLOSION
 		filename=BigExplosion.png
 		nbSpritesX=10
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=0

@@ -34,7 +34,7 @@ ENTITY:PLAYER_RED
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=1
-		invulnerability=0
+		invulnerability=20
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=100
@@ -48,6 +48,7 @@ ENTITY:PLAYER_RED
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
+		tickChange=10
 		anim=ANIM
 			action=
 			start=17
@@ -80,7 +81,7 @@ ENTITY:PLAYER_RED
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
 		component=COMPONENT:MoveForwardComponent
-			dir1=RIGHT 
+			dir1=RIGHT
 		!COMPONENT
 		nb=0
 		delay=0.15

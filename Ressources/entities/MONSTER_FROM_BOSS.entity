@@ -24,6 +24,7 @@ ENTITY:MONSTER_FROM_BOSS
 		filename=Monster3.png
 		nbSpritesX=5
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=2

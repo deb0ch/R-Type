@@ -42,6 +42,7 @@ ENTITY:BOMB_BULLET_1
 		filename=Monster4.png
 		nbSpritesX=4
 		nbSpritesY=3
+		tickChange=10
 		anim=ANIM
 			action=
 			start=4

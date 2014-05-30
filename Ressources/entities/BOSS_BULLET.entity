@@ -34,6 +34,7 @@ ENTITY:BOSS_BULLET
 		filename=ShotBoss.png
 		nbSpritesX=4
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=0

@@ -33,6 +33,7 @@ ENTITY:LASER_BULLET
 		filename=Laser.png
 		nbSpritesX=8
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=0

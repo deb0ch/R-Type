@@ -42,6 +42,7 @@ ENTITY:FAT_BULLET
 		filename=ShotBig5.png
 		nbSpritesX=2
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=1

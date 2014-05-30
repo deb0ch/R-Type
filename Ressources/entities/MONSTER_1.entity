@@ -34,6 +34,7 @@ ENTITY:MONSTER_1
 		filename=Monster1.png
 		nbSpritesX=8
 		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
 			start=0

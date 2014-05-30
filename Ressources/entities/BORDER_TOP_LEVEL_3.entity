@@ -32,6 +32,7 @@ ENTITY:BORDER_TOP_LEVEL_3
 		filename=mangling.png
 		nbSpritesX=4
 		nbSpritesY=2
+		tickChange=10
 		anim=ANIM
 			action=
 			start=6

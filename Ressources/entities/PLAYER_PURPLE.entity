@@ -30,6 +30,7 @@ ENTITY:PLAYER_PURPLE
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
+		tickChange=10
 		anim=ANIM
 			action=
 			start=7

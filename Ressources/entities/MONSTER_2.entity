@@ -27,6 +27,7 @@ ENTITY:MONSTER_2
 		filename=r-typesheet-7.png
 		nbSpritesX=4
 		nbSpritesY=3
+		tickChange=10
 		anim=ANIM
 			action=
 			start=8
