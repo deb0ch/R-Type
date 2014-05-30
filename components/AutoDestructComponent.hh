@@ -6,17 +6,17 @@
 class AutoDestructComponent : public ACopyableComponent<AutoDestructComponent>
 {
 protected:
-  unsigned long _delay;
-  unsigned long _tick;
+  float		_delay;
+  float		_tick;
 
 public:
-  AutoDestructComponent(unsigned long delay = 3);
+  AutoDestructComponent(float delay = 0.05f);
   virtual	~AutoDestructComponent();
 
-  unsigned long getDelay() const;
-  unsigned long getTick() const;
-  void setDelay(unsigned long delay);
-  void setTick(unsigned long tick);
+  float getDelay() const;
+  float getTick() const;
+  void setDelay(float delay);
+  void setTick(float tick);
   virtual void serialize(IBuffer &) const;
   virtual void unserialize(IBuffer &);
 

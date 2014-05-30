@@ -3,6 +3,7 @@
 
 # include "ASystem.hh"
 # include "SafeFifo.hpp"
+# include "Remote.hh"
 
 class SpawnPlayerSystem : public ASystem
 {
@@ -14,6 +15,7 @@ public:
   virtual void		beforeProcess(const float);
   virtual void		processEntity(Entity *, const float delta);
   void			newPlayerHandler(IEvent *event);
+  void			updateWorldToRemote(Remote *remote);
 protected:
   SafeFifo<unsigned int>	_players_to_spawn;
 };

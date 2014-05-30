@@ -17,12 +17,12 @@ bool	AutoDestructSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void	AutoDestructSystem::processEntity(Entity *entity, const float)
+void	AutoDestructSystem::processEntity(Entity *entity, const float delta)
 {
   AutoDestructComponent *autoDestructComponent;
   autoDestructComponent = entity->getComponent<AutoDestructComponent>("AutoDestructComponent");
 
-  autoDestructComponent->setTick(autoDestructComponent->getTick() + 1);
+  autoDestructComponent->setTick(autoDestructComponent->getTick() + delta);
   if (autoDestructComponent->getTick() >= autoDestructComponent->getDelay())
     this->_world->sendEvent(new EntityDeletedEvent(entity));
 }

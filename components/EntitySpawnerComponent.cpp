@@ -10,7 +10,7 @@
 EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities,
 					       std::vector<IComponent*> components,
 					       unsigned long nb,
-					       unsigned long delay,
+					       float delay,
 					       std::pair<float, float> min_pos,
 					       std::pair<float, float> max_pos,
 					       bool random,
@@ -99,21 +99,34 @@ void			EntitySpawnerComponent::setActive(bool active)
   this->_active = active;
 }
 
+void			EntitySpawnerComponent::clearEntities()
+{
+	this->_entities.clear();
+}
+
+void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned int> &value)
+{
+	this->_entities.push_back(value);
+}
+
 //----- ----- Methods ----- ----- //
-Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto)
+Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 {
   Entity		*res = NULL;
 
   if (this->_tick < this->_delay)
-    return ((Entity *) (0 * ++this->_tick));
+    {
+      this->_tick += delta;
+      return (NULL);
+    }
+  // return ((Entity *) (0 * ++this->_tick)); // wtf seriously?
 
   if (!this->_active ||
       (this->_nb > 0 && this->_counter >= _nb) ||
       this->_entities.size() == 0)
     return (NULL);
 
-  if (this->_tick >= this->_delay)
-    this->_tick = 0;
+  this->_tick -= this->_delay;
 
   if (facto)
     res = facto->create(this->_entities[this->_next].first);

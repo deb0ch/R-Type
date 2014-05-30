@@ -1,7 +1,7 @@
 #include	"MoveSequenceComponent.hh"
 
 MoveSequenceComponent::MoveSequenceComponent(const std::vector<std::string> &actions,
-					     const unsigned int tickToChange)
+					     float tickToChange)
   : ACopyableComponent("MoveSequenceComponent")
 {
   this->_tick = 0;
@@ -17,12 +17,12 @@ MoveSequenceComponent::~MoveSequenceComponent()
 //----- ----- Operators ----- ----- //
 //----- ----- Methods ----- ----- //
 
-void  MoveSequenceComponent::incrementTick()
+void  MoveSequenceComponent::incrementTick(float delta)
 {
-  ++this->_tick;
-  if (this->_tick == this->_tickToChange)
+  this->_tick += delta;
+  if (this->_tick >= this->_tickToChange)
     {
-      this->_tick = 0;
+      this->_tick -= this->_tickToChange;
       ++this->_index;
       if (this->_index >= this->_actions.size())
 	this->_index = 0;
@@ -75,7 +75,7 @@ void	MoveSequenceComponent::deserializeFromFileSpecial(const std::string &lastli
   if (std::regex_match(lastline, std::regex("action=.+")))
     this->_actions.push_back(lastline.substr(7));
   else if (std::regex_match(lastline, std::regex("tickToChange=.+")))
-    this->_tickToChange = std::stoul(lastline.substr(13));
+    this->_tickToChange = std::stof(lastline.substr(13));
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"");
 }

@@ -1,26 +1,31 @@
 #include "AutoDestructComponent.hh"
 
-AutoDestructComponent::AutoDestructComponent(unsigned long delay) : ACopyableComponent("AutoDestructComponent")
+AutoDestructComponent::AutoDestructComponent(float delay) : ACopyableComponent("AutoDestructComponent")
 {
   this->_delay = delay;
   this->_tick = 0;
 }
 
-AutoDestructComponent::~AutoDestructComponent(){
-}
+AutoDestructComponent::~AutoDestructComponent()
+{}
 
-unsigned long AutoDestructComponent::getDelay() const {
+float AutoDestructComponent::getDelay() const
+{
   return this->_delay;
 }
-unsigned long AutoDestructComponent::getTick() const {
+
+float AutoDestructComponent::getTick() const
+{
   return this->_tick;
 }
 
-void AutoDestructComponent::setDelay(unsigned long delay) {
+void AutoDestructComponent::setDelay(float delay)
+{
   this->_delay = delay;
 }
 
-void AutoDestructComponent::setTick(unsigned long tick) {
+void AutoDestructComponent::setTick(float tick)
+{
   this->_tick = tick;
 }
 

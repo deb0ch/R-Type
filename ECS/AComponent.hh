@@ -55,7 +55,7 @@ public:
   {
     (void)output;
     (void)indent;
-    throw "serializeFromFile not defined for " + this->_type;
+    throw "serializeFromFile() not defined for " + this->_type;
   }
 };
 
