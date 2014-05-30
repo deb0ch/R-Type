@@ -1,7 +1,7 @@
 #include	"MoveSequenceComponent.hh"
 
 MoveSequenceComponent::MoveSequenceComponent(const std::vector<std::string> &actions,
-					     const unsigned int tickToChange)
+					     float tickToChange)
   : ACopyableComponent("MoveSequenceComponent")
 {
   this->_tick = 0;
@@ -17,12 +17,12 @@ MoveSequenceComponent::~MoveSequenceComponent()
 //----- ----- Operators ----- ----- //
 //----- ----- Methods ----- ----- //
 
-void  MoveSequenceComponent::incrementTick()
+void  MoveSequenceComponent::incrementTick(float delta)
 {
-  ++this->_tick;
-  if (this->_tick == this->_tickToChange)
+  this->_tick += delta;
+  if (this->_tick >= this->_tickToChange)
     {
-      this->_tick = 0;
+      this->_tick -= this->_tickToChange;
       ++this->_index;
       if (this->_index >= this->_actions.size())
 	this->_index = 0;
@@ -67,7 +67,6 @@ void		MoveSequenceComponent::unserialize(IBuffer &buffer)
       this->_actions.push_back(str);
     }
 }
-
 
 void	MoveSequenceComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {

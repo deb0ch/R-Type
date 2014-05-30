@@ -146,7 +146,7 @@ public:
 			  { "BORDER_BOTTOM_LEVEL_1", 8},
 			  { "BORDER_BOTTOM_LEVEL_2", 4},
 			  { "BORDER_BOTTOM_LEVEL_3", 2},
-			  { "BORDER_BOTTOM_LEVEL_4", 4} }, {}, 0, 185,
+			  { "BORDER_BOTTOM_LEVEL_4", 4} }, {}, 0, 3.f,
 		  { (0.0f), (0.0f) }, { (0.0f), (0.0f) }, true, false))
 		  );
 
@@ -205,7 +205,7 @@ public:
 			  { "BORDER_TOP_LEVEL_1", 8},
 			  { "BORDER_TOP_LEVEL_2", 4},
 			  { "BORDER_TOP_LEVEL_3", 2},
-			  { "BORDER_TOP_LEVEL_4", 4} }, {}, 0, 185,
+			  { "BORDER_TOP_LEVEL_4", 4} }, {}, 0, 3.f,
 		  { (0.0f), (0.0f) }, { (0.0f), (0.0f) }, true, false))
 		  );
   }
@@ -384,7 +384,7 @@ public:
 		    ->addComponent((new CollisionComponent())
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 20.0f)))
 		    ->addComponent(new MovementSpeedComponent(200.f))
-		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {new MoveForwardComponent("RIGHT ")}, 0, 10,
+		    ->addComponent(new EntitySpawnerComponent({ {"BASIC_BULLET", 0} }, {new MoveForwardComponent("RIGHT ")}, 0, 0.15f,
 			{ 5.0f, 0.0f }, { 5.0f, 0.0f }))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -849,7 +849,7 @@ public:
 				{"MONSTER_BASIC_BULLET_3", 0},
 				{"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 20))
 		    ->addComponent(new MoveForwardComponent("LEFT"))
-		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 0.32f))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -880,7 +880,7 @@ public:
 		    ->addComponent(new CollisionPowerComponent(50))
 		    ->addComponent(new FireAlwaysComponent())
 		    ->addComponent(new EntitySpawnerComponent({ {"BOMB_BULLET_1", 0}, {"BOMB_BULLET_2", 0}, {"BOMB_BULLET_3", 0} },
-							      {}, 0, 60, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
+							      {}, 0, 1.f, { -10.0f, 0.0f }, { -10.0f, 0.0f }))
 		    ->addComponent(new MoveForwardComponent("LEFT"))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
@@ -893,7 +893,7 @@ public:
     this->addEntity("MONSTER_SPAWNER", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent(5.f))
 		    ->addComponent(new Pos2DComponent(800.0f, 300.0f))
-		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 75,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_1", 0}, {"MONSTER_2", 0} }, {}, 0, 1.1f,
 							      { (0.0f), (-200.0f) }, { (0.0f), (200.0f) }, true, false))
 		    );
   }
@@ -922,10 +922,10 @@ public:
 				   ->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 40.0f, 25.0f))
 				   ->addNotToCollideItem("MONSTER"))
 		    ->addComponent(new CollisionPowerComponent(50))
-		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 30,
+		    ->addComponent(new EntitySpawnerComponent({ {"MONSTER_BASIC_BULLET_3", 0}, {"MONSTER_BASIC_BULLET_4", 0} }, {}, 0, 0.5f,
 							      { (-40.0f), (0.0f) }, { (-40.0f), (0.0f) }, true))
 		    ->addComponent(new MoveForwardComponent("LEFT"))
-		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 20))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 0.32f))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("RIGHT")
@@ -938,7 +938,7 @@ public:
 		   ->addComponent(new Pos2DComponent(900.0f, 300.0f))
 		   ->addComponent(new AutoDestructComponent(100))
 		   ->addComponent(new EntitySpawnerComponent({
-			   { "BOSS_BULLET", 0 } }, {}, 20, 4,
+			   { "BOSS_BULLET", 0 } }, {}, 20, 0.06f,
 		   { (0.0f), (-150.0f) }, { (0.0f), (150.0f) }, false, false))
 		   );
 
@@ -964,7 +964,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Boss.png",
 							   ImageLoader::NbSprite{ 4, 9 },
 							   { { "", { 8, 4 } } }))
-		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 10))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 0.16f))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("DOWN")
@@ -972,7 +972,7 @@ public:
 		    ->addComponent(new EntitySpawnerComponent({
 				{"MONSTER_FROM_BOSS", 2},
 				{ "TRACKER_MISSILE", 2 },
-				{ "BOSS_1_WRATH", 1 } }, {}, 0, 40,
+				{ "BOSS_1_WRATH", 1 } }, {}, 0, 0.65f,
 			{ (-5.0f), (0.0f) }, { (-5.0f), (0.0f) }, true, false))
 		    );
   }
@@ -983,7 +983,7 @@ public:
 		  ->addComponent(new NetworkSendUpdateComponent(5.f))
 		  ->addComponent(new Pos2DComponent(800.0f, 300.0f))
 		  ->addComponent(new AutoDestructComponent(3000))
-		  ->addComponent(new EntitySpawnerComponent({ { "MONSTER_1", 0 }, { "MONSTER_2", 0 } }, {}, 0, 75,
+		  ->addComponent(new EntitySpawnerComponent({ { "MONSTER_1", 0 }, { "MONSTER_2", 0 } }, {}, 0, 1.1f,
 		  { (0.0f), (-150.0f) }, { (0.0f), (150.0f) }, true, false))
 		  );
 
@@ -992,7 +992,7 @@ public:
 		  ->addComponent(new Pos2DComponent(800.0f, 300.0f))
 		  ->addComponent(new AutoDestructComponent(4000))
 		  ->addComponent(new EntitySpawnerComponent({
-			  { "BOSS_1", 0 } }, {}, 1, 3800,
+			  { "BOSS_1", 0 } }, {}, 1, 60.f,
 			  { (-100.0f), (30.0f) }, { (-100.0f), (30.0f) }, true, false))
 		  );
 
