@@ -4,7 +4,7 @@
 # include	<string>
 # include	"IComponent.hh"
 
-
+# include <fstream>
 # include <iostream>
 # include "Hash.hh"
 
@@ -36,7 +36,7 @@ public:
   {
     (void)output;
     (void)indent;
-    throw "Not defined for  " + this->_type;
+    //throw "Not defined for  " + this->_type;
   }
 };
 

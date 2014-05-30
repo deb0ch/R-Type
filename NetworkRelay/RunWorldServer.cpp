@@ -27,6 +27,7 @@
 #include	"SpawnPlayerSystem.hh"
 #include	"NetworkSendDieEntitySystem.hh"
 #include	"DisconnectPlayerSystem.hh"
+#include	"PowerUpSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"ImageLoader.hh"
@@ -92,10 +93,12 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new SpawnPlayerSystem());
   this->_world->addSystem(new DisconnectPlayerSystem());
   this->_world->addSystem(new BackgroundSystem());
+  this->_world->addSystem(new PowerUpSystem());
 
   CollisionSystem *collision = new CollisionSystem();
   this->_world->addSystem(collision);
   this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
+  this->_world->addEventHandler("CollisionEvent", collision, &PowerUpSystem::collision_event);
 
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
   this->_world->addSystem(networkSendDieEntitySystem);
@@ -161,6 +164,7 @@ void	RunWorldServer::addEntities()
     return;
   this->_world->addEntity(entityFactory->create("BACKGROUND_1"));
   this->_world->addEntity(entityFactory->create("BACKGROUND_2"));
-  this->_world->addEntity(entityFactory->create("BOSS_1"));
-  this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
+  this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
+  this->_world->addEntity(entityFactory->create("GAME"));
 }
