@@ -11,6 +11,14 @@ class Room;
 class INetworkRelay
 {
 public:
+  enum TCPType
+    {
+      CHANGE_ROOM_QUERY,
+      CHANGE_ROOM_QUERY_YES,
+      CHANGE_ROOM_QUERY_NON
+    };
+
+public:
   virtual				~INetworkRelay()
   {}
 

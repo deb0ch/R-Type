@@ -3,12 +3,12 @@
 
 # include <map>
 # include "EventManager.hpp"
-# include "INetworkRelay.hh"
 # include "Select.hh"
 # include "NetworkInitializer.hh"
 # include "Remote.hh"
-# include "Room.hh"
 # include "World.hh"
+# include "RoomServer.hh"
+# include "INetworkRelay.hh"
 
 class ServerRelay : public INetworkRelay
 {
@@ -32,7 +32,9 @@ private:
   unsigned int				generateHash();
   void					receiveUDP();
   void					removeRemote(Remote *remote);
-  void					manageRemotes();
+  void					manageAllRemotes();
+  void					manageRemotes(std::vector<Remote *> &remotes, Room *room = NULL);
+  void					manageRemotesInRooms();
   void					udpConnect(Remote *remote);
 
 protected:
@@ -41,7 +43,8 @@ protected:
   SocketUDP				_server_socket_udp;
   Select				_select;
   Mutex					_mutex_room;
-  std::map<std::string, Room>		_remotes; // String: Nom de la room
+  std::map<std::string, RoomServer*>	_rooms;
+  std::vector<Remote *>			_remotsWithoutRoom;
   LockVector<IBuffer *>			_available_udp;
   LockVector<IBuffer *>			_available_tcp;
 

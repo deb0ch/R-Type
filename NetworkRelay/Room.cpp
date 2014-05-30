@@ -1,44 +1,25 @@
 #include <algorithm>
+#include "NewPlayerEvent.hh"
+#include "DisconnectPlayerEvent.hh"
 #include "Room.hh"
 
-Room::Room() : _remotes(), _mutex()
+Room::Room()
+  : _remotes(), _mutex()
 {
   std::cout << "Creating room" << std::endl;
 }
 
-Room::~Room()
-{
-  std::cout << "room deleted" << std::endl;
-  std::for_each(this->_remotes.begin(), this->_remotes.end(),
-		[] (Remote *remote) -> void
-		{
-		  delete remote;
-		});
-}
+Room::~Room(){}
 
-void			Room::lock()
-{
-  this->_mutex.lock();
-}
+void				Room::lock() {this->_mutex.lock();}
+void				Room::unlock() {this->_mutex.unlock();}
+bool				Room::trylock() {return (this->_mutex.trylock());}
+std::vector<Remote *>		&Room::getRemotes() {return (this->_remotes);}
+const std::vector<Remote *>	&Room::getRemotes() const {return (this->_remotes);}
 
-void			Room::unlock()
+std::vector<Remote *>		&Room::getPendingDisonnectRemotes()
 {
-  this->_mutex.unlock();
-}
-
-bool			Room::trylock()
-{
-  return (this->_mutex.trylock());
-}
-
-std::vector<Remote *>	&Room::getRemotes()
-{
-  return (this->_remotes);
-}
-
-const std::vector<Remote *>	&Room::getRemotes() const
-{
-  return (this->_remotes);
+  return (this->_pending_disconnect_remotes);
 }
 
 void				Room::disconnectRemote(Remote *remote)
@@ -49,18 +30,13 @@ void				Room::disconnectRemote(Remote *remote)
     this->_pending_disconnect_remotes.push_back(remote);
 }
 
-std::vector<Remote *>		&Room::getPendingDisonnectRemotes()
-{
-  return (this->_pending_disconnect_remotes);
-}
-
 void				Room::removeRemote(Remote *remote)
 {
   auto it = std::find(this->_remotes.begin(), this->_remotes.end(), remote);
 
   if (it == this->_remotes.end())
     return ;
-  delete *it;
+  //delete *it;
   this->_remotes.erase(it);
 }
 

@@ -1,8 +1,11 @@
 #ifndef RUNWORLDSERVER_H_
 # define RUNWORLDSERVER_H_
 
-#include	"ServerRelay.hh"
 #include	"World.hh"
+#include	"Timer.hh"
+#include	"Any.hpp"
+
+class ServerRelay;
 
 class RunWorldServer
 {
@@ -10,12 +13,14 @@ class RunWorldServer
 public:
   RunWorldServer(ServerRelay *server, const std::string &nameRoom);
   virtual ~RunWorldServer();
+  void run(Any);
   void run();
+  World *getWorld();
 
 private:
   void addSystems();
   void addSharedObjetcs();
-  void addEntities(World &world)
+  void addEntities();
 
 private:
   RunWorldServer() = delete;
@@ -24,7 +29,7 @@ private:
 
 protected:
   ServerRelay *_server;
-  World _world;
+  World *_world;
   Timer _timer;
   std::string _nameRoom;
 

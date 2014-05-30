@@ -29,9 +29,9 @@
 #include	"AutoDestructSystem.hh"
 #include	"NetworkSendActionSystem.hh"
 #include	"NetworkReceiveActionSystem.hh"
-#include	"NetworkReceiveDieEntitySystem.hh"
-#include	"SyncPos2DSystem.hh"
-#include	"NetworkTimeOutEntitySystem.hh"
+#include	"SpawnPlayerSystem.hh"
+#include	"NetworkSendDieEntitySystem.hh"
+#include	"DisconnectPlayerSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -63,35 +63,52 @@
 #include	"EntityFactory.hpp"
 #include	"SoundLoader.hh"
 
-#include	"ClientRelay.hh"
+#include	"ServerRelay.hh"
 #include	"Threads.hh"
 
 #include	"Timer.hh"
 
 void		addSystems(World &world)
 {
+  world.addSystem(new AutoDestructSystem());
+  world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
-  world.addSystem(new SFMLInputSystem());
+  // world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
   world.addSystem(new MoveSequenceSystem());
+  world.addSystem(new FireAlwaysSystem());
   world.addSystem(new ActionMovementSystem());
-  world.addSystem(new SyncPos2DSystem());
   world.addSystem(new ActionFireSystem());
   world.addSystem(new Friction2DSystem());
   world.addSystem(new MoveSystem());
+  world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
+  world.addSystem(new SpawnPlayerSystem());
+  world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
-  world.addSystem(new NetworkReceiveDieEntitySystem());
-  world.addSystem(new NetworkTimeOutEntitySystem());
 
   CollisionSystem *collision;
 
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
+
+
+  NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
+  world.addSystem(networkSendDieEntitySystem);
+  world.addEventHandler("EntityDeletedEvent", networkSendDieEntitySystem,
+			&NetworkSendDieEntitySystem::addEntityToDelete);
+
+  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+  world.addSystem(entityDeleterSystem);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+			&EntityDeleterSystem::addEntityToDelete);
+  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+	  &LifeSystem::delete_entity);
 
   std::vector<std::string> arg =
     {
@@ -103,17 +120,17 @@ void		addSystems(World &world)
       "MovementSpeedComponent",
       "NetworkSendActionComponent",
       "SFMLInputComponent",
-      "Box2DComponent",
       "MovementSpeedComponent",
+      "NetworkPlayerComponent",
       "MoveForwardComponent",
       "MoveFollowComponent",
       "MoveSequenceComponent",
       "TagComponent",
-      "SyncPos2DComponent",
+      "Box2DComponent",
       "MovementLimitFrame2DComponent"
     };
 
-  world.addSystem(new NetworkReceiveUpdateSystem(arg));
+  world.addSystem(new NetworkSendUpdateSystem(arg));
 
   std::vector<std::string> serializable_action =
     {
@@ -124,39 +141,25 @@ void		addSystems(World &world)
       "FIRE"
     };
 
-  world.addSystem(new NetworkSendActionSystem(serializable_action));
-
-  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
-  world.addSystem(entityDeleterSystem);
-  world.addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-			&EntityDeleterSystem::addEntityToDelete);
+  world.addSystem(new NetworkReceiveActionSystem(serializable_action));
 }
-
-static std::string g_ip = "127.0.0.1";
 
 void		addSharedObjetcs(World &world)
 {
-	SoundLoader *soundLoader = new SoundLoader();
-	soundLoader->addSound("Ressources/Sound/laser.wav");
-	/*
-
-	*/
-
   ComponentFactory *compos = new ComponentFactory();
-  ClientRelay *client = new ClientRelay(g_ip, 6667);
   EntityFactory *entityFactory = new EntityFactory();
-  Thread<ClientRelay> *thread = new Thread<ClientRelay>();
+  ServerRelay *server = new ServerRelay(&world, 6667, 42);
+  Thread<ServerRelay> *thread = new Thread<ServerRelay>();
   Any tmp;
 
-  thread->start(client, &ClientRelay::start, tmp);
+  world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(server));
+  world.setSharedObject("RoomName", new std::string("default"));
+  thread->start(server, &ServerRelay::start, tmp);
   compos->init();
   entityFactory->init();
   world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
   world.setSharedObject("entityFactory", entityFactory);
-  world.setSharedObject("soundLoader", soundLoader);
-  world.setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(client));
-  world.setSharedObject("RoomName", new std::string("default"));
 }
 
 void		addEntities(World &world)
@@ -167,53 +170,49 @@ void		addEntities(World &world)
     return;
   world.addEntity(entityFactory->create("BACKGROUND_1"));
   world.addEntity(entityFactory->create("BACKGROUND_2"));
+  world.addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
+  world.addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
+  // world.addEntity(entityFactory->create("PLAYER_RED"));
+  world.addEntity(entityFactory->create("GAME"));
+  //world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
+  // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
-int		main(int ac, char **av)
+#include "LockGuard.hpp"
+
+int		main()
 {
   World		world;
   Timer		timer;
 
-  try {
-    if (ac >= 2)
-      g_ip = av[1]; // Master flemme
-    else
-      {
-	std::cout << "Serveur IP: ";
-	std::cin >> g_ip;
-      }
-    addSystems(world);
-    addSharedObjetcs(world);
-    addEntities(world);
+  addSystems(world);
+  std::cout << "a" << std::endl;
+  addSharedObjetcs(world);
+  std::cout << "b" << std::endl;
+  addEntities(world);
 
-    // sf::Music music;
+  // sf::Music music;
 
-    // if (music.openFromFile("Ressources/Sound/music.ogg"))
-    //   {
-    // 	music.setLoop(true);
-    // 	music.play();
-    //   }
-    /*
-      SoundLoader *s = new SoundLoader();
-      s->addSound("Ressources/Sound/laser.wav");
-      sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-      sound->play();
-    */
-    world.start();
-    while (42)
-      {
-	timer.startFrame();
-	if (timer.canTick())
-	  {
-	    //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
-	    world.process(timer.getDeltaTime() / 1000000.f);
-	  }
-	timer.endFrame();
-      }
-    world.stop();
-  } catch (const std::exception &e)
+  // if (music.openFromFile("Ressources/Sound/music.ogg"))
+  //   {
+  //     music.setLoop(true);
+  //     music.play();
+  //   }
+  /*
+    SoundLoader *s = new SoundLoader();
+    s->addSound("Ressources/Sound/laser.wav");
+    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+    sound->play();
+  */
+  world.start();
+  std::cout << "c" << std::endl;
+  while (42)
     {
-      std::cerr << e.what() << std::endl;
+      timer.startFrame();
+      if (timer.canTick())
+	world.process(timer.getDeltaTime() / 1000000.f);
+      timer.endFrame();
     }
+  world.stop();
   return (0);
 }

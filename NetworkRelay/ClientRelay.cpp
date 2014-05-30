@@ -1,4 +1,5 @@
 #include "ClientRelay.hh"
+#include "ServerRelay.hh"
 #include "TCPException.hh"
 #include "UDPException.hh"
 #include "LockGuard.hpp"
