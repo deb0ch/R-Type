@@ -17,10 +17,7 @@ ENTITY:BOSS_EXPLOSION
 		filename=BigExplosion.png
 		nbSpritesX=10
 		nbSpritesY=1
-		anim=ANIM:
-			start=0
-			length=5
-		!ANIM
+		anim=;0;5
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint

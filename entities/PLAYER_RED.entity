@@ -27,18 +27,9 @@ ENTITY:PLAYER_RED
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
-		anim=ANIM:
-			start=17
-			length=0
-		!ANIM
-		anim=ANIM:DOWN
-			start=15
-			length=2
-		!ANIM
-		anim=ANIM:UP
-			start=18
-			length=2
-		!ANIM
+		anim=;17;0
+		anim=DOWN;15;2
+		anim=UP;18;2
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT
@@ -55,6 +46,7 @@ ENTITY:PLAYER_RED
 	COMPONENT:MovementSpeedComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=BASIC_BULLET;1
 		component=COMPONENT:MoveForwardComponent
 			dir1=RIGHT 
 		!COMPONENT

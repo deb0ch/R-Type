@@ -19,10 +19,7 @@ ENTITY:MONSTER_2
 		filename=r-typesheet-7.png
 		nbSpritesX=4
 		nbSpritesY=3
-		anim=ANIM:
-			start=8
-			length=4
-		!ANIM
+		anim=;8;4
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
 	!COMPONENT
@@ -44,6 +41,9 @@ ENTITY:MONSTER_2
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=BOMB_BULLET_1;1
+		entity=BOMB_BULLET_2;1
+		entity=BOMB_BULLET_3;1
 		nb=0
 		delay=60
 		minPosX=-10

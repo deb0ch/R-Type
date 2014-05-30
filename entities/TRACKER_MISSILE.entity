@@ -27,10 +27,7 @@ ENTITY:TRACKER_MISSILE
 		filename=Monster4.png
 		nbSpritesX=4
 		nbSpritesY=3
-		anim=ANIM:
-			start=4
-			length=0
-		!ANIM
+		anim=;4;0
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint

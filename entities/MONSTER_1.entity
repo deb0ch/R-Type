@@ -23,10 +23,7 @@ ENTITY:MONSTER_1
 		filename=Monster1.png
 		nbSpritesX=8
 		nbSpritesY=1
-		anim=ANIM:
-			start=0
-			length=8
-		!ANIM
+		anim=;0;8
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
 	!COMPONENT
@@ -44,6 +41,9 @@ ENTITY:MONSTER_1
 	COMPONENT:CollisionPowerComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=MONSTER_BASIC_BULLET;1
+		entity=MONSTER_BASIC_BULLET_3;1
+		entity=MONSTER_BASIC_BULLET_4;1
 		nb=0
 		delay=20
 		minPosX=0

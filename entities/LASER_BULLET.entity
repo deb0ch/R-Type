@@ -21,10 +21,7 @@ ENTITY:LASER_BULLET
 		filename=Laser.png
 		nbSpritesX=8
 		nbSpritesY=1
-		anim=ANIM:
-			start=0
-			length=4
-		!ANIM
+		anim=;0;4
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT

@@ -46,10 +46,7 @@ ENTITY:BOSS_1
 		filename=Boss.png
 		nbSpritesX=4
 		nbSpritesY=9
-		anim=ANIM:
-			start=8
-			length=4
-		!ANIM
+		anim=;8;4
 	!COMPONENT
 	COMPONENT:MoveSequenceComponent
 	!COMPONENT
@@ -59,6 +56,9 @@ ENTITY:BOSS_1
 		actions=UP
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=MONSTER_FROM_BOSS;2
+		entity=TRACKER_MISSILE;2
+		entity=BOSS_1_WRATH;1
 		nb=0
 		delay=40
 		minPosX=-5

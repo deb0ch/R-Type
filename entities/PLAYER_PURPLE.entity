@@ -21,18 +21,9 @@ ENTITY:PLAYER_PURPLE
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
-		anim=ANIM:
-			start=7
-			length=0
-		!ANIM
-		anim=ANIM:DOWN
-			start=5
-			length=2
-		!ANIM
-		anim=ANIM:UP
-			start=8
-			length=2
-		!ANIM
+		anim=;7;0
+		anim=DOWN;5;2
+		anim=UP;8;2
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT
@@ -49,6 +40,7 @@ ENTITY:PLAYER_PURPLE
 	COMPONENT:MovementSpeedComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=BASIC_BULLET;1
 		nb=0
 		delay=15
 		minPosX=0

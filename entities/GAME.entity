@@ -6,6 +6,8 @@ ENTITY:GAME
 	COMPONENT:AutoDestructComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=MONSTER_SPAWNER_GAME;1
+		entity=BOSS_SPAWNER;1
 		nb=2
 		delay=0
 		minPosX=0

@@ -21,18 +21,9 @@ ENTITY:PLAYER_BLUE
 		filename=players.png
 		nbSpritesX=5
 		nbSpritesY=5
-		anim=ANIM:
-			start=2
-			length=0
-		!ANIM
-		anim=ANIM:DOWN
-			start=0
-			length=2
-		!ANIM
-		anim=ANIM:UP
-			start=3
-			length=2
-		!ANIM
+		anim=;2;0
+		anim=DOWN;0;2
+		anim=UP;3;2
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT
@@ -49,6 +40,7 @@ ENTITY:PLAYER_BLUE
 	COMPONENT:MovementSpeedComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
+		entity=BASIC_BULLET;1
 		nb=0
 		delay=15
 		minPosX=0

@@ -11,10 +11,7 @@ ENTITY:EXPLOSION
 		filename=ExplosionSmall.png
 		nbSpritesX=6
 		nbSpritesY=1
-		anim=ANIM:
-			start=0
-			length=6
-		!ANIM
+		anim=;0;6
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
 	!COMPONENT

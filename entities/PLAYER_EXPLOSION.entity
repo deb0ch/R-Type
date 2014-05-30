@@ -13,10 +13,7 @@ ENTITY:PLAYER_EXPLOSION
 		filename=ExplosionPlayer.png
 		nbSpritesX=8
 		nbSpritesY=1
-		anim=ANIM:
-			start=2
-			length=6
-		!ANIM
+		anim=;2;6
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
 	!COMPONENT
