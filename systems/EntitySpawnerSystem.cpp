@@ -66,14 +66,14 @@ void		EntitySpawnerSystem::giveComponents(EntitySpawnerComponent *spawner, Entit
 		});
 }
 
-void		EntitySpawnerSystem::processEntity(Entity *e, const float)
+void		EntitySpawnerSystem::processEntity(Entity *e, const float delta)
 {
   EntitySpawnerComponent	*spawner;
   Entity			*res;
 
   if (!(spawner = e->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent")))
     return ;
-  if (!(res = spawner->spawnEntity(this->_world->getSharedObject<EntityFactory>("entityFactory"))))
+  if (!(res = spawner->spawnEntity(this->_world->getSharedObject<EntityFactory>("entityFactory"), delta)))
     return ;
 
   this->givePosition(e, spawner, res);

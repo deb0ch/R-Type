@@ -9,10 +9,10 @@
 class		MoveSequenceComponent : public ACopyableComponent<MoveSequenceComponent>
 {
 public:
-  MoveSequenceComponent(const std::vector<std::string> &actions = {}, const unsigned int tickToChange = 20);
+  MoveSequenceComponent(const std::vector<std::string> &actions = {}, float tickToChange = 0.5f);
   virtual	~MoveSequenceComponent();
 
-  void  incrementTick();
+  void  incrementTick(float delta);
   const std::string	&getAction() const;
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
@@ -22,8 +22,8 @@ public:
 protected:
   std::vector<std::string>	_actions;
   unsigned int			_index;
-  unsigned int			_tick;
-  unsigned int			_tickToChange;
+  float				_tick;
+  float				_tickToChange;
 
 };
 
