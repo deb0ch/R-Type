@@ -1023,20 +1023,20 @@ public:
   void		init()
   {
 
-    // this->initBackground();
-    // this->initBorders();
-    // this->initPlayer();
-    // this->initPlayerBullet();
-    // this->initBullet();
-    // this->initMonster();
-    // this->initBoss();
-    // this->initgame();
-    // this->initOthers();
-    // this->initPowerUp();
+    this->initBackground();
+    this->initBorders();
+    this->initPlayer();
+    this->initPlayerBullet();
+    this->initBullet();
+    this->initMonster();
+    this->initBoss();
+    this->initgame();
+    this->initOthers();
+    this->initPowerUp();
 
     this->serializeAll();
     this->deserializeAll();
-    this->serializeAll();
+    //this->serializeAll();
 
   }
 };
