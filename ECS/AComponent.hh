@@ -32,9 +32,10 @@ public:
     (void)input;
   }
 
-  virtual void		serializeFromFile(std::ofstream &output) const
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const
   {
     (void)output;
+    (void)indent;
   }
 };
 

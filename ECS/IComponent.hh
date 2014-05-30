@@ -17,7 +17,7 @@ public:
   virtual const std::string	&getType() const = 0;
   virtual IComponent		*clone() const = 0;
   virtual void			deserializeFromFile(std::ifstream &input) = 0;
-  virtual void			serializeFromFile(std::ofstream &output) const = 0;
+  virtual void			serializeFromFile(std::ofstream &output, unsigned char indent) const = 0;
 };
 
 #endif /* !ICOMPONENT_H_ */
