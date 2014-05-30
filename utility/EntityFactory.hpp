@@ -964,7 +964,7 @@ public:
 		    ->addComponent(new SFMLSpriteComponent("Boss.png",
 							   ImageLoader::NbSprite{ 4, 9 },
 							   { { "", { 8, 4 } } }))
-		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 0.16))
+		    ->addComponent(new MoveSequenceComponent({"UP", "DOWN"}, 0.16f))
 		    ->addComponent((new ActionComponent())
 				   ->addAction("UP")
 				   ->addAction("DOWN")
