@@ -24,7 +24,8 @@ public:
 
   Pos2DComponent	operator+(const Pos2DComponent&);
 
-  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !POS2DCOMPONENT_H_ */

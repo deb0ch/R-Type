@@ -2,6 +2,7 @@
 #include	"EntitySpawnerComponent.hh"
 
 #include	"EntityFactory.hpp"
+#include	"ComponentFactory.hpp"
 #include	"RandomInt.hpp"
 #include	"RandomReal.hpp"
 
@@ -30,13 +31,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
   this->_tick = 0;
 
   this->_maxWeight = 0;
-  std::for_each(this->_entities.begin(),
-		this->_entities.end(),
-		[this] (std::pair<std::string, unsigned int> &p) {
-		  if (p.second <= 0)
-		    p.second = 1;
-		  this->_maxWeight += p.second;
-		});
+  this->fixWeights();
 }
 
 EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref)
@@ -55,11 +50,7 @@ EntitySpawnerComponent::EntitySpawnerComponent(const EntitySpawnerComponent& ref
   this->_counter = 0;
   this->_tick = 0;
 
-  std::for_each(ref.getComponents().begin(),
-		ref.getComponents().end(),
-		[this] (IComponent* comp) -> void {
-		  this->_components.push_back(comp->clone());
-		});
+  this->fixWeights();
 }
 
 //----- ----- Destructor ----- ----- //
@@ -114,6 +105,18 @@ void			EntitySpawnerComponent::addEntity(const std::pair<std::string, unsigned i
 }
 
 //----- ----- Methods ----- ----- //
+void			EntitySpawnerComponent::fixWeights()
+{
+  this->_maxWeight = 0;
+  std::for_each(this->_entities.begin(),
+		this->_entities.end(),
+		[this] (std::pair<std::string, unsigned int> &p) {
+		  if (p.second <= 0)
+		    p.second = 1;
+		  this->_maxWeight += p.second;
+		});
+}
+
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 {
   Entity		*res = NULL;
@@ -170,6 +173,44 @@ void			EntitySpawnerComponent::serialize(IBuffer &) const
 
 void			EntitySpawnerComponent::unserialize(IBuffer &)
 {}
+
+void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  ComponentFactory	cf;
+  cf.init();
+
+  if (std::regex_match(lastline, std::regex("entity=.+")))
+    this->_entities.push_back(std::make_pair(lastline.substr(7, lastline.find(';') - 7), std::stoul(lastline.substr(lastline.find(';') + 1))));
+  else if (std::regex_match(lastline, std::regex("nb=.+")))
+    this->_nb = std::stoul(lastline.substr(3));
+  else if (std::regex_match(lastline, std::regex("delay=.+")))
+    this->_delay = std::stof(lastline.substr(6));
+  else if (std::regex_match(lastline, std::regex("minPosX=.+")))
+    this->_min_pos.first = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("minPosY=.+")))
+    this->_min_pos.second = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("maxPosX=.+")))
+    this->_max_pos.first = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("maxPosY=.+")))
+    this->_max_pos.second = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("random=.+")))
+    this->_random = (lastline.substr(7) == "true");
+  else if (std::regex_match(lastline, std::regex("abs=.+")))
+    this->_abs = (lastline.substr(4) == "true");
+  else if (std::regex_match(lastline, std::regex("component=COMPONENT:.+")))
+    {
+      IComponent	*compo;
+
+      compo = cf.create(lastline.substr(20));
+      if (!compo)
+	throw EntityFileException("Component doesn't exist in Factory : \"" + lastline.substr(20) + "\"", lineno);
+      compo->deserializeFromFile(input, lineno);
+      this->_components.push_back(compo);
+    }
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+  this->fixWeights();
+}
 
 void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {

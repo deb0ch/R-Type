@@ -30,6 +30,8 @@ protected:
   unsigned long			_counter;
   float				_tick;
 
+  void				fixWeights();
+
 public:
   EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities = {},
 			 std::vector<IComponent*> components = {},
@@ -55,6 +57,7 @@ public:
   virtual void			serialize(IBuffer &) const;
   virtual void			unserialize(IBuffer &);
 
+  virtual void			deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   virtual void			serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 

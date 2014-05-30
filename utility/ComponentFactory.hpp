@@ -25,6 +25,14 @@
 # include "CollisionComponent.hh"
 # include "CollisionPoint.hh"
 # include "CollisionPowerComponent.hh"
+# include "TeamComponent.hh"
+# include "ExplosionComponent.hh"
+# include "LifeComponent.hh"
+# include "AutoDestructComponent.hh"
+# include "NetworkReceiveActionComponent.hh"
+# include "EntitySpawnerComponent.hh"
+# include "FireAlwaysComponent.hh"
+# include "WeaponPowerUpComponent.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
@@ -63,6 +71,18 @@ public :
     this->addComponent(new CollisionComponent());
     this->addComponent(new CollisionPoint());
     this->addComponent(new CollisionPowerComponent());
+    this->addComponent(new TeamComponent());
+    this->addComponent(new ExplosionComponent());
+    this->addComponent(new LifeComponent());
+    this->addComponent(new AutoDestructComponent());
+    this->addComponent(new NetworkReceiveActionComponent());
+    this->addComponent(new EntitySpawnerComponent());
+    this->addComponent(new FireAlwaysComponent());
+  }
+
+  virtual ASerializableComponent	*create(const std::string &key) const
+  {
+    return this->create(Hash()(key));
   }
 
   virtual ASerializableComponent	*create(const hash_t &key) const

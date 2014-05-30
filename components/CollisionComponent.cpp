@@ -81,6 +81,24 @@ CollisionComponent	       *CollisionComponent::addNotToCollideItem(std::string c
   return (this);
 }
 
+void	CollisionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("toCollide=.+")))
+    this->_toCollide.push_back(lastline.substr(10));
+  else if (std::regex_match(lastline, std::regex("toNotCollide=.+")))
+    this->_toNotCollide.push_back(lastline.substr(13));
+  else if (std::regex_match(lastline, std::regex("collisionPoints=COMPONENT:CollisionPoint")))
+    {
+      CollisionPoint	*cp = new CollisionPoint();
+      cp->deserializeFromFile(input, lineno);
+      this->_collisionPoints.push_back(cp);
+    }
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
 void	CollisionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   std::for_each(this->_collisionPoints.begin(), this->_collisionPoints.end(), [&output, indent](const CollisionPoint *cp)

@@ -15,6 +15,7 @@ SET(HEADER_S
   ${CMAKE_CURRENT_SOURCE_DIR}/RandomReal.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFile.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFileException.hh
   PARENT_SCOPE
   )
 
@@ -26,6 +27,7 @@ SET(SOURCE_S
   ${CMAKE_CURRENT_SOURCE_DIR}/Random.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFile.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFileException.cpp
   PARENT_SCOPE
   )
   
@@ -42,6 +44,7 @@ SET(HEADER_C
   ${CMAKE_CURRENT_SOURCE_DIR}/RandomReal.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.hh
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFile.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFileException.hh
   PARENT_SCOPE
   )
 
@@ -53,5 +56,6 @@ SET(SOURCE_C
   ${CMAKE_CURRENT_SOURCE_DIR}/Random.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SoundLoader.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/EntityFile.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/EntityFileException.cpp
   PARENT_SCOPE
   )

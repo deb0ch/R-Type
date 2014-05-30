@@ -19,7 +19,8 @@ public:
 	void decreaseInvulnerability(float delta);
 	void setInvulnerabilityTime(float time);
 
-  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:
 	unsigned int _life;
