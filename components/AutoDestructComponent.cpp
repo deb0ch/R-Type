@@ -40,7 +40,7 @@ void	AutoDestructComponent::deserializeFromFileSpecial(const std::string &lastli
   (void)input;
 
   if (std::regex_match(lastline, std::regex("delay=.+")))
-    this->_delay = std::stoul(lastline.substr(6));
+    this->_delay = std::stof(lastline.substr(6));
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"");
 }

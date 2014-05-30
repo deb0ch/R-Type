@@ -176,7 +176,7 @@ void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastl
   else if (std::regex_match(lastline, std::regex("nb=.+")))
     this->_nb = std::stoul(lastline.substr(3));
   else if (std::regex_match(lastline, std::regex("delay=.+")))
-    this->_delay = std::stoul(lastline.substr(6));
+    this->_delay = std::stof(lastline.substr(6));
   else if (std::regex_match(lastline, std::regex("minPosX=.+")))
     this->_nb = std::stof(lastline.substr(8));
   else if (std::regex_match(lastline, std::regex("minPosY=.+")))
