@@ -68,6 +68,17 @@ void		MoveSequenceComponent::unserialize(IBuffer &buffer)
     }
 }
 
+void	MoveSequenceComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("action=.+")))
+    this->_actions.push_back(lastline.substr(7));
+  else if (std::regex_match(lastline, std::regex("tickToChange=.+")))
+    this->_tickToChange = std::stoul(lastline.substr(13));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
 
 void	MoveSequenceComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
