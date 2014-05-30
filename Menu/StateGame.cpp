@@ -1,10 +1,9 @@
 #include	"StateGame.hh"
 #include	"Any.hpp"
 
-StateGame::StateGame(World *world, const std::string &ip_address)
+StateGame::StateGame(World *world)
 {
   this->_world = world;
-  this->_ipAddress = ip_address;
   this->addSystems();
   this->addSharedObjetcs();
   this->addEntities();
@@ -33,18 +32,14 @@ void		StateGame::addSharedObjetcs()
   soundLoader->addSound("Ressources/Sound/Silencer.wav");
 
   ComponentFactory *compos = new ComponentFactory();
-  ClientRelay *client = new ClientRelay(this->_ipAddress, 6667);
   EntityFactory *entityFactory = new EntityFactory();
-  Thread<ClientRelay> *thread = new Thread<ClientRelay>();
 
-  thread->start(client, &ClientRelay::start, Any());
   compos->init();
   entityFactory->init();
   this->_world->setSharedObject("imageLoader", new ImageLoader());
   this->_world->setSharedObject("componentFactory", compos);
   this->_world->setSharedObject("entityFactory", entityFactory);
   this->_world->setSharedObject("soundLoader", soundLoader);
-  this->_world->setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(client));
   this->_world->setSharedObject("RoomName", new std::string("default"));
 }
 

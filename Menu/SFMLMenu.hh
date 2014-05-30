@@ -6,6 +6,7 @@
 #include	"SFMLButton.hh"
 #include	"SFMLTextBox.hh"
 #include	"World.hh"
+#include	"ClientRelay.hh"
 
 class SFMLMenu : public IState
 {
@@ -31,6 +32,7 @@ protected:
 	World		*_world;
 	sf::Sprite *_background;
 	sf::Sprite *_logo;
+	ClientRelay *_relay;
 	SFMLButton *_buttonplay;
 	SFMLButton *_buttonCredit;
 	SFMLTextBox *_textboxIP;

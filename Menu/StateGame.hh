@@ -69,7 +69,7 @@
 class StateGame : public IState
 {
 public:
-	StateGame(World *world, const std::string &ip_address);
+	StateGame(World *world);
 	~StateGame();
 
 	void update(StateManager&);
@@ -82,7 +82,6 @@ protected:
 
 
 	World		*_world;
-	std::string _ipAddress;
 };
 
 #endif /* !STATEGAME_H_ */

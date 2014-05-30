@@ -2,10 +2,9 @@
 #include	"StateRoom.hh"
 #include	"StateGame.hh"
 
-StateRoom::StateRoom(sf::RenderWindow * window, World *world, const std::string &ipaddress)
+StateRoom::StateRoom(sf::RenderWindow * window, World *world)
 {
   this->_window = window;
-  this->_ipAddress = ipaddress;
   this->_world = world;
   this->init();
 }
@@ -36,6 +35,23 @@ void	StateRoom::init()
   this->_textboxRoom->setBorderSize(270, 45);
 }
 
+void	StateRoom::accessRoom()
+{
+	this->_world->setSharedObject("RoomName", new std::string(this->_textboxRoom->getString()));
+	/*
+	bool roomOk = false;
+	if (this->_textboxRoom->getString() == "")
+	{
+	this->_world
+	while (!roomOk)
+	{
+
+	}
+	}
+	if (roomOk)
+	*/
+}
+
 void	StateRoom::update(StateManager& manager)
 {
   sf::Event	event;
@@ -50,19 +66,8 @@ void	StateRoom::update(StateManager& manager)
 	case sf::Event::TextEntered:
 	  if (event.text.unicode == 13)
 	    {
-	      /*
-	      bool roomOk = false;
-	      if (this->_textboxRoom->getString() == "")
-		{
-		  this->_world
-		  while (!roomOk)
-		    {
-
-		    }
-		}
-	      if (roomOk)
-	      */
-		manager.pushState(new StateGame(this->_world, this->_ipAddress));
+		  this->accessRoom();
+		manager.pushState(new StateGame(this->_world));
 	    }
 	  else if (event.text.unicode == 8)
 	    this->_textboxRoom->removelastCharacter();
@@ -73,7 +78,8 @@ void	StateRoom::update(StateManager& manager)
 	  break;
 
 	case sf::Event::MouseButtonPressed:
-	  manager.pushState(new StateGame(this->_world, this->_ipAddress));
+		this->accessRoom();
+		manager.pushState(new StateGame(this->_world));
 	  return;
 
 	default:

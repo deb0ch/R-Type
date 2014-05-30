@@ -63,12 +63,10 @@ void SFMLMenu::init()
 
 void	SFMLMenu::connect()
 {
-  ClientRelay *client = new ClientRelay(this->_textboxIP->getString(), 6667);
-  //Thread<ClientRelay> *thread = new Thread<ClientRelay>();
-
-  if (!client->start())
-    throw "butt";
-  //thread->start(client, &ClientRelay::start, Any());
+	this->_relay = new ClientRelay(this->_textboxIP->getString(), 6667);
+	if (!this->_relay->start())
+		throw "butt";
+	this->_world->setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(this->_relay));
 }
 
 void SFMLMenu::update(StateManager& manager)
@@ -86,8 +84,7 @@ void SFMLMenu::update(StateManager& manager)
 	  if (event.text.unicode == 13)
 	    {
 	      this->connect();
-	      manager.pushState(new StateRoom(this->_window, this->_world,
-					      this->_textboxIP->getString()));
+		  manager.pushState(new StateRoom(this->_window, this->_world));
 	    }
 	  else if (event.text.unicode == 8)
 	    this->_textboxIP->removelastCharacter();
@@ -103,8 +100,7 @@ void SFMLMenu::update(StateManager& manager)
 	  if (this->_buttonplay->isMouseOnButton())
 	    {
 	      this->connect();
-	      manager.pushState(new StateRoom(this->_window, this->_world,
-					      this->_textboxIP->getString()));
+		  manager.pushState(new StateRoom(this->_window, this->_world));
 	    }
 	  else if (this->_buttonCredit->isMouseOnButton())
 	    manager.pushState(new StateCredit(this->_window));
