@@ -2,6 +2,7 @@
 # define OUTOFBOUNDSSYSTEM_H_
 
 # include "ASystem.hh"
+# include "Window.hh"
 
 class OutOfBoundsSystem : public ASystem
 {

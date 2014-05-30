@@ -2,6 +2,7 @@
 # define MOVEMENTLIMITFRAME2DCOMPONENT_H_
 
 # include "World.hh"
+# include "Window.hh"
 # include "ACopyableComponent.hpp"
 
 class MovementLimitFrame2DComponent : public ACopyableComponent<MovementLimitFrame2DComponent>

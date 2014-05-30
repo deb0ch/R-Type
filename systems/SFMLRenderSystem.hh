@@ -3,7 +3,7 @@
 
 # include		"SFML/Graphics.hpp"
 # include		"Pos2DComponent.hh"
-
+# include		"Window.hh"
 # include		"ASystem.hh"
 
 class			SFMLRenderSystem : public ASystem
