@@ -1,17 +1,24 @@
 ENTITY:MONSTER_FROM_BOSS
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
 		y=100
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=40
+		height=25
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=MONSTER
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.5
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster3.png
@@ -20,14 +27,21 @@ ENTITY:MONSTER_FROM_BOSS
 		anim=;2;0
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=60
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=200
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=2
 	!COMPONENT
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
 	COMPONENT:ExplosionComponent
+		entity=EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
@@ -40,6 +54,7 @@ ENTITY:MONSTER_FROM_BOSS
 		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
+		collisionPower=50
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=MONSTER_BASIC_BULLET_3;1
@@ -57,6 +72,9 @@ ENTITY:MONSTER_FROM_BOSS
 		dir1=LEFT
 	!COMPONENT
 	COMPONENT:MoveSequenceComponent
+		action=UP
+		action=DOWN
+		tickToChange=20
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

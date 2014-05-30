@@ -1,27 +1,42 @@
 ENTITY:BOMB_BULLET_3
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=5
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=300
 		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=30
+		height=30
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=2
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=BULLET
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=90
 	!COMPONENT
 	COMPONENT:ExplosionComponent
+		entity=ALIEN_BOMB_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=200
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=120
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster4.png

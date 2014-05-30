@@ -29,3 +29,8 @@ void AutoDestructComponent::serialize(IBuffer &) const
 
 void AutoDestructComponent::unserialize(IBuffer &)
 {}
+
+void	AutoDestructComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "delay=" << this->_delay << std::endl;
+}

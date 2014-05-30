@@ -70,3 +70,8 @@ void		MoveFollowComponent::setTagToFollow(const std::string & tagToFollow)
 {
   this->_tagToFollow = tagToFollow;
 }
+
+void	MoveFollowComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "tagToFollow=" << this->_tagToFollow << std::endl;
+}

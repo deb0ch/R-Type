@@ -21,6 +21,8 @@ public:
 							 bool send_force = false) const;
 
   NetworkPlayerComponent		*addPlayerComponent(ASerializableComponent *component);
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   unsigned int				_remote_hash;
   std::vector<ASerializableComponent *>	_components;

@@ -4,6 +4,7 @@ ENTITY:BOSS_1_WRATH
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=100
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BOSS_BULLET;1

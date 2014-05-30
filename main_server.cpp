@@ -182,37 +182,49 @@ void		addEntities(World &world)
 
 int		main()
 {
-  World		world;
-  Timer		timer;
+  try {
+    World		world;
+    Timer		timer;
 
-  addSystems(world);
-  //std::cout << "a" << std::endl;
-  addSharedObjetcs(world);
-  //std::cout << "b" << std::endl;
-  addEntities(world);
+    addSystems(world);
+    addSharedObjetcs(world);
+    addEntities(world);
 
-  // sf::Music music;
+    // sf::Music music;
 
-  // if (music.openFromFile("Ressources/Sound/music.ogg"))
-  //   {
-  //     music.setLoop(true);
-  //     music.play();
-  //   }
-  /*
-    SoundLoader *s = new SoundLoader();
-    s->addSound("Ressources/Sound/laser.wav");
-    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-    sound->play();
-  */
-  world.start();
-  //std::cout << "c" << std::endl;
-  while (42)
+    // if (music.openFromFile("Ressources/Sound/music.ogg"))
+    //   {
+    //     music.setLoop(true);
+    //     music.play();
+    //   }
+    /*
+      SoundLoader *s = new SoundLoader();
+      s->addSound("Ressources/Sound/laser.wav");
+      sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+      sound->play();
+    */
+    world.start();
+    //std::cout << "c" << std::endl;
+    while (42)
+      {
+	timer.startFrame();
+	if (timer.canTick())
+	  world.process(timer.getDeltaTime() / 1000000.f);
+	timer.endFrame();
+      }
+    world.stop();
+  }
+  catch (std::exception e)
     {
-      timer.startFrame();
-      if (timer.canTick())
-	world.process(timer.getDeltaTime() / 1000000.f);
-      timer.endFrame();
+      std::cerr << e.what() << std::endl;
     }
-  world.stop();
+  catch (std::string str)
+    {
+      std::cerr << str << std::endl;
+    }
+  catch (...)
+    {
+      std::cerr << "Unknown error." << std::endl;
+    }
   return (0);
 }

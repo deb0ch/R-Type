@@ -16,6 +16,8 @@ public:
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);
 
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   float		_frictionCoef;
 };

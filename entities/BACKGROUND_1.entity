@@ -1,11 +1,15 @@
 ENTITY:BACKGROUND_1
 	COMPONENT:TagComponent
+		tag=do_not_delete
+		tag=BackgroundSystem
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0
 		y=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=-75
+		vy=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=background.png

@@ -98,3 +98,6 @@ NetworkPlayerComponent	*NetworkPlayerComponent::addPlayerComponent(ASerializable
     }
   return this;
 }
+
+void	NetworkPlayerComponent::serializeFromFile(std::ofstream &, unsigned char) const
+{}

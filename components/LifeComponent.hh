@@ -18,6 +18,8 @@ public:
 	bool isInvulnerable() const;
 	void decreaseInvulnerability();
 
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
 	unsigned int _life;
 	unsigned int _invulenerabilityMaxTime;

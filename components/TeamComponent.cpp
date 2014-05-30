@@ -25,3 +25,8 @@ void	TeamComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_team;
 }
+
+void	TeamComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "team=" << this->_team << std::endl;
+}

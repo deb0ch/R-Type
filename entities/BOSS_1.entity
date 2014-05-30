@@ -1,27 +1,42 @@
 ENTITY:BOSS_1
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=700
 		y=360
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=130
+		height=205
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=60
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.5
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=2
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=MONSTER
+		tag=Ennemy
 	!COMPONENT
 	COMPONENT:ExplosionComponent
+		entity=BOSS_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=7500
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
@@ -41,6 +56,7 @@ ENTITY:BOSS_1
 		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
+		collisionPower=100
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Boss.png
@@ -49,6 +65,9 @@ ENTITY:BOSS_1
 		anim=;8;4
 	!COMPONENT
 	COMPONENT:MoveSequenceComponent
+		action=UP
+		action=DOWN
+		tickToChange=10
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

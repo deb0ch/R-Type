@@ -21,6 +21,8 @@ public:
   void	addInput(const std::string &action, const sf::Keyboard::Key &key);
   virtual void serialize(IBuffer &) const;
   virtual void unserialize(IBuffer &);
+
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !SFMLINPUTCOMPONENT_H_ */

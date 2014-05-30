@@ -36,6 +36,7 @@ public:
   {
     (void)output;
     (void)indent;
+    throw "Not defined for  " + this->_type;
   }
 };
 

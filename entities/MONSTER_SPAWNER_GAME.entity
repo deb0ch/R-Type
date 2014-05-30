@@ -1,11 +1,13 @@
 ENTITY:MONSTER_SPAWNER_GAME
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=5
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=800
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=3000
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=MONSTER_1;1

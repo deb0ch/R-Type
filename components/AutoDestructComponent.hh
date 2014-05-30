@@ -19,6 +19,8 @@ public:
   void setTick(unsigned long tick);
   virtual void serialize(IBuffer &) const;
   virtual void unserialize(IBuffer &);
+
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !AUTODESTRUCTCOMPONENT_H_ */

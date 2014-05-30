@@ -1,21 +1,30 @@
 ENTITY:PLAYER_GREEN
 	COMPONENT:NetworkReceiveActionComponent
+		packet_num=0
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
 		y=100
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=50
+		height=50
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=1
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=PLAYER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.5
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=players.png
@@ -38,6 +47,7 @@ ENTITY:PLAYER_GREEN
 		toCollide=PLAYER
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=200
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1

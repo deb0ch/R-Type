@@ -1,17 +1,24 @@
 ENTITY:BOSS_EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0
 		y=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=0
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=250
+		height=280
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
+		collisionPower=500
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=BigExplosion.png
@@ -28,5 +35,6 @@ ENTITY:BOSS_EXPLOSION
 		!COMPONENT
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=50
 	!COMPONENT
 !ENTITY
