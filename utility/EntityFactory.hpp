@@ -229,6 +229,15 @@ public:
 		    ->addComponent(new AutoDestructComponent(0.192f))
 		    );
 
+	this->addEntity("LASER_EXPLOSION", (new Entity())
+		->addComponent(new NetworkSendUpdateComponent(1.f))
+		->addComponent(new Pos2DComponent(0.0f, 0.0f))
+		->addComponent(new Speed2DComponent(-0.5f, 0.0f))
+		->addComponent(new SFMLSpriteComponent("laserExplode.png", ImageLoader::NbSprite{ 6, 1 },
+		{ { "", { 0, 3 } } }, 3))
+		->addComponent(new AutoDestructComponent(0.15f))
+		);
+
     this->addEntity("PLAYER_EXPLOSION", (new Entity())
 		    ->addComponent(new NetworkSendUpdateComponent())
 		    ->addComponent(new Pos2DComponent(0.0f, 0.0f))
@@ -258,7 +267,7 @@ public:
 		->addComponent(new Pos2DComponent(0.0f, 0.0f))
 		->addComponent(new Speed2DComponent(0.0f, 0.0f))
 		->addComponent(new TeamComponent(1))
-		->addComponent(new Box2DComponent(50.0f, 50.0f))
+		->addComponent(new Box2DComponent(100.0f, 100.0f))
 		->addComponent(new CollisionPowerComponent(5))
 		->addComponent((new CollisionComponent())
 		->addCollisionPoint(new CollisionPoint(0.0f, 0.0f, 100.0f, 100.0f)))
@@ -385,7 +394,7 @@ public:
 				   ->addTag("PLAYER"))
 		    ->addComponent(new Speed2DComponent(0.f, 0.f))
 		    ->addComponent(new Friction2DComponent(0.5f))
-		    //->addComponent(new LifeComponent(1, 20))
+		    ->addComponent(new LifeComponent(1, 20))
 			->addComponent(new CollisionPowerComponent(100))
 		    ->addComponent(new ExplosionComponent("PLAYER_EXPLOSION"))
 		    ->addComponent(new SFMLSpriteComponent("players.png",
@@ -556,9 +565,11 @@ public:
 		  ->addComponent(new NetworkSendUpdateComponent(5.f))
 		  ->addComponent(new Pos2DComponent(300.0f, 300.0f))
 		  ->addComponent(new Box2DComponent(50.0f, 15.0f))
+		  ->addComponent(new ExplosionComponent("LASER_EXPLOSION"))
 		  ->addComponent(new TeamComponent(1))
 		  ->addComponent((new TagComponent())
-		  ->addTag("BULLET"))
+		  ->addTag("BULLET")
+		  ->addTag("LASER"))
 		  ->addComponent(new Speed2DComponent(1000.0f, 0.f))
 		  ->addComponent(new Friction2DComponent(0.5f))
 		  ->addComponent(new MovementSpeedComponent(500.f))
