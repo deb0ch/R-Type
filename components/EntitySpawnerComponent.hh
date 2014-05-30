@@ -47,6 +47,8 @@ public:
   const std::vector<IComponent*>	&getComponents() const;
 
   void				setActive(bool active);
+  void				clearEntities();
+  void				addEntity(std::pair<std::string, unsigned int> &);
   Entity			*spawnEntity(EntityFactory *facto);
 
   virtual void			serialize(IBuffer &) const;

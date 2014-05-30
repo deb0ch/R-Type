@@ -32,6 +32,7 @@
 #include	"SpawnPlayerSystem.hh"
 #include	"NetworkSendDieEntitySystem.hh"
 #include	"DisconnectPlayerSystem.hh"
+#include	"PowerUpSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -90,12 +91,14 @@ void		addSystems(World &world)
   world.addSystem(new SpawnPlayerSystem());
   world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
+  world.addSystem(new PowerUpSystem());
 
   CollisionSystem *collision;
 
   collision = new CollisionSystem();
   world.addSystem(collision);
   world.addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
+  world.addEventHandler("CollisionEvent", collision, &PowerUpSystem::collision_event);
 
 
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();

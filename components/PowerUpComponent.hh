@@ -3,6 +3,7 @@
 
 # include <string>
 # include "ACopyableComponent.hpp"
+# include "EntitySpawnerComponent.hh"
 
 class PowerUpComponent : public ACopyableComponent<PowerUpComponent>
 {
@@ -10,6 +11,7 @@ public:
 	PowerUpComponent(const std::string weapon = "");
 	virtual	~PowerUpComponent();
 
+	void	upgrade(EntitySpawnerComponent *spawner);
 	void	serialize(IBuffer &buffer) const;
 	void	unserialize(IBuffer &buffer);
 

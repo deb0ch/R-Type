@@ -10,6 +10,12 @@ PowerUpComponent::~PowerUpComponent()
 {
 }
 
+void	PowerUpComponent::upgrade(EntitySpawnerComponent *spawner)
+{
+	spawner->clearEntities();
+	spawner->addEntity(std::pair<std::string, unsigned int>(this->_newWeapon, 0));
+}
+
 void	PowerUpComponent::serialize(IBuffer &buffer) const
 {
 	buffer << this->_newWeapon;
