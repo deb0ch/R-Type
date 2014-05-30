@@ -11,7 +11,6 @@ PowerUpSystem::PowerUpSystem(const std::vector<std::string> &possible_powerup)
   : ASystem("PowerUpSystem")
 {
   this->_possible_powerup = possible_powerup;
-  std::cout << "AZJEOAZJE: " << this << std::endl;
 }
 
 PowerUpSystem::~PowerUpSystem()
