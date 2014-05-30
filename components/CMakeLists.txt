@@ -31,6 +31,7 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpComponent.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -64,6 +65,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpComponent.cpp
 	PARENT_SCOPE)
 
 
@@ -100,6 +102,7 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpComponent.hh
 	PARENT_SCOPE
 )
 
@@ -134,5 +137,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpComponent.cpp
 	PARENT_SCOPE
 )

@@ -26,6 +26,8 @@ CollisionComponent	&CollisionComponent::operator=(const CollisionComponent &e)
 		    [this] (CollisionPoint *cp) {
 		      this->_collisionPoints.push_back(new CollisionPoint(*cp));
 		    });
+	  this->_toCollide = e._toCollide;
+	  this->_toNotCollide = e._toNotCollide;
     }
   return (*this);
 }
