@@ -80,9 +80,6 @@ ENTITY:PLAYER_RED
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
-		component=COMPONENT:MoveForwardComponent
-			dir1=RIGHT
-		!COMPONENT
 		nb=0
 		delay=0.15
 		minPosX=5
