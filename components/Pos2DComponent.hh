@@ -23,6 +23,8 @@ public:
   void		setY(float y);
 
   Pos2DComponent	*operator+(const Pos2DComponent&);
+
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !POS2DCOMPONENT_H_ */

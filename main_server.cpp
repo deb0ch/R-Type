@@ -186,9 +186,9 @@ int		main()
   Timer		timer;
 
   addSystems(world);
-  std::cout << "a" << std::endl;
+  //std::cout << "a" << std::endl;
   addSharedObjetcs(world);
-  std::cout << "b" << std::endl;
+  //std::cout << "b" << std::endl;
   addEntities(world);
 
   // sf::Music music;
@@ -205,7 +205,7 @@ int		main()
     sound->play();
   */
   world.start();
-  std::cout << "c" << std::endl;
+  //std::cout << "c" << std::endl;
   while (42)
     {
       timer.startFrame();
