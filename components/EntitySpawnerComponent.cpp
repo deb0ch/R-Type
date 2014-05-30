@@ -2,6 +2,7 @@
 #include	"EntitySpawnerComponent.hh"
 
 #include	"EntityFactory.hpp"
+#include	"ComponentFactory.hpp"
 #include	"RandomInt.hpp"
 #include	"RandomReal.hpp"
 
@@ -152,6 +153,41 @@ void			EntitySpawnerComponent::serialize(IBuffer &) const
 
 void			EntitySpawnerComponent::unserialize(IBuffer &)
 {}
+
+void	EntitySpawnerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("entity=.+")))
+    this->_entities.push_back(std::make_pair(lastline.substr(7, lastline.find(';') - 7), std::stoul(lastline.substr(lastline.find(';') + 1))));
+  else if (std::regex_match(lastline, std::regex("nb=.+")))
+    this->_nb = std::stoul(lastline.substr(3));
+  else if (std::regex_match(lastline, std::regex("delay=.+")))
+    this->_delay = std::stoul(lastline.substr(6));
+  else if (std::regex_match(lastline, std::regex("minPosX=.+")))
+    this->_nb = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("minPosY=.+")))
+    this->_nb = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("maxPosX=.+")))
+    this->_nb = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("maxPosY=.+")))
+    this->_nb = std::stof(lastline.substr(8));
+  else if (std::regex_match(lastline, std::regex("random=.+")))
+    this->_nb = (lastline.substr(7) == "true");
+  else if (std::regex_match(lastline, std::regex("abs=.+")))
+    this->_nb = (lastline.substr(4) == "true");
+  else if (std::regex_match(lastline, std::regex("component=COMPONENT:.+")))
+    {
+      IComponent	*compo;
+      compo = ComponentFactory().create(lastline.substr(20));
+      if (!compo)
+	throw EntityFileException("Bad argument : \"" + lastline + "\"");
+      compo->deserializeFromFile(input);
+      this->_components.push_back(compo);
+    }
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"");
+}
 
 void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
