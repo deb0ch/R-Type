@@ -3,6 +3,7 @@
 #include "NetworkPlayerComponent.hh"
 #include "EntityFactory.hpp"
 #include "NetworkSendActionComponent.hh"
+#include "NetworkSendUpdateSystem.hh"
 
 SpawnPlayerSystem::SpawnPlayerSystem() : ASystem("SpawnPlayerSystem")
 {}
@@ -30,6 +31,24 @@ bool		SpawnPlayerSystem::canProcess(Entity *)
 
 void		SpawnPlayerSystem::processEntity(Entity *, const float)
 {}
+
+void		SpawnPlayerSystem::updateWorldToRemote(Remote *remote)
+{
+  const std::vector<Entity *>	&entities = this->_world->getEntities();
+  NetworkSendUpdateSystem	*update_system;
+
+  update_system = this->_world->getSystem<NetworkSendUpdateSystem>("NetworkSendUpdateSystem");
+  if (!update_system)
+    std::cerr << "No update system??" << std::endl;
+  std::for_each(entities.begin(), entities.end(),
+		[&remote, &update_system] (const Entity *entity)
+		{
+		  update_system->updateEntityToRemote(remote,
+						      entity,
+						      entity->getComponent<NetworkSendUpdateComponent>
+						      ("NetworkSendUpdateComponent"));
+		});
+}
 
 void		SpawnPlayerSystem::beforeProcess(const float)
 {

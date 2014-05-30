@@ -2,7 +2,6 @@
 #include "NetworkSendUpdateSystem.hh"
 #include "ASerializableComponent.hh"
 #include "IComponent.hh"
-#include "NetworkSendUpdateComponent.hh"
 #include "NetworkBuffer.hh"
 #include "Hash.hh"
 #include "LockGuard.hpp"
@@ -30,7 +29,7 @@ void				NetworkSendUpdateSystem::beforeProcess(const float)
   this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
+void				NetworkSendUpdateSystem::serializeComponents(const Entity *entity,
 									     Remote *remote,
 									     IBuffer &buffer)
 {
@@ -44,6 +43,21 @@ void				NetworkSendUpdateSystem::serializeComponents(Entity *entity,
 	  serializable_component->networkSerialize(remote, buffer);
 	}
     }
+}
+
+void	NetworkSendUpdateSystem::updateEntityToRemote(Remote *remote, const Entity *entity,
+						      NetworkSendUpdateComponent *network_component)
+{
+  if (!network_component || !entity || !remote)
+    return ;
+  IBuffer *buffer = this->_network->getUDPBuffer();
+
+  *buffer << static_cast<char>(ENTITY_UPDATE);
+  *buffer << entity->_id;
+  *buffer << network_component->getPacketNumber();
+  *buffer << network_component->getUpdateRate();
+  this->serializeComponents(entity, remote, *buffer);
+  remote->sendUDP(buffer);
 }
 
 void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float delta)
@@ -65,13 +79,7 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float delta
 	  std::for_each(remotes.begin(), remotes.end(),
 			[this, &entity, &network_component] (Remote *remote)
 			{
-			  IBuffer *buffer = this->_network->getUDPBuffer();
-			  *buffer << static_cast<char>(ENTITY_UPDATE);
-			  *buffer << entity->_id;
-			  *buffer << network_component->getPacketNumber();
-			  *buffer << network_component->getUpdateRate();
-			  this->serializeComponents(entity, remote, *buffer);
-			  remote->sendUDP(buffer);
+			  this->updateEntityToRemote(remote, entity, network_component);
 			});
 	  network_component->increasePacketNumber();
 	}
