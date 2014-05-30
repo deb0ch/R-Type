@@ -31,7 +31,7 @@ ENTITY:TRACKER_MISSILE
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=120
+		delay=2
 	!COMPONENT
 	COMPONENT:ExplosionComponent
 		entity=ALIEN_BOMB_EXPLOSION

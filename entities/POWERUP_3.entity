@@ -1,44 +1,51 @@
-ENTITY:ALIEN_BOMB_EXPLOSION
+ENTITY:POWERUP_3
+	COMPONENT:TagComponent
+		tag=BOOST
+	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=10
+	!COMPONENT
+	COMPONENT:Box2DComponent
+		width=25
+		height=20
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0
 		y=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=0
+		vx=-30
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=2
 	!COMPONENT
-	COMPONENT:Box2DComponent
-		width=100
-		height=100
+	COMPONENT:PowerUpComponent
+		weapon=LASER_BULLET
 	!COMPONENT
-	COMPONENT:CollisionPowerComponent
-		collisionPower=50
+	COMPONENT:LifeComponent
+		life=1
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=100
-			height=100
+			width=25
+			height=20
 		!COMPONENT
+		toCollide=PLAYER
+		toNotCollide=MONSTER
+		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=Monster4.png
+		filename=SpeedUp.png
 		nbSpritesX=4
-		nbSpritesY=3
+		nbSpritesY=1
 		anim=ANIM
 			action=
-			start=5
-			length=3
+			start=3
+			length=0
 		!ANIM
-	!COMPONENT
-	COMPONENT:AutoDestructComponent
-		delay=0.25
 	!COMPONENT
 !ENTITY

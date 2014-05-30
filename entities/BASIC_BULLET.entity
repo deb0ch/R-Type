@@ -58,6 +58,7 @@ ENTITY:BASIC_BULLET
 			width=20
 			height=20
 		!COMPONENT
+		toNotCollide=BOOST
 		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:ActionComponent

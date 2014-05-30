@@ -21,6 +21,6 @@ ENTITY:BULLET_EXPLOSION
 		!ANIM
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=12
+		delay=0.192
 	!COMPONENT
 !ENTITY

@@ -78,7 +78,7 @@ ENTITY:MONSTER_1
 	COMPONENT:MoveSequenceComponent
 		action=UP
 		action=DOWN
-		tickToChange=20
+		tickToChange=0.32
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

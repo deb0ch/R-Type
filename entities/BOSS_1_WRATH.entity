@@ -4,12 +4,12 @@ ENTITY:BOSS_1_WRATH
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=100
+		delay=1.6
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BOSS_BULLET;1
 		nb=20
-		delay=4
+		delay=0.06
 		minPosX=0
 		minPosY=-150
 		maxPosX=0

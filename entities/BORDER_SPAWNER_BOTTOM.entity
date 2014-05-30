@@ -12,7 +12,7 @@ ENTITY:BORDER_SPAWNER_BOTTOM
 		entity=BORDER_BOTTOM_LEVEL_3;2
 		entity=BORDER_BOTTOM_LEVEL_4;4
 		nb=0
-		delay=185
+		delay=3
 		minPosX=0
 		minPosY=0
 		maxPosX=0

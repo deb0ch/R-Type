@@ -39,6 +39,6 @@ ENTITY:BOSS_EXPLOSION
 		!COMPONENT
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=50
+		delay=0.8
 	!COMPONENT
 !ENTITY

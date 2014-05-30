@@ -13,6 +13,9 @@ ENTITY:LASER_BULLET
 	COMPONENT:TeamComponent
 		team=1
 	!COMPONENT
+	COMPONENT:TagComponent
+		tag=BULLET
+	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=1000
 		vy=0
@@ -46,6 +49,7 @@ ENTITY:LASER_BULLET
 			width=50
 			height=15
 		!COMPONENT
+		toNotCollide=BOOST
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

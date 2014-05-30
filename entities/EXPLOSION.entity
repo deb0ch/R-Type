@@ -21,6 +21,6 @@ ENTITY:EXPLOSION
 		!ANIM
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=30
+		delay=0.48
 	!COMPONENT
 !ENTITY
