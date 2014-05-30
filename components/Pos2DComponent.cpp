@@ -53,9 +53,9 @@ void		Pos2DComponent::additionalNetworkSerialize(IBuffer &buffer) const
   this->serialize(buffer);
 }
 
-Pos2DComponent	*Pos2DComponent::operator+(const Pos2DComponent &add)
+Pos2DComponent	Pos2DComponent::operator+(const Pos2DComponent &add)
 {
-  return (new Pos2DComponent(this->_x + add._x, this->_y + add._y));
+  return (Pos2DComponent(this->_x + add._x, this->_y + add._y));
 }
 
 void		Pos2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const

@@ -57,6 +57,7 @@ public:
 	((itSecond->first)->*((itSecond->second)))(event);
       }
     }
+	delete event;
   }
 
   /*

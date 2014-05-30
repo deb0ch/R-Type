@@ -98,7 +98,7 @@ World	*World::removeEntity(unsigned int id)
 
   if (it == this->_entities.end())
     return (this);
-
+  (dynamic_cast<Entity *>(*it))->removeAllComponent();
   delete *it;
   this->_entities.erase(it);
   return (this);
