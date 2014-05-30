@@ -4,6 +4,7 @@ ENTITY:GAME
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=50
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=MONSTER_SPAWNER_GAME;1

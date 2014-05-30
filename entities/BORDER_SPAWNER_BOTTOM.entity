@@ -1,5 +1,6 @@
 ENTITY:BORDER_SPAWNER_BOTTOM
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=5
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=840

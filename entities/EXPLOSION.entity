@@ -1,11 +1,14 @@
 ENTITY:EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0
 		y=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=-0.5
+		vy=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=ExplosionSmall.png
@@ -14,5 +17,6 @@ ENTITY:EXPLOSION
 		anim=;0;6
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=30
 	!COMPONENT
 !ENTITY

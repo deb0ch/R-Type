@@ -1,23 +1,34 @@
 ENTITY:BOSS_BULLET
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=5
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=300
 		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=25
+		height=25
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=BULLET
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=100
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
+		collisionPower=25
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=5
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=ShotBoss.png

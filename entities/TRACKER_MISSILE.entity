@@ -1,27 +1,42 @@
 ENTITY:TRACKER_MISSILE
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=300
 		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=30
+		height=30
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=2
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=-3000
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.3
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=60
 	!COMPONENT
 	COMPONENT:MoveFollowComponent
+		tagToFollow=PLAYER
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=5
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
+		delay=120
 	!COMPONENT
 	COMPONENT:ExplosionComponent
+		entity=ALIEN_BOMB_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster4.png

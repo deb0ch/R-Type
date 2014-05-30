@@ -1,19 +1,27 @@
 ENTITY:MONSTER_2
 	COMPONENT:NetworkSendUpdateComponent
+		update_rate=2
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
 		y=100
 	!COMPONENT
 	COMPONENT:Box2DComponent
+		width=50
+		height=50
 	!COMPONENT
 	COMPONENT:TeamComponent
+		team=2
 	!COMPONENT
 	COMPONENT:TagComponent
+		tag=MONSTER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
+		coef=0.9
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=r-typesheet-7.png
@@ -22,6 +30,7 @@ ENTITY:MONSTER_2
 		anim=;8;4
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
+		speed_coef=50
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
@@ -33,10 +42,16 @@ ENTITY:MONSTER_2
 		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:LifeComponent
+		life=500
+		invulnerability=0
 	!COMPONENT
 	COMPONENT:ExplosionComponent
+		entity=EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
+		collisionPower=50
 	!COMPONENT
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
