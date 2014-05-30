@@ -27,12 +27,12 @@ ServerRelay::~ServerRelay()
   this->_server_socket_tcp.close();
 }
 
-void	ServerRelay::start(Any)
+bool	ServerRelay::start(Any)
 {
-  this->start();
+  return this->start();
 }
 
-void	ServerRelay::start()
+bool	ServerRelay::start()
 {
   while (1)
     {
@@ -43,6 +43,7 @@ void	ServerRelay::start()
 	this->addClient();
       this->manageAllRemotes();
     }
+  return (true);
 }
 
 Room			*ServerRelay::getRoom(const std::string &room_name)

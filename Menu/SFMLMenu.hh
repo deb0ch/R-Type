@@ -20,6 +20,7 @@ public:
 
 	const std::string &getIpAddress() const;
 
+	void connect();
 	virtual void update(StateManager&);
 	virtual void render(const Timer&);
 

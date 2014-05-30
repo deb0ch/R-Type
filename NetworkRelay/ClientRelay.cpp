@@ -43,12 +43,12 @@ void			ClientRelay::waitForEvent()
   this->_select.doSelect();
 }
 
-void			ClientRelay::start(Any)
+bool			ClientRelay::start(Any)
 {
-  this->start();
+  return this->start();
 }
 
-void			ClientRelay::start()
+bool			ClientRelay::start()
 {
   bool			disconnect;
 
@@ -67,6 +67,7 @@ void			ClientRelay::start()
 	  if (!this->_remote->isReady())
 	    {
 	      this->_remote->setReady(true);
+	      return (true);
 	      std::cout << "CLIENT READY" << std::endl;
 	    }
 	  if (!buffer->end())
@@ -94,6 +95,7 @@ void			ClientRelay::start()
 	    disconnect = true;
 	}
     }
+  return (false);
   std::cout << "DISCONNECTED :O" << std::endl;
 }
 
