@@ -152,3 +152,25 @@ void			EntitySpawnerComponent::serialize(IBuffer &) const
 
 void			EntitySpawnerComponent::unserialize(IBuffer &)
 {}
+
+void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  std::for_each(this->_entities.begin(), this->_entities.end(), [&output, indent](const std::pair<std::string, int> &p)
+		{
+		  output << std::string(indent, '\t') << "entity=" << p.first << ";" << p.second << std::endl;
+		});
+  std::for_each(this->_components.begin(), this->_components.end(), [&output, indent](const IComponent *c)
+		{
+		  output << std::string(indent, '\t') << "component=COMPONENT:" << c->getType() << std::endl;
+		  c->serializeFromFile(output, indent + 1);
+		  output << std::string(indent, '\t') << "!COMPONENT" << std::endl;
+		});
+  output << std::string(indent, '\t') << "nb=" << this->_nb << std::endl;
+  output << std::string(indent, '\t') << "delay=" << this->_delay << std::endl;
+  output << std::string(indent, '\t') << "minPosX=" << this->_min_pos.first << std::endl;
+  output << std::string(indent, '\t') << "minPosY=" << this->_min_pos.second << std::endl;
+  output << std::string(indent, '\t') << "maxPosX=" << this->_max_pos.first << std::endl;
+  output << std::string(indent, '\t') << "maxPosY=" << this->_max_pos.second << std::endl;
+  output << std::string(indent, '\t') << "random=" << std::boolalpha << this->_random << std::endl;
+  output << std::string(indent, '\t') << "abs=" << std::boolalpha << this->_abs << std::endl;
+}

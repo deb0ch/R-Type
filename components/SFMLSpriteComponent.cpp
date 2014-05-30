@@ -142,3 +142,13 @@ void		SFMLSpriteComponent::unserialize(IBuffer &buffer)
 	buffer >> this->_first;
 	buffer >> this->_nbSprite;
 }
+
+void		SFMLSpriteComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "filename=" << this->_fileName << std::endl;
+  output << std::string(indent, '\t') << "nbSpritesX=" << this->_sprites.nbSprintX << std::endl;
+  output << std::string(indent, '\t') << "nbSpritesY=" << this->_sprites.nbSprintY << std::endl;
+  std::for_each(this->_map.begin(), this->_map.end(), [&output, indent](const std::pair<std::string, std::pair<int, int> > &pair){
+      output << std::string(indent, '\t') << "anim=" << pair.first << ";" << pair.second.first << ";" << pair.second.second << std::endl;
+    });
+}
