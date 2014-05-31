@@ -4,13 +4,12 @@ ENTITY:GAME
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=0.8
+		delay=30
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=MONSTER_SPAWNER_GAME_1;1
-		entity=BOSS_SPAWNER_1;1
-		nb=2
-		delay=0
+		entity=WAIT_PLAYER_GAME;1
+		nb=1
+		delay=20
 		minPosX=0
 		minPosY=0
 		maxPosX=0

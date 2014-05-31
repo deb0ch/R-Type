@@ -67,7 +67,6 @@ ENTITY:MONSTER_3
 	COMPONENT:ActionComponent
 		actions=DOWN
 		actions=LEFT
-		actions=RIGHT
 		actions=UP
 	!COMPONENT
 !ENTITY

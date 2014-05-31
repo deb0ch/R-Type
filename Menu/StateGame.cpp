@@ -20,6 +20,14 @@ StateGame::StateGame(World *world)
     }
   */
 
+  sf::Music *music = new sf::Music();
+
+  if (music->openFromFile("Ressources/Sound/music.ogg"))
+    {
+      music->setLoop(true);
+      music->play();
+    }
+
   this->_world->start();
 }
 
@@ -75,6 +83,7 @@ void		StateGame::addSystems()
 	this->_world->addSystem(new BackgroundSystem());
 	this->_world->addSystem(new NetworkReceiveDieEntitySystem());
 	this->_world->addSystem(new NetworkTimeOutEntitySystem());
+	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
 	CollisionSystem *collision;
 

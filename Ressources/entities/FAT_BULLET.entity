@@ -29,7 +29,7 @@ ENTITY:FAT_BULLET
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=150
+		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=70

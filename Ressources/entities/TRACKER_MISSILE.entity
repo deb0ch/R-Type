@@ -14,14 +14,14 @@ ENTITY:TRACKER_MISSILE
 		team=2
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-3000
+		vx=-200
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
 		coef=0.3
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=60
+		speed_coef=200
 	!COMPONENT
 	COMPONENT:MoveFollowComponent
 		tagToFollow=PLAYER

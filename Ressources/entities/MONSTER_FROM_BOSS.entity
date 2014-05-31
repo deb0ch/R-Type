@@ -18,7 +18,7 @@ ENTITY:MONSTER_FROM_BOSS
 		tag=MONSTER
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.5
+		coef=1
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster3.png
@@ -32,7 +32,7 @@ ENTITY:MONSTER_FROM_BOSS
 		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=60
+		speed_coef=200
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=200
