@@ -107,6 +107,7 @@ void RunWorldServer::addSystems()
     {"WeaponPowerUpComponent", "LifePowerUpComponent"};
   this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
   this->_world->addSystem(new PlayerLifeSystem(3));
+  this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
   CollisionSystem *collision;
 
@@ -145,7 +146,7 @@ void RunWorldServer::addSystems()
       "TagComponent",
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
-      "SFMLTextComponent"
+      "SFMLTextComponent",
       "SFMLJoystickComponent"
     };
 
