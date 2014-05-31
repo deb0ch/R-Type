@@ -17,7 +17,7 @@ ENTITY:BOMB_BULLET_1
 		tag=BULLET
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=0
+		vx=-200
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent

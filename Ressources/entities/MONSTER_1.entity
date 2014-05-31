@@ -28,7 +28,7 @@ ENTITY:MONSTER_1
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.9
+		coef=4
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Monster1.png
@@ -42,7 +42,7 @@ ENTITY:MONSTER_1
 		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=100
+		speed_coef=800
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=100
@@ -79,7 +79,7 @@ ENTITY:MONSTER_1
 	COMPONENT:MoveSequenceComponent
 		action=UP
 		action=DOWN
-		tickToChange=2
+		tickToChange=1
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

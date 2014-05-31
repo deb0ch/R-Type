@@ -1,61 +1,68 @@
-ENTITY:MONSTER_BASIC_BULLET_3
+ENTITY:MONSTER_3
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=5
+		update_rate=2
 	!COMPONENT
 	COMPONENT:Pos2DComponent
-		x=300
-		y=300
+		x=100
+		y=100
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=10
-		height=10
+		width=50
+		height=50
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=2
 	!COMPONENT
 	COMPONENT:TagComponent
-		tag=BULLET
+		tag=MONSTER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-100
-		vy=50
+		vx=0
+		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.5
-	!COMPONENT
-	COMPONENT:MovementSpeedComponent
-		speed_coef=300
-	!COMPONENT
-	COMPONENT:CollisionPowerComponent
-		collisionPower=25
-	!COMPONENT
-	COMPONENT:LifeComponent
-		life=5
-		invulnerability=0
+		coef=8
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=ShotBasic.png
-		nbSpritesX=4
-		nbSpritesY=1
+		filename=r-typesheet-13.png
+		nbSpritesX=8
+		nbSpritesY=2
 		tickChange=10
 		anim=ANIM
 			action=
 			start=0
-			length=4
+			length=8
 		!ANIM
 	!COMPONENT
-	COMPONENT:MoveForwardComponent
-		dir1=LEFT
-		dir2=DOWN
+	COMPONENT:MovementSpeedComponent
+		speed_coef=2000
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=10
-			height=10
+			width=50
+			height=50
 		!COMPONENT
-		toNotCollide=BULLET
+		toNotCollide=MONSTER
+	!COMPONENT
+	COMPONENT:LifeComponent
+		life=100
+		invulnerability=0
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=EXPLOSION
+		offsetX=0
+		offsetY=0
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=50
+	!COMPONENT
+		COMPONENT:MoveFollowComponent
+		tagToFollow=PLAYER
+	!COMPONENT
+	COMPONENT:MoveForwardComponent
+		dir1=LEFT
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN
