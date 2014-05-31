@@ -34,7 +34,6 @@
 #include	"SFMLSetDisplayLiveSystem.hh"
 
 #include	"ComponentFactory.hpp"
-#include	"ImageLoader.hh"
 #include	"EntityFactory.hpp"
 #include	"Entity.hh"
 #include	"ServerRelay.hh"
@@ -86,12 +85,6 @@ void RunWorldServer::addSystems()
 {
   this->_world->addSystem(new AutoDestructSystem());
   this->_world->addSystem(new EntitySpawnerSystem());
-  this->_world->addSystem(new SFMLEventSystem());
-  // this->_world->addSystem(new SFMLInputSystem());
-  this->_world->addSystem(new SFMLDisplaySystem());
-  this->_world->addSystem(new SFMLRenderSystem());
-  this->_world->addSystem(new SFMLRenderTextSystem());
-  this->_world->addSystem(new SFMLSetDisplayLiveSystem());
   this->_world->addSystem(new OutOfBoundsSystem());
   this->_world->addSystem(new MoveFollowSystem());
   this->_world->addSystem(new MoveForwardSystem());
@@ -179,7 +172,6 @@ void RunWorldServer::addSharedObjetcs()
   this->_world->setSharedObject("RoomName", &this->_nameRoom);
   compos->init();
   entityFactory->init();
-  this->_world->setSharedObject("imageLoader", new ImageLoader());
   this->_world->setSharedObject("componentFactory", compos);
   this->_world->setSharedObject("entityFactory", entityFactory);
 }

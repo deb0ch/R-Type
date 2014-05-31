@@ -11,6 +11,8 @@
 SFMLMenu::SFMLMenu(World *world)
   : _world(world)
 {
+  if (!getenv("DISPLAY"))
+    throw std::string("Unable to start SFML Window because of bad env.");
   this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),
 				       "EpicGradius", sf::Style::Titlebar | sf::Style::Close);
   this->_window->setVerticalSyncEnabled(true);

@@ -45,6 +45,22 @@ bool	SFMLInputSystem::canProcess(Entity *e) {
   return (false);
 }
 
+const std::map<std::string, std::vector<sf::Keyboard::Key> >	&SFMLInputSystem::getKeyboardInputs() const
+{
+  static std::map<std::string, std::vector<sf::Keyboard::Key> >	res;
+
+  if (res.size() == 0)
+    {
+      res["UP"]		= {sf::Keyboard::Key::Up, sf::Keyboard::Key::Z};
+      res["LEFT"]	= {sf::Keyboard::Key::Left, sf::Keyboard::Key::Q};
+      res["DOWN"]	= {sf::Keyboard::Key::Down, sf::Keyboard::Key::S};
+      res["RIGHT"]	= {sf::Keyboard::Key::Right, sf::Keyboard::Key::D};
+      res["FIRE"]	= {sf::Keyboard::Key::Space};
+    }
+
+  return (res);
+}
+
 void	SFMLInputSystem::processEntity(Entity *e, const float)
 {
   SFMLInputComponent	*inputComp;
@@ -58,7 +74,7 @@ void	SFMLInputSystem::processEntity(Entity *e, const float)
   actionComp = e->getComponent<ActionComponent>("ActionComponent");
 
   if (inputComp)
-    for (auto it = inputComp->getInputs().begin() ; it != inputComp->getInputs().end() ; ++it)
+    for (auto it = this->getKeyboardInputs().begin() ; it != this->getKeyboardInputs().end() ; ++it)
       for (auto it2 = it->second.begin() ; it2 != it->second.end() ; ++it2)
 	actionstmp[it->first] |= this->_inputs[*it2];
 

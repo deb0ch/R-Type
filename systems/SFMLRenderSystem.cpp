@@ -74,9 +74,9 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   if (action != NULL)
     {
       if (action->isActive("UP") && spriteComp->hasAction("UP"))
-	sprite = spriteComp->getSprite(*imageLoader, "UP");
+	sprite = this->getSprite(*imageLoader, spriteComp, "UP");
       else if (action->isActive("DOWN") && spriteComp->hasAction("DOWN"))
-	sprite = spriteComp->getSprite(*imageLoader, "DOWN");
+	sprite = this->getSprite(*imageLoader, spriteComp, "DOWN");
     }
   width = (box) ? box->getWidth() : 0;
   height = (box) ? box->getHeight() : 0;
@@ -87,7 +87,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 	displayCollision(entity, _window);
     }
   if (sprite == NULL)
-    sprite = spriteComp->getSprite(*imageLoader);
+    sprite = this->getSprite(*imageLoader, spriteComp, "");
   if (sprite == NULL)
     {
       std::cout << "Sprite does not exist" << std::endl;
@@ -109,3 +109,11 @@ void		SFMLRenderSystem::beforeProcess(const float)
 
 void		SFMLRenderSystem::afterProcess(const float)
 {}
+
+sf::Sprite	*SFMLRenderSystem::getSprite(ImageLoader &imageLoader, SFMLSpriteComponent *component,
+					     const std::string &action)
+{
+  imageLoader.addImage(component->getFileName(), component->getSpriteDim());
+  return imageLoader.createSprite(component->getFileName(),
+				  component->getCurrentSpriteNumber(action));
+}
