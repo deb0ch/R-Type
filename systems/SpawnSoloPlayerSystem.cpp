@@ -35,7 +35,7 @@ bool		SpawnSoloPlayerSystem::canProcess(Entity *)
 void		SpawnSoloPlayerSystem::processEntity(Entity *, const float)
 {}
 
-void				SpawnSoloPlayerSystem::playerRespawn(Entity *entity)
+void				SpawnSoloPlayerSystem::playerRespawn(Entity *)
 {
 	this->spawnPlayer("PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
 }
@@ -76,7 +76,7 @@ void		SpawnSoloPlayerSystem::beforeProcess(const float)
 		hash = this->_players_to_spawn.getNextPop();
 		const std::vector<Entity *> &entities = this->_world->getEntities();
 		player_found = std::any_of(entities.begin(), entities.end(),
-			[&hash](const Entity *entity)
+			[&hash](const Entity *)
 		{
 			return false;
 		});
@@ -85,7 +85,7 @@ void		SpawnSoloPlayerSystem::beforeProcess(const float)
 	}
 }
 
-void		SpawnSoloPlayerSystem::registerDeadPlayer(Entity *entity)
+void		SpawnSoloPlayerSystem::registerDeadPlayer(Entity *)
 {
 		this->_dead_players.push_back("PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
 }
