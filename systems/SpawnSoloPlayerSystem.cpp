@@ -35,7 +35,7 @@ bool		SpawnSoloPlayerSystem::canProcess(Entity *)
 void		SpawnSoloPlayerSystem::processEntity(Entity *, const float)
 {}
 
-void				SpawnSoloPlayerSystem::playerRespawn(Entity *entity)
+void				SpawnSoloPlayerSystem::playerRespawn(Entity *)
 {
 	//this->spawnPlayer(network_player_component->getRemoteId(), "PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
 }
