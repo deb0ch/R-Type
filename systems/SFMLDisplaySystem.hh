@@ -4,6 +4,7 @@
 # include		"SFML/Graphics.hpp"
 
 # include		"ASystem.hh"
+# include		"Window.hh"
 
 class			SFMLDisplaySystem : public ASystem
 {
