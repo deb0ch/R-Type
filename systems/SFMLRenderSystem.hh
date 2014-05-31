@@ -6,6 +6,7 @@
 # include		"Pos2DComponent.hh"
 # include		"Window.hh"
 # include		"ASystem.hh"
+# include		"ImageLoader.hh"
 
 class			SFMLRenderSystem : public ASystem
 {

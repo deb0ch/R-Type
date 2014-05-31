@@ -1,8 +1,6 @@
 #ifndef SFMLSPRITECOMPONENT_H_
 # define SFMLSPRITECOMPONENT_H_
 
-# include "SFML/Graphics.hpp"
-# include "ImageLoader.hh"
 # include "ACopyableComponent.hpp"
 
 class		SFMLSpriteComponent : public ACopyableComponent<SFMLSpriteComponent>
