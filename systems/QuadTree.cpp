@@ -1,7 +1,8 @@
 #include <tuple>
+#include "SFMLRenderSystem.hh"
 #include "QuadTree.hh"
 
-QuadTree::QuadTree(World *world, std::vector<Entity *> const &Entities, float x, float y, float width, float height, int maxEntities)
+QuadTree::QuadTree(World *world, std::vector<Entity *> const &entities, float x, float y, float width, float height, int maxEntities, int depth)
 {
   this->_world = world;
   this->_x = x;
@@ -9,16 +10,19 @@ QuadTree::QuadTree(World *world, std::vector<Entity *> const &Entities, float x,
   this->_width = width;
   this->_height = height;
   this->maxEntities = maxEntities;
-  for (auto it = Entities.begin(); it != Entities.end(); ++it)
-    if (this->isInBlock((*it)->getComponent<Pos2DComponent>("Pos2DComponent"),
-  			(*it)->getComponent<Box2DComponent>("Box2DComponent")))
-      this->Entities.push_back(*it);
-  if (this->Entities.size() > this->maxEntities)
+  for (auto it = entities.begin(); it != entities.end(); ++it)
     {
-      this->NorthWestBlock = new QuadTree(this->_world, this->Entities, x, y, width / 2, height / 2, maxEntities);
-      this->NorthEastBlock = new QuadTree(this->_world, this->Entities, x + (width / 2), y, width / 2, height / 2, maxEntities);
-      this->SouthWestBlock = new QuadTree(this->_world, this->Entities, x, y + (height / 2), width / 2, height / 2, maxEntities);
-      this->SouthEastBlock = new QuadTree(this->_world, this->Entities, x + (width / 2), y + (height / 2), width / 2, height / 2, maxEntities);
+      if ((*it)->hasComponent("CollisionComponent") &&
+	this->isInBlock((*it)->getComponent<Pos2DComponent>("Pos2DComponent"),
+			(*it)->getComponent<Box2DComponent>("Box2DComponent")))
+	this->Entities.push_back(*it);
+    }
+  if (depth > 0 && this->Entities.size() > this->maxEntities)
+    {
+      this->NorthWestBlock = new QuadTree(this->_world, this->Entities, x, y, width / 2, height / 2, maxEntities, depth - 1);
+      this->NorthEastBlock = new QuadTree(this->_world, this->Entities, x + (width / 2), y, width / 2, height / 2, maxEntities, depth - 1);
+      this->SouthWestBlock = new QuadTree(this->_world, this->Entities, x, y + (height / 2), width / 2, height / 2, maxEntities, depth - 1);
+      this->SouthEastBlock = new QuadTree(this->_world, this->Entities, x + (width / 2), y + (height / 2), width / 2, height / 2, maxEntities, depth - 1);
     }
   else
     {
@@ -27,28 +31,32 @@ QuadTree::QuadTree(World *world, std::vector<Entity *> const &Entities, float x,
       this->SouthWestBlock = NULL;
       this->SouthEastBlock = NULL;
     }
-  // if (debug)
-  //   this->DrawDebug();
+  if (DEBUG)
+    this->DrawDebug();
 }
 
 QuadTree::~QuadTree()
 {
-  delete this->NorthWestBlock;
-  delete this->NorthEastBlock;
-  delete this->SouthWestBlock;
-  delete this->SouthEastBlock;
+  if (this->NorthWestBlock != NULL)
+    {
+      delete this->NorthWestBlock;
+      delete this->NorthEastBlock;
+      delete this->SouthWestBlock;
+      delete this->SouthEastBlock;
+    }
 }
 
 void	QuadTree::DrawDebug()
 {
-  // sf::RenderWindow	*_window;
-  // sf::RectangleShape rectangle(sf::Vector2f(this->_width, this->_height));
+  sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
+  sf::RectangleShape rectangle(sf::Vector2f(this->_width, this->_height));
 
-  // rectangle.setFillColor(sf::Color::Transparent);
-  // rectangle.setPosition(this->_x, this->_y;
-  // rectangle.setOutlineThickness(-3);
-  // rectangle.setOutlineColor(sf::Color(0, 0, 250));
-  // this->_window->draw(rectangle);
+  std::cout << "draw debug" << std::endl;
+  rectangle.setFillColor(sf::Color::Transparent);
+  rectangle.setPosition(this->_x, this->_y);
+  rectangle.setOutlineThickness(-2);
+  rectangle.setOutlineColor(sf::Color(250, 250, 210));
+  _window->draw(rectangle);
 }
 
 static bool	touchingTest(std::tuple<float, float, float, float> t1, std::tuple<float, float, float, float> t2)
@@ -69,15 +77,15 @@ static bool	touchingTest(std::tuple<float, float, float, float> t1, std::tuple<f
   return ((inner_left < inner_right) && (inner_top < inner_bot));
 }
 
-bool	QuadTree::isInBlock(Pos2DComponent *pos, Box2DComponent *box)
+bool	QuadTree::isInBlock(Pos2DComponent *pos, Box2DComponent *box) const
 {
   if (!pos || !box)
     return (false);
   return (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		       std::make_tuple(this->_x, this->_y, this->_width, this->_height)));
+		       std::make_tuple(this->_x + this->_width / 2.f, this->_y + this->_height / 2.f, this->_width, this->_height)));
 }
 
-std::vector<Entity *> const &QuadTree::findTree(Entity *entity)
+std::vector<Entity *> const &QuadTree::findTree(Entity *entity) const
 {
   Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
   Box2DComponent	*box = entity->getComponent<Box2DComponent>("Box2DComponent");
@@ -85,16 +93,16 @@ std::vector<Entity *> const &QuadTree::findTree(Entity *entity)
   if (!this->NorthWestBlock)
     return (this->Entities);
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		   std::make_tuple(this->_x, this->_y, this->_width / 2, this->_height / 2)))
+		   std::make_tuple((this->_x) + this->_width / 2, this->_y + this->_height / 2, this->_width / 2, this->_height / 2)))
     return (this->NorthWestBlock->findTree(entity));
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		   std::make_tuple(this->_x + (this->_width / 2), this->_y, this->_width / 2, this->_height / 2)))
+		   std::make_tuple((this->_x + (this->_width / 2)) + this->_width / 2, this->_y + this->_height / 2, this->_width / 2, this->_height / 2)))
     return (this->NorthEastBlock->findTree(entity));
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		   std::make_tuple(this->_x, this->_y + (this->_height / 2), this->_width / 2, this->_height / 2)))
+		   std::make_tuple((this->_x) + this->_width / 2, (this->_y + (this->_height / 2)) + this->_height / 2, this->_width / 2, this->_height / 2)))
     return (this->SouthWestBlock->findTree(entity));
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		   std::make_tuple(this->_x + (this->_width / 2), this->_y + (this->_height / 2), this->_width / 2, this->_height / 2)))
+		   std::make_tuple((this->_x + (this->_width / 2)) + this->_width / 2, (this->_y + (this->_height / 2)) + this->_height / 2, this->_width / 2, this->_height / 2)))
     return (this->SouthEastBlock->findTree(entity));
   return (this->Entities);
 }

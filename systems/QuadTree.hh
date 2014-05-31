@@ -22,12 +22,12 @@ protected:
 
 public:
 
-  QuadTree(World *, std::vector<Entity *> const &, float, float, float, float, int);
+  QuadTree(World *, std::vector<Entity *> const &, float, float, float, float, int, int);
   ~QuadTree();
 
   std::vector<Entity *> const &getEntities() const;
-  bool	isInBlock(Pos2DComponent *, Box2DComponent *);
-  std::vector<Entity *> const &findTree(Entity *);
+  bool	isInBlock(Pos2DComponent *, Box2DComponent *) const;
+  std::vector<Entity *> const &findTree(Entity *) const;
   void	DrawDebug();
 };
 
