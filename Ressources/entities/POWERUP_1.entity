@@ -40,10 +40,10 @@ ENTITY:POWERUP_1
 		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=SpeedUp.png
-		nbSpritesX=4
-		nbSpritesY=1
-		tickChange=10
+		filename=boosts.png
+		nbSpritesX=1
+		nbSpritesY=3
+		tickChange=50
 		anim=ANIM
 			action=
 			start=0
