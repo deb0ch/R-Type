@@ -1,15 +1,18 @@
-ENTITY:GAME
+ENTITY:DELAY_SPAWNER_1
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=5
+	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=800
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=30
+		delay=20
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=MONSTER_SPAWNER_BEGIN_1;1
+		entity=MONSTER_SPAWNER_BEGIN_2;1
 		nb=1
-		delay=7
+		delay=13
 		minPosX=0
 		minPosY=0
 		maxPosX=0
