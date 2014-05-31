@@ -1,0 +1,27 @@
+ENTITY:STAGE_2_TEXT
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=250
+		y=200
+	!COMPONENT
+	COMPONENT:Speed2DComponent
+		vx=-0.5
+		vy=0
+	!COMPONENT
+	COMPONENT:SFMLSpriteComponent
+		filename=Stage_2.png
+		nbSpritesX=1
+		nbSpritesY=1
+		tickChange=50
+		anim=ANIM
+			action=
+			start=0
+			length=0
+		!ANIM
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=3
+	!COMPONENT
+!ENTITY
