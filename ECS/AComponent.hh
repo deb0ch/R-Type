@@ -51,7 +51,7 @@ public:
 		efe.setLineNo(lineno);
 		throw;
 	      }
-	    catch (const std::invalid_argument &ia)
+	    catch (const std::invalid_argument &)
 	      {
 		EntityFileException efe("Bad argument : expecting number", lineno);
 		efe.setComponent(this->_type);

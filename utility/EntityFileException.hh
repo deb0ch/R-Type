@@ -15,7 +15,7 @@ public:
   EntityFileException(std::string message = "", unsigned int lineno = 0);
   ~EntityFileException();
 
-  virtual const char*	what() const noexcept;
+  virtual const char*	what() const throw();
   void			setFilename(const std::string &);
   void			setComponent(const std::string &);
   void			setLineNo(unsigned int);
