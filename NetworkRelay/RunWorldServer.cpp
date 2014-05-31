@@ -45,6 +45,7 @@ RunWorldServer::RunWorldServer(ServerRelay *server, const std::string &nameRoom)
   this->addSharedObjetcs();
   this->addEntities();
   this->_world->start();
+  this->_isEnd = false;
 }
 
 void RunWorldServer::run(Any)
@@ -52,13 +53,18 @@ void RunWorldServer::run(Any)
   this->run();
 }
 
+void RunWorldServer::isEnd(bool isEnd) {
+  this->_isEnd = isEnd;
+}
+
 void RunWorldServer::run() {
-  while (42) {
+  while (!this->_isEnd) {
     this->_timer.startFrame();
     if (this->_timer.canTick())
       this->_world->process(this->_timer.getDeltaTime() / 1000000.f);
     this->_timer.endFrame();
   }
+  std::cout << "END GAMME" << std::endl;
 }
 
 RunWorldServer::~RunWorldServer() {

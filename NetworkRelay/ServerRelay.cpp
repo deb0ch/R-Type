@@ -6,8 +6,6 @@
 #include "DisconnectPlayerEvent.hh"
 #include "LockGuard.hpp"
 
-//TODO rm room test
-
 ServerRelay::ServerRelay(int port, int nb_pending_connection)
   : _network_initializer()
 {
@@ -82,10 +80,7 @@ IBuffer			*ServerRelay::getUDPBuffer()
 
   auto guard = create_lock(this->_available_udp);
   if (this->_available_udp.empty())
-    {
-      buffer = new NetworkBuffer;
-      //std::cout << "creating buffer udp: " << buffer << std::endl;
-    }
+    buffer = new NetworkBuffer;
   else
     {
       buffer = this->_available_udp.front();
@@ -287,16 +282,19 @@ void		ServerRelay::manageRemotesInRooms()
 {
   auto it = this->_rooms.begin();
   Room		*room;
+  bool		test;
+  auto guard_room = create_lock(this->_mutex_room);
 
   while (it != this->_rooms.end())
     {
+      test = true;
       room = it->second;
       auto guard = create_lock(*room);
 
       this->manageRemotes(room->getRemotes(), room);
 
       //Clean room empty
-      auto guard_room = create_lock(*room, true);
+      //auto guard_room = create_lock(*room, true);
       std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
       std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
 		    [&room, this] (Remote *remote) -> void
@@ -305,17 +303,16 @@ void		ServerRelay::manageRemotesInRooms()
 		      room->removeRemote(remote);
 		    });
       remotes_disconnect.clear();
-      if (room->getRemotes().empty() && this->_mutex_room.trylock())
+      if (room->getRemotes().empty() /* && this->_mutex_room.trylock()*/)
 	{
-	  auto guard = create_lock(this->_mutex_room, true);
-
-	  guard_room.setUnLocked();
+	  guard.setUnLocked();
 
 	  it = this->_rooms.erase(it);
 	  delete room;
+	  test = false;
 	  std::cout << "!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 	}
-      if (room)
+      if (test)
 	++it;
     }
 }
@@ -367,9 +364,6 @@ void		ServerRelay::addClient()
   hash = this->generateHash();
   std::cout << "GENERATING HASH: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
-  //TODO remove next line
-  //this->_rooms["test"]->addRemote(remote);
-  //TODO decomment next line
   this->_remotsWithoutRoom.push_back(remote);
   buffer = this->getTCPBuffer();
   *buffer << hash;

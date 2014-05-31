@@ -16,6 +16,7 @@ public:
   void run(Any);
   void run();
   World *getWorld();
+  void isEnd(bool isEnd);
 
 private:
   void addSystems();
@@ -32,6 +33,7 @@ protected:
   World *_world;
   Timer _timer;
   std::string _nameRoom;
+  bool _isEnd;
 
 };
 

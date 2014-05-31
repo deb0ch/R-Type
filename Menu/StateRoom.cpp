@@ -43,7 +43,6 @@ void	StateRoom::init()
 void	StateRoom::accessRoom()
 {
   INetworkRelay *network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
-  //ClientRelay *network = dynamic_cast<ClientRelay *>(tmpNetwork);
 
   if (network) {
     Remote *remote = NULL;
@@ -59,8 +58,6 @@ void	StateRoom::accessRoom()
     Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
 
     thread->start(network, &INetworkRelay::start, Any());
-    //network->start(Any());
-    //std::cout << "END SEND" << std::endl;
 
     while (42) {
       LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
@@ -68,8 +65,6 @@ void	StateRoom::accessRoom()
 
       for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
 	{
-	  // std::cout << "receive" << std::endl;
-
 	  if (this->parsePacket(recv_buffer, it))
 	    return ;
 	}

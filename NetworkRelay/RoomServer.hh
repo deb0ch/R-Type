@@ -23,7 +23,7 @@ protected:
   ServerRelay		*_serverRelay;
   std::string		_nameRoomServer;
   RunWorldServer	*_runWorldServer;
-  Thread<RunWorldServer> *_thread;
+  Thread<RunWorldServer> _thread;
 
 };
 
