@@ -30,3 +30,18 @@ void	Friction2DComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_frictionCoef;
 }
+
+void	Friction2DComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("coef=.+")))
+    this->_frictionCoef = std::stof(lastline.substr(5));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
+void	Friction2DComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "coef=" << this->_frictionCoef << std::endl;
+}

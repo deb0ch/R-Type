@@ -17,11 +17,14 @@ public:
 
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
-  void			networkUnserializeCallback(World *world);
+  virtual void		networkUnserializeCallback(IBuffer &, World *world, Entity *);
   unsigned int		getIdToFollow() const;
   void			setIdToFollow(const unsigned int idToFollow);
   const std::string &	getTagToFollow() const;
   void			setTagToFollow(const std::string & idToFollow);
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !MOVEFOLLOWCOMPONENT_H_ */

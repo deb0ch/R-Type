@@ -21,7 +21,8 @@ bool		EntitySpawnerSystem::canProcess(Entity *e)
   return (false);
 }
 
-void		EntitySpawnerSystem::givePosition(Entity *e, EntitySpawnerComponent *spawner, Entity *res) const
+void		EntitySpawnerSystem::givePosition(Entity *e, EntitySpawnerComponent *spawner,
+						  Entity *res) const
 {
   Pos2DComponent		*pos;
   Pos2DComponent		*res_pos;
@@ -66,19 +67,18 @@ void		EntitySpawnerSystem::giveComponents(EntitySpawnerComponent *spawner, Entit
 		});
 }
 
-void		EntitySpawnerSystem::processEntity(Entity *e, const float)
+void		EntitySpawnerSystem::processEntity(Entity *e, const float delta)
 {
   EntitySpawnerComponent	*spawner;
   Entity			*res;
 
   if (!(spawner = e->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent")))
     return ;
-  if (!(res = spawner->spawnEntity(this->_world->getSharedObject<EntityFactory>("entityFactory"))))
+  if (!(res = spawner->spawnEntity(this->_world->getSharedObject<EntityFactory>("entityFactory"),
+				   delta)))
     return ;
-
   this->givePosition(e, spawner, res);
   this->giveTeam(e, res);
   this->giveComponents(spawner, res);
-
   this->_world->addEntity(res);
 }

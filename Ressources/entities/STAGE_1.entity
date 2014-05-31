@@ -1,0 +1,21 @@
+ENTITY:STAGE_1
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=5
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=MONSTER_SPAWNER_GAME_1;1
+		entity=BOSS_SPAWNER;1
+		nb=1
+		delay=0
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
+		random=false
+		abs=false
+	!COMPONENT
+!ENTITY

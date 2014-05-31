@@ -11,10 +11,18 @@ class Room;
 class INetworkRelay
 {
 public:
+  enum TCPType
+    {
+      CHANGE_ROOM_QUERY,
+      CHANGE_ROOM_QUERY_YES,
+      CHANGE_ROOM_QUERY_NON
+    };
+
+public:
   virtual				~INetworkRelay()
   {}
 
-  virtual void				start() = 0;
+  virtual bool				start() = 0;
   virtual void				start(Any) = 0;
   virtual Room				*getRoom(const std::string &room_name) = 0;
   virtual IBuffer			*getTCPBuffer() = 0;

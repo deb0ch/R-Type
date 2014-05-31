@@ -50,8 +50,32 @@ Box2DComponent		*CollisionPoint::getBox() const
   return (this->_box);
 }
 
-void			CollisionPoint::serialize(IBuffer &) const
+void		CollisionPoint::serialize(IBuffer &) const
 {}
 
-void			CollisionPoint::unserialize(IBuffer &)
+void		CollisionPoint::unserialize(IBuffer &)
 {}
+
+void	CollisionPoint::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("x=.+")))
+    this->_pos->setX(std::stof(lastline.substr(2)));
+  else if (std::regex_match(lastline, std::regex("y=.+")))
+    this->_pos->setY(std::stof(lastline.substr(2)));
+  else if (std::regex_match(lastline, std::regex("width=.+")))
+    this->_box->setWidth(std::stof(lastline.substr(6)));
+  else if (std::regex_match(lastline, std::regex("height=.+")))
+    this->_box->setHeight(std::stof(lastline.substr(7)));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
+void		CollisionPoint::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "x=" << this->getPos()->getX() << std::endl;
+  output << std::string(indent, '\t') << "y=" << this->getPos()->getY() << std::endl;
+  output << std::string(indent, '\t') << "width=" << this->getBox()->getWidth() << std::endl;
+  output << std::string(indent, '\t') << "height=" << this->getBox()->getHeight() << std::endl;
+}

@@ -1,0 +1,23 @@
+ENTITY:BORDER_SPAWNER_TOP
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=10
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=840
+		y=70
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=BORDER_TOP_LEVEL_1;8
+		entity=BORDER_TOP_LEVEL_2;4
+		entity=BORDER_TOP_LEVEL_3;2
+		entity=BORDER_TOP_LEVEL_4;4
+		nb=0
+		delay=3
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
+		random=true
+		abs=false
+	!COMPONENT
+!ENTITY

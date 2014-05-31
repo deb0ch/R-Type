@@ -1,4 +1,5 @@
 #include "ClientRelay.hh"
+#include "ServerRelay.hh"
 #include "TCPException.hh"
 #include "UDPException.hh"
 #include "LockGuard.hpp"
@@ -47,7 +48,7 @@ void			ClientRelay::start(Any)
   this->start();
 }
 
-void			ClientRelay::start()
+bool			ClientRelay::start()
 {
   bool			disconnect;
 
@@ -67,6 +68,7 @@ void			ClientRelay::start()
 	    {
 	      this->_remote->setReady(true);
 	      std::cout << "CLIENT READY" << std::endl;
+	      return (true);
 	    }
 	  if (!buffer->end())
 	    {
@@ -93,6 +95,7 @@ void			ClientRelay::start()
 	    disconnect = true;
 	}
     }
+  return (false);
   std::cout << "DISCONNECTED :O" << std::endl;
 }
 

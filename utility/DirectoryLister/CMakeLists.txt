@@ -1,0 +1,31 @@
+SET(HEADER_S
+  ${HEADER_S}
+  ${CMAKE_CURRENT_SOURCE_DIR}/IDirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/DirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/UDirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/WDirectoryLister.hh
+  PARENT_SCOPE
+  )
+
+SET(SOURCE_S
+  ${SOURCE_S}
+  ${CMAKE_CURRENT_SOURCE_DIR}/UDirectoryLister.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/WDirectoryLister.cpp
+  PARENT_SCOPE
+  )
+
+SET(HEADER_C
+  ${HEADER_C}
+  ${CMAKE_CURRENT_SOURCE_DIR}/IDirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/DirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/UDirectoryLister.hh
+  ${CMAKE_CURRENT_SOURCE_DIR}/WDirectoryLister.hh
+  PARENT_SCOPE
+  )
+
+SET(SOURCE_C
+  ${SOURCE_C}
+  ${CMAKE_CURRENT_SOURCE_DIR}/UDirectoryLister.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/WDirectoryLister.cpp
+  PARENT_SCOPE
+  )

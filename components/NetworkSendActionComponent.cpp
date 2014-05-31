@@ -39,3 +39,6 @@ void NetworkSendActionComponent::unserialize(IBuffer &buffer)
 {
   buffer >> this->_remote_id;
 }
+
+void	NetworkSendActionComponent::serializeFromFile(std::ofstream &, unsigned char) const
+{}

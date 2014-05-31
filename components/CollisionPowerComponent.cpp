@@ -29,3 +29,18 @@ void		CollisionPowerComponent::unserialize(IBuffer &buffer)
 {
 	buffer >> this->_collisionPower;
 }
+
+void	CollisionPowerComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("collisionPower=.+")))
+    this->_collisionPower = std::stoul(lastline.substr(15));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
+void	CollisionPowerComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "collisionPower=" << this->_collisionPower << std::endl;
+}

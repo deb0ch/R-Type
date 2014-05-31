@@ -10,11 +10,14 @@ public:
   void		setFrictionCoef(float coef);
 
 public:
-		Friction2DComponent(float coef = 0.01);
+		Friction2DComponent(float coef = 0.1);
   virtual	~Friction2DComponent();
 
   virtual void	serialize(IBuffer &buffer) const;
   virtual void	unserialize(IBuffer &buffer);
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:
   float		_frictionCoef;

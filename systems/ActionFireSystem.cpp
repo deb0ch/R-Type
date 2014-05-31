@@ -10,7 +10,8 @@ ActionFireSystem::~ActionFireSystem()
 
 bool		ActionFireSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("ActionComponent") && entity->hasComponent("EntitySpawnerComponent"))
+  if (entity->hasComponent("ActionComponent")
+      && entity->hasComponent("EntitySpawnerComponent"))
     return (true);
   return (false);
 }

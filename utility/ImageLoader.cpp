@@ -18,6 +18,15 @@ ImageLoader::~ImageLoader()
     delete it->second.first;
 }
 
+void ImageLoader::addImage(const std::string &fileImage, std::pair<int, int> nbSprite)
+{
+  NbSprite tmp;
+
+  tmp.nbSprintX = nbSprite.first;
+  tmp.nbSprintY = nbSprite.second;
+  this->addImage(fileImage, tmp);
+}
+
 void ImageLoader::addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite)
 {
   std::string imagePath = imageFolder + fileImage;

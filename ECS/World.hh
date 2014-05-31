@@ -1,15 +1,14 @@
 #ifndef WORLD_H_
 # define WORLD_H_
 
-# define WINDOW_HEIGHT	600
-# define WINDOW_WIDTH	800
-
 # include	<vector>
 
 # include	"Entity.hh"
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
 # include	"Any.hpp"
+
+# define	DEBUG false
 
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
@@ -63,6 +62,24 @@ public:
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
+  ISystem	*getSystem(const std::string &type);
+
+  template <typename T>
+  T		*getSystem(const std::string &type)
+  {
+    ISystem	*system;
+    T		*result;
+
+    if (!(system = this->getSystem(type)))
+      return (NULL);
+    if (!(result = dynamic_cast<T *>(system)))
+      {
+	std::cerr << "Invalid type" << std::endl; // throw exception
+	abort();
+      }
+    return (result);
+  }
+
   template <typename T>
   World		*addEventHandler(const std::string &type, ISystem *obj,
 				 void (T::*handler)(IEvent *))
@@ -75,6 +92,10 @@ public:
   void		sendEvent(IEvent *event);
 
   std::vector<Entity *>	&getEntities();
+
+  /** For debuging purpose */
+  int		countEntities() const;
+
   Entity	*getEntity(unsigned int id);
 
   void		process(const float delta);

@@ -5,22 +5,18 @@
 # include	<string>
 # include	<vector>
 
-# include	"SFML/Window/Keyboard.hpp"
 # include	"ACopyableComponent.hpp"
 
 class		SFMLInputComponent : public ACopyableComponent<SFMLInputComponent>
 {
-private:
-  std::map<std::string, std::vector<sf::Keyboard::Key> >	_inputs;
-
 public:
   SFMLInputComponent();
   virtual ~SFMLInputComponent();
 
-  const std::map<std::string, std::vector<sf::Keyboard::Key> >&	getInputs() const;
-  void	addInput(const std::string &action, const sf::Keyboard::Key &key);
   virtual void serialize(IBuffer &) const;
   virtual void unserialize(IBuffer &);
+
+  void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !SFMLINPUTCOMPONENT_H_ */

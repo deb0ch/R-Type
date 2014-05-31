@@ -13,15 +13,18 @@ protected:
   Box2DComponent	*_box;
 
 public:
-  CollisionPoint(float x, float y, float width, float height);
+  CollisionPoint(float x = 0.f, float y = 0.f, float width = 0.f, float height = 0.f);
   virtual	~CollisionPoint();
   CollisionPoint(const CollisionPoint&);
   CollisionPoint	&operator=(const CollisionPoint&);
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
 
-  Box2DComponent		*getBox() const;
-  Pos2DComponent		*getPos() const;
+  Box2DComponent	*getBox() const;
+  Pos2DComponent	*getPos() const;
+
+  virtual void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 };
 

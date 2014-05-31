@@ -8,31 +8,20 @@
 class		MoveForwardComponent : public ACopyableComponent<MoveForwardComponent>
 {
 public:
-	enum Direction
-	{
-		UP,
-		RIGHT,
-		LEFT,
-		DOWN,
-		NONE
-	};
+  MoveForwardComponent(const std::string &dir1 = "", const std::string &dir2 = "");
+  virtual	~MoveForwardComponent();
 
-public:
-	MoveForwardComponent(const Direction = NONE);
-	MoveForwardComponent(const Direction, const Direction);
-	virtual	~MoveForwardComponent();
+  const std::pair<std::string, std::string>	getDirection() const;
 
-	const std::vector<std::string> &getDirection() const;
-	// void setDirection(const Direction);
+  virtual void	serialize(IBuffer &) const;
+  virtual void	unserialize(IBuffer &);
 
-	virtual void	serialize(IBuffer &) const;
-	virtual void	unserialize(IBuffer &);
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:
-	std::vector<std::string> _actions;
-	unsigned int _index;
-	Direction _direction1;
-	Direction _direction2;
+    std::string		_direction1;
+  std::string		_direction2;
 };
 
 #endif /* !MOVEMENTFORWARDCOMPONENT_H_ */

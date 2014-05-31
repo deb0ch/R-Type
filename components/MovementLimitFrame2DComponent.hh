@@ -2,6 +2,7 @@
 # define MOVEMENTLIMITFRAME2DCOMPONENT_H_
 
 # include "World.hh"
+# include "Window.hh"
 # include "ACopyableComponent.hpp"
 
 class MovementLimitFrame2DComponent : public ACopyableComponent<MovementLimitFrame2DComponent>
@@ -20,6 +21,9 @@ public:
   float		getPosY() const;
   float		getWidth() const;
   float		getHeight() const;
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 protected:
   float		_posX;

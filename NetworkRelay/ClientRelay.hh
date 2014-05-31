@@ -14,7 +14,7 @@ class ClientRelay : public INetworkRelay
 public:
   ClientRelay(const std::string &ip, const int port = 42);
   virtual				~ClientRelay();
-  virtual void				start();
+  virtual bool				start();
   virtual void				start(Any);
   virtual Room				*getRoom(const std::string &room_name);
   virtual IBuffer			*getTCPBuffer();

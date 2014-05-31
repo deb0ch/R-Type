@@ -17,6 +17,9 @@ public:
   void setTeam(const unsigned int team);
   unsigned int getTeam() const;
 
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
+
 protected:
   unsigned int _team;
 

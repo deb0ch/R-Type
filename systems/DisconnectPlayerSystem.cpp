@@ -29,10 +29,11 @@ void		DisconnectPlayerSystem::disconnectPlayerHandler(IEvent *event)
   std::for_each(this->_world->getEntities().begin(), this->_world->getEntities().end(),
 		[&disconnect_event, this] (Entity *entity)
 		{
-		  const NetworkPlayerComponent *player_comp;
+		  NetworkPlayerComponent *player_comp;
 
 		  if ((player_comp = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent")))
 		    {
+		      player_comp->setRespawn(false);
 		      if (player_comp->getRemoteId() == disconnect_event->getRemoteId())
 			this->_world->sendEvent(new EntityDeletedEvent(entity));
 		    }

@@ -22,7 +22,7 @@ bool		SFMLRenderSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void		SFMLRenderSystem::displayCollision(Entity *entity)
+void		SFMLRenderSystem::displayCollision(Entity *entity, sf::RenderWindow *_window)
 {
   std::list<CollisionPoint *>	const &entityPoints = entity->getComponent<CollisionComponent>("CollisionComponent")->getCollisionPoints();
   Pos2DComponent	*pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
@@ -41,11 +41,11 @@ void		SFMLRenderSystem::displayCollision(Entity *entity)
       rectangle.setOrigin(width / 2, height / 2);
       rectangle.setOutlineThickness(-3);
       rectangle.setOutlineColor(sf::Color(0, 250, 0));
-      this->_window->draw(rectangle);
+      _window->draw(rectangle);
     }
 }
 
-void		SFMLRenderSystem::displayBox2D(float width, float height, Pos2DComponent *pos)
+void		SFMLRenderSystem::displayBox2D(float width, float height, Pos2DComponent *pos, sf::RenderWindow *_window)
 {
   sf::RectangleShape rectangle(sf::Vector2f(width, height));
 
@@ -54,7 +54,7 @@ void		SFMLRenderSystem::displayBox2D(float width, float height, Pos2DComponent *
   rectangle.setPosition(pos->getX(), pos->getY());
   rectangle.setOutlineThickness(-3);
   rectangle.setOutlineColor(sf::Color(250, 0, 0));
-  this->_window->draw(rectangle);
+  _window->draw(rectangle);
 }
 
 void		SFMLRenderSystem::processEntity(Entity *entity, const float)
@@ -66,6 +66,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   float			width;
   float			height;
   ImageLoader		*imageLoader = this->_world->getSharedObject<ImageLoader>("imageLoader");
+  sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
 
   if (!imageLoader)
     return; //TODO throw
@@ -73,20 +74,20 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   if (action != NULL)
     {
       if (action->isActive("UP") && spriteComp->hasAction("UP"))
-	sprite = spriteComp->getSprite(*imageLoader, "UP");
+	sprite = this->getSprite(*imageLoader, spriteComp, "UP");
       else if (action->isActive("DOWN") && spriteComp->hasAction("DOWN"))
-	sprite = spriteComp->getSprite(*imageLoader, "DOWN");
+	sprite = this->getSprite(*imageLoader, spriteComp, "DOWN");
     }
   width = (box) ? box->getWidth() : 0;
   height = (box) ? box->getHeight() : 0;
-  if (debug)
+  if (DEBUG)
     {
-      displayBox2D(width, height, pos);
+      displayBox2D(width, height, pos, _window);
       if (entity->hasComponent("CollisionComponent"))
-	displayCollision(entity);
+	displayCollision(entity, _window);
     }
   if (sprite == NULL)
-    sprite = spriteComp->getSprite(*imageLoader);
+    sprite = this->getSprite(*imageLoader, spriteComp, "");
   if (sprite == NULL)
     {
       std::cout << "Sprite does not exist" << std::endl;
@@ -96,23 +97,23 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   if (box)
     sprite->setScale(width / sprite->getLocalBounds().width,
 		     height / sprite->getLocalBounds().height);
-  this->_window->draw(*sprite);
+  _window->draw(*sprite);
   delete sprite;
 }
 
 void		SFMLRenderSystem::start()
-{
-  this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "EpicGradius");
-  this->_window->setVerticalSyncEnabled(true);
-  this->_world->setSharedObject("sfmlwindow", this->_window);
-}
+{}
 
 void		SFMLRenderSystem::beforeProcess(const float)
-{
-  this->_window->clear();
-}
+{}
 
 void		SFMLRenderSystem::afterProcess(const float)
+{}
+
+sf::Sprite	*SFMLRenderSystem::getSprite(ImageLoader &imageLoader, SFMLSpriteComponent *component,
+					     const std::string &action)
 {
-  this->_window->display();
+  imageLoader.addImage(component->getFileName(), component->getSpriteDim());
+  return imageLoader.createSprite(component->getFileName(),
+				  component->getCurrentSpriteNumber(action));
 }
