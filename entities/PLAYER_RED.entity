@@ -33,7 +33,7 @@ ENTITY:PLAYER_RED
 		coef=0.5
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=1
+		life=100000
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent

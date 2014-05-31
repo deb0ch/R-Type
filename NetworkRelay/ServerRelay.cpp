@@ -312,7 +312,7 @@ void		ServerRelay::manageRemotesInRooms()
 	  guard_room.setUnLocked();
 
 	  it = this->_rooms.erase(it);
-	  room = NULL;
+	  delete room;
 	  std::cout << "!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 	}
       if (room)
