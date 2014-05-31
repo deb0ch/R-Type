@@ -7,8 +7,8 @@ ENTITY:GAME
 		delay=0.8
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=MONSTER_SPAWNER_GAME;1
-		entity=BOSS_SPAWNER;1
+		entity=MONSTER_SPAWNER_GAME_1;1
+		entity=BOSS_SPAWNER_1;1
 		nb=2
 		delay=0
 		minPosX=0
