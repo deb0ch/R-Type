@@ -28,6 +28,7 @@
 #include	"NetworkSendDieEntitySystem.hh"
 #include	"DisconnectPlayerSystem.hh"
 #include	"PowerUpSystem.hh"
+#include	"PlayerLifeSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"ImageLoader.hh"
@@ -77,6 +78,7 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new AutoDestructSystem());
   this->_world->addSystem(new EntitySpawnerSystem());
   this->_world->addSystem(new SFMLEventSystem());
+  // this->_world->addSystem(new SFMLInputSystem());
   this->_world->addSystem(new SFMLRenderSystem());
   this->_world->addSystem(new OutOfBoundsSystem());
   this->_world->addSystem(new MoveFollowSystem());
@@ -90,15 +92,20 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new LifeSystem());
   this->_world->addSystem(new ResetActionSystem());
   this->_world->addSystem(new MovementLimitFrame2DSystem());
-  this->_world->addSystem(new SpawnPlayerSystem());
+  this->_world->addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
   this->_world->addSystem(new DisconnectPlayerSystem());
   this->_world->addSystem(new BackgroundSystem());
-  this->_world->addSystem(new PowerUpSystem());
+  std::vector<std::string> power_ups =
+    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+  this->_world->addSystem(new PowerUpSystem(power_ups));
+  this->_world->addSystem(new PlayerLifeSystem(3));
 
-  CollisionSystem *collision = new CollisionSystem();
+  CollisionSystem *collision;
+
+  collision = new CollisionSystem();
   this->_world->addSystem(collision);
   this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
-  this->_world->addEventHandler("CollisionEvent", collision, &PowerUpSystem::collision_event);
+
 
   NetworkSendDieEntitySystem *networkSendDieEntitySystem = new NetworkSendDieEntitySystem();
   this->_world->addSystem(networkSendDieEntitySystem);
@@ -109,7 +116,8 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(entityDeleterSystem);
   this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 			&EntityDeleterSystem::addEntityToDelete);
-  this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem, &LifeSystem::delete_entity);
+  this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+	  &LifeSystem::delete_entity);
 
   std::vector<std::string> arg =
     {
@@ -124,8 +132,11 @@ void RunWorldServer::addSystems()
       "MovementSpeedComponent",
       "NetworkPlayerComponent",
       "MoveForwardComponent",
+      "MoveFollowComponent",
       "MoveSequenceComponent",
-      "Box2DComponent"
+      "TagComponent",
+      "Box2DComponent",
+      "MovementLimitFrame2DComponent"
     };
 
   this->_world->addSystem(new NetworkSendUpdateSystem(arg));

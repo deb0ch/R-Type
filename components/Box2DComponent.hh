@@ -15,6 +15,10 @@ public:
   float		getWidth() const;
   float		getHeight() const;
 
+  void		setWidth(float);
+  void		setHeight(float);
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
   virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 protected:
   float		_width;

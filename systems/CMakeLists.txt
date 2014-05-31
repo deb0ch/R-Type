@@ -2,6 +2,7 @@ set(HEADER_S
 	${HEADER_S}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/IPlayerRespawner.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
@@ -30,6 +31,7 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -64,6 +66,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	PARENT_SCOPE
 	)
 
@@ -98,6 +101,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	PARENT_SCOPE
 )
 
@@ -132,5 +136,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	PARENT_SCOPE
 )

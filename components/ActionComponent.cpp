@@ -79,6 +79,16 @@ void			ActionComponent::unserialize(IBuffer &buffer)
     }
 }
 
+void	ActionComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("actions=.+")))
+    this->_actions[lastline.substr(8)] = false;
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
 void		ActionComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   std::for_each(this->_actions.begin(), this->_actions.end(), [&output, indent](const std::pair<std::string, bool>& pair)
