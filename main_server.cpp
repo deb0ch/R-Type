@@ -91,7 +91,8 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
-  world.addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
+  std::vector<std::string> players = { "PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE" };
+  world.addSystem(new SpawnPlayerSystem(players));
   world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
   std::vector<std::string> power_ups =
