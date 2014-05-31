@@ -12,9 +12,9 @@ int			main()
   Timer		timer;
   StateManager states;
 
-  states.pushState(new SFMLMenu(&world));
   try
     {
+      states.pushState(new SFMLMenu(&world));
       while (42)
 	{
 	  timer.startFrame();
@@ -32,7 +32,7 @@ int			main()
     {
       std::cerr << e.what() << std::endl;
     }
-  catch (std::string str)
+  catch (const std::string &str)
     {
       std::cerr << str << std::endl;
     }
