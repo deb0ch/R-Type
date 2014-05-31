@@ -31,6 +31,7 @@ protected:
 	sf::Sprite *_background;
 	sf::Sprite *_logo;
 	SFMLButton *_buttonplay;
+	SFMLButton *_buttonSolo;
 	SFMLButton *_buttonCredit;
 	SFMLTextBox *_textboxIP;
 	SFMLTextBox *_ipServer;
