@@ -98,4 +98,6 @@ ENTITY:PLAYER_GREEN
 		actions=RIGHT
 		actions=UP
 	!COMPONENT
+	COMPONENT:SFMLJoystickComponent
+	!COMPONENT
 !ENTITY
