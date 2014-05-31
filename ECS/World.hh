@@ -62,6 +62,24 @@ public:
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
+  ISystem	*getSystem(const std::string &type);
+
+  template <typename T>
+  T		*getSystem(const std::string &type)
+  {
+    ISystem	*system;
+    T		*result;
+
+    if (!(system = this->getSystem(type)))
+      return (NULL);
+    if (!(result = dynamic_cast<T *>(system)))
+      {
+	std::cerr << "Invalid type" << std::endl; // throw exception
+	abort();
+      }
+    return (result);
+  }
+
   template <typename T>
   World		*addEventHandler(const std::string &type, ISystem *obj,
 				 void (T::*handler)(IEvent *))

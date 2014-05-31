@@ -10,7 +10,6 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
@@ -31,6 +30,9 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/APowerUpComponent.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/WeaponPowerUpComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifePowerUpComponent.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -64,6 +66,8 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/WeaponPowerUpComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifePowerUpComponent.cpp
 	PARENT_SCOPE)
 
 
@@ -79,7 +83,6 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionPoint.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputComponent.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/PlayerMovementComponent.hh	
 	${CMAKE_CURRENT_SOURCE_DIR}/MovementSpeedComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateComponent.hh
@@ -100,6 +103,9 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/APowerUpComponent.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/WeaponPowerUpComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/LifePowerUpComponent.hh
 	PARENT_SCOPE
 )
 
@@ -134,5 +140,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/AutoDestructComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ExplosionComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/WeaponPowerUpComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LifePowerUpComponent.cpp
 	PARENT_SCOPE
 )

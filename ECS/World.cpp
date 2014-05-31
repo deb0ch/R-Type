@@ -98,7 +98,6 @@ World	*World::removeEntity(unsigned int id)
 
   if (it == this->_entities.end())
     return (this);
-
   delete *it;
   this->_entities.erase(it);
   return (this);
@@ -125,6 +124,19 @@ World	*World::removeSystem(const std::string &type)
   delete *it;
   this->_systems.erase(it);
   return (this);
+}
+
+ISystem		*World::getSystem(const std::string &type)
+{
+  auto it = std::find_if(this->_systems.begin(), this->_systems.end(),
+			 [type] (ISystem *system) -> bool
+			 {
+			   return (system->getType() == type);
+			 });
+
+  if (it == this->_systems.end())
+    return (NULL);
+  return (*it);
 }
 
 std::vector<Entity *> &World::getEntities()

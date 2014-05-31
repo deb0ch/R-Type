@@ -64,3 +64,6 @@ float		NetworkReceiveUpdateComponent::getUpdateRate() const
 {
   return this->_update_rate;
 }
+
+void		NetworkReceiveUpdateComponent::serializeFromFile(std::ofstream &, unsigned char) const
+{}

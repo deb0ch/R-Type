@@ -33,6 +33,8 @@
 #include	"SpawnPlayerSystem.hh"
 #include	"NetworkSendDieEntitySystem.hh"
 #include	"DisconnectPlayerSystem.hh"
+#include	"PowerUpSystem.hh"
+#include	"PlayerLifeSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -89,9 +91,13 @@ void		addSystems(World &world)
   world.addSystem(new LifeSystem());
   world.addSystem(new ResetActionSystem());
   world.addSystem(new MovementLimitFrame2DSystem());
-  world.addSystem(new SpawnPlayerSystem());
+  world.addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
   world.addSystem(new DisconnectPlayerSystem());
   world.addSystem(new BackgroundSystem());
+  std::vector<std::string> power_ups =
+    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+  world.addSystem(new PowerUpSystem(power_ups));
+  world.addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
 
@@ -174,8 +180,8 @@ void		addEntities(World &world)
   world.addEntity(entityFactory->create("BACKGROUND_2"));
   world.addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
   world.addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
-  // world.addEntity(entityFactory->create("PLAYER_RED"));
   world.addEntity(entityFactory->create("GAME"));
+  // world.addEntity(entityFactory->create("PLAYER_RED"));
   //world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
@@ -184,37 +190,49 @@ void		addEntities(World &world)
 
 int		main()
 {
-  World		world;
-  Timer		timer;
+  try {
+    World		world;
+    Timer		timer;
 
-  addSystems(world);
-  std::cout << "a" << std::endl;
-  addSharedObjetcs(world);
-  std::cout << "b" << std::endl;
-  addEntities(world);
+    addSystems(world);
+    addSharedObjetcs(world);
+    addEntities(world);
 
-  // sf::Music music;
+    // sf::Music music;
 
-  // if (music.openFromFile("Ressources/Sound/music.ogg"))
-  //   {
-  //     music.setLoop(true);
-  //     music.play();
-  //   }
-  /*
-    SoundLoader *s = new SoundLoader();
-    s->addSound("Ressources/Sound/laser.wav");
-    sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
-    sound->play();
-  */
-  world.start();
-  std::cout << "c" << std::endl;
-  while (42)
+    // if (music.openFromFile("Ressources/Sound/music.ogg"))
+    //   {
+    //     music.setLoop(true);
+    //     music.play();
+    //   }
+    /*
+      SoundLoader *s = new SoundLoader();
+      s->addSound("Ressources/Sound/laser.wav");
+      sf::Sound *sound = s->getSound("Ressources/Sound/laser.wav");
+      sound->play();
+    */
+    world.start();
+    //std::cout << "c" << std::endl;
+    while (42)
+      {
+	timer.startFrame();
+	if (timer.canTick())
+	  world.process(timer.getDeltaTime() / 1000000.f);
+	timer.endFrame();
+      }
+    world.stop();
+  }
+  catch (const std::exception &e)
     {
-      timer.startFrame();
-      if (timer.canTick())
-	world.process(timer.getDeltaTime() / 1000000.f);
-      timer.endFrame();
+      std::cerr << e.what() << std::endl;
     }
-  world.stop();
+  catch (const std::string &str)
+    {
+      std::cerr << str << std::endl;
+    }
+  catch (...)
+    {
+      std::cerr << "Unknown error." << std::endl;
+    }
   return (0);
 }

@@ -24,6 +24,9 @@ public:
 
   void		addVX(float x);
   void		addVY(float y);
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !SPEED2DCOMPONENT_H_ */

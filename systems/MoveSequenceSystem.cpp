@@ -17,7 +17,7 @@ bool MoveSequenceSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void MoveSequenceSystem::processEntity(Entity *entity, const float)
+void MoveSequenceSystem::processEntity(Entity *entity, const float delta)
 {
   ActionComponent		*action;
   MoveSequenceComponent		*moveEntity;
@@ -28,6 +28,6 @@ void MoveSequenceSystem::processEntity(Entity *entity, const float)
   if (action && moveEntity)
     {
       action->setAction(moveEntity->getAction(), true);
-      moveEntity->incrementTick();
+      moveEntity->incrementTick(delta);
     }
 }

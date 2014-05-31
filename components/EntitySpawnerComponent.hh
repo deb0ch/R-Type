@@ -19,7 +19,7 @@ protected:
   std::vector<IComponent*>	_components;
   unsigned int			_next;
   unsigned long			_nb;
-  unsigned long			_delay;
+  float				_delay;
   std::pair<float, float>	_min_pos;
   std::pair<float, float>	_max_pos;
   bool				_random;
@@ -28,13 +28,15 @@ protected:
   bool				_active;
 
   unsigned long			_counter;
-  unsigned long			_tick;
+  float				_tick;
+
+  void				fixWeights();
 
 public:
   EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities = {},
 			 std::vector<IComponent*> components = {},
 			 unsigned long nb = 0,
-			 unsigned long delay = 15,
+			 float delay = 0.25f,
 			 std::pair<float, float> min_pos = {0.0f, 0.0f},
 			 std::pair<float, float> max_pos = {0.0f, 0.0f},
 			 bool random = true,
@@ -47,10 +49,16 @@ public:
   const std::vector<IComponent*>	&getComponents() const;
 
   void				setActive(bool active);
-  Entity			*spawnEntity(EntityFactory *facto);
+  Entity			*spawnEntity(EntityFactory *facto, float delta);
+  void				clearEntities();
+  void				setDelay(float delay);
+  void				addEntity(const std::pair<std::string, unsigned int> &);
 
   virtual void			serialize(IBuffer &) const;
   virtual void			unserialize(IBuffer &);
+
+  virtual void			deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void			serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !ENTITYSPAWNERCOMPONENT_H_ */
