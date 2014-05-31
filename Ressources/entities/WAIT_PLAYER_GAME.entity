@@ -1,15 +1,16 @@
-ENTITY:GAME
+ENTITY:WAIT_PLAYER_GAME
 	COMPONENT:Pos2DComponent
 		x=800
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=30
+		delay=0.8
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=WAIT_PLAYER_GAME;1
-		nb=1
-		delay=20
+		entity=MONSTER_SPAWNER_GAME_1;1
+		entity=BOSS_SPAWNER_1;1
+		nb=2
+		delay=0
 		minPosX=0
 		minPosY=0
 		maxPosX=0
