@@ -16,7 +16,9 @@ RoomServer::RoomServer(ServerRelay *server, const std::string &nameRoomServer)
 
 RoomServer::~RoomServer() {
   this->_runWorldServer->isEnd(true);
+  std::cout << "Waiting room delete" << std::endl;
   this->_thread.wait();
+  std::cout << "room deletion completed" << std::endl;
   delete this->_runWorldServer;
 }
 

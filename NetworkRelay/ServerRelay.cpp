@@ -46,12 +46,16 @@ bool	ServerRelay::start()
 
 Room			*ServerRelay::getRoom(const std::string &room_name)
 {
-  auto guard = create_lock(this->_mutex_room);
-  auto it = this->_rooms.find(room_name);
+  if (this->_mutex_room.trylock())
+    {
+      auto guard = create_lock(this->_mutex_room, true);
+      auto it = this->_rooms.find(room_name);
 
-  if (it == this->_rooms.end())
-    return (NULL);
-  return (it->second);
+      if (it == this->_rooms.end())
+	return (NULL);
+      return (it->second);
+    }
+  return NULL;
 }
 
 IBuffer			*ServerRelay::getTCPBuffer()
@@ -238,8 +242,6 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 
       buffer = *itBuff;
       buffer->rewind();
-      write(1, buffer->getBuffer(), buffer->getRemainingLength());
-      std::cout << std::endl;
       *buffer >> packet_type;
       if (packet_type == CHANGE_ROOM_QUERY)
 	{
