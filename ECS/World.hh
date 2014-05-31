@@ -92,6 +92,10 @@ public:
   void		sendEvent(IEvent *event);
 
   std::vector<Entity *>	&getEntities();
+
+  /** For debuging purpose */
+  int		countEntities() const;
+
   Entity	*getEntity(unsigned int id);
 
   void		process(const float delta);
