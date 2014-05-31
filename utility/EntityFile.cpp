@@ -40,7 +40,9 @@ std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
       ++lineno;
       line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
 
-      if (std::regex_match(line, std::regex("COMPONENT:.+")))
+      if (line[0] == '#')
+	continue ;
+      else if (std::regex_match(line, std::regex("COMPONENT:.+")))
 	{
 	  component = cf.create(line.substr(10));
 	  if (!component)

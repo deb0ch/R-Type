@@ -4,6 +4,7 @@
 #include	"SFMLEventSystem.hh"
 
 #include	"SFMLKeyEvent.hh"
+#include	"SFMLJoystickEvent.hh"
 
 SFMLEventSystem::SFMLEventSystem()
   : ASystem("SFMLEventSystem")
@@ -29,9 +30,9 @@ void	SFMLEventSystem::beforeProcess(const float)
     {
       switch (event.type)
 	{
-	  case sf::Event::Closed:
-		  this->_window->close();
-			  break;
+	case sf::Event::Closed:
+	  this->_window->close();
+	  break;
 
 	case sf::Event::KeyPressed:
 	  this->_world->sendEvent(new SFMLKeyEvent(event.key.code, true));
@@ -41,13 +42,56 @@ void	SFMLEventSystem::beforeProcess(const float)
 	  this->_world->sendEvent(new SFMLKeyEvent(event.key.code, false));
 	  break;
 
+	case sf::Event::JoystickMoved:
+	  if (event.joystickMove.joystickId != 1)
+	    break ;
+	  if (event.joystickMove.axis == sf::Joystick::PovY
+	      || event.joystickMove.axis == sf::Joystick::Y)
+	    {
+	      if (event.joystickMove.position > 50)
+		this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::DOWN, true));
+	      else if (event.joystickMove.position < -50)
+		this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::UP, true));
+	      else
+		{
+		  this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::UP, false));
+		  this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::DOWN, false));
+		}
+	    }
+	  if (event.joystickMove.axis == sf::Joystick::PovX
+	      || event.joystickMove.axis == sf::Joystick::X)
+	    {
+	      if (event.joystickMove.position > 50)
+		this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::RIGHT, true));
+	      else if (event.joystickMove.position < -50)
+		this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::LEFT, true));
+	      else
+		{
+		  this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::RIGHT, false));
+		  this->_world->sendEvent(new SFMLJoystickEvent(SFMLJoystickEvent::LEFT, false));
+		}
+	    }
+	  break;
+
+	case sf::Event::JoystickButtonPressed:
+	  if (event.joystickButton.joystickId != 1)
+	    break ;
+	  this->_world->sendEvent(new SFMLJoystickEvent(event.joystickButton.button, true));
+	  break;
+
+	case sf::Event::JoystickButtonReleased:
+	  if (event.joystickButton.joystickId != 1)
+	    break ;
+	  this->_world->sendEvent(new SFMLJoystickEvent(event.joystickButton.button, false));
+	  break;
+
 	case sf::Event::MouseButtonPressed:
-		std::cout << "MOUSE CLICK [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
-		break;
+	  //std::cout << "MOUSE CLICK [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
+	  break;
 
 	case sf::Event::MouseButtonReleased:
-		std::cout << "MOUSE RELEASE [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
-		break;
+	  //std::cout << "MOUSE RELEASE [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
+	  break;
 
 	default:
 	  break;

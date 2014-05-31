@@ -102,7 +102,8 @@ void		StateGame::addSystems()
 		"MoveSequenceComponent",
 		"TagComponent",
 		"SyncPos2DComponent",
-		"MovementLimitFrame2DComponent"
+		"MovementLimitFrame2DComponent",
+		"SFMLJoystickComponent"
 	};
 
 	this->_world->addSystem(new NetworkReceiveUpdateSystem(arg));
