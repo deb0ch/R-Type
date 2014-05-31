@@ -5,11 +5,12 @@
 const std::vector<std::string> NetworkPlayerComponent::_non_update_component =
   {"Pos2DComponent", "Speed2DComponent"};
 
-NetworkPlayerComponent::NetworkPlayerComponent(unsigned int hash)
+NetworkPlayerComponent::NetworkPlayerComponent(unsigned int hash, const std::string &entity_name)
   : ASerializableComponent("NetworkPlayerComponent")
 {
   this->_remote_hash = hash;
   this->_can_respawn = true;
+  this->_entity_name = entity_name;
 }
 
 NetworkPlayerComponent::~NetworkPlayerComponent()
@@ -112,3 +113,8 @@ NetworkPlayerComponent	*NetworkPlayerComponent::addPlayerComponent(ASerializable
 
 void	NetworkPlayerComponent::serializeFromFile(std::ofstream &, unsigned char) const
 {}
+
+const std::string	&NetworkPlayerComponent::getEntityName() const
+{
+  return this->_entity_name;
+}
