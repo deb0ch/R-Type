@@ -37,5 +37,5 @@ void			Friction2DSystem::processEntity(Entity *entity, const float delta)
 
 float	Friction2DSystem::applyFriction(float oldSpeed, float friction, float delta)
 {
-  return (oldSpeed * powf(friction, delta));
+  return (oldSpeed * expf(-friction * delta));
 }
