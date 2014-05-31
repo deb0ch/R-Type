@@ -38,7 +38,7 @@ void PowerUpSystem::collision_event(IEvent *e)
 	APowerUpComponent *powerUp = NULL;
 
 	for (auto it = this->_possible_powerup.begin();
-	     it != this->_possible_powerup.end() && powerUp == false;
+	     it != this->_possible_powerup.end() && powerUp == NULL;
 	     ++it)
 	  {
 	    powerUp = firstEntity->getComponent<APowerUpComponent>(*it);
