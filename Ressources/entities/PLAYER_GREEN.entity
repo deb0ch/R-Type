@@ -1,15 +1,13 @@
 ENTITY:PLAYER_GREEN
-	COMPONENT:NetworkReceiveActionComponent
-		packet_num=0
+	COMPONENT:MovementSpeedComponent
+		speed_coef=1800
 	!COMPONENT
-	COMPONENT:NetworkSendUpdateComponent
-		update_rate=0.2
+	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
-	COMPONENT:MovementLimitFrame2DComponent
-		posX=0
-		posY=0
-		width=800
-		height=600
+	COMPONENT:Friction2DComponent
+		coef=4
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
@@ -19,53 +17,11 @@ ENTITY:PLAYER_GREEN
 		width=40
 		height=20
 	!COMPONENT
-	COMPONENT:TeamComponent
-		team=1
-	!COMPONENT
-	COMPONENT:TagComponent
-		tag=PLAYER
-	!COMPONENT
-	COMPONENT:Speed2DComponent
-		vx=0
-		vy=0
-	!COMPONENT
-	COMPONENT:Friction2DComponent
-		coef=0.5
-	!COMPONENT
-	COMPONENT:LifeComponent
-		life=1
-		invulnerability=0.32
-	!COMPONENT
-	COMPONENT:CollisionPowerComponent
-		collisionPower=100
-	!COMPONENT
-	COMPONENT:ExplosionComponent
-		entity=PLAYER_EXPLOSION
-		offsetX=0
-		offsetY=0
-	!COMPONENT
-	COMPONENT:SFMLSpriteComponent
-		filename=players.png
-		nbSpritesX=5
-		nbSpritesY=5
-		tickChange=10
-		anim=ANIM
-			action=
-			start=12
-			length=0
-		!ANIM
-		anim=ANIM
-			action=DOWN
-			start=10
-			length=2
-		!ANIM
-		anim=ANIM
-			action=UP
-			start=13
-			length=2
-		!ANIM
-	!COMPONENT
-	COMPONENT:SFMLInputComponent
+	COMPONENT:MovementLimitFrame2DComponent
+		posX=0
+		posY=0
+		width=800
+		height=600
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
@@ -74,19 +30,36 @@ ENTITY:PLAYER_GREEN
 			width=40
 			height=20
 		!COMPONENT
-		toCollide=MONSTER
-		toCollide=PLAYER
 	!COMPONENT
-	COMPONENT:MovementSpeedComponent
-		speed_coef=200
+	COMPONENT:CollisionPowerComponent
+		collisionPower=100
+	!COMPONENT
+	COMPONENT:LifeComponent
+		life=1
+		invulnerability=2
+	!COMPONENT
+	COMPONENT:TeamComponent
+		team=1
+	!COMPONENT
+	COMPONENT:TagComponent
+		tag=PLAYER
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=PLAYER_EXPLOSION
+		offsetX=0
+		offsetY=0
+	!COMPONENT
+	COMPONENT:SFMLInputComponent
+	!COMPONENT
+	COMPONENT:SFMLJoystickComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
 		nb=0
-		delay=0.25
-		minPosX=0
+		delay=0.15
+		minPosX=5
 		minPosY=0
-		maxPosX=0
+		maxPosX=5
 		maxPosY=0
 		random=true
 		abs=false
@@ -98,6 +71,10 @@ ENTITY:PLAYER_GREEN
 		actions=RIGHT
 		actions=UP
 	!COMPONENT
-	COMPONENT:SFMLJoystickComponent
+	COMPONENT:NetworkReceiveActionComponent
+		packet_num=0
+	!COMPONENT
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=0.2
 	!COMPONENT
 !ENTITY

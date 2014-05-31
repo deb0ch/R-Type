@@ -30,7 +30,7 @@ ENTITY:LASER_BULLET
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=500
+		speed_coef=1800
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=5
