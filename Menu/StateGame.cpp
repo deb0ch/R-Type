@@ -1,3 +1,5 @@
+#include	"SFMLDisplaySystem.hh"
+#include	"SFMLRenderTextSystem.hh"
 #include	"StateGame.hh"
 #include	"Any.hpp"
 
@@ -55,66 +57,70 @@ void		StateGame::addEntities()
 
 void		StateGame::addSystems()
 {
-  this->_world->addSystem(new SFMLEventSystem());
-  this->_world->addSystem(new SFMLInputSystem());
-  this->_world->addSystem(new SFMLRenderSystem());
-  this->_world->addSystem(new MoveFollowSystem());
-  this->_world->addSystem(new MoveForwardSystem());
-  this->_world->addSystem(new MoveSequenceSystem());
-  this->_world->addSystem(new ActionMovementSystem());
-  this->_world->addSystem(new SyncPos2DSystem());
-  this->_world->addSystem(new ActionFireSystem());
-  this->_world->addSystem(new Friction2DSystem());
-  this->_world->addSystem(new MoveSystem());
-  this->_world->addSystem(new ResetActionSystem());
-  this->_world->addSystem(new MovementLimitFrame2DSystem());
-  this->_world->addSystem(new BackgroundSystem());
-  this->_world->addSystem(new NetworkReceiveDieEntitySystem());
-  this->_world->addSystem(new NetworkTimeOutEntitySystem());
+	this->_world->addSystem(new SFMLEventSystem());
+	this->_world->addSystem(new SFMLInputSystem());
+	this->_world->addSystem(new SFMLDisplaySystem());
+	this->_world->addSystem(new SFMLRenderSystem());
+	this->_world->addSystem(new SFMLRenderTextSystem());
+	this->_world->addSystem(new MoveFollowSystem());
+	this->_world->addSystem(new MoveForwardSystem());
+	this->_world->addSystem(new MoveSequenceSystem());
+	this->_world->addSystem(new ActionMovementSystem());
+	this->_world->addSystem(new SyncPos2DSystem());
+	this->_world->addSystem(new ActionFireSystem());
+	this->_world->addSystem(new Friction2DSystem());
+	this->_world->addSystem(new MoveSystem());
+	this->_world->addSystem(new ResetActionSystem());
+	this->_world->addSystem(new MovementLimitFrame2DSystem());
+	this->_world->addSystem(new BackgroundSystem());
+	this->_world->addSystem(new NetworkReceiveDieEntitySystem());
+	this->_world->addSystem(new NetworkTimeOutEntitySystem());
 
-  CollisionSystem *collision;
+	CollisionSystem *collision;
 
-  collision = new CollisionSystem();
-  this->_world->addSystem(collision);
-  this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
+	collision = new CollisionSystem();
+	this->_world->addSystem(collision);
+	this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
-  std::vector<std::string> arg =
-    {
-      "Pos2DComponent",
-      "SFMLSpriteComponent",
-      "Speed2DComponent",
-      "Friction2DComponent",
-      "ActionComponent",
-      "MovementSpeedComponent",
-      "NetworkSendActionComponent",
-      "SFMLInputComponent",
-      "Box2DComponent",
-      "MovementSpeedComponent",
-      "MoveForwardComponent",
-      "MoveFollowComponent",
-      "MoveSequenceComponent",
-      "TagComponent",
-      "SyncPos2DComponent",
-      "MovementLimitFrame2DComponent"
-    };
+	std::vector<std::string> arg =
+	{
+		"Pos2DComponent",
+		"SFMLSpriteComponent",
+		"Speed2DComponent",
+		"Friction2DComponent",
+		"ActionComponent",
+		"MovementSpeedComponent",
+		"NetworkSendActionComponent",
+		"SFMLInputComponent",
+		"Box2DComponent",
+		"MovementSpeedComponent",
+		"MoveForwardComponent",
+		"MoveFollowComponent",
+		"MoveSequenceComponent",
+		"TagComponent",
+		"SyncPos2DComponent",
+		"MovementLimitFrame2DComponent",
+		"SFMLTextComponent"
+		"SFMLJoystickComponent"
+	};
 
-  this->_world->addSystem(new NetworkReceiveUpdateSystem(arg));
+	this->_world->addSystem(new NetworkReceiveUpdateSystem(arg));
 
-  std::vector<std::string> serializable_action =
-    {
-      "UP",
-      "RIGHT",
-      "DOWN",
-      "LEFT",
-      "FIRE"
-    };
+	std::vector<std::string> serializable_action =
+	{
+		"UP",
+		"RIGHT",
+		"DOWN",
+		"LEFT",
+		"FIRE"
+	};
 
-  this->_world->addSystem(new NetworkSendActionSystem(serializable_action));
+	this->_world->addSystem(new NetworkSendActionSystem(serializable_action));
 
-  EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
-  this->_world->addSystem(entityDeleterSystem);
-  this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
-				&EntityDeleterSystem::addEntityToDelete);
+	EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+	this->_world->addSystem(entityDeleterSystem);
+	this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
+		&EntityDeleterSystem::addEntityToDelete);
 }
 
 void		StateGame::update(StateManager&)
@@ -122,5 +128,5 @@ void		StateGame::update(StateManager&)
 
 void		StateGame::render(const Timer&timer)
 {
-  this->_world->process(timer.getDeltaTime() / 1000000.f);
+	this->_world->process(timer.getDeltaTime() / 1000000.f);
 }

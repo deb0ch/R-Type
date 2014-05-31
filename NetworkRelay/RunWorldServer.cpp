@@ -29,6 +29,9 @@
 #include	"DisconnectPlayerSystem.hh"
 #include	"PowerUpSystem.hh"
 #include	"PlayerLifeSystem.hh"
+#include	"SFMLDisplaySystem.hh"
+#include	"SFMLRenderTextSystem.hh"
+#include	"SFMLSetDisplayLiveSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"ImageLoader.hh"
@@ -85,7 +88,10 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new EntitySpawnerSystem());
   this->_world->addSystem(new SFMLEventSystem());
   // this->_world->addSystem(new SFMLInputSystem());
+  this->_world->addSystem(new SFMLDisplaySystem());
   this->_world->addSystem(new SFMLRenderSystem());
+  this->_world->addSystem(new SFMLRenderTextSystem());
+  this->_world->addSystem(new SFMLSetDisplayLiveSystem());
   this->_world->addSystem(new OutOfBoundsSystem());
   this->_world->addSystem(new MoveFollowSystem());
   this->_world->addSystem(new MoveForwardSystem());
@@ -98,12 +104,15 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new LifeSystem());
   this->_world->addSystem(new ResetActionSystem());
   this->_world->addSystem(new MovementLimitFrame2DSystem());
-  this->_world->addSystem(new SpawnPlayerSystem({"PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE"}));
+  std::vector<std::string> players = { "PLAYER_RED", "PLAYER_BLUE", "PLAYER_GREEN", "PLAYER_PURPLE" };
+  this->_world->addSystem(new SpawnPlayerSystem(players));
   this->_world->addSystem(new DisconnectPlayerSystem());
   this->_world->addSystem(new BackgroundSystem());
   std::vector<std::string> power_ups =
     {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
-  this->_world->addSystem(new PowerUpSystem(power_ups));
+  std::vector<std::string> power_ups_component =
+    {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+  this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
   this->_world->addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
@@ -142,7 +151,9 @@ void RunWorldServer::addSystems()
       "MoveSequenceComponent",
       "TagComponent",
       "Box2DComponent",
-      "MovementLimitFrame2DComponent"
+      "MovementLimitFrame2DComponent",
+      "SFMLTextComponent"
+      "SFMLJoystickComponent"
     };
 
   this->_world->addSystem(new NetworkSendUpdateSystem(arg));
@@ -184,4 +195,5 @@ void	RunWorldServer::addEntities()
   this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
   this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   this->_world->addEntity(entityFactory->create("GAME"));
+  this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
 }

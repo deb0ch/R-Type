@@ -34,6 +34,7 @@ protected:
 	sf::Sprite *_logo;
 	ClientRelay *_relay;
 	SFMLButton *_buttonplay;
+	SFMLButton *_buttonSolo;
 	SFMLButton *_buttonCredit;
 	SFMLTextBox *_textboxIP;
 	SFMLTextBox *_ipServer;

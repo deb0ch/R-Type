@@ -21,7 +21,7 @@ ENTITY:MONSTER_2
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.9
+		coef=1
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=r-typesheet-7.png
@@ -35,7 +35,7 @@ ENTITY:MONSTER_2
 		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=50
+		speed_coef=75
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint

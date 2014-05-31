@@ -8,7 +8,7 @@
 class PowerUpSystem : public ASystem
 {
 public:
-	PowerUpSystem(const std::vector<std::string> &);
+  PowerUpSystem(const std::vector<std::string> &, const std::vector<std::string> &);
 	virtual ~PowerUpSystem();
 
 	virtual void	init();
@@ -20,6 +20,7 @@ protected:
 	virtual void processEntity(Entity *, const float);
 
 	std::vector<std::string>	_possible_powerup;
+	std::vector<std::string>	_powerup_component_names;
 };
 
 

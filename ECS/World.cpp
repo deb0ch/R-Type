@@ -158,6 +158,12 @@ Entity		*World::getEntity(unsigned int id)
   return (*it);
 }
 
+/** For debuging purpose */
+int		World::countEntities() const
+{
+  return (_entities.size());
+}
+
 //----- ----- Methods ----- ----- //
 
 /**

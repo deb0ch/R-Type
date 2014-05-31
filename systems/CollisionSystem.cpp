@@ -1,10 +1,11 @@
 #include <iostream>
+#include "Window.hh"
 #include "CollisionSystem.hh"
 #include "CollisionEvent.hh"
 #include "TagComponent.hh"
 #include "TeamComponent.hh"
 
-CollisionSystem::CollisionSystem() : ASystem("CollisionSystem")
+CollisionSystem::CollisionSystem() : ASystem("CollisionSystem", 40)
 {
 }
 
@@ -14,9 +15,20 @@ CollisionSystem::~CollisionSystem()
 
 bool	CollisionSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("CollisionComponent"))
+  if (entity->hasComponent("CollisionComponent") &&
+      entity->hasComponent("Pos2DComponent") &&
+      entity->hasComponent("Box2DComponent"))
     return (true);
   return (false);
+}
+
+void		CollisionSystem::beforeProcess(const float)
+{
+  // this->quadTree = new QuadTree(this->_world, this->_world->getEntities(), 0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 4, 4);
+}
+void		CollisionSystem::afterProcess(const float)
+{
+  // delete this->quadTree;
 }
 
 static bool	checkTags(TagComponent const *tags, CollisionComponent const *col)
@@ -32,7 +44,6 @@ static bool	checkTags(TagComponent const *tags, CollisionComponent const *col)
 
 void	CollisionSystem::processEntity(Entity *entity, const float)
 {
-  std::vector<Entity *> &world_entities = this->_world->getEntities();
   CollisionComponent	*entity_col;
   CollisionComponent	*world_entity_col;
   TeamComponent		*entityTeam;
@@ -42,7 +53,9 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
   entityTeam = entity->getComponent<TeamComponent>("TeamComponent");
   if (!entity_col || !entityTeam)
     return ;
-  for (auto it = world_entities.begin(); it != world_entities.end(); ++it)
+  std::vector<Entity *> const &entities = this->_world->getEntities();
+  // std::vector<Entity *> const &entities = this->quadTree->findTree(entity);
+  for (auto it = entities.begin(); it != entities.end(); ++it)
     {
       world_entity_col = (*it)->getComponent<CollisionComponent>("CollisionComponent");
       worldEntityTeam = (*it)->getComponent<TeamComponent>("TeamComponent");

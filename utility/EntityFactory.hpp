@@ -32,7 +32,7 @@
 # include "EntityFile.hh"
 # include "LifePowerUpComponent.hh"
 
-# include <dirent.h>
+# include "DirectoryLister.hh"
 
 class EntityFactory : public Factory<Entity, hash_t>
 {
@@ -87,24 +87,20 @@ public:
   void					deserializeAll()
   {
     EntityFile				ef;
-    DIR					*dir;
-    struct dirent			*file;
+    DirectoryLister			directory_lister;
     std::ifstream			input;
     std::pair<std::string, Entity*>	res;
 
-    dir = opendir("Ressources/entities/");
-
-    while (dir && (file = readdir(dir)))
+    std::vector<std::string> files = directory_lister.listDirectory("Ressources/entities/");
+    for(auto it = files.begin(); it != files.end(); ++it)
       {
-	if (file->d_name[0] == '.')
-	  continue ;
-	input.open("./Ressources/entities/" + std::string(file->d_name));
+	input.open("./Ressources/entities/" + *it);
 	try {
 	  res = ef.deserialize(input);
 	}
 	catch (EntityFileException &efe)
 	  {
-	    efe.setFilename(file->d_name);
+	    efe.setFilename(*it);
 	    throw;
 	  }
 	this->addEntity(res.first, res.second);

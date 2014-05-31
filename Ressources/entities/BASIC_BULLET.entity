@@ -22,14 +22,14 @@ ENTITY:BASIC_BULLET
 		offsetY=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=1000
+		vx=300
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=200
+		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=25

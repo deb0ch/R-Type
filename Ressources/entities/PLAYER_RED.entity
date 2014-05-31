@@ -1,15 +1,13 @@
 ENTITY:PLAYER_RED
-	COMPONENT:NetworkReceiveActionComponent
-		packet_num=0
+	COMPONENT:MovementSpeedComponent
+		speed_coef=1800
 	!COMPONENT
-	COMPONENT:NetworkSendUpdateComponent
-		update_rate=0.2
+	COMPONENT:Speed2DComponent
+		vx=0
+		vy=0
 	!COMPONENT
-	COMPONENT:MovementLimitFrame2DComponent
-		posX=0
-		posY=0
-		width=800
-		height=600
+	COMPONENT:Friction2DComponent
+		coef=4
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
@@ -19,25 +17,32 @@ ENTITY:PLAYER_RED
 		width=40
 		height=20
 	!COMPONENT
+	COMPONENT:MovementLimitFrame2DComponent
+		posX=0
+		posY=0
+		width=800
+		height=600
+	!COMPONENT
+	COMPONENT:CollisionComponent
+		collisionPoints=COMPONENT:CollisionPoint
+			x=0
+			y=0
+			width=40
+			height=20
+		!COMPONENT
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=100
+	!COMPONENT
+	COMPONENT:LifeComponent
+		life=1
+		invulnerability=2
+	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1
 	!COMPONENT
 	COMPONENT:TagComponent
 		tag=PLAYER
-	!COMPONENT
-	COMPONENT:Speed2DComponent
-		vx=0
-		vy=0
-	!COMPONENT
-	COMPONENT:Friction2DComponent
-		coef=0.5
-	!COMPONENT
-	COMPONENT:LifeComponent
-		life=1
-		invulnerability=0.32
-	!COMPONENT
-	COMPONENT:CollisionPowerComponent
-		collisionPower=100
 	!COMPONENT
 	COMPONENT:ExplosionComponent
 		entity=PLAYER_EXPLOSION
@@ -67,16 +72,7 @@ ENTITY:PLAYER_RED
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT
-	COMPONENT:CollisionComponent
-		collisionPoints=COMPONENT:CollisionPoint
-			x=0
-			y=0
-			width=40
-			height=20
-		!COMPONENT
-	!COMPONENT
-	COMPONENT:MovementSpeedComponent
-		speed_coef=200
+	COMPONENT:SFMLJoystickComponent
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
@@ -95,5 +91,11 @@ ENTITY:PLAYER_RED
 		actions=LEFT
 		actions=RIGHT
 		actions=UP
+	!COMPONENT
+	COMPONENT:NetworkReceiveActionComponent
+		packet_num=0
+	!COMPONENT
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=0.2
 	!COMPONENT
 !ENTITY
