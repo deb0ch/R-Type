@@ -1,13 +1,13 @@
 ENTITY:PLAYER_RED
 	COMPONENT:MovementSpeedComponent
-		speed_coef=1800
+		speed_coef=10000
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=0
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=4
+		coef=25
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
