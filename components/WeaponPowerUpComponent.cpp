@@ -27,7 +27,7 @@ void	WeaponPowerUpComponent::deserializeFromFileSpecial(const std::string &lastl
   (void)input;
 
   if (std::regex_match(lastline, std::regex("delay=.+")))
-    this->_newdelay = std::stoul(lastline.substr(6));
+    this->_newdelay = std::stof(lastline.substr(6));
   else if (std::regex_match(lastline, std::regex("weapon=.+")))
     this->_newWeapon = lastline.substr(7);
   else
