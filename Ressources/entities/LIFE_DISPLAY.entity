@@ -1,0 +1,15 @@
+ENTITY:LIFE_DISPLAY
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=0
+		y=0
+	!COMPONENT
+	COMPONENT:SFMLTextComponent
+		text=Lives: 
+	!COMPONENT
+	COMPONENT:TagComponent
+		tag=render_live
+	!COMPONENT
+!ENTITY
