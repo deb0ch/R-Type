@@ -11,6 +11,7 @@ public:
   virtual void	init();
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
+  void		savePlayerDeath(Entity *);
   void		entityDeathEvent(IEvent *event);
   unsigned int	getNbLives() const;
   void		setNbLives(unsigned int);

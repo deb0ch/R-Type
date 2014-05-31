@@ -56,19 +56,12 @@ void		SpawnPlayerSystem::updateWorldToRemote(Remote *remote)
 void				SpawnPlayerSystem::playerRespawn(Entity *entity)
 {
   NetworkPlayerComponent	*network_player_component;
-  Entity			*new_player_entity;
-  LifeComponent			*life_component;
 
   network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
   if (network_player_component)
     {
-      new_player_entity = this->spawnPlayer(network_player_component->getRemoteId(),
-					    "PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
-      if (!new_player_entity)
-	return ;
-      life_component = new_player_entity->getComponent<LifeComponent>("LifeComponent");
-      if (life_component)
-	life_component->setInvulnerabilityTime(3.f);
+      this->spawnPlayer(network_player_component->getRemoteId(),
+			"PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
     }
 }
 
@@ -77,7 +70,7 @@ void		SpawnPlayerSystem::spawnNextPlayer(unsigned int hash)
   if (this->_index >= this->_entity_player_name.size())
     {
       std::cout << "Cannot spawn more player" << std::endl;
-      std::cout << "..ok I'll do it.." << std::endl;
+      std::cout << "..ok I'll do it.." << std::endl; // to test more than 4 players
       this->_index = 0;
     }
   this->spawnPlayer(hash, this->_entity_player_name[this->_index]);
@@ -88,6 +81,7 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
 					       const std::string &entity_name)
 {
   EntityFactory *entityFactory = this->_world->getSharedObject<EntityFactory>("entityFactory");
+  LifeComponent *life_component;
 
   if (entityFactory)
     {
@@ -107,8 +101,13 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
 				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>
 						       ("Friction2DComponent"))
 				  ->addPlayerComponent(send_action));
-
-      std::cout << "Created entity" << std::endl;
+      if (player_entity)
+	{
+	  life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
+	  if (life_component)
+	    life_component->setInvulnerabilityTime(3.f);
+	  std::cout << "Created entity" << std::endl;
+	}
       return (player_entity);
     }
   return (NULL);
@@ -140,4 +139,25 @@ void		SpawnPlayerSystem::beforeProcess(const float)
       if (!player_found)
 	this->spawnNextPlayer(hash);
     }
+}
+
+void		SpawnPlayerSystem::registerDeadPlayer(Entity *entity)
+{
+  NetworkPlayerComponent	*network_player_component;
+
+  network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
+  if (network_player_component)
+    {
+      this->_dead_players.push_back(std::make_pair(network_player_component->getRemoteId(),
+						   "PLAYER_RED")); // FIND A WAY TO GET THE NAME OF THE ENTITY
+    }
+}
+
+bool		SpawnPlayerSystem::respawnDeadPlayer()
+{
+  if (this->_dead_players.empty())
+    return false;
+  this->spawnPlayer(this->_dead_players.front().first, this->_dead_players.front().second);
+  this->_dead_players.erase(this->_dead_players.begin());
+  return true;
 }

@@ -32,25 +32,23 @@ void	PlayerLifeSystem::entityDeathEvent(IEvent *event)
   if (entityDeletedEvent)
     {
       TagComponent *tag = entityDeletedEvent->getEntity()->getComponent<TagComponent>("TagComponent");
+
       if (tag && tag->hasTag("PLAYER"))
 	{
-	  std::cout << "A player is dead!" << std::endl;
+	  player_respawner = this->_world->getSharedObject<IPlayerRespawner>("PlayerRespawner");
+	  if (!player_respawner)
+	    {
+	      std::cerr << "No player respawner" << std::endl;
+	      return ;
+	    }
 	  if (this->_nb_lives > 0)
 	    {
 	      --this->_nb_lives;
 	      std::cout << "Player respawned! " << this->_nb_lives << " lives remaining!" << std::endl;
-	      player_respawner = this->_world->getSharedObject<IPlayerRespawner>("PlayerRespawner");
-	      if (!player_respawner)
-		{
-		  std::cerr << "No player respawner" << std::endl;
-		  return ;
-		}
 	      player_respawner->playerRespawn(entityDeletedEvent->getEntity());
 	    }
 	  else
-	    {
-	      std::cout << "No lives remaining" << std::endl;
-	    }
+	    player_respawner->registerDeadPlayer(entityDeletedEvent->getEntity());
 	}
     }
 }
@@ -60,7 +58,19 @@ unsigned int	PlayerLifeSystem::getNbLives() const
   return this->_nb_lives;
 }
 
-void		PlayerLifeSystem::setNbLives(unsigned int lives)
+void			PlayerLifeSystem::setNbLives(unsigned int lives)
 {
+  IPlayerRespawner	*player_respawner;
+
   this->_nb_lives = lives;
+  if (this->_nb_lives)
+    {
+      player_respawner = this->_world->getSharedObject<IPlayerRespawner>("PlayerRespawner");
+      if (!player_respawner)
+	{
+	  std::cerr << "No player respawner" << std::endl;
+	  return ;
+	}
+      player_respawner->respawnDeadPlayer();
+    }
 }
