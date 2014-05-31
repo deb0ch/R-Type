@@ -67,6 +67,8 @@ ENTITY:PLAYER_RED
 	!COMPONENT
 	COMPONENT:SFMLInputComponent
 	!COMPONENT
+	COMPONENT:SFMLJoystickComponent
+	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0

@@ -65,7 +65,7 @@ ENTITY:MONSTER_1
 		entity=MONSTER_BASIC_BULLET_3;1
 		entity=MONSTER_BASIC_BULLET_4;1
 		nb=0
-		delay=20
+		delay=0.33
 		minPosX=0
 		minPosY=0
 		maxPosX=0
