@@ -7,10 +7,12 @@
 #include	"RandomInt.hpp"
 #include	"EntityFactory.hpp"
 
-PowerUpSystem::PowerUpSystem(const std::vector<std::string> &possible_powerup)
+PowerUpSystem::PowerUpSystem(const std::vector<std::string> &possible_powerup,
+			     const std::vector<std::string> &powerup_component_names)
   : ASystem("PowerUpSystem")
 {
   this->_possible_powerup = possible_powerup;
+  this->_powerup_component_names = powerup_component_names;
 }
 
 PowerUpSystem::~PowerUpSystem()
@@ -37,14 +39,14 @@ void PowerUpSystem::collision_event(IEvent *e)
 	Entity *secondEntity = event->getEntity2();
 	APowerUpComponent *powerUp = NULL;
 
-	for (auto it = this->_possible_powerup.begin();
-	     it != this->_possible_powerup.end() && powerUp == NULL;
+	for (auto it = this->_powerup_component_names.begin();
+	     it != this->_powerup_component_names.end() && powerUp == NULL;
 	     ++it)
 	  {
 	    powerUp = firstEntity->getComponent<APowerUpComponent>(*it);
 	  }
 	if (powerUp == NULL)
-		return ;
+	  return ;
 	powerUp->upgrade(this->_world, secondEntity);
 }
 
@@ -71,7 +73,10 @@ void PowerUpSystem::delete_entity(IEvent *e)
 								       (0, this->_possible_powerup.size() - 1)
 								       ]);
 			if (boost == NULL)
-				return;
+			  {
+			    std::cout << "Boost is null" << std::endl;
+			    return;
+			  }
 			Pos2DComponent *boostPosition = boost->getComponent<Pos2DComponent>("Pos2DComponent");
 			if (boostPosition == NULL)
 				return;

@@ -97,7 +97,9 @@ void		addSystems(World &world)
   world.addSystem(new BackgroundSystem());
   std::vector<std::string> power_ups =
     {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
-  world.addSystem(new PowerUpSystem(power_ups));
+  std::vector<std::string> power_ups_component =
+    {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+  world.addSystem(new PowerUpSystem(power_ups, power_ups_component));
   world.addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
