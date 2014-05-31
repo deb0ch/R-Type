@@ -106,6 +106,7 @@ void		StateGame::addSystems()
 		"SyncPos2DComponent",
 		"MovementLimitFrame2DComponent",
 		"SFMLTextComponent"
+		"SFMLJoystickComponent"
 	};
 
 	this->_world->addSystem(new NetworkReceiveUpdateSystem(arg));

@@ -102,13 +102,10 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
 }
 
 void		SFMLRenderSystem::start()
-{
-}
+{}
 
 void		SFMLRenderSystem::beforeProcess(const float)
-{
-}
+{}
 
 void		SFMLRenderSystem::afterProcess(const float)
-{
-}
+{}

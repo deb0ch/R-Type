@@ -19,15 +19,15 @@ bool MoveSequenceSystem::canProcess(Entity *entity)
 
 void MoveSequenceSystem::processEntity(Entity *entity, const float delta)
 {
-  ActionComponent		*action;
-  MoveSequenceComponent		*moveEntity;
+  ActionComponent		*actionComponent;
+  MoveSequenceComponent		*moveComponent;
 
-  action = entity->getComponent<ActionComponent>("ActionComponent");
-  moveEntity = entity->getComponent<MoveSequenceComponent>("MoveSequenceComponent");
+  actionComponent = entity->getComponent<ActionComponent>("ActionComponent");
+  moveComponent = entity->getComponent<MoveSequenceComponent>("MoveSequenceComponent");
 
-  if (action && moveEntity)
+  if (actionComponent && moveComponent)
     {
-      action->setAction(moveEntity->getAction(), true);
-      moveEntity->incrementTick(delta);
+      actionComponent->setAction(moveComponent->getAction(), true);
+      moveComponent->incrementTick(delta);
     }
 }

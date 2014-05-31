@@ -19,7 +19,8 @@ MovementLimitFrame2DSystem::~MovementLimitFrame2DSystem()
 //----- ----- Methods ----- ----- //
 bool		MovementLimitFrame2DSystem::canProcess(Entity *e)
 {
-  if (e->hasComponent("MovementLimitFrame2DComponent") && e->hasComponent("Pos2DComponent"))
+  if (e->hasComponent("MovementLimitFrame2DComponent")
+      && e->hasComponent("Pos2DComponent"))
     return (true);
   return (false);
 }
@@ -28,17 +29,17 @@ void	MovementLimitFrame2DSystem::processEntity(Entity *e, const float)
 {
   MovementLimitFrame2DComponent*	frame;
   Pos2DComponent*			pos;
-  Box2DComponent*			shape;
+  Box2DComponent*			box;
   float					width = 0;
   float					height = 0;
 
   if (!(frame = e->getComponent<MovementLimitFrame2DComponent>("MovementLimitFrame2DComponent"))
       || !(pos = e->getComponent<Pos2DComponent>("Pos2DComponent")))
     return ;
-  if ((shape = e->getComponent<Box2DComponent>("Box2DComponent")))
+  if ((box = e->getComponent<Box2DComponent>("Box2DComponent")))
     {
-      width = shape->getWidth();
-      height = shape->getHeight();
+      width = box->getWidth();
+      height = box->getHeight();
     }
   if (pos->getX() < frame->getPosX() + (width / 2.f))
     pos->setX(frame->getPosX() + (width / 2.f));

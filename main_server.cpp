@@ -101,7 +101,9 @@ void		addSystems(World &world)
   world.addSystem(new BackgroundSystem());
   std::vector<std::string> power_ups =
     {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
-  world.addSystem(new PowerUpSystem(power_ups));
+  std::vector<std::string> power_ups_component =
+    {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+  world.addSystem(new PowerUpSystem(power_ups, power_ups_component));
   world.addSystem(new PlayerLifeSystem(3));
 
   CollisionSystem *collision;
@@ -142,6 +144,7 @@ void		addSystems(World &world)
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
       "SFMLTextComponent"
+      "SFMLJoystickComponent"
     };
 
   world.addSystem(new NetworkSendUpdateSystem(arg));
@@ -199,7 +202,7 @@ int		main()
 {
   try {
     World		world;
-    Timer		timer;
+    Timer		timer(60);
 
     addSystems(world);
     addSharedObjetcs(world);
@@ -224,7 +227,11 @@ int		main()
       {
 	timer.startFrame();
 	if (timer.canTick())
-	  world.process(timer.getDeltaTime() / 1000000.f);
+	  {
+	    std::cout << std::endl << "entities count = " << world.countEntities() << std::endl;
+	    std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+	    world.process(timer.getDeltaTime() / 1000000.f);
+	  }
 	timer.endFrame();
       }
     world.stop();
