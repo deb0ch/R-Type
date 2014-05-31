@@ -1,7 +1,8 @@
 #ifndef IDIRECTORYLISTER_H_
 # define IDIRECTORYLISTER_H_
 
-#include <vector>
+# include <vector>
+# include <string>
 
 class IDirectoryLister
 {
