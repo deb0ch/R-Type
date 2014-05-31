@@ -24,5 +24,20 @@ void SFMLTextComponent::serialize(IBuffer &buffer) const {
 }
 
 void SFMLTextComponent::unserialize(IBuffer &buffer) {
-  buffer << this->_text;
+  buffer >> this->_text;
+}
+
+void	SFMLTextComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("text=.+")))
+    this->_text = lastline.substr(5);
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
+void		SFMLTextComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
+{
+  output << std::string(indent, '\t') << "text=" << this->_text << std::endl;
 }

@@ -35,6 +35,8 @@
 #include	"DisconnectPlayerSystem.hh"
 #include	"PowerUpSystem.hh"
 #include	"PlayerLifeSystem.hh"
+#include	"SFMLRenderTextSystem.hh"
+#include	"SFMLSetDisplayLiveSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -79,6 +81,8 @@ void		addSystems(World &world)
   // world.addSystem(new SFMLInputSystem());
   world.addSystem(new SFMLDisplaySystem());
   world.addSystem(new SFMLRenderSystem());
+  world.addSystem(new SFMLRenderTextSystem());
+  world.addSystem(new SFMLSetDisplayLiveSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
@@ -136,7 +140,8 @@ void		addSystems(World &world)
       "MoveSequenceComponent",
       "TagComponent",
       "Box2DComponent",
-      "MovementLimitFrame2DComponent"
+      "MovementLimitFrame2DComponent",
+      "SFMLTextComponent"
     };
 
   world.addSystem(new NetworkSendUpdateSystem(arg));
@@ -182,6 +187,7 @@ void		addEntities(World &world)
   world.addEntity(entityFactory->create("BORDER_SPAWNER_BOTTOM"));
   world.addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   world.addEntity(entityFactory->create("GAME"));
+  world.addEntity(entityFactory->create("LIFE_DISPLAY"));
   // world.addEntity(entityFactory->create("PLAYER_RED"));
   //world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
   // world.addEntity(entityFactory->create("MONSTER_SPAWNER"));
