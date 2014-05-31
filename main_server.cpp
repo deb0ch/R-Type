@@ -194,7 +194,7 @@ int		main()
 {
   try {
     World		world;
-    Timer		timer;
+    Timer		timer(60);
 
     addSystems(world);
     addSharedObjetcs(world);
@@ -219,7 +219,11 @@ int		main()
       {
 	timer.startFrame();
 	if (timer.canTick())
-	  world.process(timer.getDeltaTime() / 1000000.f);
+	  {
+	    std::cout << std::endl << "entities count = " << world.countEntities() << std::endl;
+	    std::cout << "fps = " << timer.getCurrentFps() << std::endl;
+	    world.process(timer.getDeltaTime() / 1000000.f);
+	  }
 	timer.endFrame();
       }
     world.stop();

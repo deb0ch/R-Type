@@ -11,8 +11,9 @@ SyncPos2DSystem::~SyncPos2DSystem()
 
 bool		SyncPos2DSystem::canProcess(Entity *entity)
 {
-  if (entity->hasComponent("SyncPos2DComponent") && entity->hasComponent("Pos2DComponent") &&
-      entity->hasComponent("NetworkReceiveUpdateComponent"))
+  if (entity->hasComponent("SyncPos2DComponent")
+      && entity->hasComponent("Pos2DComponent")
+      && entity->hasComponent("NetworkReceiveUpdateComponent"))
     return true;
   return false;
 }

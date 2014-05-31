@@ -37,7 +37,7 @@ void		SpawnSoloPlayerSystem::processEntity(Entity *, const float)
 
 void				SpawnSoloPlayerSystem::playerRespawn(Entity *)
 {
-	this->spawnPlayer("PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+  this->spawnPlayer(this->_entity_player_name);
 }
 
 void		SpawnSoloPlayerSystem::spawnNextPlayer()
@@ -76,7 +76,7 @@ void		SpawnSoloPlayerSystem::beforeProcess(const float)
 
 void		SpawnSoloPlayerSystem::registerDeadPlayer(Entity *)
 {
-		this->_dead_players.push_back("PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+		this->_dead_players.push_back(this->_entity_player_name);
 }
 
 bool		SpawnSoloPlayerSystem::respawnDeadPlayer()
