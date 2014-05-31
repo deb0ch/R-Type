@@ -18,16 +18,15 @@ public:
 
   void			newPlayerHandler(IEvent *event);
   virtual void		playerRespawn(Entity *entity);
-  void			spawnNextPlayer(unsigned int hash);
-  Entity		*spawnPlayer(unsigned int hash,
-				     const std::string &entity_name);
+  void			spawnNextPlayer();
+  Entity		*spawnPlayer(const std::string &entity_name);
   virtual void		registerDeadPlayer(Entity *entity);
   virtual bool		respawnDeadPlayer();
 
 protected:
   SafeFifo<unsigned int>	_players_to_spawn;
   std::string		_entity_player_name;
-  std::vector< std::pair<unsigned int, std::string> >	_dead_players;
+  std::vector<std::string>	_dead_players;
 };
 
 #endif /* !SPAWNSOLOPLAYERSYSTEM_H_ */
