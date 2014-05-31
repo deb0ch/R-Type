@@ -35,7 +35,7 @@ void SFMLMenu::init()
 	this->_buttonCredit->addTexture("Ressources/Images/creditsButton.png", 338, 94);
 
 	this->_buttonSolo = new SFMLButton(this->_window, 25, 200, 200, 75);
-	//this->_buttonSolo->addTexture("Ressources/Images/creditsButton.png", 338, 94);
+	this->_buttonSolo->addTexture("Ressources/Images/buttonSolo.png", 171, 48);
 
 	this->_buttonCredit = new SFMLButton(this->_window, 540, 490, 250, 100);
 	this->_buttonCredit->addTexture("Ressources/Images/creditsButton.png", 338, 94);
