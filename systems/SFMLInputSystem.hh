@@ -17,6 +17,8 @@ protected:
   virtual bool	canProcess(Entity *);
   virtual void	processEntity(Entity *, const float);
 
+  const std::map<std::string, std::vector<sf::Keyboard::Key> >	&getKeyboardInputs() const;
+
 public:
   SFMLInputSystem();
   virtual	~SFMLInputSystem();
