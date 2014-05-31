@@ -17,14 +17,14 @@ ENTITY:MONSTER_BASIC_BULLET
 		tag=BULLET
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=0
+		vx=-300
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
 		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=200
+		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=25

@@ -23,7 +23,7 @@ ENTITY:LASER_BULLET
 		tag=LASER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=1000
+		vx=300
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
