@@ -1,22 +1,16 @@
 #include	<iostream>
 
-#include	"SFML/Audio/Music.hpp"
-
 #include	"World.hh"
 #include	"Entity.hh"
 
 #include	"MoveSystem.hh"
 #include	"Friction2DSystem.hh"
 #include	"CollisionSystem.hh"
-#include	"SFMLRenderSystem.hh"
-#include	"SFMLDisplaySystem.hh"
-#include	"SFMLInputSystem.hh"
 #include	"ActionMovementSystem.hh"
 #include	"EntityDeleterSystem.hh"
 #include	"OutOfBoundsSystem.hh"
 #include	"NetworkSendUpdateSystem.hh"
 #include	"NetworkReceiveUpdateSystem.hh"
-#include	"SFMLEventSystem.hh"
 #include	"MoveFollowSystem.hh"
 #include	"MoveForwardSystem.hh"
 #include	"MoveSequenceSystem.hh"
@@ -57,7 +51,6 @@
 #include	"FireAlwaysComponent.hh"
 #include	"MovementLimitFrame2DComponent.hh"
 
-#include	"ImageLoader.hh"
 #include	"ActionComponent.hh"
 
 #include	"NetworkBuffer.hh"
@@ -75,10 +68,6 @@ void		addSystems(World &world)
 {
   world.addSystem(new AutoDestructSystem());
   world.addSystem(new EntitySpawnerSystem());
-  world.addSystem(new SFMLEventSystem());
-  // world.addSystem(new SFMLInputSystem());
-  world.addSystem(new SFMLDisplaySystem());
-  world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());
   world.addSystem(new MoveForwardSystem());
@@ -167,7 +156,6 @@ void		addSharedObjetcs(World &world)
   thread->start(server, &ServerRelay::start, tmp);
   compos->init();
   entityFactory->init();
-  world.setSharedObject("imageLoader", new ImageLoader());
   world.setSharedObject("componentFactory", compos);
   world.setSharedObject("entityFactory", entityFactory);
 }
