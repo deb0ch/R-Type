@@ -33,6 +33,7 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new SFMLInputSystem());
 	this->_world->addSystem(new SFMLDisplaySystem());
 	this->_world->addSystem(new SFMLRenderSystem());
+	this->_world->addSystem(new SFMLRenderTextSystem());
 	this->_world->addSystem(new OutOfBoundsSystem());
 	this->_world->addSystem(new MoveFollowSystem());
 	this->_world->addSystem(new MoveForwardSystem());
@@ -53,6 +54,7 @@ void		StateSoloGame::addSystems()
 	  {"WeaponPowerUpComponent", "LifePowerUpComponent"};
 	this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
 	this->_world->addSystem(new PlayerLifeSystem(3));
+	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
 	CollisionSystem *collision;
 
@@ -92,6 +94,7 @@ void		StateSoloGame::addEntities()
 	this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
 	this->_world->addEntity(entityFactory->create("GAME"));
 	this->_world->addEntity(entityFactory->create("PLAYER_RED"));
+	this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
 	//this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
 	// this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }

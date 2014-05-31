@@ -36,6 +36,8 @@
 #include	"DisconnectPlayerSystem.hh"
 #include	"PowerUpSystem.hh"
 #include	"PlayerLifeSystem.hh"
+#include	"SFMLRenderTextSystem.hh"
+#include	"SFMLSetDisplayLiveSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"

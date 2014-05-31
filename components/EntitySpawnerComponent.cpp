@@ -128,11 +128,11 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
       this->_tick += delta;
       return (NULL);
     }
-  this->_tick -= this->_delay;
   if (!this->_active
       || (this->_nb > 0 && this->_counter >= _nb)
       || this->_entities.size() == 0)
     return (NULL);
+  this->_tick -= this->_delay;
   if (facto != NULL)
     res = facto->create(this->_entities[this->_next].first);
   if (!this->_random)
