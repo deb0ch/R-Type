@@ -42,7 +42,7 @@ ENTITY:MONSTER_1
 		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=75
+		speed_coef=100
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=100
