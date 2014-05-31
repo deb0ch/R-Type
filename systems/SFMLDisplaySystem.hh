@@ -1,5 +1,5 @@
 #ifndef SFMLDISPLAYSYSTEM_H_
-# define SFMDISPLAYSYSTEM_H_
+# define SFMLDISPLAYSYSTEM_H_
 
 # include		"SFML/Graphics.hpp"
 
