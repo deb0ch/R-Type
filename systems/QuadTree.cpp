@@ -93,28 +93,28 @@ std::vector<Entity *> const &QuadTree::findTree(Entity *entity)
   if (!this->NorthWestBlock)
     return (this->Entities);
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-		   std::make_tuple((this->_x) + this->_width / 2, this->_y + this->_height / 2, this->_width / 2, this->_height / 2)))
+		   std::make_tuple(this->_x + this->_width / 4, this->_y + this->_height / 4, this->_width / 2, this->_height / 2)))
     {
       tmp = this->NorthWestBlock->findTree(entity);
       this->EntitiesRet.reserve(this->Entities.size() + tmp.size());
       this->EntitiesRet.insert(this->EntitiesRet.end(), tmp.begin(), tmp.end());
     }
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-  		   std::make_tuple((this->_x + (this->_width / 2)) + this->_width / 2, this->_y + this->_height / 2, this->_width / 2, this->_height / 2)))
+  		   std::make_tuple(this->_x + (3 * (this->_width / 4)), this->_y + this->_height / 4, this->_width / 2, this->_height / 2)))
     {
       tmp = this->NorthEastBlock->findTree(entity);
       this->EntitiesRet.reserve(this->Entities.size() + tmp.size());
       this->EntitiesRet.insert(this->EntitiesRet.end(), tmp.begin(), tmp.end());
     }
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-  		   std::make_tuple((this->_x) + this->_width / 2, (this->_y + (this->_height / 2)) + this->_height / 2, this->_width / 2, this->_height / 2)))
+  		   std::make_tuple(this->_x + this->_width / 4, this->_y + 3 * (this->_height / 4), this->_width / 2, this->_height / 2)))
     {
       tmp = this->SouthWestBlock->findTree(entity);
       this->EntitiesRet.reserve(this->Entities.size() + tmp.size());
       this->EntitiesRet.insert(this->EntitiesRet.end(), tmp.begin(), tmp.end());
     }
   if (touchingTest(std::make_tuple(pos->getX(), pos->getY(), box->getWidth(), box->getHeight()),
-  		   std::make_tuple((this->_x + (this->_width / 2)) + this->_width / 2, (this->_y + (this->_height / 2)) + this->_height / 2, this->_width / 2, this->_height / 2)))
+  		   std::make_tuple(this->_x + 3 * (this->_width / 4), this->_y + 3 * (this->_height / 4), this->_width / 2, this->_height / 2)))
     {
       tmp = this->SouthEastBlock->findTree(entity);
       this->EntitiesRet.reserve(this->Entities.size() + tmp.size());
