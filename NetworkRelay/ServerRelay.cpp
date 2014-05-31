@@ -244,12 +244,7 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
       if (packet_type == CHANGE_ROOM_QUERY)
 	{
 	  *buffer >> nameRoom;
-	  if (room) {
-	    auto itRemote = std::find(room->getRemotes().begin(),
-				      room->getRemotes().end(), remote);
-	    if (itRemote != room->getRemotes().end())
-	      room->disconnectRemote(remote);
-	  }
+	  this->disposeTCPBuffer(buffer);
 	  auto tmp = this->_rooms.find(nameRoom);
 	  if (tmp == this->_rooms.end())
 	    {
@@ -258,12 +253,19 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 				  (nameRoom, new RoomServer(this, nameRoom)));
 	    }
 	  tmp = this->_rooms.find(nameRoom);
-	  tmp->second->addRemote(remote);
-	  this->disposeTCPBuffer(buffer);
 	  buffer = this->getTCPBuffer();
+	  if (tmp->second->getRemotes().size() >= 4)
+	    {
+	      std::cout << "!!!! Send CHANGE_ROOM_QUERY_NON : The room is full !!!!" << std::endl;
+	      *buffer << static_cast<char>(CHANGE_ROOM_QUERY_NON);
+	      *buffer << "The room is full";
+	      remote->sendTCP(buffer);
+	      return false;
+	    }
+	  std::cout << "Send CHANGE_ROOM_QUERY_YES" << std::endl;
+	  tmp->second->addRemote(remote);
 	  *buffer << static_cast<char>(CHANGE_ROOM_QUERY_YES);
 	  remote->sendTCP(buffer);
-	  std::cout << "Send CHANGE_ROOM_QUERY_YES" << std::endl;
 	  remote->setRoom(nameRoom);
 	  itBuff = recv_buffer.erase(itBuff);
 	  if (!room) {
