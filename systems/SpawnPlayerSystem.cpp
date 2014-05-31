@@ -61,7 +61,7 @@ void				SpawnPlayerSystem::playerRespawn(Entity *entity)
   if (network_player_component && network_player_component->canRespawn())
     {
       this->spawnPlayer(network_player_component->getRemoteId(),
-			"PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
+			network_player_component->getEntityName());
     }
 }
 
@@ -95,7 +95,7 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
       tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
       if (tmp)
 	tmp->setNetworkSendUpdateException(hash);
-      player_entity->addComponent((new NetworkPlayerComponent(hash))
+      player_entity->addComponent((new NetworkPlayerComponent(hash, entity_name))
 				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>
 						       ("ActionComponent"))
 				  ->addPlayerComponent(player_entity->getComponent<ASerializableComponent>
@@ -149,7 +149,7 @@ void		SpawnPlayerSystem::registerDeadPlayer(Entity *entity)
   if (network_player_component && network_player_component->canRespawn())
     {
       this->_dead_players.push_back(std::make_pair(network_player_component->getRemoteId(),
-						   "PLAYER_RED")); // FIND A WAY TO GET THE NAME OF THE ENTITY
+						   network_player_component->getEntityName()));
     }
 }
 
