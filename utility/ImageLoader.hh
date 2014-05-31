@@ -30,6 +30,7 @@ public:
    * NbSprite.nbSprint = 0 OR fileName dosn't exist
    */
   void addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite);
+  void addImage(const std::string &fileImage, std::pair<int, int> nbSprite);
 
   /**
    * @brief Allocates Sprite OR throw ImageLoaderException
