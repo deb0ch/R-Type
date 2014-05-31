@@ -15,6 +15,10 @@ const std::string &SFMLTextComponent::getText() const {
   return this->_text;
 }
 
+void SFMLTextComponent::setText(const std::string &text) {
+  this->_text = text;
+}
+
 void SFMLTextComponent::serialize(IBuffer &buffer) const {
   buffer << this->_text;
 }
