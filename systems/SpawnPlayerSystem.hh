@@ -17,13 +17,17 @@ public:
   virtual void		processEntity(Entity *, const float delta);
   void			newPlayerHandler(IEvent *event);
   void			updateWorldToRemote(Remote *remote);
-  void			playerRespawn(Entity *entity);
+  virtual void		playerRespawn(Entity *entity);
   void			spawnNextPlayer(unsigned int hash);
   Entity		*spawnPlayer(unsigned int hash,
 				     const std::string &entity_name);
+  virtual void		registerDeadPlayer(Entity *entity);
+  virtual bool		respawnDeadPlayer();
+
 protected:
   SafeFifo<unsigned int>	_players_to_spawn;
   std::vector<std::string>	_entity_player_name;
+  std::vector< std::pair<unsigned int, std::string> >	_dead_players;
   unsigned int			_index;
 };
 
