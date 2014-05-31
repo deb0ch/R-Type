@@ -9,6 +9,7 @@
 #include	"Friction2DSystem.hh"
 #include	"CollisionSystem.hh"
 #include	"SFMLRenderSystem.hh"
+#include	"SFMLDisplaySystem.hh"
 #include	"SFMLInputSystem.hh"
 #include	"ActionMovementSystem.hh"
 #include	"EntityDeleterSystem.hh"
@@ -74,6 +75,7 @@ void		addSystems(World &world)
   world.addSystem(new EntitySpawnerSystem());
   world.addSystem(new SFMLEventSystem());
   // world.addSystem(new SFMLInputSystem());
+  world.addSystem(new SFMLDisplaySystem());
   world.addSystem(new SFMLRenderSystem());
   world.addSystem(new OutOfBoundsSystem());
   world.addSystem(new MoveFollowSystem());

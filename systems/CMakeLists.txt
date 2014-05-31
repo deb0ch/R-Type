@@ -5,6 +5,7 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplaySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.hh
@@ -29,6 +30,7 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -38,6 +40,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplaySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.cpp
@@ -62,6 +65,7 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/DisconnectPlayerSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.cpp
 	PARENT_SCOPE
 	)
 
@@ -72,6 +76,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplaySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.hh
@@ -95,6 +100,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	PARENT_SCOPE
 )
 
@@ -105,6 +111,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplaySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Friction2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLInputSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ActionMovementSystem.cpp
@@ -128,5 +135,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveDieEntitySystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SyncPos2DSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.cpp
 	PARENT_SCOPE
 )
