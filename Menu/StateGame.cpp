@@ -10,16 +10,6 @@ StateGame::StateGame(World *world)
   this->addSharedObjetcs();
   this->addEntities();
 
-  /*
-    sf::Music music;
-
-    if (music.openFromFile("Ressources/Sound/music.ogg"))
-    {
-    music.setLoop(true);
-    music.play();
-    }
-  */
-
   sf::Music *music = new sf::Music();
 
   if (music->openFromFile("Ressources/Sound/music.ogg"))
@@ -83,7 +73,6 @@ void		StateGame::addSystems()
 	this->_world->addSystem(new BackgroundSystem());
 	this->_world->addSystem(new NetworkReceiveDieEntitySystem());
 	this->_world->addSystem(new NetworkTimeOutEntitySystem());
-	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
 	CollisionSystem *collision;
 
@@ -109,7 +98,7 @@ void		StateGame::addSystems()
 		"TagComponent",
 		"SyncPos2DComponent",
 		"MovementLimitFrame2DComponent",
-		"SFMLTextComponent"
+		"SFMLTextComponent",
 		"SFMLJoystickComponent"
 	};
 

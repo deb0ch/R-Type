@@ -17,7 +17,7 @@ SFMLSetDisplayLiveSystem::~SFMLSetDisplayLiveSystem()
 //----- ----- Methods ----- ----- //
 bool		SFMLSetDisplayLiveSystem::canProcess(Entity *entity)
 {
-  TagComponent *tag = entity->getComponent<TagComponent>("TagComponent");
+  TagComponent	*tag = entity->getComponent<TagComponent>("TagComponent");
 
   if (entity->hasComponent("SFMLTextComponent") && tag && tag->hasTag("render_live"))
     return (true);
