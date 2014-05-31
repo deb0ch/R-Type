@@ -19,6 +19,8 @@ public:
   virtual void				unserialize(IBuffer &);
   virtual void				networkSerialize(Remote *remote, IBuffer &,
 							 bool send_force = false) const;
+  void					setRespawn(bool);
+  bool					canRespawn() const;
 
   NetworkPlayerComponent		*addPlayerComponent(ASerializableComponent *component);
   void	serializeFromFile(std::ofstream &output, unsigned char indent) const;
@@ -26,8 +28,8 @@ public:
 protected:
   unsigned int				_remote_hash;
   std::vector<ASerializableComponent *>	_components;
+  bool					_can_respawn;
   const static std::vector<std::string>	_non_update_component;
-  // May/Must segfault if a component is removed. Catch a remove component event to remove it from here?
 };
 
 #endif /* !NETWORKPLAYERCOMPONENT_H_ */

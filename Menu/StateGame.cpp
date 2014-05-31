@@ -1,3 +1,4 @@
+#include	"SFMLDisplaySystem.hh"
 #include	"StateGame.hh"
 
 StateGame::StateGame(World *world, const std::string &ip_address)
@@ -62,6 +63,7 @@ void		StateGame::addSystems()
 {
 	this->_world->addSystem(new SFMLEventSystem());
 	this->_world->addSystem(new SFMLInputSystem());
+	this->_world->addSystem(new SFMLDisplaySystem());
 	this->_world->addSystem(new SFMLRenderSystem());
 	this->_world->addSystem(new MoveFollowSystem());
 	this->_world->addSystem(new MoveForwardSystem());

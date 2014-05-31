@@ -9,6 +9,7 @@ NetworkPlayerComponent::NetworkPlayerComponent(unsigned int hash)
   : ASerializableComponent("NetworkPlayerComponent")
 {
   this->_remote_hash = hash;
+  this->_can_respawn = true;
 }
 
 NetworkPlayerComponent::~NetworkPlayerComponent()
@@ -66,6 +67,16 @@ void			NetworkPlayerComponent::unserialize(IBuffer &)
 {
   std::cout << "Not supposed to happen yet" << std::endl;
   throw 1;
+}
+
+void			NetworkPlayerComponent::setRespawn(bool value)
+{
+  this->_can_respawn = value;
+}
+
+bool			NetworkPlayerComponent::canRespawn() const
+{
+  return this->_can_respawn;
 }
 
 void			NetworkPlayerComponent::networkSerialize(Remote *remote, IBuffer &buffer,

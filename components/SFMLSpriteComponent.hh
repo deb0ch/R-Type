@@ -33,12 +33,12 @@ public:
 
 	sf::Sprite	*getSprite(ImageLoader &imageLoader, const std::string & action = "");
 	bool		hasAction(const std::string & action);
+  virtual void		deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &);
+  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
 private:
 	sf::Sprite	*getSpriteWithoutMap(ImageLoader &imageLoader, const std::string & action = "");
 	sf::Sprite	*getSpriteFromMap(ImageLoader &imageLoader, const std::string & action = "");
-
-  virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 };
 
 #endif /* !SFMLSPRITECOMPONENT_H_ */
