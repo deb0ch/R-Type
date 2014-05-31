@@ -4,6 +4,7 @@
 #include "StateManager.hh"
 #include "StateRoom.hh"
 #include "StateCredit.hh"
+#include "StateSoloGame.hh"
 
 SFMLMenu::SFMLMenu(World *world)
 	: _world(world)
@@ -30,6 +31,12 @@ void SFMLMenu::init()
 	this->_background = NULL;
 	this->_buttonplay = new SFMLButton(this->_window, 25, 425, 400, 150);
 	this->_buttonplay->addTexture("Ressources/Images/playgameButton.png", 250, 80);
+	this->_buttonCredit = new SFMLButton(this->_window, 540, 490, 250, 100);
+	this->_buttonCredit->addTexture("Ressources/Images/creditsButton.png", 338, 94);
+
+	this->_buttonSolo = new SFMLButton(this->_window, 25, 200, 200, 75);
+	this->_buttonSolo->addTexture("Ressources/Images/buttonSolo.png", 171, 48);
+
 	this->_buttonCredit = new SFMLButton(this->_window, 540, 490, 250, 100);
 	this->_buttonCredit->addTexture("Ressources/Images/creditsButton.png", 338, 94);
 	this->_ipServer = new SFMLTextBox(this->_window, 5, 350, false, 30);
@@ -88,6 +95,8 @@ void SFMLMenu::update(StateManager& manager)
 				manager.pushState(new StateRoom(this->_window, this->_world, this->_textboxIP->getString()));
 			else if (this->_buttonCredit->isMouseOnButton())
 				manager.pushState(new StateCredit(this->_window));
+			else if (this->_buttonSolo->isMouseOnButton())
+				manager.pushState(new StateSoloGame(this->_world));
 			return;
 
 		default:
@@ -105,6 +114,7 @@ void SFMLMenu::render(const Timer&)
 	this->_window->draw(*this->_logo);
 	this->_ipServer->draw();
 	this->_buttonplay->draw();
+	this->_buttonSolo->draw();
 	this->_textboxIP->draw();
 	this->_buttonCredit->draw();
 	this->_window->display();
