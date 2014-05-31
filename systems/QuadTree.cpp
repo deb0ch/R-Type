@@ -51,7 +51,6 @@ void	QuadTree::DrawDebug()
   sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
   sf::RectangleShape rectangle(sf::Vector2f(this->_width, this->_height));
 
-  std::cout << "draw debug" << std::endl;
   rectangle.setFillColor(sf::Color::Transparent);
   rectangle.setPosition(this->_x, this->_y);
   rectangle.setOutlineThickness(-2);
