@@ -48,8 +48,10 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new SpawnSoloPlayerSystem("PLAYER_RED"));
 	this->_world->addSystem(new BackgroundSystem());
 	std::vector<std::string> power_ups =
-	{ "POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE" };
-	this->_world->addSystem(new PowerUpSystem(power_ups));
+	  {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+	std::vector<std::string> power_ups_component =
+	  {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+	this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
 	this->_world->addSystem(new PlayerLifeSystem(3));
 
 	CollisionSystem *collision;
