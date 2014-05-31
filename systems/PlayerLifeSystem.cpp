@@ -71,6 +71,7 @@ void			PlayerLifeSystem::setNbLives(unsigned int lives)
 	  std::cerr << "No player respawner" << std::endl;
 	  return ;
 	}
-      player_respawner->respawnDeadPlayer();
+      while (player_respawner->respawnDeadPlayer())
+	;
     }
 }
