@@ -136,7 +136,8 @@ void		addSystems(World &world)
       "MoveSequenceComponent",
       "TagComponent",
       "Box2DComponent",
-      "MovementLimitFrame2DComponent"
+      "MovementLimitFrame2DComponent",
+      "SFMLJoystickComponent"
     };
 
   world.addSystem(new NetworkSendUpdateSystem(arg));
