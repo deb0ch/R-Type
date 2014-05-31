@@ -17,7 +17,7 @@ EntityFileException::~EntityFileException()
 //----- ----- Operators ----- ----- //
 
 //----- ----- Getters ----- ----- //
-const char*	EntityFileException::what() const noexcept
+const char*	EntityFileException::what() const throw()
 {
   std::stringstream	res;
   std::string		*str = new std::string();

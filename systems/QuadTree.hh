@@ -18,6 +18,7 @@ protected:
   QuadTree		*SouthWestBlock;
   QuadTree		*SouthEastBlock;
   std::vector<Entity *>	Entities;
+  std::vector<Entity *>	EntitiesRet;
   float			_x, _y, _width, _height;
 
 public:
@@ -27,7 +28,7 @@ public:
 
   std::vector<Entity *> const &getEntities() const;
   bool	isInBlock(Pos2DComponent *, Box2DComponent *) const;
-  std::vector<Entity *> const &findTree(Entity *) const;
+  std::vector<Entity *> const &findTree(Entity *);
   void	DrawDebug();
 };
 

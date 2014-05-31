@@ -108,6 +108,7 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.hh
 	PARENT_SCOPE
 )
 
@@ -145,5 +146,6 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.cpp
 	PARENT_SCOPE
 )
