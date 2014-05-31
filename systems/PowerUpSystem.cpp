@@ -35,8 +35,14 @@ void PowerUpSystem::collision_event(IEvent *e)
 	CollisionEvent*	event = dynamic_cast<CollisionEvent*>(e);
 	Entity *firstEntity = event->getEntity1();
 	Entity *secondEntity = event->getEntity2();
+	APowerUpComponent *powerUp = NULL;
 
-	APowerUpComponent *powerUp = firstEntity->getComponent<APowerUpComponent>("APowerUpComponent");
+	for (auto it = this->_possible_powerup.begin();
+	     it != this->_possible_powerup.end() && powerUp == false;
+	     ++it)
+	  {
+	    powerUp = firstEntity->getComponent<APowerUpComponent>(*it);
+	  }
 	if (powerUp == NULL)
 		return ;
 	powerUp->upgrade(this->_world, secondEntity);

@@ -20,7 +20,7 @@ ENTITY:POWERUP_1
 	COMPONENT:TeamComponent
 		team=2
 	!COMPONENT
-	COMPONENT:APowerUpComponent
+	COMPONENT:WeaponPowerUpComponent
 		weapon=FAT_BULLET
 		delay=0.3
 	!COMPONENT

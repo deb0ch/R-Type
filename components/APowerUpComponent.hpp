@@ -5,10 +5,10 @@
 # include "ACopyableComponent.hpp"
 # include "EntitySpawnerComponent.hh"
 
-class APowerUpComponent : public AComponent
+class APowerUpComponent : public ASerializableComponent
 {
 public:
-  APowerUpComponent() : AComponent("APowerUpComponent")
+  APowerUpComponent(const std::string &name) : ASerializableComponent(name)
   {}
   virtual	~APowerUpComponent()
   {}

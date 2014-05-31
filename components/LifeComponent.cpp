@@ -64,7 +64,7 @@ void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std:
 {
   (void)input;
 
-  if (std::regex_match(lastline, std::regex("life.+")))
+  if (std::regex_match(lastline, std::regex("life=.+")))
     this->_life = std::stoul(lastline.substr(5));
   else if (std::regex_match(lastline, std::regex("invulnerability=.+")))
     this->_invulnerabilityMaxTime = std::stoul(lastline.substr(16));

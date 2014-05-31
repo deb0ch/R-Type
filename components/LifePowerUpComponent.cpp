@@ -2,7 +2,7 @@
 #include "PlayerLifeSystem.hh"
 
 LifePowerUpComponent::LifePowerUpComponent(unsigned int nb_bonus)
-  : APowerUpComponent()
+  : APowerUpComponent("LifePowerUpComponent")
 {
   this->_nb_bonus = nb_bonus;
 }
@@ -26,12 +26,22 @@ void	LifePowerUpComponent::upgrade(World *world, Entity *)
     }
 }
 
+void	LifePowerUpComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+{
+  (void)input;
+
+  if (std::regex_match(lastline, std::regex("nb_bonus=.+")))
+    this->_nb_bonus = std::stoul(lastline.substr(9));
+  else
+    throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
+}
+
 void	LifePowerUpComponent::serializeFromFile(std::ofstream &output, unsigned char indent) const
 {
   output << std::string(indent, '\t') << "nb_bonus=" << this->_nb_bonus << std::endl;
 }
 
-IComponent	*LifePowerUpComponent::clone() const
+ASerializableComponent	*LifePowerUpComponent::cloneSerializable() const
 {
   return (new LifePowerUpComponent(*this));
 }

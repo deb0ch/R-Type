@@ -5,13 +5,19 @@ ENTITY:PLAYER_GREEN
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=0.2
 	!COMPONENT
+	COMPONENT:MovementLimitFrame2DComponent
+		posX=0
+		posY=0
+		width=800
+		height=600
+	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=100
-		y=100
+		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=50
-		height=50
+		width=40
+		height=20
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1
@@ -25,6 +31,18 @@ ENTITY:PLAYER_GREEN
 	!COMPONENT
 	COMPONENT:Friction2DComponent
 		coef=0.5
+	!COMPONENT
+	COMPONENT:LifeComponent
+		life=1
+		invulnerability=0.32
+	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=100
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=PLAYER_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=players.png

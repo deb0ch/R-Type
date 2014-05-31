@@ -17,7 +17,7 @@ ENTITY:POWERUP_LIFE
 		vx=-30
 		vy=0
 	!COMPONENT
-	COMPONENT:APowerUpComponent
+	COMPONENT:LifePowerUpComponent
 		nb_bonus=1
 	!COMPONENT
 	COMPONENT:TeamComponent

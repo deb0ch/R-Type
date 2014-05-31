@@ -58,7 +58,7 @@ void				SpawnPlayerSystem::playerRespawn(Entity *entity)
   NetworkPlayerComponent	*network_player_component;
 
   network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
-  if (network_player_component)
+  if (network_player_component && network_player_component->canRespawn())
     {
       this->spawnPlayer(network_player_component->getRemoteId(),
 			"PLAYER_RED"); // FIND A WAY TO GET THE NAME OF THE ENTITY
@@ -146,7 +146,7 @@ void		SpawnPlayerSystem::registerDeadPlayer(Entity *entity)
   NetworkPlayerComponent	*network_player_component;
 
   network_player_component = entity->getComponent<NetworkPlayerComponent>("NetworkPlayerComponent");
-  if (network_player_component)
+  if (network_player_component && network_player_component->canRespawn())
     {
       this->_dead_players.push_back(std::make_pair(network_player_component->getRemoteId(),
 						   "PLAYER_RED")); // FIND A WAY TO GET THE NAME OF THE ENTITY

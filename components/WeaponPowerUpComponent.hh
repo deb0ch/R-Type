@@ -16,7 +16,10 @@ public:
 
   virtual void		serializeFromFile(std::ofstream &output, unsigned char indent) const;
 
-  virtual IComponent	*clone() const;
+  virtual ASerializableComponent	*cloneSerializable() const;
+
+  virtual void	deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input,
+					   unsigned int &lineno);
 
 protected:
   std::string _newWeapon;
