@@ -119,13 +119,13 @@ void			EntitySpawnerComponent::fixWeights()
 		});
 }
 
-Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float dt)
+Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
 {
   Entity		*res = NULL;
 
   if (this->_tick < this->_delay)
     {
-      this->_tick += dt;
+      this->_tick += delta;
       return (NULL);
     }
   this->_tick -= this->_delay;

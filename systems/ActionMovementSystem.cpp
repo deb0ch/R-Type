@@ -23,7 +23,7 @@ bool ActionMovementSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void ActionMovementSystem::processEntity(Entity *entity, const float dt)
+void ActionMovementSystem::processEntity(Entity *entity, const float delta)
 {
   ActionComponent		*action;
   Speed2DComponent		*speed;
@@ -41,8 +41,8 @@ void ActionMovementSystem::processEntity(Entity *entity, const float dt)
     {
       if (action->isActive(it->first))
 	{
-	  speed->addVX(it->second.first * mv_speed * dt);
-	  speed->addVY(it->second.second * mv_speed * dt);
+	  speed->addVX(it->second.first * mv_speed * delta);
+	  speed->addVY(it->second.second * mv_speed * delta);
 	}
     }
 }

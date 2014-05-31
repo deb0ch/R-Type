@@ -23,7 +23,7 @@ bool		Friction2DSystem::canProcess(Entity *entity)
 /**
  * Decreases the speed of the component. The formula is newSpeed = oldSpeed - coef * delta
  */
-void			Friction2DSystem::processEntity(Entity *entity, const float dt)
+void			Friction2DSystem::processEntity(Entity *entity, const float delta)
 {
   Speed2DComponent*	speed;
   Friction2DComponent*	friction;
@@ -31,11 +31,11 @@ void			Friction2DSystem::processEntity(Entity *entity, const float dt)
   speed = entity->getComponent<Speed2DComponent>("Speed2DComponent");
   friction = entity->getComponent<Friction2DComponent>("Friction2DComponent");
 
-  speed->setVX(applyFriction(speed->getVX(), friction->getFrictionCoef(), dt));
-  speed->setVY(applyFriction(speed->getVY(), friction->getFrictionCoef(), dt));
+  speed->setVX(applyFriction(speed->getVX(), friction->getFrictionCoef(), delta));
+  speed->setVY(applyFriction(speed->getVY(), friction->getFrictionCoef(), delta));
 }
 
-float	Friction2DSystem::applyFriction(float oldSpeed, float friction, float dt)
+float	Friction2DSystem::applyFriction(float oldSpeed, float friction, float delta)
 {
-  return (oldSpeed * powf(friction, dt));
+  return (oldSpeed * powf(friction, delta));
 }
