@@ -2,22 +2,21 @@
 
 StateSoloGame::StateSoloGame(World *world)
 {
-	this->_world = world;
-	this->addSystems();
-	this->addSharedObjetcs();
-	this->addEntities();
+  this->_world = world;
+  this->addSystems();
+  this->addSharedObjetcs();
+  this->addEntities();
 
-	/*
-	sf::Music music;
 
-	if (music.openFromFile("Ressources/Sound/music.ogg"))
-	{
-		music.setLoop(true);
-		music.play();
-	}
-	*/
+  sf::Music *music = new sf::Music();
 
-	this->_world->start();
+  if (music->openFromFile("Ressources/Sound/music.ogg"))
+    {
+      music->setLoop(true);
+      music->play();
+    }
+
+  this->_world->start();
 }
 
 StateSoloGame::~StateSoloGame()

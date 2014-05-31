@@ -33,6 +33,7 @@
 #include	"NetworkReceiveDieEntitySystem.hh"
 #include	"SyncPos2DSystem.hh"
 #include	"NetworkTimeOutEntitySystem.hh"
+#include	"SFMLSetDisplayLiveSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
