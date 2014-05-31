@@ -85,7 +85,6 @@ ENTITY:MONSTER_1
 		actions=DOWN
 		actions=FIRE
 		actions=LEFT
-		actions=RIGHT
 		actions=UP
 	!COMPONENT
 !ENTITY

@@ -10,11 +10,8 @@ ENTITY:BOSS_BULLET
 		width=25
 		height=25
 	!COMPONENT
-	COMPONENT:TagComponent
-		tag=BULLET
-	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=0
+		vx=-100
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
@@ -52,7 +49,6 @@ ENTITY:BOSS_BULLET
 			height=25
 		!COMPONENT
 		toNotCollide=BOOST
-		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

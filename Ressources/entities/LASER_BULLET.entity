@@ -23,14 +23,14 @@ ENTITY:LASER_BULLET
 		tag=LASER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=300
+		vx=800
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.5
+		coef=0
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=1800
+		speed_coef=0
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=5
