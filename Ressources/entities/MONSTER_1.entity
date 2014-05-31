@@ -42,7 +42,7 @@ ENTITY:MONSTER_1
 		!ANIM
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=300
+		speed_coef=75
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=100
@@ -79,7 +79,7 @@ ENTITY:MONSTER_1
 	COMPONENT:MoveSequenceComponent
 		action=UP
 		action=DOWN
-		tickToChange=1
+		tickToChange=2
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN
