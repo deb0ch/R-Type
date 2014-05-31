@@ -1,5 +1,0 @@
-J'ai mergé develop avec ma branche et quand j'ai tenté d'adapter les PowerUp à la (dé)sérialization ça compilait pas car les PowerUps ne respectent pas les standard qu'on avait fixé. Ils n'ont pas du tout été fait de la même manière que tous les autres composants qui ont été fait depuis le début. J'ai viré l'adaptation qui compilait pas et j'ai mergé ma branche qui est terminée dans develop. J'ai autre chose à faire que de réparer les conneries des gens.
-
-Indice 1 : Lancez le programme.
-Indice 2 : Depuis quand on fait plusieurs composants avec le même type ?
-Indice 3 : Voir la ComponentFactory.
