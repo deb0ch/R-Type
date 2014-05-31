@@ -120,7 +120,6 @@ std::vector<Entity *> const &QuadTree::findTree(Entity *entity)
       this->EntitiesRet.reserve(this->Entities.size() + tmp.size());
       this->EntitiesRet.insert(this->EntitiesRet.end(), tmp.begin(), tmp.end());
     }
-  std::cout << "size = " << this->EntitiesRet.size() << std::endl;
   return (this->EntitiesRet);
 }
 

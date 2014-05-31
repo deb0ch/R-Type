@@ -8,7 +8,7 @@
 # include	"EventManager.hpp"
 # include	"Any.hpp"
 
-# define	DEBUG true
+# define	DEBUG false
 
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
