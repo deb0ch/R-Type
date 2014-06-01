@@ -79,6 +79,8 @@ void			LifeSystem::delete_entity(IEvent *e)
   EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
   if (event_catch == NULL)
     return;
+  if (event_catch->isForced())
+    return ;
   Entity *dyingEntity = event_catch->getEntity();
   if (dyingEntity == NULL)
     return;
@@ -88,6 +90,8 @@ void			LifeSystem::delete_entity(IEvent *e)
   if (explosionName != NULL && position != NULL && entityFactory != NULL)
   {
 	  Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
+	  if (explode == NULL)
+		  return;
 	  Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
 	  if (explode != NULL && explodePosition != NULL)
 	  {

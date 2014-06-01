@@ -8,7 +8,7 @@
 
 #include	"MoveSystem.hh"
 #include	"Friction2DSystem.hh"
-#include	"CollisionSystem.hh"
+#include	"CollisionSoloSystem.hh"
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLInputSystem.hh"
@@ -18,6 +18,7 @@
 #include	"NetworkSendUpdateSystem.hh"
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
+#include	"SFMLSoundSystem.hh"
 #include	"MoveFollowSystem.hh"
 #include	"MoveForwardSystem.hh"
 #include	"MoveSequenceSystem.hh"
@@ -38,6 +39,8 @@
 #include	"PlayerLifeSystem.hh"
 #include	"SFMLRenderTextSystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"SFMLDisplayScoreSystem.hh"
+#include	"ScoreSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -91,9 +94,11 @@ protected:
 	void addSharedObjetcs();
 	void addEntities();
 	void addSystems();
+	void createConfigFile() const;
 
 
 	World		*_world;
+	sf::Music	*_music;
 };
 
 #endif /* !STATESOLOGAME_H_ */

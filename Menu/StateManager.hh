@@ -14,9 +14,12 @@ public:
 	void	pushState(IState* state);
 	void	update();
 	void	render(const Timer&);
+	void	exit();
+	bool	isRunning() const;
 
 protected:
 	std::vector<IState *>	_states;
+	bool			_running;
 };
 
 #endif /* !STATEMANAGER_H_ */

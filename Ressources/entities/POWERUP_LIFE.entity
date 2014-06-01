@@ -45,8 +45,8 @@ ENTITY:POWERUP_LIFE
 		tickChange=10
 		anim=ANIM
 			action=
-			start=3
-			length=0
+			start=0
+			length=4
 		!ANIM
 	!COMPONENT
 !ENTITY

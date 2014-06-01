@@ -5,6 +5,7 @@
 # include "Factory.hpp"
 # include "ASerializableComponent.hh"
 # include "SFMLInputComponent.hh"
+# include "SFMLSoundComponent.hh"
 # include "Friction2DComponent.hh"
 # include "Box2DComponent.hh"
 # include "Pos2DComponent.hh"
@@ -85,6 +86,7 @@ public :
     this->addComponent(new LifePowerUpComponent());
     this->addComponent(new SFMLTextComponent());
     this->addComponent(new SFMLJoystickComponent());
+    this->addComponent(new SFMLSoundComponent());
   }
 
   virtual ASerializableComponent	*create(const std::string &key) const

@@ -1,0 +1,23 @@
+ENTITY:STAGE_SURVIVAL_MONSTERS
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=10
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=MONSTER_1;1
+		entity=MONSTER_2;1
+		entity=MONSTER_3;1
+		entity=MONSTER_4;1
+		nb=0
+		delay=0.8
+		minPosX=0
+		minPosY=-150
+		maxPosX=0
+		maxPosY=150
+		random=false
+		abs=false
+	!COMPONENT
+!ENTITY

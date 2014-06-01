@@ -1,0 +1,15 @@
+ENTITY:SCORE_DISPLAY
+	COMPONENT:NetworkSendUpdateComponent
+		update_rate=1
+	!COMPONENT
+	COMPONENT:Pos2DComponent
+		x=300
+		y=0
+	!COMPONENT
+	COMPONENT:SFMLTextComponent
+		text=Score: 
+	!COMPONENT
+	COMPONENT:TagComponent
+		tag=render_score
+	!COMPONENT
+!ENTITY

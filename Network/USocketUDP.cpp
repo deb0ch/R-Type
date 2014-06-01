@@ -93,7 +93,7 @@ int	SocketUDP::receive(IBuffer &buffer, std::string &address, int &port) {
   buffer.setLength(s);
   buffer.rewind();
   address = ::inet_ntoa(from.sin_addr);
-  port = ::ntohs(from.sin_port);
+  port = ntohs(from.sin_port);
   return (s);
 }
 

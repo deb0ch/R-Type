@@ -34,7 +34,7 @@ void		SFMLRenderTextSystem::processEntity(Entity *entity, const float)
     {
       text.setFont(font);
       text.setString(sfText->getText());
-      text.setColor(sf::Color::White);
+      text.setColor(sf::Color(255, 102, 0));
       text.setCharacterSize(48);
       text.setPosition(pos->getX(), pos->getY());
       renderWindow->draw(text);

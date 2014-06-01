@@ -1,0 +1,21 @@
+ENTITY:STAGE_SURVIVAL
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=10
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=STAGE_SURVIVAL_TEXT_SPAWNER;1
+		entity=STAGE_SURVIVAL_MONSTERS;1
+		nb=2
+		delay=3
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
+		random=false
+		abs=false
+	!COMPONENT
+!ENTITY

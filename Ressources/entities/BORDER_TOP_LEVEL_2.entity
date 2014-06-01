@@ -3,7 +3,7 @@ ENTITY:BORDER_TOP_LEVEL_2
 		update_rate=10
 	!COMPONENT
 	COMPONENT:Pos2DComponent
-		x=100
+		x=0
 		y=0
 	!COMPONENT
 	COMPONENT:Box2DComponent
@@ -11,7 +11,7 @@ ENTITY:BORDER_TOP_LEVEL_2
 		height=150
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=200
+		collisionPower=10000
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=-30
