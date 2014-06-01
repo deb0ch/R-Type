@@ -28,7 +28,7 @@ public:
   virtual void			startFrame();
   virtual void			endFrame();
   virtual bool			canTick() const;
-  virtual unsigned long		getDeltaTime() const;
+  virtual float			getDeltaTime() const;
 
   virtual unsigned long		getFps() const;
   virtual unsigned long		getCurrentFps() const;
