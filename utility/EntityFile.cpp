@@ -1,8 +1,8 @@
-#include	<regex>
+#include <regex>
 
-#include	"EntityFile.hh"
-#include	"ComponentFactory.hpp"
-#include	"EntityFileException.hh"
+#include "EntityFile.hh"
+#include "ComponentFactory.hpp"
+#include "EntityFileException.hh"
 
 //----- ----- Constructors ----- ----- //
 EntityFile::EntityFile()
@@ -17,7 +17,8 @@ EntityFile::~EntityFile()
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 
-std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
+std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) const
+{
   Entity				*entity;
   std::string				key;
   ComponentFactory			cf;
@@ -28,25 +29,23 @@ std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
 
   cf.init();
   entity = new Entity();
-
   std::getline(input, line);
   line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
   if (!std::regex_match(line, std::regex("ENTITY:.+")))
     throw EntityFileException("Bad Header", lineno);
   key = line.substr(7);
-
   while (std::getline(input, line))
     {
       ++lineno;
       line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
-
       if (line[0] == '#')
 	continue ;
       else if (std::regex_match(line, std::regex("COMPONENT:.+")))
 	{
 	  component = cf.create(line.substr(10));
 	  if (!component)
-	    throw EntityFileException("Component not found in factory : \"" + line.substr(10) + "\"", lineno);
+	    throw EntityFileException("Component not found in factory : \""
+				      + line.substr(10) + "\"", lineno);
 	  component->deserializeFromFile(input, lineno);
 	  entity->addComponent(component);
 	}
@@ -57,16 +56,16 @@ std::pair<std::string, Entity*>		EntityFile::deserialize(std::ifstream &input) {
     }
   if (!closed)
     throw EntityFileException("No closind tag", lineno);
-
   return (std::make_pair(key, entity));
 }
 
-void					EntityFile::serialize(const Entity *e, const std::string &key, std::ofstream &output)
+void	EntityFile::serialize(const Entity *e, const std::string &key, std::ofstream &output) const
 {
   if (!e)
     return ;
   output << "ENTITY:" << key << std::endl;
-  std::for_each(e->_components.begin(), e->_components.end(), [&output](const IComponent *c)
+  std::for_each(e->_components.begin(), e->_components.end(),
+		[&output] (const IComponent *c)
 		{
 		  output << std::string(1, '\t') << "COMPONENT:" << c->getType() << std::endl;
 		  c->serializeFromFile(output, 2);

@@ -5,6 +5,7 @@
 #include <cstring>
 #include <cstddef>
 #include <unistd.h>
+
 #include "UDirectoryLister.hh"
 #include "RTException.hh"
 
@@ -14,7 +15,7 @@ DirectoryLister::DirectoryLister()
 DirectoryLister::~DirectoryLister()
 {}
 
-std::vector<std::string> DirectoryLister::listDirectory(const std::string &directory)
+std::vector<std::string> DirectoryLister::listDirectory(const std::string &directory) const
 {
   DIR				*dir;
   struct dirent			file;
@@ -49,4 +50,4 @@ std::vector<std::string> DirectoryLister::listDirectory(const std::string &direc
   return result;
 }
 
-#endif
+#endif /* !__linux__ */

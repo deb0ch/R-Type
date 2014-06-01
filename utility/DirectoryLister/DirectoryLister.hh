@@ -2,9 +2,9 @@
 # define DIRECTORYLISTER_H_
 
 #ifdef __linux__
-	#include "UDirectoryLister.hh"
+# include "UDirectoryLister.hh"
 #elif _WIN32
-	#include "WDirectoryLister.hh"
+# include "WDirectoryLister.hh"
 #endif
 
 #endif /* !DIRECTORYLISTER_H_ */
