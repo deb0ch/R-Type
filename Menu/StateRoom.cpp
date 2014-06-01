@@ -1,12 +1,12 @@
-#include	"Window.hh"
-#include	"INetworkRelay.hh"
-#include	"LockGuard.hpp"
-#include	"StateRoom.hh"
-#include	"Threads.hh"
-#include	"ClientRelay.hh"
-#include	"Any.hpp"
-#include	"StateGame.hh"
-#include	"RTException.hh"
+# include "Window.hh"
+# include "INetworkRelay.hh"
+# include "LockGuard.hpp"
+# include "StateRoom.hh"
+# include "Threads.hh"
+# include "ClientRelay.hh"
+# include "Any.hpp"
+# include "StateGame.hh"
+# include "RTException.hh"
 
 StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
 {
@@ -17,8 +17,7 @@ StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
 }
 
 StateRoom::~StateRoom()
-{
-}
+{}
 
 void	StateRoom::init()
 {
@@ -34,7 +33,6 @@ void	StateRoom::init()
   this->_serverRooms = new SFMLTextBox(this->_window, 5, 545, false, 40, 25);
   this->_serverRooms->setString("select a room : ");
   this->_serverRooms->setColor(sf::Color(150, 15, 229));
-
   this->_textboxRoom = new SFMLTextBox(this->_window, 350, 545, true, 40, 8);
   this->_textboxRoom->setColor(sf::Color(100, 15, 229));
   this->_textboxRoom->setBorderOutLineColor(sf::Color(150, 15, 250, 200));
@@ -46,33 +44,41 @@ void	StateRoom::accessRoom()
 {
   INetworkRelay *network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
 
-  if (network) {
-    Remote *remote = NULL;
-    if (this->_textboxRoom->getString() != "")
-      this->_textboxRoom->setString("defaulte");
-    if (!(remote = network->getRemote(0)))
-      throw RTException("Invalid remote");
-    IBuffer *buffer = network->getTCPBuffer();
-    *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
-    *buffer << this->_textboxRoom->getString();
-    remote->sendTCP(buffer);
-    Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
+  if (network)
+    {
+      Remote *remote = NULL;
 
-    thread->start(network, &INetworkRelay::start, Any());
+      if (this->_textboxRoom->getString() != "")
+	this->_textboxRoom->setString("defaulte");
+      if (!(remote = network->getRemote(0)))
+	throw RTException("Invalid remote");
 
-    while (42) {
-      LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
-      auto guard = create_lock(recv_buffer);
+      IBuffer *buffer = network->getTCPBuffer();
 
-      for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
+      *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
+      *buffer << this->_textboxRoom->getString();
+      remote->sendTCP(buffer);
+
+      Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
+
+      thread->start(network, &INetworkRelay::threadStart);
+
+      while (42)
 	{
-	  if (this->parsePacket(recv_buffer, it))
-	    return ;
+	  LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
+	  auto guard = create_lock(recv_buffer);
+
+	  for (auto it = recv_buffer.begin(); it != recv_buffer.end();)
+	    {
+	      if (this->parsePacket(recv_buffer, it))
+		return ;
+	    }
 	}
     }
-  } else {
-    throw RTException("Invalid network");
-  }
+  else
+    {
+      throw RTException("Invalid network");
+    }
 }
 
 bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it)
@@ -84,8 +90,8 @@ bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
-  if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES ||
-      packet_type == INetworkRelay::CHANGE_ROOM_QUERY_NON)
+  if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES
+      || packet_type == INetworkRelay::CHANGE_ROOM_QUERY_NON)
     {
       if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES)
 	{
@@ -114,7 +120,7 @@ void	StateRoom::update(StateManager& manager)
 	case sf::Event::Closed:
 	  this->_window->close();
 	  manager.exit();
-	  break;
+	  break ;
 
 	case sf::Event::TextEntered:
 	  if (event.text.unicode == 13)
@@ -129,19 +135,19 @@ void	StateRoom::update(StateManager& manager)
 	    {
 	      this->_textboxRoom->addCharacter(static_cast<char>(event.text.unicode));
 	    }
-	  break;
+	  break ;
 
 	case sf::Event::MouseButtonPressed:
-		this->_music->stop();
-		this->accessRoom();
-		manager.pushState(new StateGame(this->_world));
-	  return;
+	  this->_music->stop();
+	  this->accessRoom();
+	  manager.pushState(new StateGame(this->_world));
+	  return ;
+	  break ;
 
 	default:
-	  break;
+	  break ;
 	}
     }
-
 }
 
 void StateRoom::render(const Timer&)

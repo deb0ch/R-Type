@@ -25,7 +25,7 @@ ServerRelay::~ServerRelay()
   this->_server_socket_tcp.close();
 }
 
-void	ServerRelay::start(Any)
+void	ServerRelay::threadStart()
 {
   this->start();
 }
