@@ -30,6 +30,17 @@ ENTITY:FORCE_ATTACHED
 		toNotCollide=MONSTER
 		toNotCollide=BULLET
 	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=BASIC_BULLET;1
+		nb=0
+		delay=0.15
+		minPosX=5
+		minPosY=0
+		maxPosX=5
+		maxPosY=0
+		random=true
+		abs=false
+	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=force-attach.png
 		nbSpritesX=4
