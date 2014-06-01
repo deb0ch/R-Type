@@ -49,6 +49,9 @@ ENTITY:BASIC_BULLET
 			length=0
 		!ANIM
 	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=Silencer-SoundBible.com-1632156458.wav
+	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT
 	!COMPONENT

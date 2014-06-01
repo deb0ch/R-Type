@@ -71,7 +71,7 @@ public:
     return (tmp->clone());
   }
 
-  void					deserializeAll()
+  void	deserializeAll()
   {
     EntityFile				ef;
     DirectoryLister			directory_lister;

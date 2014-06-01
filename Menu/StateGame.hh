@@ -34,6 +34,9 @@
 #include	"SyncPos2DSystem.hh"
 #include	"NetworkTimeOutEntitySystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"SFMLDisplaySystem.hh"
+#include	"SFMLRenderTextSystem.hh"
+#include	"SFMLSoundSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -41,6 +44,7 @@
 #include	"Friction2DComponent.hh"
 #include	"Box2DComponent.hh"
 #include	"SFMLSpriteComponent.hh"
+#include	"SFMLSoundComponent.hh"
 #include	"SFMLInputComponent.hh"
 #include	"MovementSpeedComponent.hh"
 #include	"NetworkSendUpdateComponent.hh"

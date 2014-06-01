@@ -157,6 +157,7 @@ void RunWorldServer::addSystems()
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
       "SFMLTextComponent",
+      "SFMLSoundComponent",
       "SFMLJoystickComponent"
     };
 

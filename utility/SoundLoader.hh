@@ -1,9 +1,15 @@
 #ifndef SOUNDLOADER_H_
 # define SOUNDLOADER_H_
 
+# include <iostream>
 # include <map>
 # include "SFML/Audio/Sound.hpp"
 # include "SFML/Audio/SoundBuffer.hpp"
+
+# include "RTException.hh"
+# include "Unistd.hh"
+
+# define SOUNDFILE "Ressources/Sound/"
 
 class SoundLoader
 {
@@ -12,17 +18,17 @@ public:
   virtual ~SoundLoader();
 
 public:
-  void addSound(const std::string &fileSound);
-  sf::Sound *getSound(const std::string &fileSound) const;
-
-private:
-  std::map<std::string, sf::SoundBuffer *> _sounds;
+  sf::Sound	*getSound(const std::string &fileSound);
 
 private:
   SoundLoader(const SoundLoader &);
   SoundLoader &operator=(const SoundLoader &);
 
-};
+private:
+  void		addSound(const std::string &fileSound);
 
+private:
+  std::map<std::string, sf::SoundBuffer *> _sounds;
+};
 
 #endif /* !SOUNDLOADER_H_ */
