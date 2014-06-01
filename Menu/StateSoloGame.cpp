@@ -10,7 +10,7 @@ StateSoloGame::StateSoloGame(World *world)
 
   std::fstream		cfgFile;
 
-  if (_access("config.cfg", R_OK) == -1)
+  if (access("config.cfg", R_OK) == -1)
     this->createConfigFile();
 
   cfgFile.open("config.cfg", std::ios::in);
