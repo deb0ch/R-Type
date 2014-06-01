@@ -18,7 +18,7 @@ public:
   RTException(const std::string &error);
   ~RTException() throw() {}
 
-protected:
+public:
   RTException(const std::string &prefix, const int error);
   RTException(const std::string &prefix, const std::string &error);
 

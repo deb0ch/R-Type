@@ -71,20 +71,7 @@ public:
     return (tmp->clone());
   }
 
-  /*
-  void			serializeAll()
-  {
-
-    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &output](const std::string &key)
-		  {
-		        output.open("Ressources/entities/"+key+".entity");
-			ef.serialize(this->create(key), key, output);
-			output.close();
-		  });
-  }
-  */
-
-  void					deserializeAll()
+  void	deserializeAll()
   {
     EntityFile				ef;
     DirectoryLister			directory_lister;
@@ -94,6 +81,8 @@ public:
     std::vector<std::string> files = directory_lister.listDirectory("Ressources/entities/");
     for(auto it = files.begin(); it != files.end(); ++it)
       {
+	if ((*it).substr((*it).rfind('.')) != ".entity")
+	  return ;
 	input.open("./Ressources/entities/" + *it);
 	try {
 	  res = ef.deserialize(input);
