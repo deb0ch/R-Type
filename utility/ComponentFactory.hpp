@@ -36,6 +36,7 @@
 # include "LifePowerUpComponent.hh"
 # include "SFMLTextComponent.hh"
 # include "SFMLJoystickComponent.hh"
+# include "AttachPowerUpComponent.hh"
 
 class ComponentFactory : public Factory<ASerializableComponent, hash_t>
 {
@@ -85,6 +86,7 @@ public :
     this->addComponent(new LifePowerUpComponent());
     this->addComponent(new SFMLTextComponent());
     this->addComponent(new SFMLJoystickComponent());
+    this->addComponent(new AttachPowerUpComponent());
   }
 
   virtual ASerializableComponent	*create(const std::string &key) const

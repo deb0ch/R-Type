@@ -30,9 +30,11 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachSystem.hh
 	PARENT_SCOPE)
 
-SET(SOURCE_S
+      SET(SOURCE_S
 	${SOURCE_S}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
@@ -63,10 +65,12 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachSystem.cpp
 	PARENT_SCOPE
 	)
 
-set(HEADER_C
+      set(HEADER_C
 	${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
@@ -103,6 +107,8 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachSystem.hh
 	PARENT_SCOPE
 )
 
@@ -143,5 +149,7 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachSystem.cpp
 	PARENT_SCOPE
 )
