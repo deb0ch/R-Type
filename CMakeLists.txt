@@ -80,6 +80,7 @@ if (UNIX)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-audio.so.2.1)
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-graphics.so.2.1)
+	TARGET_LINK_LIBRARIES (${SERVER_BIN} rt)
 
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} pthread)
 	TARGET_LINK_LIBRARIES (${SERVER_BIN} pthread)
