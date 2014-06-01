@@ -1,6 +1,8 @@
 #ifndef STATEROOM_H_
 # define STATEROOM_H_
 
+#include	"SFML/Audio/Music.hpp"
+
 #include	"IState.hh"
 #include	"SFML/Graphics.hpp"
 #include	"SFMLButton.hh"
@@ -11,7 +13,7 @@
 class StateRoom : public IState
 {
 public:
-	StateRoom(sf::RenderWindow * window, World *world);
+	StateRoom(sf::RenderWindow * window, World *world, sf::Music *);
 	virtual ~StateRoom();
 
 	virtual void update(StateManager&);
@@ -29,6 +31,7 @@ protected:
 	SFMLTextBox *_textboxRoom;
 	SFMLTextBox *_serverRooms;
 	sf::RenderWindow *_window;
+	sf::Music	*_music;
 };
 
 #endif /* !STATEROOM_H_ */

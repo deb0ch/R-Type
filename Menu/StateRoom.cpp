@@ -7,11 +7,12 @@
 #include	"Any.hpp"
 #include	"StateGame.hh"
 
-StateRoom::StateRoom(sf::RenderWindow * window, World *world)
+StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
 {
   this->_window = window;
   this->_world = world;
   this->init();
+  this->_music = music;
 }
 
 StateRoom::~StateRoom()
@@ -119,6 +120,7 @@ void	StateRoom::update(StateManager& manager)
 	case sf::Event::TextEntered:
 	  if (event.text.unicode == 13)
 	    {
+	      this->_music->stop();
 	      this->accessRoom();
 	      manager.pushState(new StateGame(this->_world));
 	    }
@@ -131,6 +133,7 @@ void	StateRoom::update(StateManager& manager)
 	  break;
 
 	case sf::Event::MouseButtonPressed:
+		this->_music->stop();
 		this->accessRoom();
 		manager.pushState(new StateGame(this->_world));
 	  return;

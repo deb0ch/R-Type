@@ -107,7 +107,7 @@ void SFMLMenu::update(StateManager& manager)
 	  if (event.text.unicode == 13)
 	    {
 	      this->connect();
-		  manager.pushState(new StateRoom(this->_window, this->_world));
+	      manager.pushState(new StateRoom(this->_window, this->_world, this->_music));
 	    }
 	  else if (event.text.unicode == 8)
 	    this->_textboxIP->removelastCharacter();
@@ -120,10 +120,7 @@ void SFMLMenu::update(StateManager& manager)
 	  break;
 		case sf::Event::MouseButtonPressed:
 			if (this->_buttonplay->isMouseOnButton())
-			  {
-			    this->_music->stop();
-			    manager.pushState(new StateRoom(this->_window, this->_world));
-			  }
+			  manager.pushState(new StateRoom(this->_window, this->_world, this->_music));
 			else if (this->_buttonCredit->isMouseOnButton())
 				manager.pushState(new StateCredit(this->_window));
 			else if (this->_buttonSolo->isMouseOnButton())
