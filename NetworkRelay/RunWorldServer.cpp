@@ -67,7 +67,7 @@ void RunWorldServer::run() {
       while (!this->_isEnd) {
 	this->_timer.startFrame();
 	if (this->_timer.canTick())
-	  this->_world->process(this->_timer.getDeltaTime() / 1000000.f);
+	  this->_world->process(this->_timer.getDeltaTime());
 	this->_timer.endFrame();
       }
     }

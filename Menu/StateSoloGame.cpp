@@ -1,3 +1,4 @@
+#include	"Unistd.hh"
 #include	"StateSoloGame.hh"
 
 StateSoloGame::StateSoloGame(World *world)
@@ -150,5 +151,5 @@ void		StateSoloGame::update(StateManager &manager)
 
 void		StateSoloGame::render(const Timer&timer)
 {
-  this->_world->process(timer.getDeltaTime() / 1000000.f);
+  this->_world->process(timer.getDeltaTime());
 }
