@@ -1,6 +1,8 @@
 #ifndef SFMLMENU_H_
 # define SFMLMENU_H_
 
+#include	"SFML/Audio/Music.hpp"
+
 #include	"IState.hh"
 #include	"SFML/Graphics.hpp"
 #include	"SFMLButton.hh"
@@ -39,6 +41,7 @@ protected:
 	SFMLTextBox *_textboxIP;
 	SFMLTextBox *_ipServer;
 	sf::RenderWindow *_window;
+  	sf::Music	*_music;
 };
 
 #endif /* !SFMLMENU_H_ */
