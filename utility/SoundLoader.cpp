@@ -1,4 +1,3 @@
-#include <iostream>
 #include "SoundLoader.hh"
 
 SoundLoader::SoundLoader()
@@ -20,7 +19,6 @@ SoundLoader::~SoundLoader()
 
 sf::Sound *SoundLoader::getSound(const std::string &fileSound)
 {
-	std::cout << fileSound << std::endl;
   auto it = _soundBuffers.find(fileSound);
 
   if (it != _soundBuffers.end()
@@ -49,7 +47,6 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
 
 void SoundLoader::addSound(const std::string &fileSound)
 {
-	std::cout << "toto" << std::endl;
   sf::SoundBuffer	*buffer = new sf::SoundBuffer();
   auto			it = _soundBuffers.find(fileSound);
 
