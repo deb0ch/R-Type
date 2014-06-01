@@ -59,7 +59,7 @@ public:
     if (!(tmp = dynamic_cast<T*>(component)))
       {
 	std::cerr << ": Invalid type" << std::endl;
-	abort();
+	return NULL;
       }
     return (tmp);
   }
@@ -75,7 +75,7 @@ public:
     if (!(tmp = dynamic_cast<X*>(component)))
       {
 	std::cerr << ": Invalid type" << std::endl;
-	abort();
+	return NULL;
       }
     return (tmp);
   }

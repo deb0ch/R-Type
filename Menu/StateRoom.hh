@@ -32,6 +32,7 @@ protected:
 	SFMLTextBox *_serverRooms;
 	sf::RenderWindow *_window;
 	sf::Music	*_music;
+	bool		_isConnecting;
 };
 
 #endif /* !STATEROOM_H_ */

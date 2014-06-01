@@ -14,6 +14,7 @@ StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
   this->_world = world;
   this->init();
   this->_music = music;
+  this->_isConnecting = false;
 }
 
 StateRoom::~StateRoom()
@@ -117,8 +118,9 @@ void	StateRoom::update(StateManager& manager)
 	  break;
 
 	case sf::Event::TextEntered:
-	  if (event.text.unicode == 13)
+	  if (event.text.unicode == 13 && !this->_isConnecting)
 	    {
+	      this->_isConnecting = true;
 	      this->_music->stop();
 	      this->accessRoom();
 	      manager.pushState(new StateGame(this->_world));
@@ -132,6 +134,9 @@ void	StateRoom::update(StateManager& manager)
 	  break;
 
 	case sf::Event::MouseButtonPressed:
+	  if (this->_isConnecting)
+	    return ;
+	  this->_isConnecting = true;
 		this->_music->stop();
 		this->accessRoom();
 		manager.pushState(new StateGame(this->_world));
