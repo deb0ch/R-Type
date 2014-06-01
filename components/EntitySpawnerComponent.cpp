@@ -118,7 +118,10 @@ void			EntitySpawnerComponent::fixWeights()
 		    p.second = 1;
 		  this->_maxWeight += p.second;
 		});
-  this->_lastSpawned = this->_entities[0].first;
+  if (this->_entities.size() > 0)
+    this->_lastSpawned = this->_entities[0].first;
+  else
+    this->_lastSpawned = "";
 }
 
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
