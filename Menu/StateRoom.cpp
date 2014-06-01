@@ -55,7 +55,6 @@ void	StateRoom::accessRoom()
     IBuffer *buffer = network->getTCPBuffer();
     *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
     *buffer << this->_textboxRoom->getString();
-    std::cout << "SEND" << std::endl;
     remote->sendTCP(buffer);
     Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
 
@@ -85,7 +84,6 @@ bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
-  std::cout << (int)packet_type << std::endl;
   if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES ||
       packet_type == INetworkRelay::CHANGE_ROOM_QUERY_NON)
     {

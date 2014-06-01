@@ -87,11 +87,9 @@ void	SFMLEventSystem::beforeProcess(const float)
 	  break;
 
 	case sf::Event::MouseButtonPressed:
-	  //std::cout << "MOUSE CLICK [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
 	  break;
 
 	case sf::Event::MouseButtonReleased:
-	  //std::cout << "MOUSE RELEASE [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
 	  break;
 
 	default:

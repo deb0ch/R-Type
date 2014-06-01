@@ -37,7 +37,7 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
     }
   catch (RTException e)
     {
-      std::cout << e.what() << std::endl;
+      std::cerr << e.what() << std::endl;
       return (NULL);
     }
   if (_sounds.find(fileSound) == _sounds.end())

@@ -85,7 +85,6 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 	  *buffer >> packet_number;
 	  if (packet_number > network->getPacketNum())
 	    {
-	      // std::cout << "Parsing action" << std::endl;
 	      network->setPacketNum(packet_number);
 	      this->parseActions(*buffer, action);
 	    }
@@ -108,7 +107,6 @@ void		NetworkReceiveActionSystem::parseActions(IBuffer &buffer, ActionComponent 
     {
       buffer >> action_name;
       buffer >> active;
-      // std::cout << action_name << " " << (int)active << std::endl;
       action->setAction(action_name, active != 0);
     }
 }

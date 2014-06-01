@@ -18,7 +18,6 @@ void	LifePowerUpComponent::upgrade(World *world, Entity *)
   if (lifesystem)
     {
       lifesystem->setNbLives(lifesystem->getNbLives() + 1);
-      std::cout << "YOU GAIN A NEW LIFE!" << std::endl;
     }
   else
     {
