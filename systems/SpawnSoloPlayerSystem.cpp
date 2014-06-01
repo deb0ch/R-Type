@@ -66,7 +66,7 @@ Entity		*SpawnSoloPlayerSystem::spawnPlayer(const std::string &entity_name)
 
 void		SpawnSoloPlayerSystem::beforeProcess(const float)
 {
-  while (!this->_players_to_spawn.isEmpty())
+  if (!this->_players_to_spawn.isEmpty())
     {
       this->spawnNextPlayer();
     }
