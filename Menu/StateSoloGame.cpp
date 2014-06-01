@@ -32,6 +32,7 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new EntitySpawnerSystem());
 	this->_world->addSystem(new SFMLEventSystem());
 	this->_world->addSystem(new SFMLInputSystem());
+	this->_world->addSystem(new SFMLSoundSystem());
 	this->_world->addSystem(new SFMLDisplaySystem());
 	this->_world->addSystem(new SFMLRenderSystem());
 	this->_world->addSystem(new SFMLRenderTextSystem());
@@ -49,10 +50,21 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new MovementLimitFrame2DSystem());
 	this->_world->addSystem(new SpawnSoloPlayerSystem("PLAYER_RED"));
 	this->_world->addSystem(new BackgroundSystem());
+
 	std::vector<std::string> power_ups =
-	  {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+	  {
+	    "POWERUP_1",
+	    "POWERUP_2",
+	    "POWERUP_3",
+	    "POWERUP_LIFE"
+	  };
+
 	std::vector<std::string> power_ups_component =
-	  {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+	  {
+	    "WeaponPowerUpComponent",
+	    "LifePowerUpComponent"
+	  };
+
 	this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
 	this->_world->addSystem(new PlayerLifeSystem(3));
 	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
@@ -64,6 +76,7 @@ void		StateSoloGame::addSystems()
 	this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
 	EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+
 	this->_world->addSystem(entityDeleterSystem);
 	this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 		&EntityDeleterSystem::addEntityToDelete);
@@ -79,6 +92,7 @@ void		StateSoloGame::addSharedObjetcs()
 	compos->init();
 	entityFactory->init();
 	this->_world->setSharedObject("imageLoader", new ImageLoader());
+	this->_world->setSharedObject("soundLoader", new SoundLoader());
 	this->_world->setSharedObject("componentFactory", compos);
 	this->_world->setSharedObject("entityFactory", entityFactory);
 }
@@ -96,8 +110,6 @@ void		StateSoloGame::addEntities()
 	this->_world->addEntity(entityFactory->create("GAME"));
 	this->_world->addEntity(entityFactory->create("PLAYER_RED"));
 	this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
-	//this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
-	// this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 void		StateSoloGame::update(StateManager &manager)
@@ -108,5 +120,5 @@ void		StateSoloGame::update(StateManager &manager)
 
 void		StateSoloGame::render(const Timer&timer)
 {
-	this->_world->process(timer.getDeltaTime() / 1000000.f);
+  this->_world->process(timer.getDeltaTime() / 1000000.f);
 }

@@ -18,6 +18,7 @@
 #include	"NetworkSendUpdateSystem.hh"
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
+#include	"SFMLSoundSystem.hh"
 #include	"MoveFollowSystem.hh"
 #include	"MoveForwardSystem.hh"
 #include	"MoveSequenceSystem.hh"

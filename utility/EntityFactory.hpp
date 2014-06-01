@@ -4,6 +4,7 @@
 # include <string>
 # include "Factory.hpp"
 # include "SFMLInputComponent.hh"
+# include "SFMLSoundComponent.hh"
 # include "Friction2DComponent.hh"
 # include "Box2DComponent.hh"
 # include "Pos2DComponent.hh"
@@ -71,20 +72,7 @@ public:
     return (tmp->clone());
   }
 
-  /*
-  void			serializeAll()
-  {
-
-    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &output](const std::string &key)
-		  {
-		        output.open("Ressources/entities/"+key+".entity");
-			ef.serialize(this->create(key), key, output);
-			output.close();
-		  });
-  }
-  */
-
-  void					deserializeAll()
+  void	deserializeAll()
   {
     EntityFile				ef;
     DirectoryLister			directory_lister;
@@ -95,9 +83,10 @@ public:
     for(auto it = files.begin(); it != files.end(); ++it)
       {
 	input.open("./Ressources/entities/" + *it);
-	try {
-	  res = ef.deserialize(input);
-	}
+	try
+	  {
+	    res = ef.deserialize(input);
+	  }
 	catch (EntityFileException &efe)
 	  {
 	    efe.setFilename(*it);

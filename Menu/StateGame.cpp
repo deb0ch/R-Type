@@ -1,5 +1,3 @@
-#include	"SFMLDisplaySystem.hh"
-#include	"SFMLRenderTextSystem.hh"
 #include	"StateGame.hh"
 #include	"Any.hpp"
 
@@ -9,15 +7,12 @@ StateGame::StateGame(World *world)
   this->addSystems();
   this->addSharedObjetcs();
   this->addEntities();
-
   this->_music = new sf::Music();
-
   if (this->_music->openFromFile("Ressources/Sound/music.ogg"))
     {
       this->_music->setLoop(true);
       this->_music->play();
     }
-
   this->_world->start();
 }
 
@@ -31,8 +26,6 @@ StateGame::~StateGame()
 void		StateGame::addSharedObjetcs()
 {
   SoundLoader *soundLoader = new SoundLoader();
-  soundLoader->addSound("Ressources/Sound/Silencer.wav");
-
   ComponentFactory *compos = new ComponentFactory();
   EntityFactory *entityFactory = new EntityFactory();
 
@@ -60,6 +53,7 @@ void		StateGame::addSystems()
 	this->_world->addSystem(new SFMLEventSystem());
 	this->_world->addSystem(new SFMLInputSystem());
 	this->_world->addSystem(new SFMLDisplaySystem());
+	this->_world->addSystem(new SFMLSoundSystem());
 	this->_world->addSystem(new SFMLRenderSystem());
 	this->_world->addSystem(new SFMLRenderTextSystem());
 	this->_world->addSystem(new MoveFollowSystem());
@@ -101,7 +95,8 @@ void		StateGame::addSystems()
 		"SyncPos2DComponent",
 		"MovementLimitFrame2DComponent",
 		"SFMLTextComponent",
-		"SFMLJoystickComponent"
+		"SFMLJoystickComponent",
+		"SFMLSoundComponent"
 	};
 
 	this->_world->addSystem(new NetworkReceiveUpdateSystem(arg));
@@ -118,6 +113,7 @@ void		StateGame::addSystems()
 	this->_world->addSystem(new NetworkSendActionSystem(serializable_action));
 
 	EntityDeleterSystem *entityDeleterSystem = new EntityDeleterSystem();
+
 	this->_world->addSystem(entityDeleterSystem);
 	this->_world->addEventHandler("EntityDeletedEvent", entityDeleterSystem,
 		&EntityDeleterSystem::addEntityToDelete);
