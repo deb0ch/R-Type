@@ -4,6 +4,7 @@
 #include "Entity.hh"
 #include "EntityDeletedEvent.hh"
 #include "ActionComponent.hh"
+#include "EntitySpawnerComponent.hh"
 
 AttachedToSystem::AttachedToSystem() : ASystem("AttachedToSystem")
 {}
@@ -39,10 +40,15 @@ void AttachedToSystem::processEntity(Entity *entity, const float)
   pos->setY(follow_pos->getY() + attachedto->getOffset().second);
 
   follow_action_component = follow_entity->getComponent<ActionComponent>("ActionComponent");
+  action_comp = entity->getComponent<ActionComponent>("ActionComponent");
   if (follow_action_component && follow_action_component->isActive("FIRE"))
     {
-      action_comp = entity->getComponent<ActionComponent>("ActionComponent");
       if (action_comp)
-	action_comp->setAction("FIRE", true);
+	{
+	  std::cout << "SET FIRE" << std::endl;
+	  action_comp->setAction("FIRE", true);
+	}
     }
+  else if (action_comp)
+    action_comp->setAction("FIRE", false);
 }
