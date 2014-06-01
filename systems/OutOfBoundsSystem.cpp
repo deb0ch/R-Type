@@ -24,8 +24,8 @@ void		OutOfBoundsSystem::processEntity(Entity *e, const float)
 
   if (!(pos = e->getComponent<Pos2DComponent>("Pos2DComponent")))
     return ;
-  if ((pos->getX() >= WINDOW_WIDTH + 50 || pos->getX() <= 0 - 50) ||
-      (pos->getY() >= WINDOW_HEIGHT + 50 || pos->getY() <= 0 - 50)) {
+  if ((pos->getX() >= WINDOW_WIDTH + 150 || pos->getX() <= 0 - 150) ||
+      (pos->getY() >= WINDOW_HEIGHT + 150 || pos->getY() <= 0 - 150)) {
 
     TagComponent *tmp = e->getComponent<TagComponent>("TagComponent");
 
