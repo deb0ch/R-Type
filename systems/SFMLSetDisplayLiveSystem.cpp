@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "PlayerLifeSystem.hh"
 #include "TagComponent.hh"
 #include "SFML/Graphics.hpp"

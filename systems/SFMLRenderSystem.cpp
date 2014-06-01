@@ -1,8 +1,4 @@
-#include	<iostream>
-#include	<list>
-
 #include	"SFMLRenderSystem.hh"
-
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
 #include	"ActionComponent.hh"
@@ -69,7 +65,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
 
   if (!imageLoader)
-    return; //TODO throw
+    return;
   sf::Sprite *sprite = NULL;
   if (action != NULL)
     {

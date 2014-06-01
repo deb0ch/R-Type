@@ -8,16 +8,13 @@ SFMLDisplaySystem::~SFMLDisplaySystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLDisplaySystem::canProcess(Entity *entity)
+bool		SFMLDisplaySystem::canProcess(Entity *)
 {
-  (void)entity;
   return (false);
 }
 
-void		SFMLDisplaySystem::processEntity(Entity *entity, const float)
-{
-  (void)entity;
-}
+void		SFMLDisplaySystem::processEntity(Entity *, const float)
+{}
 
 void		SFMLDisplaySystem::start()
 {

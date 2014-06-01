@@ -1,4 +1,3 @@
-
 #include "EntityDeletedEvent.hh"
 #include "MoveFollowSystem.hh"
 #include "MoveFollowComponent.hh"
@@ -21,14 +20,14 @@ bool MoveFollowSystem::canProcess(Entity *entity)
   return (false);
 }
 
-inline float	MoveFollowSystem::getDistance(Pos2DComponent* a, Pos2DComponent* b) const
+float	MoveFollowSystem::getDistance(Pos2DComponent* a, Pos2DComponent* b) const
 {
   return (sqrt(powf(a->getX() - b->getX(), 2) + powf(a->getY() - b->getY(), 2)));
 }
 
-inline bool	MoveFollowSystem::isCloser(Pos2DComponent* follower,
-					   Pos2DComponent* prevTarget,
-					   Pos2DComponent* newTarget) const
+bool	MoveFollowSystem::isCloser(Pos2DComponent* follower,
+				   Pos2DComponent* prevTarget,
+				   Pos2DComponent* newTarget) const
 {
   return (getDistance(follower, prevTarget) > getDistance(follower, newTarget));
 }

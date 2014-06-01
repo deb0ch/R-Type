@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "SFML/Graphics.hpp"
 #include "SFMLTextComponent.hh"
 #include "SFMLRenderTextSystem.hh"
@@ -16,9 +14,7 @@ SFMLRenderTextSystem::~SFMLRenderTextSystem()
 bool		SFMLRenderTextSystem::canProcess(Entity *entity)
 {
   if (entity->hasComponent("SFMLTextComponent") && entity->hasComponent("Pos2DComponent"))
-    {
-      return (true);
-    }
+    return (true);
   return (false);
 }
 

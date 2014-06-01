@@ -1,7 +1,6 @@
 #ifndef NETWORKSENDDIEENTITY_H_
 # define NETWORKSENDDIEENTITY_H_
 
-# include <vector>
 # include "INetworkRelay.hh"
 # include "Room.hh"
 # include "ASystem.hh"

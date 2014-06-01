@@ -6,8 +6,8 @@
 NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::string> &serializable_action)
   : ASystem("NetworkReceiveActionSystem"), _serializable_action(serializable_action)
 {
-	this->_room_name = NULL;
-	this->_network = NULL;
+  this->_room_name = NULL;
+  this->_network = NULL;
 }
 
 NetworkReceiveActionSystem::~NetworkReceiveActionSystem()
@@ -18,9 +18,7 @@ void NetworkReceiveActionSystem::beforeProcess(const float)
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
-  {
-	  this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
-  }
+    this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
 bool NetworkReceiveActionSystem::canProcess(Entity *entity)
@@ -84,7 +82,6 @@ void NetworkReceiveActionSystem::parsePacket(Entity *entity,
 	  *buffer >> packet_number;
 	  if (packet_number > network->getPacketNum())
 	    {
-	      // std::cout << "Parsing action" << std::endl;
 	      network->setPacketNum(packet_number);
 	      this->parseActions(*buffer, action);
 	    }
@@ -107,7 +104,6 @@ void		NetworkReceiveActionSystem::parseActions(IBuffer &buffer, ActionComponent 
     {
       buffer >> action_name;
       buffer >> active;
-      // std::cout << action_name << " " << (int)active << std::endl;
       action->setAction(action_name, active != 0);
     }
 }

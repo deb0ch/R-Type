@@ -89,9 +89,6 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
       this->_world->addEntity(player_entity);
       NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
       ASerializableComponent *tmp;
-      // tmp = player_entity->getComponent<ASerializableComponent>("Pos2DComponent");
-      // if (tmp)
-      // 	tmp->setNetworkSendUpdateException(hash);
       tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
       if (tmp)
 	tmp->setNetworkSendUpdateException(hash);

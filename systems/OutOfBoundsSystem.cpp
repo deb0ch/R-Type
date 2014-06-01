@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Pos2DComponent.hh"
 #include "EntityDeletedEvent.hh"
 #include "TagComponent.hh"
