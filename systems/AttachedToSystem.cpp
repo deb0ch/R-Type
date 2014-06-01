@@ -3,6 +3,7 @@
 #include "Pos2DComponent.hh"
 #include "Entity.hh"
 #include "EntityDeletedEvent.hh"
+#include "ActionComponent.hh"
 
 AttachedToSystem::AttachedToSystem() : ASystem("AttachedToSystem")
 {}
@@ -21,6 +22,9 @@ void AttachedToSystem::processEntity(Entity *entity, const float)
 {
   AttachedToComponent *attachedto = entity->getComponent<AttachedToComponent>("AttachedToComponent");
   Pos2DComponent *pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
+  ActionComponent *follow_action_component;
+  ActionComponent *action_comp;
+  Pos2DComponent *follow_pos;
 
   if (!attachedto || !pos)
     return ;
@@ -30,8 +34,15 @@ void AttachedToSystem::processEntity(Entity *entity, const float)
       this->_world->sendEvent(new EntityDeletedEvent(entity));
       return;
     }
-  Pos2DComponent *follow_pos = follow_entity->getComponent<Pos2DComponent>("Pos2DComponent");
-
+  follow_pos = follow_entity->getComponent<Pos2DComponent>("Pos2DComponent");
   pos->setX(follow_pos->getX() + attachedto->getOffset().first);
   pos->setY(follow_pos->getY() + attachedto->getOffset().second);
+
+  follow_action_component = follow_entity->getComponent<ActionComponent>("ActionComponent");
+  if (follow_action_component && follow_action_component->isActive("FIRE"))
+    {
+      action_comp = entity->getComponent<ActionComponent>("ActionComponent");
+      if (action_comp)
+	action_comp->setAction("FIRE", true);
+    }
 }
