@@ -32,7 +32,7 @@ void NetworkReceiveDieEntitySystem::afterProcess(const float)
 
   if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name)))
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),

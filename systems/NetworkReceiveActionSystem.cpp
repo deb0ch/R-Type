@@ -41,10 +41,9 @@ void NetworkReceiveActionSystem::processEntity(Entity *entity, const float)
   if (!this->_network || !this->_room_name)
     return ;
   room = this->_network->getRoom(*this->_room_name);
-  action_component->resetActions();
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),

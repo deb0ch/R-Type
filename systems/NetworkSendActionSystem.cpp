@@ -55,7 +55,7 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
   Room *room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       room->sendBroadcastUDP(*this->_network, tmp);
     }

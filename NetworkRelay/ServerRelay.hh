@@ -15,7 +15,7 @@ class ServerRelay : public INetworkRelay
 
 public:
   ServerRelay(int port = 4011, int nb_pending_connection = 42);
-  virtual				~ServerRelay();
+  virtual		~ServerRelay();
   virtual bool		start();
   virtual void		start(Any);
   virtual Room		*getRoom(const std::string &room_name);

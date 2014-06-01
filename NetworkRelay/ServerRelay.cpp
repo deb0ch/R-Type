@@ -53,6 +53,7 @@ Room			*ServerRelay::getRoom(const std::string &room_name)
 
       if (it == this->_rooms.end())
 	return (NULL);
+      it->second->lock();
       return (it->second);
     }
   return NULL;

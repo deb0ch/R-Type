@@ -68,7 +68,7 @@ void				NetworkSendUpdateSystem::processEntity(Entity *entity, const float delta
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       network_component = entity->getComponent<NetworkSendUpdateComponent>("NetworkSendUpdateComponent");
