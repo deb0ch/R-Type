@@ -29,6 +29,7 @@ protected:
 
   unsigned long			_counter;
   float				_tick;
+  std::string			_lastSpawned;
 
   void				fixWeights();
 
@@ -53,6 +54,7 @@ public:
   void				clearEntities();
   void				setDelay(float delay);
   void				addEntity(const std::pair<std::string, unsigned int> &);
+  const std::string		&getLastSpawned() const;
 
   virtual void			serialize(IBuffer &) const;
   virtual void			unserialize(IBuffer &);
