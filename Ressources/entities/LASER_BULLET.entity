@@ -23,7 +23,7 @@ ENTITY:LASER_BULLET
 		tag=LASER
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=800
+		vx=950
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
@@ -33,7 +33,7 @@ ENTITY:LASER_BULLET
 		speed_coef=0
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=5
+		collisionPower=6
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Laser.png
@@ -45,6 +45,10 @@ ENTITY:LASER_BULLET
 			start=0
 			length=4
 		!ANIM
+	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=bullet3.wav
+		volume=30
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT

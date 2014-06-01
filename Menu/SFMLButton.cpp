@@ -11,7 +11,6 @@ SFMLButton::SFMLButton(sf::RenderWindow *window, float posX, float posY, float w
 SFMLButton::~SFMLButton()
 {}
 
-// a mettre dans une class button
 bool	SFMLButton::isMouseOnButton()
 {
 	if (!this->_button)

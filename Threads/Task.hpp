@@ -30,9 +30,7 @@ class CTask : public ITask
 public:
   virtual void		run() { (*_task)(_arg); }
   virtual void		operator()() {
-    std::cout << "A" << std::endl;
     (*_task)(_arg);
-    std::cout << "B" << std::endl;
   }
 
   CTask(void* (*_task)(void*), void* _arg);

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "PlayerLifeSystem.hh"
 #include "TagComponent.hh"
 #include "SFML/Graphics.hpp"
@@ -15,7 +13,7 @@ SFMLSetDisplayLiveSystem::~SFMLSetDisplayLiveSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLSetDisplayLiveSystem::canProcess(Entity *entity)
+bool		SFMLSetDisplayLiveSystem::canProcess(Entity *entity) const
 {
   TagComponent	*tag = entity->getComponent<TagComponent>("TagComponent");
 

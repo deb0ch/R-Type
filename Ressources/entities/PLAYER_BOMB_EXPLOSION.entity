@@ -39,6 +39,10 @@ ENTITY:PLAYER_BOMB_EXPLOSION
 			length=6
 		!ANIM
 	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=boom6.wav
+		volume=100
+	!COMPONENT
 	COMPONENT:AutoDestructComponent
 		delay=0.5
 	!COMPONENT

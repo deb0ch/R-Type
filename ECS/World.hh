@@ -7,11 +7,10 @@
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
 # include	"Any.hpp"
+# include	"ECSException.hh"
 
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
- * @todo Add two boolean state attributes to keep trace of the start() / stop() and pause() / resume() methods calls.
- * @todo Reflect if init is really usefull.
  */
 class		World
 {
@@ -33,7 +32,7 @@ public:
   static bool				DEBUG;
   static bool				QUADTREE;
 
- World();
+  World();
   World(const World&);
   virtual	~World();
   World&	operator=(const World&);
@@ -67,10 +66,10 @@ public:
   World		*removeSystem(ISystem *);
   World		*removeSystem(const std::string &type);
 
-  ISystem	*getSystem(const std::string &type);
+  ISystem	*getSystem(const std::string &type) const;
 
   template <typename T>
-  T		*getSystem(const std::string &type)
+  T		*getSystem(const std::string &type) const
   {
     ISystem	*system;
     T		*result;
@@ -79,8 +78,7 @@ public:
       return (NULL);
     if (!(result = dynamic_cast<T *>(system)))
       {
-	std::cerr << "Invalid type" << std::endl; // throw exception
-	abort();
+	throw ECSException("Invalid type");
       }
     return (result);
   }
@@ -97,11 +95,12 @@ public:
   void		sendEvent(IEvent *event);
 
   std::vector<Entity *>	&getEntities();
+  const std::vector<Entity *>	&getEntities() const;
 
   /** For debuging purpose */
   int		countEntities() const;
 
-  Entity	*getEntity(unsigned int id);
+  Entity	*getEntity(const unsigned int id) const;
 
   void		process(const float delta);
   /** @brief Init all the systems. */

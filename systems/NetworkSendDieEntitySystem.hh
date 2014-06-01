@@ -1,7 +1,6 @@
 #ifndef NETWORKSENDDIEENTITY_H_
 # define NETWORKSENDDIEENTITY_H_
 
-# include <vector>
 # include "INetworkRelay.hh"
 # include "Room.hh"
 # include "ASystem.hh"
@@ -9,7 +8,7 @@
 class NetworkSendDieEntitySystem : public ASystem
 {
 protected:
-  virtual bool canProcess(Entity *);
+  virtual bool canProcess(Entity *) const;
   virtual void processEntity(Entity *, const float);
   virtual void beforeProcess(const float);
 

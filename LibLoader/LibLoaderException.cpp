@@ -32,6 +32,7 @@ LibLoaderException::LibLoaderException(const std::string &info)
   this->_info += info;
 }
 
-const char*   LibLoaderException::what() const throw() {
+const char*   LibLoaderException::what() const throw()
+{
   return (this->_info.c_str());
 }

@@ -7,13 +7,13 @@
 class EntityDeleterSystem : public ASystem
 {
 protected:
-  virtual bool canProcess(Entity *);
+  virtual bool canProcess(Entity *) const;
   virtual void processEntity(Entity *, const float);
 
 public:
+
   void addEntityToDelete(IEvent *entity);
 
-public:
   EntityDeleterSystem();
   virtual ~EntityDeleterSystem();
   virtual void afterProcess(const float);

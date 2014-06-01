@@ -2,6 +2,7 @@
 # define COMPONENTFACTORY_H_
 
 # include <string>
+
 # include "Factory.hpp"
 # include "ASerializableComponent.hh"
 # include "SFMLInputComponent.hh"
@@ -57,40 +58,39 @@ public :
 
   virtual void init()
   {
-    this->addComponent(new SFMLInputComponent());
-    this->addComponent(new Pos2DComponent());
-    this->addComponent(new Friction2DComponent());
-    this->addComponent(new Box2DComponent());
-    this->addComponent(new Speed2DComponent());
-    this->addComponent(new MovementSpeedComponent());
-    this->addComponent(new SFMLSpriteComponent());
-    this->addComponent(new NetworkSendUpdateComponent());
     this->addComponent(new ActionComponent());
-    this->addComponent(new NetworkSendActionComponent());
-    this->addComponent(new SyncPos2DComponent());
-    this->addComponent(new MoveForwardComponent());
-    this->addComponent(new MovementSpeedComponent());
-    this->addComponent(new MoveSequenceComponent());
-    this->addComponent(new MoveFollowComponent());
-    this->addComponent(new TagComponent());
-    this->addComponent(new MovementLimitFrame2DComponent());
+    this->addComponent(new AttachedToComponent());
+    this->addComponent(new AttachPowerUpComponent());
+    this->addComponent(new AutoDestructComponent());
+    this->addComponent(new Box2DComponent());
     this->addComponent(new CollisionComponent());
     this->addComponent(new CollisionPoint());
     this->addComponent(new CollisionPowerComponent());
-    this->addComponent(new TeamComponent());
-    this->addComponent(new ExplosionComponent());
-    this->addComponent(new LifeComponent());
-    this->addComponent(new AutoDestructComponent());
-    this->addComponent(new NetworkReceiveActionComponent());
     this->addComponent(new EntitySpawnerComponent());
+    this->addComponent(new ExplosionComponent());
     this->addComponent(new FireAlwaysComponent());
-    this->addComponent(new WeaponPowerUpComponent());
+    this->addComponent(new Friction2DComponent());
+    this->addComponent(new LifeComponent());
     this->addComponent(new LifePowerUpComponent());
-    this->addComponent(new SFMLTextComponent());
+    this->addComponent(new MoveForwardComponent());
+    this->addComponent(new MovementSpeedComponent());
+    this->addComponent(new MoveFollowComponent());
+    this->addComponent(new MoveSequenceComponent());
+    this->addComponent(new MovementLimitFrame2DComponent());
+    this->addComponent(new NetworkReceiveActionComponent());
+    this->addComponent(new NetworkSendActionComponent());
+    this->addComponent(new NetworkSendUpdateComponent());
+    this->addComponent(new Pos2DComponent());
+    this->addComponent(new SFMLInputComponent());
     this->addComponent(new SFMLJoystickComponent());
     this->addComponent(new SFMLSoundComponent());
-    this->addComponent(new AttachPowerUpComponent());
-    this->addComponent(new AttachedToComponent());
+    this->addComponent(new SFMLTextComponent());
+    this->addComponent(new SFMLSpriteComponent());
+    this->addComponent(new Speed2DComponent());
+    this->addComponent(new SyncPos2DComponent());
+    this->addComponent(new TagComponent());
+    this->addComponent(new TeamComponent());
+    this->addComponent(new WeaponPowerUpComponent());
   }
 
   virtual ASerializableComponent	*create(const std::string &key) const

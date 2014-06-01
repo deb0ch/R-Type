@@ -9,7 +9,7 @@ class NetworkSendActionSystem : public ASystem
 public:
   NetworkSendActionSystem(const std::vector<std::string> &serializable_action);
   virtual ~NetworkSendActionSystem();
-  virtual bool canProcess(Entity *);
+  virtual bool canProcess(Entity *) const;
   virtual void beforeProcess(const float);
   virtual void processEntity(Entity *, const float);
 protected:

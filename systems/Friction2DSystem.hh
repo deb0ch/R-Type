@@ -1,8 +1,6 @@
 #ifndef FRICTION2DSYSTEM_H_
 # define FRICTION2DSYSTEM_H_
 
-#include <iostream>
-
 # include "Friction2DComponent.hh"
 # include "Speed2DComponent.hh"
 # include "ASystem.hh"
@@ -14,7 +12,7 @@ public:
   virtual		~Friction2DSystem();
 
 protected:
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float);
 
 private:

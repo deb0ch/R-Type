@@ -22,7 +22,7 @@ public:
 		NetworkSendUpdateSystem(const std::vector<std::string> &component_to_send);
   virtual	~NetworkSendUpdateSystem();
 
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float delta);
   virtual void	beforeProcess(const float);
   virtual void	updateEntityToRemote(Remote *, const Entity *, NetworkSendUpdateComponent *);

@@ -53,6 +53,7 @@ Room			*ServerRelay::getRoom(const std::string &room_name)
 
       if (it == this->_rooms.end())
 	return (NULL);
+      it->second->lock();
       return (it->second);
     }
   return NULL;
@@ -66,7 +67,6 @@ IBuffer			*ServerRelay::getTCPBuffer()
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
-      std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -95,13 +95,13 @@ IBuffer			*ServerRelay::getUDPBuffer()
   return (buffer);
 }
 
-Remote		*ServerRelay::getRemote(unsigned int hash)
+Remote		*ServerRelay::getRemote(unsigned int hash) const
 {
   for(auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it)
     {
-      std::vector<Remote *> &remotes = it->second->getRemotes();
+      const std::vector<Remote *> &remotes = it->second->getRemotes();
       auto result = std::find_if(remotes.begin(), remotes.end(),
-				 [this, &hash] (Remote *remote) -> bool
+				 [this, &hash] (const Remote *remote) -> bool
 				 {
 				   if (remote->getPrivateHash() == hash)
 				     return true;
@@ -111,7 +111,7 @@ Remote		*ServerRelay::getRemote(unsigned int hash)
 	return (*result);
     }
   auto result = std::find_if(this->_remotsWithoutRoom.begin(), this->_remotsWithoutRoom.end(),
-			     [this, &hash] (Remote *remote) -> bool
+			     [this, &hash] (const Remote *remote) -> bool
 			     {
 			       if (remote->getPrivateHash() == hash)
 				 return true;
@@ -122,13 +122,13 @@ Remote		*ServerRelay::getRemote(unsigned int hash)
   return (NULL);
 }
 
-Remote		*ServerRelay::getRemote(const std::string &ip, const int port)
+Remote		*ServerRelay::getRemote(const std::string &ip, const int port) const
 {
   for(auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it)
     {
-      std::vector<Remote *> &remotes = it->second->getRemotes();
+      const std::vector<Remote *> &remotes = it->second->getRemotes();
       auto result = std::find_if(remotes.begin(), remotes.end(),
-				 [this, &ip, &port] (Remote *remote) -> bool
+				 [this, &ip, &port] (const Remote *remote) -> bool
 				 {
 				   if (remote->getIP() == ip && remote->getPort() == port)
 				     return true;
@@ -211,11 +211,10 @@ void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 	    test = this->manageRemotesReceiveTCP(remotes, room, it, remote);
 	  } else {
 	    if (!room) {
-	      std::cout << "erase2" << std::endl;
+	      std::cout << "Erase remote from the server" << std::endl;
 	      it = remotes.erase(it);
 	      test = true;
 	    } else {
-	      std::cout << "disconnectRemote" << std::endl;
 	      room->disconnectRemote(remote);
 	    }
 	  }
@@ -230,7 +229,6 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 						     std::vector<Remote *>::iterator &it,
 						     Remote *remote)
 {
-  std::cout << "ReceiveTCP" << std::endl;
   LockVector<IBuffer *> &recv_buffer = remote->getRecvBufferTCP();
   auto guard = create_lock(recv_buffer);
 
@@ -250,18 +248,17 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 	  auto tmp = this->_rooms.find(nameRoom);
 	  if (tmp == this->_rooms.end())
 	    {
-	      std::cout << "Create Room" << std::endl;
 	      try {
 		this->_rooms.insert(std::pair<std::string, RoomServer *>
 				    (nameRoom, new RoomServer(this, nameRoom)));
 	      } catch (const std::exception &e) {
-		std::cerr << e.what() << std::endl;
+		std::cerr << "Exception : " << e.what() << std::endl;
 		return false;
 	      } catch (const std::string &str) {
-		std::cerr << str << std::endl;
+		std::cerr << "Error : " << str << std::endl;
 		return false;
 	      } catch (...) {
-		std::cerr << "Unknown error." << std::endl;
+		std::cerr << "Error : Unknown error." << std::endl;
 		return false;
 	      }
 	    }
@@ -269,20 +266,19 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 	  buffer = this->getTCPBuffer();
 	  if (tmp->second->getRemotes().size() >= 4)
 	    {
-	      std::cout << "!!!! Send CHANGE_ROOM_QUERY_NON : The room is full !!!!" << std::endl;
+	      std::cout << "Sorry The room is full !" << std::endl;
 	      *buffer << static_cast<char>(CHANGE_ROOM_QUERY_NON);
 	      *buffer << "The room is full";
 	      remote->sendTCP(buffer);
 	      return false;
 	    }
-	  std::cout << "Send CHANGE_ROOM_QUERY_YES" << std::endl;
 	  tmp->second->addRemote(remote);
 	  *buffer << static_cast<char>(CHANGE_ROOM_QUERY_YES);
 	  remote->sendTCP(buffer);
 	  remote->setRoom(nameRoom);
 	  itBuff = recv_buffer.erase(itBuff);
 	  if (!room) {
-	    std::cout << "remotes.erase" << std::endl;
+	    std::cout << "Erase remote from the server" << std::endl;
 	    it = remotes.erase(it);
 	    return true;
 	  }
@@ -308,12 +304,10 @@ void		ServerRelay::manageRemotesInRooms()
       this->manageRemotes(room->getRemotes(), room);
 
       //Clean room empty
-      //auto guard_room = create_lock(*room, true);
       std::vector<Remote *> &remotes_disconnect = room->getPendingDisonnectRemotes();
       std::for_each(remotes_disconnect.begin(), remotes_disconnect.end(),
 		    [&room, this] (Remote *remote) -> void
 		    {
-		      std::cout << "removeRemote" << std::endl;
 		      room->removeRemote(remote);
 		    });
       remotes_disconnect.clear();
@@ -322,19 +316,16 @@ void		ServerRelay::manageRemotesInRooms()
 	  auto guard_room = create_lock(this->_mutex_room, true);
 	  guard.setUnLocked();
 
+	  std::cout << "Erase the room" << it->first << std::endl;
 	  it = this->_rooms.erase(it);
 	  delete room;
 	  test = false;
-	  std::cout << "!!!!!!!!!!!!!!!!!!!!!!ERASE ROOM!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 	}
       if (test)
 	++it;
     }
 }
 
-/**
- * @todo Add more verifications than only id (like Port and IP) to know which client is talking
- */
 void		ServerRelay::receiveUDP()
 {
   IBuffer	*buffer = this->getUDPBuffer();
@@ -374,10 +365,10 @@ void		ServerRelay::addClient()
   IBuffer	*buffer;
   unsigned int	hash;
 
-  std::cout << "Adding client" << std::endl;
+  std::cout << "Adding new client in the server" << std::endl;
   new_client = this->_server_socket_tcp.accept();
   hash = this->generateHash();
-  std::cout << "GENERATING HASH: " << hash << std::endl;
+  std::cout << "Generating hash: " << hash << std::endl;
   remote = new Remote(*new_client, hash);
   this->_remotsWithoutRoom.push_back(remote);
   buffer = this->getTCPBuffer();
@@ -385,7 +376,7 @@ void		ServerRelay::addClient()
   remote->sendTCP(buffer);
 }
 
-unsigned int	ServerRelay::generateHash()
+unsigned int	ServerRelay::generateHash() const
 {
   unsigned int	hash;
 

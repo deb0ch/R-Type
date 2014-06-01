@@ -16,7 +16,7 @@ void	PlayerLifeSystem::init()
   this->_world->addEventHandler("EntityDeletedEvent", this, &PlayerLifeSystem::entityDeathEvent);
 }
 
-bool	PlayerLifeSystem::canProcess(Entity *)
+bool	PlayerLifeSystem::canProcess(Entity *) const
 {
   return (false);
 }
@@ -44,7 +44,6 @@ void	PlayerLifeSystem::entityDeathEvent(IEvent *event)
 	  if (this->_nb_lives > 0)
 	    {
 	      --this->_nb_lives;
-	      std::cout << "Player respawned! " << this->_nb_lives << " lives remaining!" << std::endl;
 	      player_respawner->playerRespawn(entityDeletedEvent->getEntity());
 	    }
 	  else

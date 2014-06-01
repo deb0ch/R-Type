@@ -2,37 +2,38 @@
 # define ENTITYFACTORY_H_
 
 # include <string>
-# include "Factory.hpp"
-# include "SFMLInputComponent.hh"
-# include "Friction2DComponent.hh"
-# include "Box2DComponent.hh"
-# include "Pos2DComponent.hh"
-# include "TeamComponent.hh"
-# include "Speed2DComponent.hh"
-# include "MovementSpeedComponent.hh"
-# include "SFMLSpriteComponent.hh"
-# include "NetworkSendUpdateComponent.hh"
-# include "ActionComponent.hh"
-# include "CollisionPowerComponent.hh"
-# include "Entity.hh"
-# include "LifeComponent.hh"
-# include "MoveForwardComponent.hh"
-# include "FireAlwaysComponent.hh"
-# include "MoveSequenceComponent.hh"
-# include "EntitySpawnerComponent.hh"
-# include "MovementLimitFrame2DComponent.hh"
-# include "TagComponent.hh"
-# include "CollisionComponent.hh"
-# include "AutoDestructComponent.hh"
-# include "MoveFollowComponent.hh"
-# include "ExplosionComponent.hh"
-# include "WeaponPowerUpComponent.hh"
-# include "Hash.hh"
-# include "NetworkReceiveActionComponent.hh"
-# include "EntityFile.hh"
-# include "LifePowerUpComponent.hh"
 
 # include "DirectoryLister.hh"
+# include "Entity.hh"
+# include "EntityFile.hh"
+# include "Factory.hpp"
+# include "Hash.hh"
+
+# include "ActionComponent.hh"
+# include "AutoDestructComponent.hh"
+# include "Box2DComponent.hh"
+# include "CollisionComponent.hh"
+# include "CollisionPowerComponent.hh"
+# include "EntitySpawnerComponent.hh"
+# include "ExplosionComponent.hh"
+# include "FireAlwaysComponent.hh"
+# include "Friction2DComponent.hh"
+# include "LifeComponent.hh"
+# include "LifePowerUpComponent.hh"
+# include "MoveForwardComponent.hh"
+# include "MovementLimitFrame2DComponent.hh"
+# include "MovementSpeedComponent.hh"
+# include "MoveSequenceComponent.hh"
+# include "Pos2DComponent.hh"
+# include "MoveFollowComponent.hh"
+# include "NetworkReceiveActionComponent.hh"
+# include "NetworkSendUpdateComponent.hh"
+# include "SFMLInputComponent.hh"
+# include "SFMLSpriteComponent.hh"
+# include "Speed2DComponent.hh"
+# include "TagComponent.hh"
+# include "TeamComponent.hh"
+# include "WeaponPowerUpComponent.hh"
 
 class EntityFactory : public Factory<Entity, hash_t>
 {
@@ -45,7 +46,7 @@ public:
   virtual ~EntityFactory()
   {}
 
-  void		addEntity(const std::string &key, Entity *input)
+  void	addEntity(const std::string &key, Entity *input)
   {
     this->add(Hash()(key), input);
     this->_keys.push_back(key);
@@ -84,9 +85,10 @@ public:
 	if ((*it).substr((*it).rfind('.')) != ".entity")
 	  return ;
 	input.open("./Ressources/entities/" + *it);
-	try {
-	  res = ef.deserialize(input);
-	}
+	try
+	  {
+	    res = ef.deserialize(input);
+	  }
 	catch (EntityFileException &efe)
 	  {
 	    efe.setFilename(*it);
@@ -97,10 +99,10 @@ public:
       }
   }
 
-  void		init()
+  void	init()
   {
     this->deserializeAll();
   }
 };
 
-#endif
+#endif /* !ENTITYFACTORY_H_ */

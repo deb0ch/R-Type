@@ -34,19 +34,19 @@ protected:
   void				fixWeights();
 
 public:
-  EntitySpawnerComponent(std::vector<std::pair<std::string, unsigned int>> entities = {},
-			 std::vector<IComponent*> components = {},
+  EntitySpawnerComponent(const std::vector<std::pair<std::string, unsigned int>> &entities = {},
+			 const std::vector<IComponent*> &components = {},
 			 unsigned long nb = 0,
 			 float delay = 0.25f,
-			 std::pair<float, float> min_pos = {0.0f, 0.0f},
-			 std::pair<float, float> max_pos = {0.0f, 0.0f},
+			 const std::pair<float, float> &min_pos = {0.0f, 0.0f},
+			 const std::pair<float, float> &max_pos = {0.0f, 0.0f},
 			 bool random = true,
 			 bool abs = false);
   EntitySpawnerComponent(const EntitySpawnerComponent& ref);
   virtual	~EntitySpawnerComponent();
 
   bool				isAbsolute() const;
-  const std::pair<float, float>	getCoordinates() const;
+  const std::pair<float, float>		getCoordinates() const;
   const std::vector<IComponent*>	&getComponents() const;
 
   void				setActive(bool active);

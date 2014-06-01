@@ -14,7 +14,6 @@ MoveSequenceComponent::MoveSequenceComponent(const std::vector<std::string> &act
 MoveSequenceComponent::~MoveSequenceComponent()
 {}
 
-//----- ----- Operators ----- ----- //
 //----- ----- Methods ----- ----- //
 
 void  MoveSequenceComponent::incrementTick(float delta)

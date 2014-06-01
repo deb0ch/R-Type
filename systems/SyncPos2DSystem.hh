@@ -9,9 +9,8 @@ public:
   SyncPos2DSystem();
   virtual ~SyncPos2DSystem();
 
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float);
-protected:
 
 };
 

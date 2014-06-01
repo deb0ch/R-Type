@@ -19,8 +19,8 @@ public:
   virtual Room				*getRoom(const std::string &room_name);
   virtual IBuffer			*getTCPBuffer();
   virtual IBuffer			*getUDPBuffer();
-  virtual Remote			*getRemote(unsigned int);
-  virtual Remote			*getRemote(const std::string &ip, const int port);
+  virtual Remote			*getRemote(unsigned int) const;
+  virtual Remote			*getRemote(const std::string &ip, const int port) const;
   virtual void				disposeUDPBuffer(IBuffer *);
   virtual void				disposeTCPBuffer(IBuffer *);
 

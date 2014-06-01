@@ -1,5 +1,3 @@
-#include	<iostream>
-
 #include	"MoveSystem.hh"
 #include	"Speed2DComponent.hh"
 #include	"Pos2DComponent.hh"
@@ -13,10 +11,8 @@ MoveSystem::MoveSystem()
 MoveSystem::~MoveSystem()
 {}
 
-//----- ----- Getters ----- ----- //
-//----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
-bool		MoveSystem::canProcess(Entity *e)
+bool		MoveSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("Speed2DComponent") && e->hasComponent("Pos2DComponent"))
     return (true);

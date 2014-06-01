@@ -10,8 +10,10 @@ class CollisionEvent : public AEvent
 public:
   CollisionEvent(Entity* entity1, Entity* entity2);
   virtual	~CollisionEvent();
-  Entity*	getEntity1() const;
-  Entity*	getEntity2() const;
+  Entity*	getEntity1();
+  Entity*	getEntity2();
+  const Entity*	getEntity1() const;
+  const Entity*	getEntity2() const;
 
 protected:
   Entity	*entity1;
