@@ -4,7 +4,7 @@
 # define _XOPEN_SOURCE 700
 
 # ifdef __linux__
-#  include <errno.h>
+#  include <cerrno>
 #  include <exception>
 #  include <unistd.h>
 # endif /* !__linux__ */
@@ -14,7 +14,7 @@
 # endif /* !_WIN32 */
 
 # include <string>
-# include <time.h>
+# include <ctime>
 
 # include "ITimer.hh"
 # include "RTException.hh"

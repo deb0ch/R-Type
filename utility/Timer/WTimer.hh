@@ -3,7 +3,7 @@
 
 # include <iostream>
 # include <string>
-# include <time.h>
+# include <ctime>
 # include <Windows.h>
 # include <SynchApi.h>
 
