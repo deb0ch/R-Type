@@ -20,6 +20,21 @@ public:
 		if ((_threadHandle = CreateThread(
 			NULL,
 			0,
+			reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntryArg),
+			&_container,
+			0,
+			&_thread)) == NULL)
+				throw ThreadException(GetLastError());
+		_status = RUNNING;
+	}
+
+  virtual void						start(T* obj, void (T::*fct)(Any))
+	{
+		_container.obj = obj;
+		_container.fct = fct;
+		if ((_threadHandle = CreateThread(
+			NULL,
+			0,
 			reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
 			&_container,
 			0,
@@ -33,7 +48,7 @@ public:
 	  if ((_threadHandle = CreateThread(
 		  NULL,
 		  0,
-		  reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntry),
+		  reinterpret_cast<LPTHREAD_START_ROUTINE>(_threadEntryArg),
 		  arg,
 		  0,
 		  &_thread)) == NULL)
@@ -86,11 +101,19 @@ private:
 	struct Container					_container;
 
 	// Private functions
-	static void*						_threadEntry(void* args)
+	static void*						_threadEntryArg(void* args)
 	{
 		Thread<T>::Container*			container = reinterpret_cast<Thread<T>::Container*>(args);
 
 		(container->obj->*(container->fct))(container->arg);
+		return (NULL);
+	}
+
+  static void*						_threadEntry(void* args)
+	{
+		Thread<T>::Container*			container = reinterpret_cast<Thread<T>::Container*>(args);
+
+		(container->obj->*(container->fct))();
 		return (NULL);
 	}
 };

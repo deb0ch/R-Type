@@ -4,7 +4,8 @@
 #include "UDPException.hh"
 #include "LockGuard.hpp"
 
-ClientRelay::ClientRelay(const std::string &addr, int port) : _network_initializer(), _select()
+ClientRelay::ClientRelay(const std::string &addr, int port)
+  : _network_initializer(), _select()
 {
   SocketTCP	*sock = new SocketTCP;
 
@@ -35,7 +36,8 @@ void			ClientRelay::waitForEvent()
     {
       this->_select.addWrite(this->_remote->getTCPSocket().getHandle());
     }
-  if (this->_remote->canSendUDP() || (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0))
+  if (this->_remote->canSendUDP()
+      || (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0))
     {
       this->_select.addWrite(this->_socket_udp.getHandle());
     }
@@ -43,7 +45,7 @@ void			ClientRelay::waitForEvent()
   this->_select.doSelect();
 }
 
-void			ClientRelay::start(Any)
+void			ClientRelay::threadStart()
 {
   this->start();
 }
