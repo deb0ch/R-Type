@@ -55,9 +55,9 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new PlayerLifeSystem(3));
 	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
-	CollisionSystem *collision;
+	CollisionSoloSystem *collision;
 
-	collision = new CollisionSystem();
+	collision = new CollisionSoloSystem();
 	this->_world->addSystem(collision);
 	this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 

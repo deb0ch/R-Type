@@ -8,8 +8,6 @@
 # include	"EventManager.hpp"
 # include	"Any.hpp"
 
-# define	DEBUG false
-
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
  * @todo Add two boolean state attributes to keep trace of the start() / stop() and pause() / resume() methods calls.
@@ -31,7 +29,10 @@ private:
 
 public:
 
-  World();
+  static bool				DEBUG;
+  static bool				QUADTREE;
+
+ World();
   World(const World&);
   virtual	~World();
   World&	operator=(const World&);
