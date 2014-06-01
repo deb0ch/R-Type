@@ -9,11 +9,10 @@ ENTITY:BOSS_SPAWNER_2
 	COMPONENT:AutoDestructComponent
 		delay=150
 	!COMPONENT
-	#delay=135
 	COMPONENT:EntitySpawnerComponent
 		entity=BOSS_2_1;1
 		nb=1
-		delay=0
+		delay=135
 		minPosX=-100
 		minPosY=30
 		maxPosX=-100
