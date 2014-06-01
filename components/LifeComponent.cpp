@@ -60,7 +60,8 @@ void LifeComponent::decreaseInvulnerability(float delta)
 		this->_invulnerability -= delta;
 }
 
-void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)
+void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input,
+						  unsigned int &lineno)
 {
   (void)input;
 

@@ -1,53 +1,65 @@
-ENTITY:POWERUP_3
+ENTITY:POWERUP_FORCE
 	COMPONENT:TagComponent
 		tag=BOOST
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=10
+		update_rate=2
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=25
-		height=20
+		width=35
+		height=35
 	!COMPONENT
 	COMPONENT:Pos2DComponent
-		x=0
-		y=0
+		x=50
+		y=150
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-30
+		vx=0
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=2
 	!COMPONENT
-	COMPONENT:WeaponPowerUpComponent
-		weapon=LASER_BULLET
-		delay=0.30
-	!COMPONENT
 	COMPONENT:LifeComponent
 		life=1
 		invulnerability=0
+	!COMPONENT
+	COMPONENT:MoveFollowComponent
+		tagToFollow=PLAYER
+	!COMPONENT
+	COMPONENT:AttachPowerUpComponent
+		entity=FORCE_ATTACHED
+	!COMPONENT
+	COMPONENT:MovementSpeedComponent
+		speed_coef=800
+	!COMPONENT
+	COMPONENT:Friction2DComponent
+		coef=2.7
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=25
-			height=20
+			width=24
+			height=24
 		!COMPONENT
 		toCollide=PLAYER
 		toNotCollide=MONSTER
 		toNotCollide=BULLET
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=boosts.png
-		nbSpritesX=1
-		nbSpritesY=3
-		tickChange=50
+		filename=force-powerup.png
+		nbSpritesX=6
+		nbSpritesY=1
+		tickChange=10
 		anim=ANIM
 			action=
-			start=1
-			length=0
+			start=0
+			length=6
 		!ANIM
+	!COMPONENT
+	COMPONENT:ActionComponent
+		actions=DOWN
+		actions=UP
 	!COMPONENT
 !ENTITY

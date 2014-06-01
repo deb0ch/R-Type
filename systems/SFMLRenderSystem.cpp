@@ -6,6 +6,7 @@
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
 #include	"ActionComponent.hh"
+#include	"RTException.hh"
 
 SFMLRenderSystem::SFMLRenderSystem()
   : ASystem("SFMLRenderSystem")
@@ -69,7 +70,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
 
   if (!imageLoader)
-    return; //TODO throw
+    throw RTException("The world do not content ImageLoader");
   sf::Sprite *sprite = NULL;
   if (action != NULL)
     {

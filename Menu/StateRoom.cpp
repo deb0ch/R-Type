@@ -6,6 +6,7 @@
 #include	"ClientRelay.hh"
 #include	"Any.hpp"
 #include	"StateGame.hh"
+#include	"RTException.hh"
 
 StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
 {
@@ -50,7 +51,7 @@ void	StateRoom::accessRoom()
     if (this->_textboxRoom->getString() != "")
       this->_textboxRoom->setString("defaulte");
     if (!(remote = network->getRemote(0)))
-      throw "invalide remote";
+      throw RTException("Invalid remote");
     IBuffer *buffer = network->getTCPBuffer();
     *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
     *buffer << this->_textboxRoom->getString();
@@ -71,7 +72,7 @@ void	StateRoom::accessRoom()
 	}
     }
   } else {
-    throw "invalide network";
+    throw RTException("Invalid network");
   }
 }
 
@@ -95,7 +96,7 @@ bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>
       else
 	{
 	  *buffer >> msg;
-	  throw msg;
+	  throw RTException(msg);
 	}
       it = vector.erase(it);
       return true;

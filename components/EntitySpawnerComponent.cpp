@@ -118,6 +118,10 @@ void			EntitySpawnerComponent::fixWeights()
 		    p.second = 1;
 		  this->_maxWeight += p.second;
 		});
+  if (this->_entities.size() > 0)
+    this->_lastSpawned = this->_entities[0].first;
+  else
+    this->_lastSpawned = "";
 }
 
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
@@ -136,6 +140,7 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
   this->_tick -= this->_delay;
   if (facto != NULL)
     res = facto->create(this->_entities[this->_next].first);
+  this->_lastSpawned = this->_entities[this->_next].first;
   if (!this->_random)
     {
       ++this->_next;
@@ -163,6 +168,11 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
     return (NULL);
   ++this->_counter;
   return (res);
+}
+
+const std::string	&EntitySpawnerComponent::getLastSpawned() const
+{
+  return (this->_lastSpawned);
 }
 
 void			EntitySpawnerComponent::serialize(IBuffer &) const
@@ -229,4 +239,9 @@ void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned
   output << std::string(indent, '\t') << "maxPosY=" << this->_max_pos.second << std::endl;
   output << std::string(indent, '\t') << "random=" << std::boolalpha << this->_random << std::endl;
   output << std::string(indent, '\t') << "abs=" << std::boolalpha << this->_abs << std::endl;
+}
+
+float			EntitySpawnerComponent::getDelay() const
+{
+  return this->_delay;
 }
