@@ -31,6 +31,8 @@ StateSoloGame::~StateSoloGame()
 void		StateSoloGame::addSystems()
 {
 	this->_world->addSystem(new AutoDestructSystem());
+	this->_world->addSystem(new AttachSystem());
+	this->_world->addSystem(new AttachedToSystem());
 	this->_world->addSystem(new EntitySpawnerSystem());
 	this->_world->addSystem(new SFMLEventSystem());
 	this->_world->addSystem(new SFMLInputSystem());
@@ -58,8 +60,6 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
 	this->_world->addSystem(new PlayerLifeSystem(3));
 	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
-	this->_world->addSystem(new AttachSystem());
-	this->_world->addSystem(new AttachedToSystem());
 
 	CollisionSystem *collision;
 

@@ -19,6 +19,9 @@ ENTITY:FORCE_ATTACHED
 	COMPONENT:AttachPowerUpComponent
 		entity=FORCE_ATTACHED
 	!COMPONENT
+	COMPONENT:CollisionPowerComponent
+		collisionPower=200
+	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
@@ -35,9 +38,9 @@ ENTITY:FORCE_ATTACHED
 		nb=0
 		delay=0.15
 		minPosX=5
-		minPosY=0
+		minPosY=10
 		maxPosX=5
-		maxPosY=0
+		maxPosY=10
 		random=true
 		abs=false
 	!COMPONENT
@@ -51,5 +54,7 @@ ENTITY:FORCE_ATTACHED
 			start=0
 			length=4
 		!ANIM
+	!COMPONENT
+	COMPONENT:ActionComponent
 	!COMPONENT
 !ENTITY

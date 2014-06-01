@@ -240,3 +240,8 @@ void			EntitySpawnerComponent::serializeFromFile(std::ofstream &output, unsigned
   output << std::string(indent, '\t') << "random=" << std::boolalpha << this->_random << std::endl;
   output << std::string(indent, '\t') << "abs=" << std::boolalpha << this->_abs << std::endl;
 }
+
+float			EntitySpawnerComponent::getDelay() const
+{
+  return this->_delay;
+}

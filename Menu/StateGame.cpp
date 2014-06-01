@@ -2,6 +2,7 @@
 #include	"SFMLRenderTextSystem.hh"
 #include	"StateGame.hh"
 #include	"Any.hpp"
+#include	"AttachedToSystem.hh"
 
 StateGame::StateGame(World *world)
 {
@@ -58,6 +59,7 @@ void		StateGame::addEntities()
 void		StateGame::addSystems()
 {
 	this->_world->addSystem(new SFMLEventSystem());
+	this->_world->addSystem(new AttachedToSystem());
 	this->_world->addSystem(new SFMLInputSystem());
 	this->_world->addSystem(new SFMLDisplaySystem());
 	this->_world->addSystem(new SFMLRenderSystem());
@@ -101,6 +103,7 @@ void		StateGame::addSystems()
 		"SyncPos2DComponent",
 		"MovementLimitFrame2DComponent",
 		"SFMLTextComponent",
+		"AttachedToComponent",
 		"SFMLJoystickComponent"
 	};
 

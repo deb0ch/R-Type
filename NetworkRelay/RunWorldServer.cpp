@@ -32,6 +32,8 @@
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLRenderTextSystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"AttachSystem.hh"
+#include	"AttachedToSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"EntityFactory.hpp"
@@ -84,6 +86,8 @@ World *RunWorldServer::getWorld() {
 void RunWorldServer::addSystems()
 {
   this->_world->addSystem(new AutoDestructSystem());
+  this->_world->addSystem(new AttachSystem());
+  this->_world->addSystem(new AttachedToSystem());
   this->_world->addSystem(new EntitySpawnerSystem());
   this->_world->addSystem(new OutOfBoundsSystem());
   this->_world->addSystem(new MoveFollowSystem());
@@ -102,9 +106,9 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new DisconnectPlayerSystem());
   this->_world->addSystem(new BackgroundSystem());
   std::vector<std::string> power_ups =
-    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE"};
+    {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE", "POWERUP_FORCE"};
   std::vector<std::string> power_ups_component =
-    {"WeaponPowerUpComponent", "LifePowerUpComponent"};
+    {"WeaponPowerUpComponent", "LifePowerUpComponent", "AttachPowerUpComponent"};
   this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
   this->_world->addSystem(new PlayerLifeSystem(3));
   this->_world->addSystem(new SFMLSetDisplayLiveSystem());
@@ -147,6 +151,7 @@ void RunWorldServer::addSystems()
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
       "SFMLTextComponent",
+      "AttachedToComponent",
       "SFMLJoystickComponent"
     };
 
@@ -189,4 +194,5 @@ void	RunWorldServer::addEntities()
   this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   this->_world->addEntity(entityFactory->create("GAME"));
   this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
+  this->_world->addEntity(entityFactory->create("POWERUP_FORCE"));
 }

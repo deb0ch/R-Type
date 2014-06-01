@@ -24,7 +24,8 @@ void AttachedToSystem::processEntity(Entity *entity, const float)
   AttachedToComponent *attachedto = entity->getComponent<AttachedToComponent>("AttachedToComponent");
   Pos2DComponent *pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
   ActionComponent *follow_action_component;
-  ActionComponent *action_comp;
+  EntitySpawnerComponent *entity_spawner;
+  EntitySpawnerComponent *follow_entity_spawner;
   Pos2DComponent *follow_pos;
 
   if (!attachedto || !pos)
@@ -40,15 +41,18 @@ void AttachedToSystem::processEntity(Entity *entity, const float)
   pos->setY(follow_pos->getY() + attachedto->getOffset().second);
 
   follow_action_component = follow_entity->getComponent<ActionComponent>("ActionComponent");
-  action_comp = entity->getComponent<ActionComponent>("ActionComponent");
-  if (follow_action_component && follow_action_component->isActive("FIRE"))
+  entity_spawner = entity->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent");
+  follow_entity_spawner = follow_entity->getComponent<EntitySpawnerComponent>("EntitySpawnerComponent");
+  if (follow_action_component && follow_action_component->isActive("FIRE") &&
+      entity_spawner && follow_entity_spawner)
     {
-      if (action_comp)
-	{
-	  std::cout << "SET FIRE" << std::endl;
-	  action_comp->setAction("FIRE", true);
-	}
+      std::string tmp = follow_entity_spawner->getLastSpawned();
+      float delay = follow_entity_spawner->getDelay();
+      entity_spawner->clearEntities();
+      entity_spawner->addEntity(std::make_pair(tmp, 1));
+      entity_spawner->setDelay(delay);
+      entity_spawner->setActive(true);
     }
-  else if (action_comp)
-    action_comp->setAction("FIRE", false);
+  else if (entity_spawner)
+    entity_spawner->setActive(false);
 }
