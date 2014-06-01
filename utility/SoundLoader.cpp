@@ -8,12 +8,9 @@ SoundLoader::SoundLoader()
 
 SoundLoader::~SoundLoader()
 {
-  auto it = _soundBuffers.begin();
-  auto it2 = _sounds.begin();
-
-  for (it = _soundBuffers.begin(); it != _soundBuffers.end(); ++it)
+  for (auto it = _soundBuffers.begin(); it != _soundBuffers.end(); ++it)
     delete it->second;
-  for (it2 = _sounds.begin(); it2 != _sounds.end(); ++it2)
+  for (auto it2 = _sounds.begin(); it2 != _sounds.end(); ++it2)
     delete it2->second;
 }
 
