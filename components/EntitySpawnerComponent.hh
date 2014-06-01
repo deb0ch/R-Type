@@ -29,6 +29,7 @@ protected:
 
   unsigned long			_counter;
   float				_tick;
+  std::string			_lastSpawned;
 
   void				fixWeights();
 

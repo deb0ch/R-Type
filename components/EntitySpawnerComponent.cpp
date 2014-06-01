@@ -118,6 +118,7 @@ void			EntitySpawnerComponent::fixWeights()
 		    p.second = 1;
 		  this->_maxWeight += p.second;
 		});
+  this->_lastSpawned = this->_entities[0].first;
 }
 
 Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
@@ -136,6 +137,7 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
   this->_tick -= this->_delay;
   if (facto != NULL)
     res = facto->create(this->_entities[this->_next].first);
+  this->_lastSpawned = this->_entities[this->_next].first;
   if (!this->_random)
     {
       ++this->_next;
