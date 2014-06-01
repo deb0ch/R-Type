@@ -251,8 +251,19 @@ bool		ServerRelay::manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room 
 	  if (tmp == this->_rooms.end())
 	    {
 	      std::cout << "Create Room" << std::endl;
-	      this->_rooms.insert(std::pair<std::string, RoomServer *>
-				  (nameRoom, new RoomServer(this, nameRoom)));
+	      try {
+		this->_rooms.insert(std::pair<std::string, RoomServer *>
+				    (nameRoom, new RoomServer(this, nameRoom)));
+	      } catch (const std::exception &e) {
+		std::cerr << e.what() << std::endl;
+		return false;
+	      } catch (const std::string &str) {
+		std::cerr << str << std::endl;
+		return false;
+	      } catch (...) {
+		std::cerr << "Unknown error." << std::endl;
+		return false;
+	      }
 	    }
 	  tmp = this->_rooms.find(nameRoom);
 	  buffer = this->getTCPBuffer();
