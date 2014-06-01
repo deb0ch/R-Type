@@ -29,9 +29,9 @@ ENTITY:BOSS_2_BULLET
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=shotBoss2.png
-		nbSpritesX=8
+		nbSpritesX=4
 		nbSpritesY=1
-		tickChange=10
+		tickChange=50
 		anim=ANIM
 			action=
 			start=0
