@@ -129,7 +129,8 @@ void SFMLMenu::render(const Timer&)
   this->_window->clear();
 	if (this->_background)
 		this->_window->draw(*this->_background);
-	this->_window->draw(*this->_logo);
+	if (this->_logo)
+	  this->_window->draw(*this->_logo);
 	this->_ipServer->draw();
 	this->_buttonplay->draw();
 	this->_buttonSolo->draw();
