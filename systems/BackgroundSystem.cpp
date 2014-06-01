@@ -31,7 +31,7 @@ void	BackgroundSystem::processEntity(Entity *entity, const float)
   entity_pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
   if (entity_pos->getX() <= -(BACKGROUND_WIDTH / 2))
     {
-      int diff = entity_pos->getX() + (BACKGROUND_WIDTH / 2);
+      float diff = entity_pos->getX() + (BACKGROUND_WIDTH / 2);
       diff = (diff == 0) ? (diff - 2) : (diff - 1);
       entity_pos->setX(BACKGROUND_WIDTH + (BACKGROUND_WIDTH / 2) + diff);
     }
