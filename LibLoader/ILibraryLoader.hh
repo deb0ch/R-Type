@@ -14,11 +14,4 @@ public:
   virtual ~ILibraryLoader() {}
 };
 
-/*
-class ILibraryLoader
-{
-public:
-	virtual IAnimal *getInstance(const std::string &path, const std::string &entry = "getInstance") = 0;
-};
-*/
 #endif /* !__ILIBRARYLOADER_H_ */

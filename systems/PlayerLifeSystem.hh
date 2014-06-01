@@ -9,7 +9,7 @@ public:
   PlayerLifeSystem(unsigned int nb_lives = 3);
   virtual ~PlayerLifeSystem();
   virtual void	init();
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
   void		savePlayerDeath(Entity *);
   void		entityDeathEvent(IEvent *event);

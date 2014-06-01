@@ -19,7 +19,6 @@ NetworkBuffer::NetworkBuffer(const IBuffer &buffer)
 {
   const char	*cpy;
 
-  std::cout << "COPY CONSTRUCT" << std::endl;
   this->_buffer_max_size = buffer.getMaxSize() + buffer.getOffset();
   this->_buffer = new char[this->_buffer_max_size];
   this->_buffer_original = this->_buffer;

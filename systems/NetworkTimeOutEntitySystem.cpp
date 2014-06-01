@@ -8,7 +8,7 @@ NetworkTimeOutEntitySystem::NetworkTimeOutEntitySystem() : ASystem("NetworkTimeO
 NetworkTimeOutEntitySystem::~NetworkTimeOutEntitySystem()
 {}
 
-bool		NetworkTimeOutEntitySystem::canProcess(Entity *entity)
+bool		NetworkTimeOutEntitySystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkReceiveUpdateComponent"))
     return true;
@@ -21,7 +21,6 @@ void		NetworkTimeOutEntitySystem::processEntity(Entity *entity, const float) {
 
   if (tmp && tmp->getLastUpdate() >= tmp->getUpdateRate() * 5.f)
     {
-      std::cout << "Timeout" << std::endl;
       this->_world->sendEvent(new EntityDeletedEvent(entity));
     }
 }

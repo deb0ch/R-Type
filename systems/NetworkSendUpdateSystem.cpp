@@ -1,4 +1,3 @@
-#include <iostream>
 #include "NetworkSendUpdateSystem.hh"
 #include "ASerializableComponent.hh"
 #include "IComponent.hh"
@@ -15,7 +14,7 @@ NetworkSendUpdateSystem::NetworkSendUpdateSystem(const std::vector<std::string> 
 NetworkSendUpdateSystem::~NetworkSendUpdateSystem()
 {}
 
-bool				NetworkSendUpdateSystem::canProcess(Entity *entity)
+bool				NetworkSendUpdateSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkSendUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)

@@ -12,7 +12,7 @@ public:
   SpawnPlayerSystem(const std::vector<std::string> &entity_player_name);
   virtual		~SpawnPlayerSystem();
   virtual void		start();
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		beforeProcess(const float);
   virtual void		processEntity(Entity *, const float delta);
   void			newPlayerHandler(IEvent *event);

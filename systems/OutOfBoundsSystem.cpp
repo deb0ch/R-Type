@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Pos2DComponent.hh"
 #include "EntityDeletedEvent.hh"
 #include "TagComponent.hh"
@@ -13,7 +11,7 @@ OutOfBoundsSystem::~OutOfBoundsSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		OutOfBoundsSystem::canProcess(Entity *e)
+bool		OutOfBoundsSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("Pos2DComponent"))
     return (true);

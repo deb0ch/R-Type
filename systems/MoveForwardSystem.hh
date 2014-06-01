@@ -8,7 +8,7 @@ class MoveForwardSystem : public ASystem
 public:
 	MoveForwardSystem();
 	virtual ~MoveForwardSystem();
-	virtual bool canProcess(Entity *);
+	virtual bool canProcess(Entity *) const;
 	virtual void processEntity(Entity *, const float);
 };
 

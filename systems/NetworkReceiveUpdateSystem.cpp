@@ -20,7 +20,7 @@ NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem(const std::vector<std::st
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
 
-bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
+bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkReceiveUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)
@@ -138,7 +138,7 @@ void		NetworkReceiveUpdateSystem::parsePacketOnEntity(Entity *entity,
 	      receive_component->setPacketNum(num_packet);
 	    }
 	  else
-	    std::cout << "Packed dropped: " << num_packet << " " <<
+	    std::cerr << "Packed dropped: " << num_packet << " " <<
 	      receive_component->getPacketNum() << std::endl;
 	  this->_network->disposeUDPBuffer(buffer);
 	  it = vector.erase(it);
@@ -240,7 +240,6 @@ void				NetworkReceiveUpdateSystem::updateEntity(Entity *entity,
       auto it_serializable = this->_serializable_component.find(Hash()((*it)->getType()));
       if (it_serializable != this->_serializable_component.end() && it_serializable->second == false)
   	{
-	  std::cout << "deleting: " << (*it)->getType() << std::endl;
   	  delete *it;
   	  it = entity->_components.erase(it);
   	}

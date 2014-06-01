@@ -68,7 +68,7 @@ void	LifeComponent::deserializeFromFileSpecial(const std::string &lastline, std:
   if (std::regex_match(lastline, std::regex("life=.+")))
     this->_life = std::stoul(lastline.substr(5));
   else if (std::regex_match(lastline, std::regex("invulnerability=.+")))
-    this->_invulnerabilityMaxTime = std::stoul(lastline.substr(16));
+    this->_invulnerabilityMaxTime = std::stof(lastline.substr(16));
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }

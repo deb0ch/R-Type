@@ -21,8 +21,6 @@ int			main()
 	  states.update();
 	  if (timer.canTick())
 	    {
-	      //std::cout << std::endl << "entities count = " << world.countEntities() << std::endl;
-	      //std::cout << "fps = " << timer.getCurrentFps() << std::endl;
 	      states.render(timer);
 	    }
 	  timer.endFrame();

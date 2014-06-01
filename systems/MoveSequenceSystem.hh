@@ -8,7 +8,7 @@ class MoveSequenceSystem : public ASystem
 public:
 	MoveSequenceSystem();
 	virtual ~MoveSequenceSystem();
-	virtual bool canProcess(Entity *);
+	virtual bool canProcess(Entity *) const;
 	virtual void processEntity(Entity *, const float);
 };
 

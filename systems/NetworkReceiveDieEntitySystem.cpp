@@ -23,7 +23,7 @@ void NetworkReceiveDieEntitySystem::beforeProcess(const float) {
 }
 
 
-bool NetworkReceiveDieEntitySystem::canProcess(Entity *) {return (false);}
+bool NetworkReceiveDieEntitySystem::canProcess(Entity *) const {return (false);}
 void NetworkReceiveDieEntitySystem::processEntity(Entity *, const float) {}
 
 void NetworkReceiveDieEntitySystem::afterProcess(const float)

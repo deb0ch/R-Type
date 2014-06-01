@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Window.hh"
 #include "CollisionSoloSystem.hh"
 #include "CollisionEvent.hh"
@@ -13,7 +12,7 @@ CollisionSoloSystem::~CollisionSoloSystem()
 {
 }
 
-bool	CollisionSoloSystem::canProcess(Entity *entity)
+bool	CollisionSoloSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("CollisionComponent") &&
       entity->hasComponent("Pos2DComponent") &&

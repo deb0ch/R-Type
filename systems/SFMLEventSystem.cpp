@@ -1,8 +1,4 @@
-#include	<iostream>
-#include	<map>
-
 #include	"SFMLEventSystem.hh"
-
 #include	"SFMLKeyEvent.hh"
 #include	"SFMLJoystickEvent.hh"
 
@@ -86,21 +82,13 @@ void	SFMLEventSystem::beforeProcess(const float)
 	  this->_world->sendEvent(new SFMLJoystickEvent(event.joystickButton.button, false));
 	  break;
 
-	case sf::Event::MouseButtonPressed:
-	  //std::cout << "MOUSE CLICK [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
-	  break;
-
-	case sf::Event::MouseButtonReleased:
-	  //std::cout << "MOUSE RELEASE [" << sf::Mouse::getPosition().x << ";" << sf::Mouse::getPosition().y << "]" << std::endl;
-	  break;
-
 	default:
 	  break;
 	}
     }
 }
 
-bool	SFMLEventSystem::canProcess(Entity *)
+bool	SFMLEventSystem::canProcess(Entity *) const
 {
   return (false);
 }

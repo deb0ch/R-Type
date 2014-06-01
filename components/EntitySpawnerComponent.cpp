@@ -7,13 +7,13 @@
 #include	"RandomReal.hpp"
 
 //----- ----- Constructors ----- ----- //
-EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string,
-					       unsigned int>> entities,
-					       std::vector<IComponent*> components,
+EntitySpawnerComponent::EntitySpawnerComponent(const std::vector<std::pair<std::string,
+					       unsigned int>> &entities,
+					       const std::vector<IComponent*> &components,
 					       unsigned long nb,
 					       float delay,
-					       std::pair<float, float> min_pos,
-					       std::pair<float, float> max_pos,
+					       const std::pair<float, float> &min_pos,
+					       const std::pair<float, float> &max_pos,
 					       bool random,
 					       bool abs)
   : ACopyableComponent("EntitySpawnerComponent"),
@@ -31,7 +31,6 @@ EntitySpawnerComponent::EntitySpawnerComponent(std::vector<std::pair<std::string
   this->_counter = 0;
   this->_tick = 0;
 
-  this->_maxWeight = 0;
   this->fixWeights();
 }
 

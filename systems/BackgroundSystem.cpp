@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "TagComponent.hh"
 #include "SFMLSpriteComponent.hh"
 #include "Pos2DComponent.hh"
@@ -14,7 +12,7 @@ BackgroundSystem::~BackgroundSystem()
 {
 }
 
-bool	BackgroundSystem::canProcess(Entity *entity)
+bool	BackgroundSystem::canProcess(Entity *entity) const
 {
   TagComponent *tagComponent = entity->getComponent<TagComponent>("TagComponent");
 

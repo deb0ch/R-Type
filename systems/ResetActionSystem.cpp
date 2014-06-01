@@ -9,7 +9,7 @@ ResetActionSystem::ResetActionSystem()
 ResetActionSystem::~ResetActionSystem()
 {}
 
-bool ResetActionSystem::canProcess(Entity *entity)
+bool ResetActionSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent"))
     return (true);

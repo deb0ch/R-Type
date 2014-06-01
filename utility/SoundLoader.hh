@@ -28,7 +28,8 @@ private:
   void		addSound(const std::string &fileSound);
 
 private:
-  std::map<std::string, sf::SoundBuffer *> _sounds;
+  std::map<std::string, sf::SoundBuffer *> _soundBuffers;
+  std::map<std::string, sf::Sound *> _sounds;
 };
 
 #endif /* !SOUNDLOADER_H_ */

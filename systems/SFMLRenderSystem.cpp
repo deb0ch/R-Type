@@ -1,8 +1,4 @@
-#include	<iostream>
-#include	<list>
-
 #include	"SFMLRenderSystem.hh"
-
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
 #include	"ActionComponent.hh"
@@ -16,7 +12,7 @@ SFMLRenderSystem::~SFMLRenderSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLRenderSystem::canProcess(Entity *entity)
+bool		SFMLRenderSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("SFMLSpriteComponent") && entity->hasComponent("Pos2DComponent"))
     return (true);
@@ -91,7 +87,6 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
     sprite = this->getSprite(*imageLoader, spriteComp, "");
   if (sprite == NULL)
     {
-      std::cout << "Sprite does not exist" << std::endl;
       return;
     }
   sprite->setPosition(pos->getX() - (width / 2), pos->getY() - (height / 2));
