@@ -204,4 +204,5 @@ void	RunWorldServer::addEntities()
   this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   this->_world->addEntity(entityFactory->create("GAME"));
   this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
+  this->_world->addEntity(entityFactory->create("SCORE_DISPLAY"));
 }
