@@ -10,6 +10,7 @@ class SFMLSoundComponent : public ACopyableComponent<SFMLSoundComponent>
 private:
   bool			_alreadyPlayed;
   std::string		_soundName;
+  int			_volume;
 
 public:
   SFMLSoundComponent();
@@ -17,6 +18,7 @@ public:
   virtual ~SFMLSoundComponent();
 
   const std::string&	getSoundFileName() const;
+  int			getVolume() const;
   bool			alreadyPlayed() const;
   void			setPlayed();
 

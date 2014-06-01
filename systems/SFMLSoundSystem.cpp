@@ -28,7 +28,10 @@ void	SFMLSoundSystem::processEntity(Entity * e, const float)
       sf::Sound *sfSound = _soundLoader->getSound(sound->getSoundFileName());
 
       if (sfSound)
-	sfSound->play();
+	{
+	  sfSound->setVolume(sound->getVolume());
+	  sfSound->play();
+	}
       sound->setPlayed();
     }
 }
