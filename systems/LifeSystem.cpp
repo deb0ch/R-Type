@@ -79,6 +79,8 @@ void			LifeSystem::delete_entity(IEvent *e)
   EntityDeletedEvent*	event_catch = dynamic_cast<EntityDeletedEvent*>(e);
   if (event_catch == NULL)
     return;
+  if (event_catch->isForced())
+    return ;
   Entity *dyingEntity = event_catch->getEntity();
   if (dyingEntity == NULL)
     return;
