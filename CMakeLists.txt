@@ -8,7 +8,7 @@ SET(SERVER_BIN RType_Server)
 SET(CLIENT_BIN RType_Client)
 
 if (UNIX)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -ggdb3 -O0 -W -Wall -Wextra -Werror")
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -W -Wall -Wextra -Werror")
 endif (UNIX)
 
 SET(EXECUTABLE_SOURCE_DIR, {CMAKE_SOURCE_DIR})
