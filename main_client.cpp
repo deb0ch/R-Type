@@ -36,6 +36,10 @@ int			main()
     {
       std::cerr << "Error : " << str << std::endl;
     }
+  catch (const char* &str)
+    {
+      std::cerr << "Error : " << str << std::endl;
+    }
   catch (...)
     {
       std::cerr << "Error : Unknown error." << std::endl;
