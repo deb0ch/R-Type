@@ -36,6 +36,10 @@ public:
    * @brief Activate or desactivate an action.
    */
   void			setAction(const std::string &, const bool status);
+  /**
+   * @brief reset all actions
+   */
+  void			resetActions();
 
   virtual void		serialize(IBuffer &) const;
   virtual void		unserialize(IBuffer &);
