@@ -9,7 +9,7 @@ MoveSequenceSystem::MoveSequenceSystem() : ASystem("MoveSequenceSystem")
 MoveSequenceSystem::~MoveSequenceSystem()
 {}
 
-bool MoveSequenceSystem::canProcess(Entity *entity)
+bool MoveSequenceSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("MoveSequenceComponent") &&
       entity->hasComponent("ActionComponent"))

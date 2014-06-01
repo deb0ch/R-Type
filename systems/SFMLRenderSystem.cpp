@@ -1,8 +1,4 @@
-#include	<iostream>
-#include	<list>
-
 #include	"SFMLRenderSystem.hh"
-
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
 #include	"ActionComponent.hh"
@@ -16,7 +12,7 @@ SFMLRenderSystem::~SFMLRenderSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLRenderSystem::canProcess(Entity *entity)
+bool		SFMLRenderSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("SFMLSpriteComponent") && entity->hasComponent("Pos2DComponent"))
     return (true);

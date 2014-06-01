@@ -26,7 +26,7 @@ void			SpawnPlayerSystem::newPlayerHandler(IEvent *event)
   this->_players_to_spawn.push(new_player->getRemoteId());
 }
 
-bool		SpawnPlayerSystem::canProcess(Entity *)
+bool		SpawnPlayerSystem::canProcess(Entity *) const
 {
   return false;
 }
@@ -86,9 +86,6 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
       this->_world->addEntity(player_entity);
       NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
       ASerializableComponent *tmp;
-      // tmp = player_entity->getComponent<ASerializableComponent>("Pos2DComponent");
-      // if (tmp)
-      // 	tmp->setNetworkSendUpdateException(hash);
       tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
       if (tmp)
 	tmp->setNetworkSendUpdateException(hash);

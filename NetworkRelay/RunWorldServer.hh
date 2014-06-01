@@ -16,6 +16,7 @@ public:
   void run(Any);
   void run();
   World *getWorld();
+  const World *getWorld() const;
   void isEnd(bool isEnd);
 
 private:

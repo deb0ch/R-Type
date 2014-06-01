@@ -1,5 +1,3 @@
-#include	<map>
-
 #include	"SFMLInputSystem.hh"
 #include	"SFMLInputComponent.hh"
 #include	"SFMLJoystickComponent.hh"
@@ -39,7 +37,7 @@ void	SFMLInputSystem::init()
   this->_world->addEventHandler("SFMLJoystickEvent", this, &SFMLInputSystem::SFMLJoystickEventListener);
 }
 
-bool	SFMLInputSystem::canProcess(Entity *e) {
+bool	SFMLInputSystem::canProcess(Entity *e) const {
   if (e->hasComponent("ActionComponent"))
     return (true);
   return (false);

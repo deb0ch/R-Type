@@ -1,7 +1,6 @@
 #ifndef		FIREALWAYSSYSTEM_H_
 # define	FIREALWAYSSYSTEM_H_
 
-# include	<map>
 # include	"ASystem.hh"
 
 class		FireAlwaysSystem : public ASystem
@@ -9,7 +8,7 @@ class		FireAlwaysSystem : public ASystem
 public:
 		FireAlwaysSystem();
   virtual	~FireAlwaysSystem();
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 };
 

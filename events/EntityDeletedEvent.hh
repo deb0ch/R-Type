@@ -13,6 +13,7 @@ public:
 
 public:
   Entity *getEntity(void);
+  const Entity *getEntity(void) const;
   bool	isForced() const;
 
 protected:

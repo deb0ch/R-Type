@@ -53,6 +53,7 @@ Room			*ServerRelay::getRoom(const std::string &room_name)
 
       if (it == this->_rooms.end())
 	return (NULL);
+      it->second->lock();
       return (it->second);
     }
   return NULL;
@@ -94,13 +95,13 @@ IBuffer			*ServerRelay::getUDPBuffer()
   return (buffer);
 }
 
-Remote		*ServerRelay::getRemote(unsigned int hash)
+Remote		*ServerRelay::getRemote(unsigned int hash) const
 {
   for(auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it)
     {
-      std::vector<Remote *> &remotes = it->second->getRemotes();
+      const std::vector<Remote *> &remotes = it->second->getRemotes();
       auto result = std::find_if(remotes.begin(), remotes.end(),
-				 [this, &hash] (Remote *remote) -> bool
+				 [this, &hash] (const Remote *remote) -> bool
 				 {
 				   if (remote->getPrivateHash() == hash)
 				     return true;
@@ -110,7 +111,7 @@ Remote		*ServerRelay::getRemote(unsigned int hash)
 	return (*result);
     }
   auto result = std::find_if(this->_remotsWithoutRoom.begin(), this->_remotsWithoutRoom.end(),
-			     [this, &hash] (Remote *remote) -> bool
+			     [this, &hash] (const Remote *remote) -> bool
 			     {
 			       if (remote->getPrivateHash() == hash)
 				 return true;
@@ -121,13 +122,13 @@ Remote		*ServerRelay::getRemote(unsigned int hash)
   return (NULL);
 }
 
-Remote		*ServerRelay::getRemote(const std::string &ip, const int port)
+Remote		*ServerRelay::getRemote(const std::string &ip, const int port) const
 {
   for(auto it = this->_rooms.begin(); it != this->_rooms.end(); ++it)
     {
-      std::vector<Remote *> &remotes = it->second->getRemotes();
+      const std::vector<Remote *> &remotes = it->second->getRemotes();
       auto result = std::find_if(remotes.begin(), remotes.end(),
-				 [this, &ip, &port] (Remote *remote) -> bool
+				 [this, &ip, &port] (const Remote *remote) -> bool
 				 {
 				   if (remote->getIP() == ip && remote->getPort() == port)
 				     return true;
@@ -325,9 +326,6 @@ void		ServerRelay::manageRemotesInRooms()
     }
 }
 
-/**
- * @todo Add more verifications than only id (like Port and IP) to know which client is talking
- */
 void		ServerRelay::receiveUDP()
 {
   IBuffer	*buffer = this->getUDPBuffer();
@@ -378,7 +376,7 @@ void		ServerRelay::addClient()
   remote->sendTCP(buffer);
 }
 
-unsigned int	ServerRelay::generateHash()
+unsigned int	ServerRelay::generateHash() const
 {
   unsigned int	hash;
 

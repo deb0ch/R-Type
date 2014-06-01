@@ -49,7 +49,7 @@ void		ASystem::process(std::vector<Entity *> &entities, const float delta)
   this->afterProcess(delta);
 }
 
-void		ASystem::sortEntities(std::vector<Entity *>&)
+void		ASystem::sortEntities(std::vector<Entity *>&) const
 {}
 
 void		ASystem::beforeProcess(const float)

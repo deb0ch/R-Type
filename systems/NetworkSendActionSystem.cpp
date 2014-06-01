@@ -24,7 +24,7 @@ void NetworkSendActionSystem::beforeProcess(const float)
     this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool NetworkSendActionSystem::canProcess(Entity *entity)
+bool NetworkSendActionSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("NetworkSendActionComponent"))
     return (true);
@@ -55,7 +55,7 @@ void NetworkSendActionSystem::processEntity(Entity *entity, const float)
   Room *room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       room->sendBroadcastUDP(*this->_network, tmp);
     }

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ScoreSystem.hh"
 #include "TagComponent.hh"
 #include "SFML/Graphics.hpp"
@@ -15,7 +13,7 @@ SFMLDisplayScoreSystem::~SFMLDisplayScoreSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLDisplayScoreSystem::canProcess(Entity *entity)
+bool		SFMLDisplayScoreSystem::canProcess(Entity *entity) const
 {
   TagComponent	*tag = entity->getComponent<TagComponent>("TagComponent");
 

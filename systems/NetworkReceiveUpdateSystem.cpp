@@ -20,7 +20,7 @@ NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem(const std::vector<std::st
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
 
-bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
+bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkReceiveUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)
@@ -43,7 +43,7 @@ void				NetworkReceiveUpdateSystem::afterProcess(const float)
   room = this->_network->getRoom(*this->_room_name);
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
@@ -82,7 +82,7 @@ void				NetworkReceiveUpdateSystem::processEntity(Entity *entity, const float de
 
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),

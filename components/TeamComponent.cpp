@@ -1,18 +1,21 @@
 #include <algorithm>
 #include "TeamComponent.hh"
 
-TeamComponent::TeamComponent(const unsigned int team) : ACopyableComponent("TeamComponent"){
+TeamComponent::TeamComponent(const unsigned int team) : ACopyableComponent("TeamComponent")
+{
   this->_team = team;
 }
 
-TeamComponent::~TeamComponent(){
-}
+TeamComponent::~TeamComponent()
+{}
 
-void TeamComponent::setTeam(const unsigned int team) {
+void TeamComponent::setTeam(const unsigned int team)
+{
   this->_team = team;
 }
 
-unsigned int TeamComponent::getTeam() const {
+unsigned int TeamComponent::getTeam() const
+{
   return this->_team;
 }
 
@@ -31,7 +34,7 @@ void	TeamComponent::deserializeFromFileSpecial(const std::string &lastline, std:
   (void)input;
 
   if (std::regex_match(lastline, std::regex("team=.+")))
-    this->_team = std::stof(lastline.substr(5));
+    this->_team = std::stoul(lastline.substr(5));
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }

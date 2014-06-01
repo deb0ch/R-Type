@@ -1,6 +1,3 @@
-#include <iostream>
-#include <map>
-
 #include "EntityDeletedEvent.hh"
 #include "NetworkSendUpdateSystem.hh"
 #include "NetworkSendDieEntitySystem.hh"
@@ -23,7 +20,7 @@ void NetworkSendDieEntitySystem::beforeProcess(const float)
     this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool		NetworkSendDieEntitySystem::canProcess(Entity *)
+bool		NetworkSendDieEntitySystem::canProcess(Entity *) const
 {
   return (false);
 }
@@ -39,7 +36,7 @@ void	NetworkSendDieEntitySystem::afterProcess(const float)
 
   if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name)))
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),

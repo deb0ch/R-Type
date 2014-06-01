@@ -12,7 +12,7 @@ class NetworkReceiveActionSystem : public ASystem
 public:
   NetworkReceiveActionSystem(const std::vector<std::string> &);
   virtual	~NetworkReceiveActionSystem();
-  virtual	bool canProcess(Entity *);
+  virtual	bool canProcess(Entity *) const;
   virtual	void beforeProcess(const float);
   virtual	void processEntity(Entity *, const float);
   void		parsePacket(Entity *, ActionComponent *action, NetworkReceiveActionComponent *network,

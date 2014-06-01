@@ -6,8 +6,8 @@
 NetworkReceiveActionSystem::NetworkReceiveActionSystem(const std::vector<std::string> &serializable_action)
   : ASystem("NetworkReceiveActionSystem"), _serializable_action(serializable_action)
 {
-	this->_room_name = NULL;
-	this->_network = NULL;
+  this->_room_name = NULL;
+  this->_network = NULL;
 }
 
 NetworkReceiveActionSystem::~NetworkReceiveActionSystem()
@@ -18,12 +18,10 @@ void NetworkReceiveActionSystem::beforeProcess(const float)
   if (!this->_network)
     this->_network = this->_world->getSharedObject<INetworkRelay>("NetworkRelay");
   if (!this->_room_name)
-  {
-	  this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
-  }
+    this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool NetworkReceiveActionSystem::canProcess(Entity *entity)
+bool NetworkReceiveActionSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("NetworkReceiveActionComponent"))
     return true;
@@ -41,10 +39,9 @@ void NetworkReceiveActionSystem::processEntity(Entity *entity, const float)
   if (!this->_network || !this->_room_name)
     return ;
   room = this->_network->getRoom(*this->_room_name);
-  action_component->resetActions();
   if (room)
     {
-      auto guard = create_lock(*room);
+      auto guard = create_lock(*room, true);
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
