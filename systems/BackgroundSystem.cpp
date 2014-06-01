@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "TagComponent.hh"
 #include "SFMLSpriteComponent.hh"
 #include "Pos2DComponent.hh"

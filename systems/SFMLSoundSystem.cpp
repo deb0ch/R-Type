@@ -1,4 +1,3 @@
-
 #include "SFMLSoundSystem.hh"
 
 SFMLSoundSystem::SFMLSoundSystem()

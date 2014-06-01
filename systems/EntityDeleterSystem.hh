@@ -11,9 +11,9 @@ protected:
   virtual void processEntity(Entity *, const float);
 
 public:
+
   void addEntityToDelete(IEvent *entity);
 
-public:
   EntityDeleterSystem();
   virtual ~EntityDeleterSystem();
   virtual void afterProcess(const float);

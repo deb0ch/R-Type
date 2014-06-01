@@ -1,5 +1,3 @@
-#include	<map>
-
 #include	"SFMLInputSystem.hh"
 #include	"SFMLInputComponent.hh"
 #include	"SFMLJoystickComponent.hh"

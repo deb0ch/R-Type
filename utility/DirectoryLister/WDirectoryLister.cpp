@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <windows.h>
-#include <tchar.h> 
+#include <tchar.h>
 #include <stdio.h>
 #include <strsafe.h>
 #include "WDirectoryLister.hh"
@@ -50,10 +50,6 @@ std::vector<std::string> DirectoryLister::listDirectory(const std::string &str)
 		{
 			std::string tempo(ffd.cFileName);
 			res.push_back(tempo);
-			std::cout << tempo << std::endl;
-			//std::wstring ws(tempo);
-			//std::string test(ws.begin(), ws.end());
-			//std::cout << test << std::endl;
 		}
 	} while (FindNextFile(hFind, &ffd) != 0);
 

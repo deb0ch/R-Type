@@ -1,6 +1,3 @@
-#include <iostream>
-#include <map>
-
 #include "EntityDeletedEvent.hh"
 #include "NetworkSendUpdateSystem.hh"
 #include "NetworkSendDieEntitySystem.hh"

@@ -1,4 +1,3 @@
-
 # include "Friction2DSystem.hh"
 
 //----- ----- Constructors ----- ----- //
@@ -10,8 +9,6 @@ Friction2DSystem::Friction2DSystem()
 Friction2DSystem::~Friction2DSystem()
 {}
 
-//----- ----- Getters ----- ----- //
-//----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 bool		Friction2DSystem::canProcess(Entity *entity) const
 {

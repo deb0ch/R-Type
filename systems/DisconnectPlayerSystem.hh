@@ -12,7 +12,6 @@ public:
   virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float delta);
   void			disconnectPlayerHandler(IEvent *event);
-protected:
 
 };
 

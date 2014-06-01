@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Window.hh"
 #include "CollisionSoloSystem.hh"
 #include "CollisionEvent.hh"
