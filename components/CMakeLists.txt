@@ -36,9 +36,12 @@ SET(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLTextComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLJoystickComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachPowerUpComponent.hh
 	PARENT_SCOPE)
 
-SET(SOURCE_S
+      SET(SOURCE_S
 	${SOURCE_S}
 	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.cpp
@@ -74,11 +77,14 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLTextComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLJoystickComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachPowerUpComponent.cpp
 	PARENT_SCOPE)
 
 
-SET(HEADER_C
-   ${HEADER_C}
+      SET(HEADER_C
+	${HEADER_C}
    	${CMAKE_CURRENT_SOURCE_DIR}/Speed2DComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSpriteComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/Pos2DComponent.hh
@@ -115,6 +121,9 @@ SET(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLTextComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLJoystickComponent.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachComponent.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachPowerUpComponent.hh
 	PARENT_SCOPE
 )
 
@@ -153,6 +162,9 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/LifePowerUpComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLTextComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLJoystickComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachedToComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachComponent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AttachPowerUpComponent.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundComponent.cpp
 	PARENT_SCOPE
 )

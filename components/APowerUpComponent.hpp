@@ -20,9 +20,6 @@ public:
   void		unserialize(IBuffer &)
   {}
 
-protected:
-  std::string _newWeapon;
-  float _newdelay;
 
 };
 
