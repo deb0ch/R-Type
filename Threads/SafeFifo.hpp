@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Threads.hh"
+#include "SafeFifoException.hh"
 
 template <typename T>
 class SafeFifo
@@ -36,7 +37,7 @@ public:
     ScopedMutex p(&(this->_mutex));
 
     if (this->fifo.empty())
-      throw std::exception();
+      throw SafeFifoException("The fifo is empty");
     return ((this->fifo.front()));
   }
 
@@ -45,7 +46,7 @@ public:
     static T	res;
 
     if (this->fifo.empty())
-      throw std::exception();
+      throw SafeFifoException("The fifo is empty");
     res = (this->fifo.front());
     this->fifo.erase(this->fifo.begin());
     return (res);
