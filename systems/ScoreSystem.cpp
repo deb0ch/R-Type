@@ -34,7 +34,7 @@ void	ScoreSystem::entityDeathEvent(IEvent *event)
   TagComponent *tag = entityDeletedEvent->getEntity()->getComponent<TagComponent>("TagComponent");
   if (!tag || !tag->hasTag("MONSTER") || entityDeletedEvent->isForced())
     return ;
-  this->_score += (tag->hasTag("BOSS")) ? 500 : 10;
+  this->_score += (tag->hasTag("BOSS")) ? 500 : 13;
 }
 
 unsigned int	ScoreSystem::getScore() const
