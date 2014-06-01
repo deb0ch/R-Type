@@ -28,6 +28,7 @@ private:
   EventManager<ISystem>			_event_manager;
   //Factory<IComponent, std::size_t>	_component_factory;
   bool					_initialized;
+  bool					_running;
 
 public:
 
@@ -35,6 +36,9 @@ public:
   World(const World&);
   virtual	~World();
   World&	operator=(const World&);
+
+  void		exit();
+  bool		isRunning() const;
 
   /**
    * @brief Create a new Entity with an ID that come from the current World.

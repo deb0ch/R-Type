@@ -83,6 +83,7 @@ protected:
 
 
 	World		*_world;
+	sf::Music	*_music;
 };
 
 #endif /* !STATEGAME_H_ */

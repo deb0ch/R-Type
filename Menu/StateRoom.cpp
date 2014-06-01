@@ -113,6 +113,7 @@ void	StateRoom::update(StateManager& manager)
 	{
 	case sf::Event::Closed:
 	  this->_window->close();
+	  manager.exit();
 	  break;
 
 	case sf::Event::TextEntered:
