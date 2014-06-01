@@ -167,6 +167,11 @@ Entity			*EntitySpawnerComponent::spawnEntity(EntityFactory *facto, float delta)
   return (res);
 }
 
+const std::string	&EntitySpawnerComponent::getLastSpawned() const
+{
+  return (this->_lastSpawned);
+}
+
 void			EntitySpawnerComponent::serialize(IBuffer &) const
 {}
 
