@@ -1,5 +1,7 @@
 #include	"Unistd.hh"
 #include	"StateSoloGame.hh"
+#include	"AttachSystem.hh"
+#include	"AttachedToSystem.hh"
 
 StateSoloGame::StateSoloGame(World *world)
 {
@@ -57,6 +59,8 @@ StateSoloGame::~StateSoloGame()
 void		StateSoloGame::addSystems()
 {
 	this->_world->addSystem(new AutoDestructSystem());
+	this->_world->addSystem(new AttachSystem());
+	this->_world->addSystem(new AttachedToSystem());
 	this->_world->addSystem(new EntitySpawnerSystem());
 	this->_world->addSystem(new SFMLEventSystem());
 	this->_world->addSystem(new SFMLInputSystem());
@@ -80,19 +84,9 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new BackgroundSystem());
 
 	std::vector<std::string> power_ups =
-	  {
-	    "POWERUP_1",
-	    "POWERUP_2",
-	    "POWERUP_3",
-	    "POWERUP_LIFE"
-	  };
-
+	  {"POWERUP_1", "POWERUP_2", "POWERUP_3", "POWERUP_LIFE", "POWERUP_FORCE"};
 	std::vector<std::string> power_ups_component =
-	  {
-	    "WeaponPowerUpComponent",
-	    "LifePowerUpComponent"
-	  };
-
+	  {"WeaponPowerUpComponent", "LifePowerUpComponent", "AttachPowerUpComponent"};
 	this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
 	this->_world->addSystem(new PlayerLifeSystem(3));
 	this->_world->addSystem(new ScoreSystem());
@@ -141,6 +135,8 @@ void		StateSoloGame::addEntities()
 	this->_world->addEntity(entityFactory->create("PLAYER_RED"));
 	this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
 	this->_world->addEntity(entityFactory->create("SCORE_DISPLAY"));
+	//this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
+	// this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
 void		StateSoloGame::update(StateManager &manager)
