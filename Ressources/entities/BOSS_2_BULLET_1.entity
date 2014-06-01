@@ -1,4 +1,4 @@
-ENTITY:BOSS_2_BULLET
+ENTITY:BOSS_2_BULLET_1
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=5
 	!COMPONENT
@@ -11,7 +11,7 @@ ENTITY:BOSS_2_BULLET
 		height=25
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-200
+		vx=0
 		vy=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
@@ -41,10 +41,7 @@ ENTITY:BOSS_2_BULLET
 			length=4
 		!ANIM
 	!COMPONENT
-	COMPONENT:MoveForwardComponent
-		dir1=LEFT
-	!COMPONENT
-		COMPONENT:MoveFollowComponent
+	COMPONENT:MoveFollowComponent
 		tagToFollow=PLAYER
 	!COMPONENT
 	COMPONENT:CollisionComponent

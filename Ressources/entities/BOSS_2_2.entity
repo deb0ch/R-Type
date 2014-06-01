@@ -73,8 +73,9 @@ ENTITY:BOSS_2_2
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
 		entity=BOSS_2_BULLET;1
+		entity=BOSS_2_MISSILE_1;14
 		nb=0
-		delay=0.4
+		delay=0.20
 		minPosX=-5
 		minPosY=-30
 		maxPosX=-5
