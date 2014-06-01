@@ -81,6 +81,8 @@ public:
     std::vector<std::string> files = directory_lister.listDirectory("Ressources/entities/");
     for(auto it = files.begin(); it != files.end(); ++it)
       {
+	if ((*it).substr((*it).rfind('.')) != ".entity")
+	  return ;
 	input.open("./Ressources/entities/" + *it);
 	try {
 	  res = ef.deserialize(input);
