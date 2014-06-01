@@ -30,6 +30,11 @@ ENTITY:BOSS_2_BULLET_1
 		life=200
 		invulnerability=0
 	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=BULLET_EXPLOSION
+		offsetX=0
+		offsetY=0
+	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=shotBoss2.png
 		nbSpritesX=4
