@@ -1,5 +1,3 @@
-#include	<iostream>
-
 #include	"LifeSystem.hh"
 #include	"LifeComponent.hh"
 #include	"CollisionEvent.hh"
@@ -17,8 +15,6 @@ LifeSystem::LifeSystem()
 LifeSystem::~LifeSystem()
 {}
 
-//----- ----- Getters ----- ----- //
-//----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
 bool		LifeSystem::canProcess(Entity *e)
 {

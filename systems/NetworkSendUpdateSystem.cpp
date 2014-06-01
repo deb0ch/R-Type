@@ -1,4 +1,3 @@
-#include <iostream>
 #include "NetworkSendUpdateSystem.hh"
 #include "ASerializableComponent.hh"
 #include "IComponent.hh"

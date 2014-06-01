@@ -1,8 +1,4 @@
-#include	<iostream>
-#include	<list>
-
 #include	"SFMLRenderSystem.hh"
-
 #include	"SFMLSpriteComponent.hh"
 #include	"CollisionComponent.hh"
 #include	"ActionComponent.hh"

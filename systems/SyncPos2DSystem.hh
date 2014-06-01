@@ -11,7 +11,6 @@ public:
 
   virtual bool		canProcess(Entity *);
   virtual void		processEntity(Entity *, const float);
-protected:
 
 };
 
