@@ -23,7 +23,7 @@ void NetworkReceiveActionSystem::beforeProcess(const float)
   }
 }
 
-bool NetworkReceiveActionSystem::canProcess(Entity *entity)
+bool NetworkReceiveActionSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("NetworkReceiveActionComponent"))
     return true;

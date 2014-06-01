@@ -16,7 +16,7 @@ MoveSystem::~MoveSystem()
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
-bool		MoveSystem::canProcess(Entity *e)
+bool		MoveSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("Speed2DComponent") && e->hasComponent("Pos2DComponent"))
     return (true);

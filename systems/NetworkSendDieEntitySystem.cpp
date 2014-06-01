@@ -23,7 +23,7 @@ void NetworkSendDieEntitySystem::beforeProcess(const float)
     this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool		NetworkSendDieEntitySystem::canProcess(Entity *)
+bool		NetworkSendDieEntitySystem::canProcess(Entity *) const
 {
   return (false);
 }

@@ -16,7 +16,7 @@ void	ScoreSystem::init()
   this->_world->addEventHandler("EntityDeletedEvent", this, &ScoreSystem::entityDeathEvent);
 }
 
-bool	ScoreSystem::canProcess(Entity *)
+bool	ScoreSystem::canProcess(Entity *) const
 {
   return (false);
 }

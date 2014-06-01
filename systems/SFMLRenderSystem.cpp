@@ -16,7 +16,7 @@ SFMLRenderSystem::~SFMLRenderSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLRenderSystem::canProcess(Entity *entity)
+bool		SFMLRenderSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("SFMLSpriteComponent") && entity->hasComponent("Pos2DComponent"))
     return (true);

@@ -9,7 +9,7 @@ class		FireAlwaysSystem : public ASystem
 public:
 		FireAlwaysSystem();
   virtual	~FireAlwaysSystem();
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 };
 

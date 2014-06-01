@@ -13,7 +13,7 @@ Friction2DSystem::~Friction2DSystem()
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
-bool		Friction2DSystem::canProcess(Entity *entity)
+bool		Friction2DSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("Speed2DComponent") && entity->hasComponent("Friction2DComponent"))
     return (true);

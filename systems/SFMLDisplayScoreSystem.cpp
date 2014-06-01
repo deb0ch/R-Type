@@ -15,7 +15,7 @@ SFMLDisplayScoreSystem::~SFMLDisplayScoreSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLDisplayScoreSystem::canProcess(Entity *entity)
+bool		SFMLDisplayScoreSystem::canProcess(Entity *entity) const
 {
   TagComponent	*tag = entity->getComponent<TagComponent>("TagComponent");
 

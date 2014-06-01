@@ -8,7 +8,7 @@ NetworkTimeOutEntitySystem::NetworkTimeOutEntitySystem() : ASystem("NetworkTimeO
 NetworkTimeOutEntitySystem::~NetworkTimeOutEntitySystem()
 {}
 
-bool		NetworkTimeOutEntitySystem::canProcess(Entity *entity)
+bool		NetworkTimeOutEntitySystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkReceiveUpdateComponent"))
     return true;

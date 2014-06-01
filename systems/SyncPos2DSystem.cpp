@@ -9,7 +9,7 @@ SyncPos2DSystem::SyncPos2DSystem() : ASystem("SyncPos2DSystem")
 SyncPos2DSystem::~SyncPos2DSystem()
 {}
 
-bool		SyncPos2DSystem::canProcess(Entity *entity)
+bool		SyncPos2DSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("SyncPos2DComponent")
       && entity->hasComponent("Pos2DComponent")

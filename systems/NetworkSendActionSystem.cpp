@@ -24,7 +24,7 @@ void NetworkSendActionSystem::beforeProcess(const float)
     this->_room_name = this->_world->getSharedObject<std::string>("RoomName");
 }
 
-bool NetworkSendActionSystem::canProcess(Entity *entity)
+bool NetworkSendActionSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("NetworkSendActionComponent"))
     return (true);

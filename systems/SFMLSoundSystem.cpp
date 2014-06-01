@@ -8,7 +8,7 @@ SFMLSoundSystem::SFMLSoundSystem()
 SFMLSoundSystem::~SFMLSoundSystem()
 {}
 
-bool	SFMLSoundSystem::canProcess(Entity *e)
+bool	SFMLSoundSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("SFMLSoundComponent"))
     return (true);

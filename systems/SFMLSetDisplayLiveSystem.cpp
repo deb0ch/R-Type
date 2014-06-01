@@ -15,7 +15,7 @@ SFMLSetDisplayLiveSystem::~SFMLSetDisplayLiveSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLSetDisplayLiveSystem::canProcess(Entity *entity)
+bool		SFMLSetDisplayLiveSystem::canProcess(Entity *entity) const
 {
   TagComponent	*tag = entity->getComponent<TagComponent>("TagComponent");
 

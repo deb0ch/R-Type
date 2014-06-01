@@ -13,7 +13,7 @@ SFMLRenderTextSystem::~SFMLRenderTextSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLRenderTextSystem::canProcess(Entity *entity)
+bool		SFMLRenderTextSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("SFMLTextComponent") && entity->hasComponent("Pos2DComponent"))
     {

@@ -13,7 +13,7 @@ class			SFMLRenderSystem : public ASystem
 protected:
   static const bool	debug = false;
 
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float);
 
 public:

@@ -8,7 +8,7 @@ SFMLDisplaySystem::~SFMLDisplaySystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		SFMLDisplaySystem::canProcess(Entity *entity)
+bool		SFMLDisplaySystem::canProcess(Entity *entity) const
 {
   (void)entity;
   return (false);

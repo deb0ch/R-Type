@@ -14,7 +14,7 @@ BackgroundSystem::~BackgroundSystem()
 {
 }
 
-bool	BackgroundSystem::canProcess(Entity *entity)
+bool	BackgroundSystem::canProcess(Entity *entity) const
 {
   TagComponent *tagComponent = entity->getComponent<TagComponent>("TagComponent");
 

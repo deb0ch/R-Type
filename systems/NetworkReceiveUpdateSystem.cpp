@@ -20,7 +20,7 @@ NetworkReceiveUpdateSystem::NetworkReceiveUpdateSystem(const std::vector<std::st
 NetworkReceiveUpdateSystem::~NetworkReceiveUpdateSystem()
 {}
 
-bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity)
+bool				NetworkReceiveUpdateSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("NetworkReceiveUpdateComponent") &&
       this->_network != NULL && this->_room_name != NULL)

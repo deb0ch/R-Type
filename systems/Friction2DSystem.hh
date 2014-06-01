@@ -14,7 +14,7 @@ public:
   virtual		~Friction2DSystem();
 
 protected:
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float);
 
 private:
