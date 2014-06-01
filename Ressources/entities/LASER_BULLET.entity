@@ -48,7 +48,7 @@ ENTITY:LASER_BULLET
 	!COMPONENT
 	COMPONENT:SFMLSoundComponent
 		filename=bullet3.wav
-		volume=40
+		volume=30
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT
