@@ -71,19 +71,6 @@ public:
     return (tmp->clone());
   }
 
-  /*
-  void			serializeAll()
-  {
-
-    std::for_each(this->_keys.begin(), this->_keys.end(), [this, &ef, &output](const std::string &key)
-		  {
-		        output.open("Ressources/entities/"+key+".entity");
-			ef.serialize(this->create(key), key, output);
-			output.close();
-		  });
-  }
-  */
-
   void					deserializeAll()
   {
     EntityFile				ef;
