@@ -74,7 +74,6 @@ void PowerUpSystem::delete_entity(IEvent *e)
 								       ]);
 			if (boost == NULL)
 			  {
-			    std::cout << "Boost is null" << std::endl;
 			    return;
 			  }
 			Pos2DComponent *boostPosition = boost->getComponent<Pos2DComponent>("Pos2DComponent");

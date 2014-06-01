@@ -91,7 +91,6 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
     sprite = this->getSprite(*imageLoader, spriteComp, "");
   if (sprite == NULL)
     {
-      std::cout << "Sprite does not exist" << std::endl;
       return;
     }
   sprite->setPosition(pos->getX() - (width / 2), pos->getY() - (height / 2));
