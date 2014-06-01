@@ -7,6 +7,7 @@
 # include	"ISystem.hh"
 # include	"EventManager.hpp"
 # include	"Any.hpp"
+# include	"ECSException.hh"
 
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
@@ -79,8 +80,7 @@ public:
       return (NULL);
     if (!(result = dynamic_cast<T *>(system)))
       {
-	std::cerr << "Invalid type" << std::endl; // throw exception
-	abort();
+	throw ECSException("Invalid type");
       }
     return (result);
   }
