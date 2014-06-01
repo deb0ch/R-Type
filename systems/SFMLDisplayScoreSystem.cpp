@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "ScoreSystem.hh"
 #include "TagComponent.hh"
 #include "SFML/Graphics.hpp"

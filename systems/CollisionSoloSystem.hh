@@ -16,6 +16,7 @@ public:
 
   virtual void		beforeProcess(const float);
   virtual void		afterProcess(const float);
+
 protected:
   bool		isColliding(Pos2DComponent const &pos1, Box2DComponent const &box1,
 			    Pos2DComponent const &pos2, Box2DComponent const &box2) const;

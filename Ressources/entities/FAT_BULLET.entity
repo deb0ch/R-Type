@@ -49,6 +49,10 @@ ENTITY:FAT_BULLET
 			length=0
 		!ANIM
 	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=bullet2.wav
+		volume=80
+	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT
 	!COMPONENT

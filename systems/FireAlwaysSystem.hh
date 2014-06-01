@@ -1,7 +1,6 @@
 #ifndef		FIREALWAYSSYSTEM_H_
 # define	FIREALWAYSSYSTEM_H_
 
-# include	<map>
 # include	"ASystem.hh"
 
 class		FireAlwaysSystem : public ASystem

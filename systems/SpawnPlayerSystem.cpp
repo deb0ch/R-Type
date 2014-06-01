@@ -23,7 +23,6 @@ void			SpawnPlayerSystem::newPlayerHandler(IEvent *event)
 {
   NewPlayerEvent	*new_player = dynamic_cast<NewPlayerEvent *>(event);
 
-  std::cout << "New player :D" << std::endl;
   this->_players_to_spawn.push(new_player->getRemoteId());
 }
 
@@ -69,8 +68,6 @@ void		SpawnPlayerSystem::spawnNextPlayer(unsigned int hash)
 {
   if (this->_index >= this->_entity_player_name.size())
     {
-      std::cout << "Cannot spawn more player" << std::endl;
-      std::cout << "..ok I'll do it.." << std::endl; // to test more than 4 players
       this->_index = 0;
     }
   this->spawnPlayer(hash, this->_entity_player_name[this->_index]);
@@ -89,9 +86,6 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
       this->_world->addEntity(player_entity);
       NetworkSendActionComponent *send_action = new NetworkSendActionComponent(player_entity->_id);
       ASerializableComponent *tmp;
-      // tmp = player_entity->getComponent<ASerializableComponent>("Pos2DComponent");
-      // if (tmp)
-      // 	tmp->setNetworkSendUpdateException(hash);
       tmp = player_entity->getComponent<ASerializableComponent>("Speed2DComponent");
       if (tmp)
 	tmp->setNetworkSendUpdateException(hash);
@@ -106,7 +100,6 @@ Entity		*SpawnPlayerSystem::spawnPlayer(unsigned int hash,
 	  life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
 	  if (life_component)
 	    life_component->setInvulnerabilityTime(3.f);
-	  std::cout << "Created entity" << std::endl;
 	}
       return (player_entity);
     }

@@ -9,8 +9,8 @@
 class SpawnSoloPlayerSystem : public ASystem, public IPlayerRespawner
 {
 public:
-	SpawnSoloPlayerSystem(const std::string &entity_player_name);
-	virtual		~SpawnSoloPlayerSystem();
+  SpawnSoloPlayerSystem(const std::string &entity_player_name);
+  virtual		~SpawnSoloPlayerSystem();
   virtual void		init();
   virtual bool		canProcess(Entity *);
   virtual void		beforeProcess(const float);

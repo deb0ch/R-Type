@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "EntityDeletedEvent.hh"
 #include "AutoDestructComponent.hh"
 #include "AutoDestructSystem.hh"

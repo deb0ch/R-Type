@@ -1,6 +1,3 @@
-#include <iostream>
-#include <map>
-
 #include "EntityDeleterSystem.hh"
 #include "EntityDeletedEvent.hh"
 
@@ -28,7 +25,7 @@ void	EntityDeleterSystem::afterProcess(const float) {
   this->_toDelete.clear();
 }
 
-void EntityDeleterSystem::addEntityToDelete(IEvent *event) {
+void	EntityDeleterSystem::addEntityToDelete(IEvent *event) {
   EntityDeletedEvent *entityDeletedEvent = dynamic_cast<EntityDeletedEvent *>(event);
 
   if (entityDeletedEvent)
