@@ -1,4 +1,4 @@
-ENTITY:BOSS_EXPLOSION
+ENTITY:BOSS_2_2_EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=1
 	!COMPONENT
@@ -11,7 +11,7 @@ ENTITY:BOSS_EXPLOSION
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent
-		team=0
+		team=2
 	!COMPONENT
 	COMPONENT:Box2DComponent
 		width=250
@@ -43,13 +43,13 @@ ENTITY:BOSS_EXPLOSION
 		delay=0.8
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=STAGE_2;1
+		entity=BOSS_2_3;1
 		nb=1
-		delay=0
-		minPosX=800
-		minPosY=300
-		maxPosX=800
-		maxPosY=300
+		delay=0.5
+		minPosX=750
+		minPosY=390
+		maxPosX=750
+		maxPosY=390
 		random=false
 		abs=true
 	!COMPONENT

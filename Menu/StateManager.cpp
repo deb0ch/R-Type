@@ -3,11 +3,11 @@
 
 StateManager::StateManager()
 {
+  this->_running = true;
 }
 
 StateManager::~StateManager()
-{
-}
+{}
 
 void	StateManager::popState()
 {
@@ -30,4 +30,14 @@ void	StateManager::render(const Timer &timer)
 {
 	if (this->_states.size() > 0)
 		this->_states.back()->render(timer);
+}
+
+void	StateManager::exit()
+{
+  this->_running = false;
+}
+
+bool	StateManager::isRunning() const
+{
+  return this->_running;
 }

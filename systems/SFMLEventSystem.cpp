@@ -32,6 +32,7 @@ void	SFMLEventSystem::beforeProcess(const float)
 	{
 	case sf::Event::Closed:
 	  this->_window->close();
+	  this->_world->exit();
 	  break;
 
 	case sf::Event::KeyPressed:

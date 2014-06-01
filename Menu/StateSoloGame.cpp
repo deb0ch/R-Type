@@ -8,12 +8,12 @@ StateSoloGame::StateSoloGame(World *world)
   this->addEntities();
 
 
-  sf::Music *music = new sf::Music();
+  this->_music = new sf::Music();
 
-  if (music->openFromFile("Ressources/Sound/music.ogg"))
+  if (this->_music->openFromFile("Ressources/Sound/music.ogg"))
     {
-      music->setLoop(true);
-      music->play();
+      this->_music->setLoop(true);
+      this->_music->play();
     }
 
   this->_world->start();
@@ -22,6 +22,8 @@ StateSoloGame::StateSoloGame(World *world)
 StateSoloGame::~StateSoloGame()
 {
 	this->_world->stop();
+	this->_music->stop();
+	delete this->_music;
 }
 
 void		StateSoloGame::addSystems()
@@ -55,9 +57,9 @@ void		StateSoloGame::addSystems()
 	this->_world->addSystem(new PlayerLifeSystem(3));
 	this->_world->addSystem(new SFMLSetDisplayLiveSystem());
 
-	CollisionSystem *collision;
+	CollisionSoloSystem *collision;
 
-	collision = new CollisionSystem();
+	collision = new CollisionSoloSystem();
 	this->_world->addSystem(collision);
 	this->_world->addEventHandler("CollisionEvent", collision, &LifeSystem::collision_event);
 
@@ -98,8 +100,11 @@ void		StateSoloGame::addEntities()
 	// this->_world->addEntity(entityFactory->create("MONSTER_SPAWNER"));
 }
 
-void		StateSoloGame::update(StateManager&)
-{}
+void		StateSoloGame::update(StateManager &manager)
+{
+  if (!this->_world->isRunning())
+    manager.exit();
+}
 
 void		StateSoloGame::render(const Timer&timer)
 {

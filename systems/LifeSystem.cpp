@@ -88,6 +88,8 @@ void			LifeSystem::delete_entity(IEvent *e)
   if (explosionName != NULL && position != NULL && entityFactory != NULL)
   {
 	  Entity *explode = entityFactory->create(explosionName->getExplosionEntityName());
+	  if (explode == NULL)
+		  return;
 	  Pos2DComponent *explodePosition = explode->getComponent<Pos2DComponent>("Pos2DComponent");
 	  if (explode != NULL && explodePosition != NULL)
 	  {

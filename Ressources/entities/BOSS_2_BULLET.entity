@@ -1,61 +1,54 @@
-ENTITY:TRACKER_MISSILE
+ENTITY:BOSS_2_BULLET
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=5
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=300
 		y=300
 	!COMPONENT
 	COMPONENT:Box2DComponent
-		width=30
-		height=30
-	!COMPONENT
-	COMPONENT:TeamComponent
-		team=2
+		width=25
+		height=25
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=-200
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=2
+		coef=0
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=800
+		speed_coef=0
 	!COMPONENT
-	COMPONENT:MoveFollowComponent
-		tagToFollow=PLAYER
+	COMPONENT:CollisionPowerComponent
+		collisionPower=25
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=5
+		life=200
 		invulnerability=0
 	!COMPONENT
-	COMPONENT:AutoDestructComponent
-		delay=3
-	!COMPONENT
-	COMPONENT:ExplosionComponent
-		entity=ALIEN_BOMB_EXPLOSION
-		offsetX=0
-		offsetY=0
-	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
-		filename=Monster4.png
+		filename=shotBoss2.png
 		nbSpritesX=4
-		nbSpritesY=3
-		tickChange=10
+		nbSpritesY=1
+		tickChange=50
 		anim=ANIM
 			action=
-			start=4
-			length=0
+			start=0
+			length=4
 		!ANIM
+	!COMPONENT
+	COMPONENT:MoveForwardComponent
+		dir1=LEFT
 	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
 			y=0
-			width=10
-			height=10
+			width=25
+			height=25
 		!COMPONENT
+		toNotCollide=BOOST
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN

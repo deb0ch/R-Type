@@ -8,7 +8,7 @@
 
 #include	"MoveSystem.hh"
 #include	"Friction2DSystem.hh"
-#include	"CollisionSystem.hh"
+#include	"CollisionSoloSystem.hh"
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLInputSystem.hh"
@@ -94,6 +94,7 @@ protected:
 
 
 	World		*_world;
+	sf::Music	*_music;
 };
 
 #endif /* !STATESOLOGAME_H_ */
