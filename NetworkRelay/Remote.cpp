@@ -136,7 +136,7 @@ bool			Remote::networkReceiveTCP(INetworkRelay &network)
 	{
 	  size_read = this->_tcp->receive(this->_temporary_tcp_buffer);
 	}
-      catch (const TCPException &e)
+      catch (const std::exception &e)
 	{
 	  std::cerr << e.what() << std::endl;
 	  return false;

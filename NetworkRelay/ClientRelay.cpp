@@ -54,47 +54,54 @@ bool			ClientRelay::start()
 {
   bool			disconnect;
 
-  disconnect = false;
-  while (!disconnect)
+  try
     {
-      this->waitForEvent();
-      if (this->_select.issetReads(this->_socket_udp.getHandle()))
+      disconnect = false;
+      while (!disconnect)
 	{
-	  IBuffer	*buffer = this->getUDPBuffer();
-	  std::string	ip;
-	  int		port;
-
-	  this->_socket_udp.receive(*buffer, ip, port);
-	  buffer->setPosition(sizeof(unsigned int));
-	  if (!this->_remote->isReady())
+	  this->waitForEvent();
+	  if (this->_select.issetReads(this->_socket_udp.getHandle()))
 	    {
-	      this->_remote->setReady(true);
-	      return (true);
+	      IBuffer	*buffer = this->getUDPBuffer();
+	      std::string	ip;
+	      int		port;
+
+	      this->_socket_udp.receive(*buffer, ip, port);
+	      buffer->setPosition(sizeof(unsigned int));
+	      if (!this->_remote->isReady())
+		{
+		  this->_remote->setReady(true);
+		  return (true);
+		}
+	      if (!buffer->end())
+		{
+		  buffer->rewind();
+		  auto guard = create_lock(this->_remote->getRecvBufferUDP());
+		  buffer->addOffset(sizeof(unsigned int));
+		  this->_remote->getRecvBufferUDP().push_back(buffer);
+		}
 	    }
-	  if (!buffer->end())
+
+	  if (this->_select.issetWrites(this->_socket_udp.getHandle()))
 	    {
-	      buffer->rewind();
-	      auto guard = create_lock(this->_remote->getRecvBufferUDP());
-	      buffer->addOffset(sizeof(unsigned int));
-	      this->_remote->getRecvBufferUDP().push_back(buffer);
+	      if (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0)
+		this->udpConnect();
+	      this->_remote->networkSendUDP(*this, this->_socket_udp);
+	    }
+
+	  if (this->_select.issetWrites(this->_remote->getTCPSocket().getHandle()))
+	    this->_remote->networkSendTCP(*this);
+
+	  if (this->_select.issetReads(this->_remote->getTCPSocket().getHandle()))
+	    {
+	      if (!this->_remote->networkReceiveTCP(*this))
+		disconnect = true;
 	    }
 	}
-
-      if (this->_select.issetWrites(this->_socket_udp.getHandle()))
-	{
-	  if (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0)
-	    this->udpConnect();
-	  this->_remote->networkSendUDP(*this, this->_socket_udp);
-	}
-
-      if (this->_select.issetWrites(this->_remote->getTCPSocket().getHandle()))
-	this->_remote->networkSendTCP(*this);
-
-      if (this->_select.issetReads(this->_remote->getTCPSocket().getHandle()))
-	{
-	  if (!this->_remote->networkReceiveTCP(*this))
-	    disconnect = true;
-	}
+    }
+  catch(const std::exception &e)
+    {
+      std::cerr << e.what() << std::endl;
     }
   return (false);
 }
