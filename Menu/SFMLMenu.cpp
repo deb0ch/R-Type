@@ -7,13 +7,14 @@
 #include "ClientRelay.hh"
 #include "Remote.hh"
 #include "StateSoloGame.hh"
+#include "RTException.hh"
 
 SFMLMenu::SFMLMenu(World *world)
   : _world(world)
 {
 #ifdef __linux__
   if (!getenv("DISPLAY"))
-    throw std::string("Unable to start SFML Window because of bad env.");
+    throw RTException("Unable to start SFML Window because of bad env.");
 #endif
   this->_window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),
 				       "EpicGradius", sf::Style::Titlebar | sf::Style::Close);
@@ -84,10 +85,8 @@ void SFMLMenu::init()
 void	SFMLMenu::connect()
 {
 	this->_relay = new ClientRelay(this->_textboxIP->getString(), 6667);
-	std::cout << "begin" << std::endl;
 	if (!this->_relay->start())
-		throw "butt";
-	std::cout << "end" << std::endl;
+	  throw RTException("Connection fails");
 	this->_world->setSharedObject("NetworkRelay", static_cast<INetworkRelay *>(this->_relay));
 }
 
