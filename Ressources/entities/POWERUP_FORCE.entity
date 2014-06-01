@@ -3,7 +3,7 @@ ENTITY:POWERUP_FORCE
 		tag=BOOST
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=2
+		update_rate=7
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
 		delay=20

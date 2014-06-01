@@ -1,6 +1,6 @@
 ENTITY:BOSS_2_1
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=3
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=700
