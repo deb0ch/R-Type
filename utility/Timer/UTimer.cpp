@@ -50,9 +50,9 @@ void	Timer::setFps(unsigned long fps)
   _fps = fps;
 }
 
-unsigned long	Timer::getDeltaTime() const
+float	Timer::getDeltaTime() const
 {
-  return (_currentTime - _previousTime);
+  return ((_currentTime - _previousTime) / 1000000.f);
 }
 
 unsigned long	Timer::getTime()

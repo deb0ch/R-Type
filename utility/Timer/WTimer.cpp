@@ -29,9 +29,9 @@ bool	Timer::canTick() const
   return (_currentTime - _previousTime >= CLOCKS_PER_SEC / _fps);
 }
 
-unsigned long	Timer::getDeltaTime() const
+float	Timer::getDeltaTime() const
 {
-	return ((_currentTime - _previousTime) * 1000);
+  return ((_currentTime - _previousTime) / 1000);
 }
 
 unsigned long	Timer::getFps() const
@@ -57,8 +57,8 @@ unsigned long	Timer::getTime()
 }
 
 void	Timer::sleep(unsigned long delay) const
-{ 
-	Sleep(delay); // No error return or exception
+{
+  Sleep(delay); // No error return or exception
 }
 
 // Private:
