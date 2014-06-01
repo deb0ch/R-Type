@@ -5,6 +5,14 @@ ENTITY:POWERUP_FORCE
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=2
 	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=20
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=BULLET_EXPLOSION
+		offsetX=0
+		offsetY=0
+	!COMPONENT
 	COMPONENT:Box2DComponent
 		width=35
 		height=35
