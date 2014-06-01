@@ -11,7 +11,7 @@ ENTITY:BORDER_TOP_LEVEL_4
 		height=150
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=200
+		collisionPower=10000
 	!COMPONENT
 	COMPONENT:Speed2DComponent
 		vx=-30

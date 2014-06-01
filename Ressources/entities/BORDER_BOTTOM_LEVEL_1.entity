@@ -7,7 +7,7 @@ ENTITY:BORDER_BOTTOM_LEVEL_1
 		height=150
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=200
+		collisionPower=10000
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0
