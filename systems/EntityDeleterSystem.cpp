@@ -9,7 +9,7 @@ EntityDeleterSystem::EntityDeleterSystem()
 EntityDeleterSystem::~EntityDeleterSystem()
 {}
 
-bool		EntityDeleterSystem::canProcess(Entity *) {
+bool		EntityDeleterSystem::canProcess(Entity *) const {
   return (false);
 }
 

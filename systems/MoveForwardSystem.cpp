@@ -9,7 +9,7 @@ MoveForwardSystem::MoveForwardSystem() : ASystem("MoveForwardSystem")
 MoveForwardSystem::~MoveForwardSystem()
 {}
 
-bool MoveForwardSystem::canProcess(Entity *entity)
+bool MoveForwardSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("MoveForwardComponent") &&
       entity->hasComponent("ActionComponent"))

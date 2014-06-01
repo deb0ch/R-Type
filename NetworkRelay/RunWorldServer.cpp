@@ -92,6 +92,10 @@ World *RunWorldServer::getWorld() {
   return this->_world;
 }
 
+const World *RunWorldServer::getWorld() const {
+  return this->_world;
+}
+
 
 /**************** PRIVATE ****************/
 

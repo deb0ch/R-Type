@@ -13,7 +13,7 @@ MovementLimitFrame2DSystem::~MovementLimitFrame2DSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		MovementLimitFrame2DSystem::canProcess(Entity *e)
+bool		MovementLimitFrame2DSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("MovementLimitFrame2DComponent")
       && e->hasComponent("Pos2DComponent"))

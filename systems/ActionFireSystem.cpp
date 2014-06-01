@@ -8,7 +8,7 @@ ActionFireSystem::ActionFireSystem() : ASystem("ActionFireSystem")
 ActionFireSystem::~ActionFireSystem()
 {}
 
-bool		ActionFireSystem::canProcess(Entity *entity)
+bool		ActionFireSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent")
       && entity->hasComponent("EntitySpawnerComponent"))

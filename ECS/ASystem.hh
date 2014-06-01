@@ -13,12 +13,12 @@ protected:
   unsigned int		_priority;
   World			*_world;
 
-  /* Defined system MUST implement those methods */
-  virtual bool		canProcess(Entity *) = 0;
+  /* Defined system MUST implement these methods */
+  virtual bool		canProcess(Entity *) const = 0;
   virtual void		processEntity(Entity *, const float delta) = 0;
 
   /* Theses method CAN be overloaded in the derived classes  */
-  virtual void		sortEntities(std::vector<Entity *>&);
+  virtual void		sortEntities(std::vector<Entity *>&) const;
 
   virtual void		beforeProcess(const float);
   virtual void		afterProcess(const float);

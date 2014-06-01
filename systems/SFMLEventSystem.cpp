@@ -88,7 +88,7 @@ void	SFMLEventSystem::beforeProcess(const float)
     }
 }
 
-bool	SFMLEventSystem::canProcess(Entity *)
+bool	SFMLEventSystem::canProcess(Entity *) const
 {
   return (false);
 }

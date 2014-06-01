@@ -19,10 +19,6 @@ void	LifePowerUpComponent::upgrade(World *world, Entity *)
     {
       lifesystem->setNbLives(lifesystem->getNbLives() + 1);
     }
-  else
-    {
-      std::cerr << "NO LIFE SYSTEM" << std::endl;
-    }
 }
 
 void	LifePowerUpComponent::deserializeFromFileSpecial(const std::string &lastline, std::ifstream &input, unsigned int &lineno)

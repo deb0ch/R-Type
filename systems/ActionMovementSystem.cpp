@@ -16,7 +16,7 @@ ActionMovementSystem::ActionMovementSystem() : ASystem("ActionMovementSystem")
 ActionMovementSystem::~ActionMovementSystem()
 {}
 
-bool ActionMovementSystem::canProcess(Entity *entity)
+bool ActionMovementSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") && entity->hasComponent("Speed2DComponent"))
     return (true);

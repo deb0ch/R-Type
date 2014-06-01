@@ -11,7 +11,7 @@ OutOfBoundsSystem::~OutOfBoundsSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		OutOfBoundsSystem::canProcess(Entity *e)
+bool		OutOfBoundsSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("Pos2DComponent"))
     return (true);

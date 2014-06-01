@@ -9,12 +9,22 @@ CollisionEvent::CollisionEvent(Entity* entity1, Entity* entity2) : AEvent("Colli
 CollisionEvent::~CollisionEvent()
 {}
 
-Entity*	CollisionEvent::getEntity1() const
+const Entity*	CollisionEvent::getEntity1() const
 {
   return (this->entity1);
 }
 
-Entity*	CollisionEvent::getEntity2() const
+const Entity*	CollisionEvent::getEntity2() const
+{
+  return (this->entity2);
+}
+
+Entity*	CollisionEvent::getEntity1()
+{
+  return (this->entity1);
+}
+
+Entity*	CollisionEvent::getEntity2()
 {
   return (this->entity2);
 }

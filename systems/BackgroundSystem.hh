@@ -9,7 +9,7 @@ public:
 		BackgroundSystem();
   virtual	~BackgroundSystem();
 
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 };
 

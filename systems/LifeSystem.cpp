@@ -16,7 +16,7 @@ LifeSystem::~LifeSystem()
 {}
 
 //----- ----- Methods ----- ----- //
-bool		LifeSystem::canProcess(Entity *e)
+bool		LifeSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("LifeComponent"))
     return (true);

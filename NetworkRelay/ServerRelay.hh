@@ -15,21 +15,21 @@ class ServerRelay : public INetworkRelay
 
 public:
   ServerRelay(int port = 4011, int nb_pending_connection = 42);
-  virtual				~ServerRelay();
+  virtual		~ServerRelay();
   virtual bool		start();
   virtual void		start(Any);
   virtual Room		*getRoom(const std::string &room_name);
   virtual IBuffer	*getTCPBuffer();
   virtual IBuffer	*getUDPBuffer();
-  virtual Remote	*getRemote(unsigned int);
-  virtual Remote	*getRemote(const std::string &ip, const int port);
+  virtual Remote	*getRemote(unsigned int) const;
+  virtual Remote	*getRemote(const std::string &ip, const int port) const;
   virtual void		disposeUDPBuffer(IBuffer *);
   virtual void		disposeTCPBuffer(IBuffer *);
 
 private:
   void			waitForEvent();
   void			addClient();
-  unsigned int		generateHash();
+  unsigned int		generateHash() const;
   void			receiveUDP();
   void			removeRemote(Remote *remote);
   void			manageAllRemotes();

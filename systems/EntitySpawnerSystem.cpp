@@ -14,7 +14,7 @@ EntitySpawnerSystem::~EntitySpawnerSystem()
 //----- ----- Getters ----- ----- //
 //----- ----- Setters ----- ----- //
 //----- ----- Methods ----- ----- //
-bool		EntitySpawnerSystem::canProcess(Entity *e)
+bool		EntitySpawnerSystem::canProcess(Entity *e) const
 {
   if (e->hasComponent("EntitySpawnerComponent"))
     return (true);

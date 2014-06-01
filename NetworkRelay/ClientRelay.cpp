@@ -140,12 +140,12 @@ IBuffer			*ClientRelay::getUDPBuffer()
   return (buffer);
 }
 
-Remote			*ClientRelay::getRemote(unsigned int)
+Remote			*ClientRelay::getRemote(unsigned int) const
 {
   return (this->_remote);
 }
 
-Remote			*ClientRelay::getRemote(const std::string &, const int)
+Remote			*ClientRelay::getRemote(const std::string &, const int) const
 {
   return (this->_remote);
 }
