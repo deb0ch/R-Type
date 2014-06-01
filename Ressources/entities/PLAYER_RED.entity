@@ -35,8 +35,8 @@ ENTITY:PLAYER_RED
 		collisionPower=100
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=1
-		invulnerability=1.5
+		life=1000
+		invulnerability=1000.5
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1
