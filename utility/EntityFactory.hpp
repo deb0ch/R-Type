@@ -4,7 +4,6 @@
 # include <string>
 # include "Factory.hpp"
 # include "SFMLInputComponent.hh"
-# include "SFMLSoundComponent.hh"
 # include "Friction2DComponent.hh"
 # include "Box2DComponent.hh"
 # include "Pos2DComponent.hh"
@@ -82,11 +81,12 @@ public:
     std::vector<std::string> files = directory_lister.listDirectory("Ressources/entities/");
     for(auto it = files.begin(); it != files.end(); ++it)
       {
+	if ((*it).substr((*it).rfind('.')) != ".entity")
+	  return ;
 	input.open("./Ressources/entities/" + *it);
-	try
-	  {
-	    res = ef.deserialize(input);
-	  }
+	try {
+	  res = ef.deserialize(input);
+	}
 	catch (EntityFileException &efe)
 	  {
 	    efe.setFilename(*it);

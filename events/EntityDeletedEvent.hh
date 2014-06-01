@@ -8,14 +8,16 @@ class EntityDeletedEvent : public AEvent
 {
 public:
   EntityDeletedEvent() = delete;
-  EntityDeletedEvent(Entity *entity);
+  EntityDeletedEvent(Entity *entity, bool forced = false);
   virtual ~EntityDeletedEvent();
 
 public:
   Entity *getEntity(void);
+  bool	isForced() const;
 
 protected:
   Entity *_entity;
+  bool	_forced;
 
 };
 

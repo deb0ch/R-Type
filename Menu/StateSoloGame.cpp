@@ -1,3 +1,4 @@
+#include	"Unistd.hh"
 #include	"StateSoloGame.hh"
 
 StateSoloGame::StateSoloGame(World *world)
@@ -9,7 +10,7 @@ StateSoloGame::StateSoloGame(World *world)
 
   std::fstream		cfgFile;
 
-  if (access("config.cfg", R_OK) == -1)
+  if (_access("config.cfg", R_OK) == -1)
     this->createConfigFile();
 
   cfgFile.open("config.cfg", std::ios::in);
