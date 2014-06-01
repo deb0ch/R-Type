@@ -29,7 +29,9 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -63,6 +65,8 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.cpp
 	PARENT_SCOPE
 	)
 
@@ -103,8 +107,10 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.hh
 	PARENT_SCOPE
 )
 
@@ -145,7 +151,9 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.cpp
 	PARENT_SCOPE
 )

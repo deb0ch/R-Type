@@ -25,6 +25,7 @@ ENTITY:BOSS_1
 	!COMPONENT
 	COMPONENT:TagComponent
 		tag=MONSTER
+		tag=BOSS
 		tag=Ennemy
 	!COMPONENT
 	COMPONENT:ExplosionComponent

@@ -38,6 +38,8 @@
 #include	"PlayerLifeSystem.hh"
 #include	"SFMLRenderTextSystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"SFMLDisplayScoreSystem.hh"
+#include	"ScoreSystem.hh"
 
 #include	"CollisionComponent.hh"
 #include	"Pos2DComponent.hh"

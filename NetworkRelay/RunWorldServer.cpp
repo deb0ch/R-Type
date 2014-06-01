@@ -32,6 +32,8 @@
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLRenderTextSystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"SFMLDisplayScoreSystem.hh"
+#include	"ScoreSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"EntityFactory.hpp"
@@ -108,6 +110,8 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
   this->_world->addSystem(new PlayerLifeSystem(3));
   this->_world->addSystem(new SFMLSetDisplayLiveSystem());
+  this->_world->addSystem(new ScoreSystem());
+  this->_world->addSystem(new SFMLDisplayScoreSystem());
 
   CollisionSystem *collision;
 
