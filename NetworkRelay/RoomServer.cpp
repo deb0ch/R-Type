@@ -23,6 +23,11 @@ RoomServer::~RoomServer() {
 
 RunWorldServer			&RoomServer::getRunWorldServer() {return *this->_runWorldServer;}
 
+const RunWorldServer		&RoomServer::getRunWorldServer() const
+{
+  return *this->_runWorldServer;
+}
+
 void				RoomServer::removeRemote(Remote *remote)
 {
   auto it = std::find(this->_remotes.begin(), this->_remotes.end(), remote);
