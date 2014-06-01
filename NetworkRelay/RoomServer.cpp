@@ -10,7 +10,7 @@ RoomServer::RoomServer(ServerRelay *server, const std::string &nameRoomServer)
 {
   std::cout << "Creating new room: " << this->_nameRoomServer << std::endl;
   this->_runWorldServer = new RunWorldServer(server, nameRoomServer);
-  this->_thread.start(this->_runWorldServer, &RunWorldServer::run, Any());
+  this->_thread.start(this->_runWorldServer, &RunWorldServer::run);
 }
 
 RoomServer::~RoomServer() {
