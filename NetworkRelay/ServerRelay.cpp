@@ -298,7 +298,6 @@ void		ServerRelay::manageRemotesInRooms()
   auto it = this->_rooms.begin();
   Room		*room;
   bool		test;
-  auto guard_room = create_lock(this->_mutex_room);
 
   while (it != this->_rooms.end())
     {
@@ -318,8 +317,9 @@ void		ServerRelay::manageRemotesInRooms()
 		      room->removeRemote(remote);
 		    });
       remotes_disconnect.clear();
-      if (room->getRemotes().empty() /* && this->_mutex_room.trylock()*/)
+      if (room->getRemotes().empty() && this->_mutex_room.trylock())
 	{
+	  auto guard_room = create_lock(this->_mutex_room, true);
 	  guard.setUnLocked();
 
 	  it = this->_rooms.erase(it);

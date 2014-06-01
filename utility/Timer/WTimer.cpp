@@ -31,7 +31,7 @@ bool	Timer::canTick() const
 
 float	Timer::getDeltaTime() const
 {
-  return ((_currentTime - _previousTime) / 1000);
+  return ((_currentTime - _previousTime) / 1000.f);
 }
 
 unsigned long	Timer::getFps() const
