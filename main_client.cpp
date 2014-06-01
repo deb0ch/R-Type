@@ -30,11 +30,11 @@ int			main()
     }
   catch (const std::exception &e)
     {
-      std::cerr << "Exception : " + e.what() << std::endl;
+      std::cerr << "Exception : " << e.what() << std::endl;
     }
   catch (const std::string &str)
     {
-      std::cerr << "Error : " + str << std::endl;
+      std::cerr << "Error : " << str << std::endl;
     }
   catch (...)
     {
