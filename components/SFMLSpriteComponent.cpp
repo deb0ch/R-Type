@@ -32,7 +32,7 @@ SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, const std:
 SFMLSpriteComponent::~SFMLSpriteComponent()
 {}
 
-bool		SFMLSpriteComponent::hasAction(const std::string & action)
+bool		SFMLSpriteComponent::hasAction(const std::string & action) const
 {
   auto it = this->_map.find(action);
   if (it == this->_map.end())

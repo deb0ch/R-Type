@@ -38,7 +38,7 @@ void		NetworkSendUpdateComponent::addLastUpdateDelay(const float value)
   this->_last_update_delay += value;
 }
 
-bool		NetworkSendUpdateComponent::canSend()
+bool		NetworkSendUpdateComponent::canSend() const
 {
   if (this->_first_update || this->_last_update_delay >= this->_update_rate)
     return true;
