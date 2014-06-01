@@ -1,4 +1,4 @@
-ENTITY:BOSS_2_1_EXPLOSION
+ENTITY:BOSS_2_2_EXPLOSION
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=1
 	!COMPONENT
@@ -43,7 +43,7 @@ ENTITY:BOSS_2_1_EXPLOSION
 		delay=0.8
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=BOSS_2_2;1
+		entity=BOSS_2_3;1
 		nb=1
 		delay=0.5
 		minPosX=750
