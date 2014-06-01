@@ -21,7 +21,7 @@ private:
 
 public:
 
-  Select(const int to, const int tu);
+  Select(const int, const int);
   Select();
   ~Select() {}
 

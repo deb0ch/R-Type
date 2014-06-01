@@ -31,7 +31,7 @@ void	TeamComponent::deserializeFromFileSpecial(const std::string &lastline, std:
   (void)input;
 
   if (std::regex_match(lastline, std::regex("team=.+")))
-    this->_team = std::stof(lastline.substr(5));
+    this->_team = std::stoul(lastline.substr(5));
   else
     throw EntityFileException("Bad argument : \"" + lastline + "\"", lineno);
 }
