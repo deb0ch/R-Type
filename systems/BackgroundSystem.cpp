@@ -3,6 +3,7 @@
 #include "TagComponent.hh"
 #include "SFMLSpriteComponent.hh"
 #include "Pos2DComponent.hh"
+#include "Window.hh"
 #include "BackgroundSystem.hh"
 
 BackgroundSystem::BackgroundSystem() : ASystem("BackgroundSystem")
@@ -30,6 +31,10 @@ void	BackgroundSystem::processEntity(Entity *entity, const float)
   Pos2DComponent	*entity_pos;
 
   entity_pos = entity->getComponent<Pos2DComponent>("Pos2DComponent");
-  if (entity_pos->getX() <= -1095)
-    entity_pos->setX(1095);
+  if (entity_pos->getX() <= -(BACKGROUND_WIDTH / 2))
+    {
+      int diff = entity_pos->getX() + (BACKGROUND_WIDTH / 2);
+      diff = (diff == 0) ? (diff - 2) : (diff - 1);
+      entity_pos->setX(BACKGROUND_WIDTH + (BACKGROUND_WIDTH / 2) + diff);
+    }
 }

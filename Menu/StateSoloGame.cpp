@@ -7,6 +7,23 @@ StateSoloGame::StateSoloGame(World *world)
   this->addSharedObjetcs();
   this->addEntities();
 
+  std::fstream		cfgFile;
+
+  if (access("config.cfg", R_OK) == -1)
+    this->createConfigFile();
+
+  cfgFile.open("config.cfg", std::ios::in);
+  if (cfgFile.is_open())
+    {
+      std::string	line;
+      while (std::getline(cfgFile, line))
+	{
+	  if (line.substr(0, line.find('=')) == "debug" && line.substr(line.find('=') + 1) == "1")
+	    World::DEBUG = true;
+	  else if (line.substr(0, line.find('=')) == "quadtree" && line.substr(line.find('=') + 1) == "1")
+	    World::QUADTREE = true;
+	}
+    }
 
   this->_music = new sf::Music();
 
@@ -17,6 +34,16 @@ StateSoloGame::StateSoloGame(World *world)
     }
 
   this->_world->start();
+}
+
+void	StateSoloGame::createConfigFile() const
+{
+  std::ofstream		cfgFile;
+
+  cfgFile.open("config.cfg", std::ios::out);
+  cfgFile << "debug=0" << std::endl;
+  cfgFile << "quadtree=0" << std::endl;
+  cfgFile.close();
 }
 
 StateSoloGame::~StateSoloGame()

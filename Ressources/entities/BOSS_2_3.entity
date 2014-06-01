@@ -35,7 +35,7 @@ ENTITY:BOSS_2_3
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=500000
+		life=7500
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:CollisionComponent
@@ -90,13 +90,13 @@ ENTITY:BOSS_2_3
 		actions=UP
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=BOSS_2_BULLET;1
+		entity=BOSS_2_BULLET_1;1
 		nb=0
-		delay=0.4
-		minPosX=-5
-		minPosY=-30
-		maxPosX=-5
-		maxPosY=30
+		delay=1
+		minPosX=0
+		minPosY=0
+		maxPosX=0
+		maxPosY=0
 		random=true
 		abs=false
 	!COMPONENT

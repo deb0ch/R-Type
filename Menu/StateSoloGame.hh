@@ -92,6 +92,7 @@ protected:
 	void addSharedObjetcs();
 	void addEntities();
 	void addSystems();
+	void createConfigFile() const;
 
 
 	World		*_world;

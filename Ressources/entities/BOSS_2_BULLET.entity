@@ -14,11 +14,14 @@ ENTITY:BOSS_2_BULLET
 		vx=-200
 		vy=0
 	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=4
+	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0
+		coef=0.5
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=0
+		speed_coef=400
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
 		collisionPower=25
@@ -26,6 +29,11 @@ ENTITY:BOSS_2_BULLET
 	COMPONENT:LifeComponent
 		life=200
 		invulnerability=0
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=BULLET_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=shotBoss2.png
@@ -41,6 +49,9 @@ ENTITY:BOSS_2_BULLET
 	COMPONENT:MoveForwardComponent
 		dir1=LEFT
 	!COMPONENT
+		COMPONENT:MoveFollowComponent
+		tagToFollow=PLAYER
+	!COMPONENT
 	COMPONENT:CollisionComponent
 		collisionPoints=COMPONENT:CollisionPoint
 			x=0
@@ -49,6 +60,7 @@ ENTITY:BOSS_2_BULLET
 			height=25
 		!COMPONENT
 		toNotCollide=BOOST
+		toNotCollide=MONSTER
 	!COMPONENT
 	COMPONENT:ActionComponent
 		actions=DOWN
