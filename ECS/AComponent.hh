@@ -38,6 +38,9 @@ public:
 	++lineno;
 	line.erase(std::remove(line.begin(), line.end(), '\t'), line.end());
 
+	if (line[0] == '#')
+	  continue ;
+
 	if (std::regex_match(line, std::regex("!COMPONENT")))
 	    return ;
 	else

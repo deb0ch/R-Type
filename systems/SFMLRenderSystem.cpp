@@ -80,7 +80,7 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
     }
   width = (box) ? box->getWidth() : 0;
   height = (box) ? box->getHeight() : 0;
-  if (DEBUG)
+  if (World::DEBUG)
     {
       displayBox2D(width, height, pos, _window);
       if (entity->hasComponent("CollisionComponent"))

@@ -18,10 +18,10 @@ ENTITY:TRACKER_MISSILE
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
-		coef=0.3
+		coef=2
 	!COMPONENT
 	COMPONENT:MovementSpeedComponent
-		speed_coef=200
+		speed_coef=800
 	!COMPONENT
 	COMPONENT:MoveFollowComponent
 		tagToFollow=PLAYER
@@ -31,7 +31,7 @@ ENTITY:TRACKER_MISSILE
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=2
+		delay=3
 	!COMPONENT
 	COMPONENT:ExplosionComponent
 		entity=ALIEN_BOMB_EXPLOSION

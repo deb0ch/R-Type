@@ -21,28 +21,33 @@ void RTException::addError(const int error)
 }
 
 /* Public Constructor */
-RTException::RTException(const int error) {
+RTException::RTException(const int error)
+{
   this->_info = "RTException : ";
   this->addError(error);
 }
 
-RTException::RTException(const std::string &info) {
+RTException::RTException(const std::string &info)
+{
   this->_info = "RTException : ";
   this->_info = info;
 }
 
 /* Protected Constructor */
-RTException::RTException(const std::string &prefix, const int error) {
+RTException::RTException(const std::string &prefix, const int error)
+{
   this->_info = prefix;
   this->addError(error);
 }
 
-RTException::RTException(const std::string &prefix, const std::string &error) {
+RTException::RTException(const std::string &prefix, const std::string &error)
+{
   this->_info = prefix;
   this->_info += error;
 }
 
 /* Methodes */
-const char*   RTException::what() const throw() {
+const char*   RTException::what() const throw()
+{
   return (this->_info.c_str());
 }

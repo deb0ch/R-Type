@@ -29,7 +29,9 @@ set(HEADER_S
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkTimeOutEntitySystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.hh
 	PARENT_SCOPE)
 
 SET(SOURCE_S
@@ -63,12 +65,16 @@ SET(SOURCE_S
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.cpp
 	PARENT_SCOPE
 	)
 
 set(HEADER_C
 	${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSoloSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
@@ -101,14 +107,19 @@ set(HEADER_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.hh
-	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundSystem.hh
 	PARENT_SCOPE
 )
 
 SET(SOURCE_C
 	${SOURCE_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSoloSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp
@@ -141,7 +152,10 @@ SET(SOURCE_C
 	${CMAKE_CURRENT_SOURCE_DIR}/PowerUpSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PlayerLifeSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SFMLRenderTextSystem.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SpawnSoloPlayerSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ScoreSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSetDisplayLiveSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLDisplayScoreSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SFMLSoundSystem.cpp
 	PARENT_SCOPE
 )

@@ -33,6 +33,6 @@ void		OutOfBoundsSystem::processEntity(Entity *e, const float)
 
     if (tmp && tmp->hasTag("do_not_delete"))
       return;
-    this->_world->sendEvent(new EntityDeletedEvent(e));
+    this->_world->sendEvent(new EntityDeletedEvent(e, true));
   }
 }

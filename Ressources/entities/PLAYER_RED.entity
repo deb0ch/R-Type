@@ -36,7 +36,7 @@ ENTITY:PLAYER_RED
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=1
-		invulnerability=3
+		invulnerability=1.5
 	!COMPONENT
 	COMPONENT:TeamComponent
 		team=1

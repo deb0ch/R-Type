@@ -31,7 +31,7 @@ QuadTree::QuadTree(World *world, std::vector<Entity *> const &entities, float x,
       this->SouthWestBlock = NULL;
       this->SouthEastBlock = NULL;
     }
-  if (DEBUG)
+  if (World::DEBUG)
     this->DrawDebug();
 }
 

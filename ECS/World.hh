@@ -8,8 +8,6 @@
 # include	"EventManager.hpp"
 # include	"Any.hpp"
 
-# define	DEBUG false
-
 /**
  * @brief The primary class of the framework that contains all the entities and the systems.
  * @todo Add two boolean state attributes to keep trace of the start() / stop() and pause() / resume() methods calls.
@@ -28,13 +26,20 @@ private:
   EventManager<ISystem>			_event_manager;
   //Factory<IComponent, std::size_t>	_component_factory;
   bool					_initialized;
+  bool					_running;
 
 public:
 
-  World();
+  static bool				DEBUG;
+  static bool				QUADTREE;
+
+ World();
   World(const World&);
   virtual	~World();
   World&	operator=(const World&);
+
+  void		exit();
+  bool		isRunning() const;
 
   /**
    * @brief Create a new Entity with an ID that come from the current World.

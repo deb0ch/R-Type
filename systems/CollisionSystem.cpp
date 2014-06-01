@@ -22,15 +22,6 @@ bool	CollisionSystem::canProcess(Entity *entity)
   return (false);
 }
 
-void		CollisionSystem::beforeProcess(const float)
-{
-  // this->quadTree = new QuadTree(this->_world, this->_world->getEntities(), 0.0f, 0.0f, WINDOW_WIDTH, WINDOW_HEIGHT, 4, 4);
-}
-void		CollisionSystem::afterProcess(const float)
-{
-  // delete this->quadTree;
-}
-
 static bool	checkTags(TagComponent const *tags, CollisionComponent const *col)
 {
   bool	collide, notCollide;
@@ -48,13 +39,12 @@ void	CollisionSystem::processEntity(Entity *entity, const float)
   CollisionComponent	*world_entity_col;
   TeamComponent		*entityTeam;
   TeamComponent		*worldEntityTeam;
+  std::vector<Entity *> const &entities = this->_world->getEntities();
 
   entity_col = entity->getComponent<CollisionComponent>("CollisionComponent");
   entityTeam = entity->getComponent<TeamComponent>("TeamComponent");
   if (!entity_col || !entityTeam)
     return ;
-  std::vector<Entity *> const &entities = this->_world->getEntities();
-  // std::vector<Entity *> const &entities = this->quadTree->findTree(entity);
   for (auto it = entities.begin(); it != entities.end(); ++it)
     {
       world_entity_col = (*it)->getComponent<CollisionComponent>("CollisionComponent");

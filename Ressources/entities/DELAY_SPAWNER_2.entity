@@ -12,7 +12,7 @@ ENTITY:DELAY_SPAWNER_2
 	COMPONENT:EntitySpawnerComponent
 		entity=STAGE_1;1
 		nb=1
-		delay=13
+		delay=7
 		minPosX=0
 		minPosY=0
 		maxPosX=0

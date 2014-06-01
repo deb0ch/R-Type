@@ -19,6 +19,14 @@ SFMLMenu::SFMLMenu(World *world)
 				       "EpicGradius", sf::Style::Titlebar | sf::Style::Close);
   this->_window->setVerticalSyncEnabled(true);
   this->init();
+
+  this->_music = new sf::Music();
+
+  if (this->_music->openFromFile("Ressources/Sound/menu.ogg"))
+    {
+      this->_music->setLoop(true);
+      this->_music->play();
+    }
 }
 
 SFMLMenu::SFMLMenu(World *world, sf::RenderWindow *window)
@@ -92,13 +100,14 @@ void SFMLMenu::update(StateManager& manager)
 	{
 	case sf::Event::Closed:
 	  this->_window->close();
+	  manager.exit();
 	  break;
 
 	case sf::Event::TextEntered:
 	  if (event.text.unicode == 13)
 	    {
 	      this->connect();
-		  manager.pushState(new StateRoom(this->_window, this->_world));
+	      manager.pushState(new StateRoom(this->_window, this->_world, this->_music));
 	    }
 	  else if (event.text.unicode == 8)
 	    this->_textboxIP->removelastCharacter();
@@ -111,11 +120,17 @@ void SFMLMenu::update(StateManager& manager)
 	  break;
 		case sf::Event::MouseButtonPressed:
 			if (this->_buttonplay->isMouseOnButton())
-				manager.pushState(new StateRoom(this->_window, this->_world));
+			{
+				this->connect();
+				manager.pushState(new StateRoom(this->_window, this->_world, this->_music));
+			}
 			else if (this->_buttonCredit->isMouseOnButton())
 				manager.pushState(new StateCredit(this->_window));
 			else if (this->_buttonSolo->isMouseOnButton())
-				manager.pushState(new StateSoloGame(this->_world));
+			  {
+			    this->_music->stop();
+			    manager.pushState(new StateSoloGame(this->_world));
+			  }
 			return;
 	default:
 	  break;
@@ -128,7 +143,8 @@ void SFMLMenu::render(const Timer&)
   this->_window->clear();
 	if (this->_background)
 		this->_window->draw(*this->_background);
-	this->_window->draw(*this->_logo);
+	if (this->_logo)
+	  this->_window->draw(*this->_logo);
 	this->_ipServer->draw();
 	this->_buttonplay->draw();
 	this->_buttonSolo->draw();

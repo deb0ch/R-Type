@@ -1,0 +1,20 @@
+ENTITY:STAGE_2_TEXT_SPAWNER
+	COMPONENT:Pos2DComponent
+		x=800
+		y=300
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=3
+	!COMPONENT
+	COMPONENT:EntitySpawnerComponent
+		entity=STAGE_2_TEXT;1
+		nb=1
+		delay=0
+		minPosX=300
+		minPosY=220
+		maxPosX=300
+		maxPosY=220
+		random=false
+		abs=true
+	!COMPONENT
+!ENTITY

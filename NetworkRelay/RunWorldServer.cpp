@@ -32,6 +32,8 @@
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLRenderTextSystem.hh"
 #include	"SFMLSetDisplayLiveSystem.hh"
+#include	"SFMLDisplayScoreSystem.hh"
+#include	"ScoreSystem.hh"
 
 #include	"ComponentFactory.hpp"
 #include	"EntityFactory.hpp"
@@ -60,11 +62,21 @@ void RunWorldServer::isEnd(bool isEnd) {
 }
 
 void RunWorldServer::run() {
-  while (!this->_isEnd) {
-    this->_timer.startFrame();
-    if (this->_timer.canTick())
-      this->_world->process(this->_timer.getDeltaTime() / 1000000.f);
-    this->_timer.endFrame();
+  try
+    {
+      while (!this->_isEnd) {
+	this->_timer.startFrame();
+	if (this->_timer.canTick())
+	  this->_world->process(this->_timer.getDeltaTime());
+	this->_timer.endFrame();
+      }
+    }
+  catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  } catch (const std::string &str) {
+    std::cerr << str << std::endl;
+  } catch (...) {
+    std::cerr << "Unknown error." << std::endl;
   }
   std::cout << "END GAMME" << std::endl;
 }
@@ -108,6 +120,8 @@ void RunWorldServer::addSystems()
   this->_world->addSystem(new PowerUpSystem(power_ups, power_ups_component));
   this->_world->addSystem(new PlayerLifeSystem(3));
   this->_world->addSystem(new SFMLSetDisplayLiveSystem());
+  this->_world->addSystem(new ScoreSystem());
+  this->_world->addSystem(new SFMLDisplayScoreSystem());
 
   CollisionSystem *collision;
 
@@ -147,6 +161,7 @@ void RunWorldServer::addSystems()
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
       "SFMLTextComponent",
+      "SFMLSoundComponent",
       "SFMLJoystickComponent"
     };
 
@@ -189,4 +204,5 @@ void	RunWorldServer::addEntities()
   this->_world->addEntity(entityFactory->create("BORDER_SPAWNER_TOP"));
   this->_world->addEntity(entityFactory->create("GAME"));
   this->_world->addEntity(entityFactory->create("LIFE_DISPLAY"));
+  this->_world->addEntity(entityFactory->create("SCORE_DISPLAY"));
 }
