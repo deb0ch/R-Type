@@ -12,7 +12,7 @@ protected:
 
   sf::RenderWindow	*_window;
 
-  virtual bool		canProcess(Entity *);
+  virtual bool		canProcess(Entity *) const;
   virtual void		processEntity(Entity *, const float);
 
 public:

@@ -48,9 +48,6 @@ public:
     return (*iterator);
   }
 
-  /**
-   * @todo Throw an exception if the return is null.
-   */
   template <typename T>
   T		*getComponent(const std::string &string_type) const
   {

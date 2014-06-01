@@ -41,6 +41,10 @@ ENTITY:MONSTER_1
 			length=8
 		!ANIM
 	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=tie-fly.wav
+		volume=50
+	!COMPONENT
 	COMPONENT:MovementSpeedComponent
 		speed_coef=800
 	!COMPONENT

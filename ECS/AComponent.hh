@@ -9,7 +9,8 @@
 
 # include	"IComponent.hh"
 # include	"Hash.hh"
-#include	"EntityFileException.hh"
+# include	"EntityFileException.hh"
+# include	"ECSException.hh"
 
 class		AComponent : public IComponent
 {
@@ -66,12 +67,12 @@ public:
 
   virtual void		deserializeFromFileSpecial(const std::string &, std::ifstream &, unsigned int&)
   {
-    throw "deserializeFromFileSpecial() not defined for " + this->_type;
+    throw ECSException("deserializeFromFileSpecial() not defined for " + this->_type);
   }
 
   virtual void		serializeFromFile(std::ofstream &, unsigned char) const
   {
-    throw "serializeFromFile() not defined for " + this->_type;
+    throw ECSException("serializeFromFile() not defined for " + this->_type);
   }
 };
 

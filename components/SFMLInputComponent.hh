@@ -1,9 +1,7 @@
 #ifndef		SFMLINPUTCOMPONENT_H_
 # define	SFMLINPUTCOMPONENT_H_
 
-# include	<map>
 # include	<string>
-# include	<vector>
 
 # include	"ACopyableComponent.hpp"
 

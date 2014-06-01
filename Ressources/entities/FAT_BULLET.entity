@@ -22,7 +22,7 @@ ENTITY:FAT_BULLET
 		offsetY=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=1000
+		vx=700
 		vy=0
 	!COMPONENT
 	COMPONENT:Friction2DComponent
@@ -32,7 +32,7 @@ ENTITY:FAT_BULLET
 		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=70
+		collisionPower=150
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=5
@@ -48,6 +48,10 @@ ENTITY:FAT_BULLET
 			start=1
 			length=0
 		!ANIM
+	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=bullet2.wav
+		volume=80
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
 		dir1=RIGHT

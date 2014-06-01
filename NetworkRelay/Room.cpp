@@ -6,7 +6,6 @@
 Room::Room()
   : _remotes(), _mutex()
 {
-  std::cout << "Creating room" << std::endl;
 }
 
 Room::~Room(){}
@@ -28,7 +27,6 @@ void				Room::disconnectRemote(Remote *remote)
 		this->_pending_disconnect_remotes.end(), remote) ==
       this->_pending_disconnect_remotes.end())
     {
-      std::cout << "_______________________ DisconnectRemote________________________" << std::endl;
       this->_pending_disconnect_remotes.push_back(remote);
     }
 }
@@ -39,7 +37,6 @@ void				Room::removeRemote(Remote *remote)
 
   if (it == this->_remotes.end())
     return ;
-  //delete *it;
   this->_remotes.erase(it);
 }
 

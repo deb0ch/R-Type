@@ -10,7 +10,7 @@ public:
   virtual ~IDirectoryLister()
   {}
 
-  virtual std::vector<std::string> listDirectory(const std::string &) = 0;
+  virtual std::vector<std::string> listDirectory(const std::string &) const = 0;
 };
 
 #endif /* !IDIRECTORYLISTER_H_ */

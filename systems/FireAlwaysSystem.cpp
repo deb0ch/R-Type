@@ -8,7 +8,7 @@ FireAlwaysSystem::FireAlwaysSystem() : ASystem("FireAlwaysSystem")
 FireAlwaysSystem::~FireAlwaysSystem()
 {}
 
-bool		FireAlwaysSystem::canProcess(Entity *entity)
+bool		FireAlwaysSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("ActionComponent") &&
       entity->hasComponent("FireAlwaysComponent"))

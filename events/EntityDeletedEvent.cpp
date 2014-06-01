@@ -14,6 +14,10 @@ Entity *EntityDeletedEvent::getEntity(void) {
   return this->_entity;
 }
 
+const Entity *EntityDeletedEvent::getEntity(void) const {
+  return this->_entity;
+}
+
 bool	EntityDeletedEvent::isForced() const
 {
   return (this->_forced);

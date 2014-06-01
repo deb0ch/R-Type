@@ -67,7 +67,6 @@ bool			ClientRelay::start()
 	  if (!this->_remote->isReady())
 	    {
 	      this->_remote->setReady(true);
-	      std::cout << "CLIENT READY" << std::endl;
 	      return (true);
 	    }
 	  if (!buffer->end())
@@ -96,7 +95,6 @@ bool			ClientRelay::start()
 	}
     }
   return (false);
-  std::cout << "DISCONNECTED :O" << std::endl;
 }
 
 Room	*ClientRelay::getRoom(const std::string &)
@@ -112,7 +110,6 @@ IBuffer			*ClientRelay::getTCPBuffer()
   if (this->_available_tcp.empty())
     {
       buffer = new NetworkBuffer(4096);
-      std::cout << "creating buffer tcp: " << buffer << std::endl;
     }
   else
     {
@@ -132,7 +129,6 @@ IBuffer			*ClientRelay::getUDPBuffer()
   if (this->_available_udp.empty())
     {
       buffer = new NetworkBuffer;
-      std::cout << "creating buffer udp: " << buffer << std::endl;
     }
   else
     {
@@ -144,12 +140,12 @@ IBuffer			*ClientRelay::getUDPBuffer()
   return (buffer);
 }
 
-Remote			*ClientRelay::getRemote(unsigned int)
+Remote			*ClientRelay::getRemote(unsigned int) const
 {
   return (this->_remote);
 }
 
-Remote			*ClientRelay::getRemote(const std::string &, const int)
+Remote			*ClientRelay::getRemote(const std::string &, const int) const
 {
   return (this->_remote);
 }

@@ -13,7 +13,7 @@ public:
   NetworkReceiveDieEntitySystem();
   virtual	~NetworkReceiveDieEntitySystem();
 
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 
   virtual void	beforeProcess(const float);

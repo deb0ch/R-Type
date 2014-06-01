@@ -60,14 +60,10 @@ unsigned int			NetworkPlayerComponent::getRemoteId() const
 
 void			NetworkPlayerComponent::serialize(IBuffer &) const
 {
-  std::cout << "Not supposed to happen yet" << std::endl;
-  throw 1;
 }
 
 void			NetworkPlayerComponent::unserialize(IBuffer &)
 {
-  std::cout << "Not supposed to happen yet" << std::endl;
-  throw 1;
 }
 
 void			NetworkPlayerComponent::setRespawn(bool value)

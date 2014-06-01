@@ -32,7 +32,7 @@ ENTITY:BASIC_BULLET
 		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=25
+		collisionPower=60
 	!COMPONENT
 	COMPONENT:LifeComponent
 		life=5
@@ -50,7 +50,7 @@ ENTITY:BASIC_BULLET
 		!ANIM
 	!COMPONENT
 	COMPONENT:SFMLSoundComponent
-		filename=Silencer.wav
+		filename=bullet.wav
 		volume=40
 	!COMPONENT
 	COMPONENT:MoveForwardComponent

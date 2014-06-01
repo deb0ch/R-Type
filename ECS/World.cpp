@@ -58,7 +58,6 @@ Entity	*World::createEntity()
 
 /**
  * Add an Entity into the World and change the nextEntityID if the entity has brought a bigger ID.
- * @todo Prevent adding an Entity with an ID that already is in the World.
  */
 World	*World::addEntity(Entity *entity)
 {
@@ -74,7 +73,6 @@ World	*World::addEntity(Entity *entity)
 
 /**
  * Add a System into the World and sort the vector according to the systems priority..
- * @todo Prevent adding a System that already exists in the World.
  */
 World	*World::addSystem(ISystem *system)
 {
@@ -133,7 +131,7 @@ World	*World::removeSystem(const std::string &type)
   return (this);
 }
 
-ISystem		*World::getSystem(const std::string &type)
+ISystem		*World::getSystem(const std::string &type) const
 {
   auto it = std::find_if(this->_systems.begin(), this->_systems.end(),
 			 [type] (ISystem *system) -> bool
@@ -151,7 +149,12 @@ std::vector<Entity *> &World::getEntities()
   return (this->_entities);
 }
 
-Entity		*World::getEntity(unsigned int id)
+const std::vector<Entity *> &World::getEntities() const
+{
+  return (this->_entities);
+}
+
+Entity		*World::getEntity(const unsigned int id) const
 {
   auto it = std::find_if(this->_entities.begin(), this->_entities.end(),
 			 [id] (Entity *entity) -> bool
@@ -175,7 +178,6 @@ int		World::countEntities() const
 
 /**
  * Call the ASystem::process() method of each System, passing all the entities to them.
- * @todo Throw an exception if the World is paused or stopped or not initialized.
  */
 void	World::process(const float delta)
 {
@@ -188,9 +190,6 @@ void	World::process(const float delta)
 		});
 }
 
-/**
- * @todo All the code.
- */
 void	World::init()
 {
   this->_initialized = true;
@@ -201,9 +200,6 @@ void	World::init()
 		});
 }
 
-/**
- * @todo Throw an exception if the World is not stopped or not initialized.
- */
 void	World::start()
 {
   std::for_each(this->_systems.begin(), this->_systems.end(),
@@ -213,9 +209,6 @@ void	World::start()
 		});
 }
 
-/**
- * @todo Throw an exception if the World is not running.
- */
 void	World::pause()
 {
   std::for_each(this->_systems.begin(), this->_systems.end(),
@@ -225,9 +218,6 @@ void	World::pause()
 		});
 }
 
-/**
- * @todo Throw an exception if the World is not paused.
- */
 void	World::resume()
 {
   std::for_each(this->_systems.begin(), this->_systems.end(),
@@ -237,9 +227,6 @@ void	World::resume()
 		});
 }
 
-/**
- * @todo Throw an exception if the World is not started.
- */
 void	World::stop()
 {
   std::for_each(this->_systems.begin(), this->_systems.end(),
@@ -259,7 +246,6 @@ bool		World::hasEventHandler(const std::string &type) const
   return (this->_event_manager.hasHandler(type));
 }
 
-
 void		World::exit()
 {
   this->_running = false;
@@ -267,5 +253,5 @@ void		World::exit()
 
 bool		World::isRunning() const
 {
-  return this->_running;
+  return (this->_running);
 }

@@ -15,7 +15,7 @@ class NetworkReceiveUpdateSystem : public ASystem
 public:
   NetworkReceiveUpdateSystem(const std::vector<std::string> &serializable_component);
   virtual	~NetworkReceiveUpdateSystem();
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 
   virtual void	beforeProcess(const float);

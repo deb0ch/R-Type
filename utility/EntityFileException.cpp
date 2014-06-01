@@ -1,8 +1,9 @@
 #include <sstream>
+
 #include "EntityFileException.hh"
 
 //----- ----- Constructors ----- ----- //
-EntityFileException::EntityFileException(std::string message, unsigned int lineno)
+EntityFileException::EntityFileException(const std::string & message, unsigned int lineno)
 {
   this->_message = message;
   this->_component = "";
@@ -22,7 +23,7 @@ const char*	EntityFileException::what() const throw()
   std::stringstream	res;
   std::string		*str = new std::string();
 
-  // res << "===== EntityFileException =====" << std::endl;
+  res << "EntityFileException:" << std::endl;
   if (this->_filename != "")
     {
       res << "Where ?\tDuring parsing of [" << this->_filename << "]";
@@ -33,24 +34,22 @@ const char*	EntityFileException::what() const throw()
   if (this->_component != "")
     res << "When ?\tWhen deserializing component " << this->_component << std::endl;
   res << "What ?\t" << this->_message << std::endl;
-
   *str = res.str();
-
   return (str->c_str());
 }
 
 //----- ----- Setters ----- ----- //
-void		EntityFileException::setFilename(const std::string &filename)
+void	EntityFileException::setFilename(const std::string &filename)
 {
   this->_filename = filename;
 }
 
-void		EntityFileException::setComponent(const std::string &component)
+void	EntityFileException::setComponent(const std::string &component)
 {
   this->_component = component;
 }
 
-void		EntityFileException::setLineNo(unsigned int lineno)
+void	EntityFileException::setLineNo(unsigned int lineno)
 {
   this->_lineno = lineno;
 }

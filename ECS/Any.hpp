@@ -13,7 +13,7 @@ private:
     virtual ~IContainer()
     {}
 
-    virtual IContainer *clone() = 0;
+    virtual IContainer *clone() const = 0;
   };
 
   template <typename T>
@@ -28,7 +28,7 @@ private:
     virtual ~Container()
     {}
 
-    virtual IContainer *clone()
+    virtual IContainer *clone() const
     {
       return new Container<T>(this->_value);
     }

@@ -68,6 +68,10 @@ ENTITY:BOSS_1
 			length=4
 		!ANIM
 	!COMPONENT
+	COMPONENT:SFMLSoundComponent
+		filename=engine.wav
+		volume=100
+	!COMPONENT
 	COMPONENT:MoveSequenceComponent
 		action=UP
 		action=DOWN

@@ -13,6 +13,7 @@ public:
   virtual void			removeRemote(Remote *remote);
   void				addRemote(Remote *remote);
   RunWorldServer		&getRunWorldServer();
+  const RunWorldServer		&getRunWorldServer() const;
 
 private:
   RoomServer() = delete;

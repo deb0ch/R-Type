@@ -77,7 +77,7 @@ ENTITY:PLAYER_RED
 	COMPONENT:EntitySpawnerComponent
 		entity=BASIC_BULLET;1
 		nb=0
-		delay=0.15
+		delay=0.3
 		minPosX=5
 		minPosY=0
 		maxPosX=5
