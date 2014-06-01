@@ -8,7 +8,7 @@
 
 #include	"MoveSystem.hh"
 #include	"Friction2DSystem.hh"
-#include	"CollisionSystem.hh"
+#include	"CollisionSoloSystem.hh"
 #include	"SFMLRenderSystem.hh"
 #include	"SFMLDisplaySystem.hh"
 #include	"SFMLInputSystem.hh"

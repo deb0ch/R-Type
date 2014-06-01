@@ -69,6 +69,8 @@ SET(SOURCE_S
 set(HEADER_C
 	${HEADER_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSoloSystem.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.hh
@@ -109,6 +111,8 @@ set(HEADER_C
 SET(SOURCE_C
 	${SOURCE_C}
 	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CollisionSoloSystem.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadTree.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/MoveSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkSendUpdateSystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/NetworkReceiveUpdateSystem.cpp

@@ -4,6 +4,9 @@
 #include	"World.hh"
 #include	"Hash.hh"
 
+bool World::DEBUG = false;
+bool World::QUADTREE = false;
+
 //----- ----- Constructors ----- ----- //
 World::World()
 {
