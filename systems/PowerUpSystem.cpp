@@ -67,22 +67,24 @@ void PowerUpSystem::delete_entity(IEvent *e)
     {
       if (RandomInt().operator()<unsigned long>(0, 10) == 0)
 	{
-	  Entity *boost =
-	    entityFactory->create(this->_possible_powerup[
-							  RandomInt().operator()<unsigned long>
-							  (0, this->_possible_powerup.size() - 1)
-							  ]);
-	  if (boost == NULL)
+	  if (RandomInt().operator()<unsigned long>(0, 10) == 0)
 	    {
-	      std::cout << "Boost is null" << std::endl;
-	      return;
+	      Entity *boost =
+		entityFactory->create(this->_possible_powerup[
+							      RandomInt().operator()<unsigned long>
+							      (0, this->_possible_powerup.size() - 1)
+							      ]);
+	      if (boost == NULL)
+		{
+		  return;
+		}
+	      Pos2DComponent *boostPosition = boost->getComponent<Pos2DComponent>("Pos2DComponent");
+	      if (boostPosition == NULL)
+		return;
+	      boostPosition->setX(position->getX());
+	      boostPosition->setY(position->getY());
+	      this->_world->addEntity(boost);
 	    }
-	  Pos2DComponent *boostPosition = boost->getComponent<Pos2DComponent>("Pos2DComponent");
-	  if (boostPosition == NULL)
-	    return;
-	  boostPosition->setX(position->getX());
-	  boostPosition->setY(position->getY());
-	  this->_world->addEntity(boost);
 	}
     }
 }

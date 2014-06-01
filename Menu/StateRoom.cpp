@@ -6,6 +6,7 @@
 #include	"ClientRelay.hh"
 #include	"Any.hpp"
 #include	"StateGame.hh"
+#include	"RTException.hh"
 
 StateRoom::StateRoom(sf::RenderWindow * window, World *world, sf::Music *music)
 {
@@ -50,11 +51,10 @@ void	StateRoom::accessRoom()
     if (this->_textboxRoom->getString() != "")
       this->_textboxRoom->setString("defaulte");
     if (!(remote = network->getRemote(0)))
-      throw "invalide remote";
+      throw RTException("Invalid remote");
     IBuffer *buffer = network->getTCPBuffer();
     *buffer << static_cast<char>(INetworkRelay::CHANGE_ROOM_QUERY);
     *buffer << this->_textboxRoom->getString();
-    std::cout << "SEND" << std::endl;
     remote->sendTCP(buffer);
     Thread<INetworkRelay> *thread = new Thread<INetworkRelay>();
 
@@ -71,7 +71,7 @@ void	StateRoom::accessRoom()
 	}
     }
   } else {
-    throw "invalide network";
+    throw RTException("Invalid network");
   }
 }
 
@@ -84,7 +84,6 @@ bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>
   buffer = *it;
   buffer->rewind();
   *buffer >> packet_type;
-  std::cout << (int)packet_type << std::endl;
   if (packet_type == INetworkRelay::CHANGE_ROOM_QUERY_YES ||
       packet_type == INetworkRelay::CHANGE_ROOM_QUERY_NON)
     {
@@ -95,7 +94,7 @@ bool StateRoom::parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>
       else
 	{
 	  *buffer >> msg;
-	  throw msg;
+	  throw RTException(msg);
 	}
       it = vector.erase(it);
       return true;

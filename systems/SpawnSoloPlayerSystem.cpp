@@ -23,7 +23,6 @@ void			SpawnSoloPlayerSystem::newPlayerHandler(IEvent *event)
 {
   NewPlayerEvent	*new_player = dynamic_cast<NewPlayerEvent *>(event);
 
-  std::cout << "New player :D" << std::endl;
   this->_players_to_spawn.push(new_player->getRemoteId());
 }
 
@@ -56,10 +55,15 @@ Entity		*SpawnSoloPlayerSystem::spawnPlayer(const std::string &entity_name)
       this->_world->addEntity(player_entity);
       if (player_entity)
 	{
-	  life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
-	  if (life_component)
-	    life_component->setInvulnerabilityTime(3.f);
-	  std::cout << "Created entity" << std::endl;
+	  Entity *player_entity = entityFactory->create(entity_name);
+	  this->_world->addEntity(player_entity);
+	  if (player_entity)
+	    {
+	      life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
+	      if (life_component)
+		life_component->setInvulnerabilityTime(3.f);
+	    }
+	  return (player_entity);
 	}
       return (player_entity);
     }

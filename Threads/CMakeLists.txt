@@ -18,7 +18,8 @@ SET(HEADERS
   ICondVar.hh
   UCondVar.hh
   WCondVar.hh
-  LockGuard.hpp)
+  LockGuard.hpp
+  SafeFifoException.hh)
 
 SET(SOURCES
   ThreadException.cpp
@@ -28,6 +29,7 @@ SET(SOURCES
   ScopedMutex.cpp
   UCondVar.cpp
   WCondVar.cpp
+  SafeFifoException.cpp
   )
 
 SET (LIB_TYPE STATIC)

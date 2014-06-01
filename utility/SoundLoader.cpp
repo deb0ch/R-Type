@@ -3,24 +3,32 @@
 
 SoundLoader::SoundLoader()
 {
-  _sounds = std::map<std::string, sf::SoundBuffer *>();
+  _soundBuffers = std::map<std::string, sf::SoundBuffer *>();
+  _sounds = std::map<std::string, sf::Sound *>();
 }
 
 SoundLoader::~SoundLoader()
 {
-  auto it = _sounds.begin();
+  auto it = _soundBuffers.begin();
+  auto it2 = _sounds.begin();
 
-  for (it = _sounds.begin(); it != _sounds.end(); ++it)
+  for (it = _soundBuffers.begin(); it != _soundBuffers.end(); ++it)
     delete it->second;
+  for (it2 = _sounds.begin(); it2 != _sounds.end(); ++it2)
+    delete it2->second;
 }
 
 sf::Sound *SoundLoader::getSound(const std::string &fileSound)
 {
-  auto it = _sounds.find(fileSound);
+  auto it = _soundBuffers.find(fileSound);
 
-  if (it != _sounds.end()
+  if (it != _soundBuffers.end()
       && it->second != NULL)
-    return new sf::Sound(*(it)->second);
+    {
+      if (_sounds.find(fileSound) == _sounds.end())
+	_sounds[fileSound] = new sf::Sound(*(it)->second);
+      return (_sounds[fileSound]);
+    }
   else if (it->second == NULL)
     return (NULL);
   try
@@ -29,29 +37,31 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
     }
   catch (RTException e)
     {
-      std::cout << e.what() << std::endl;
+      std::cerr << e.what() << std::endl;
       return (NULL);
     }
-  return (new sf::Sound(*_sounds.find(fileSound)->second));
+  if (_sounds.find(fileSound) == _sounds.end())
+    _sounds[fileSound] = new sf::Sound(*_soundBuffers.find(fileSound)->second);
+  return (_sounds[fileSound]);
 }
 
 void SoundLoader::addSound(const std::string &fileSound)
 {
   sf::SoundBuffer	*buffer = new sf::SoundBuffer();
-  auto			it = _sounds.find(fileSound);
+  auto			it = _soundBuffers.find(fileSound);
 
-  if (it == _sounds.end())
+  if (it == _soundBuffers.end())
     {
       if (access((SOUNDFILE + fileSound).c_str(), R_OK) == -1)
 	{
-	  _sounds[fileSound] = NULL;
+	  _soundBuffers[fileSound] = NULL;
 	  throw RTException("SoundLoader: file " + fileSound + " does not exist\n");
 	}
       if (!buffer->loadFromFile(SOUNDFILE + fileSound))
 	{
-	  _sounds[fileSound] = NULL;
+	  _soundBuffers[fileSound] = NULL;
 	  throw RTException("sf::SoundBuffer.loadFromFile failed on file " + fileSound + "\n");
 	}
-      _sounds[fileSound] = buffer;
+      _soundBuffers[fileSound] = buffer;
     }
 }

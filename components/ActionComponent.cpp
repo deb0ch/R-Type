@@ -53,6 +53,15 @@ void		ActionComponent::setAction(const std::string &action, const bool status)
     }
 }
 
+void			ActionComponent::resetActions()
+{
+  std::for_each(this->_actions.begin(), this->_actions.end(),
+		[] (std::pair<const std::string, bool> &pair)
+		{
+		  pair.second = false;
+		});
+}
+
 void			ActionComponent::serialize(IBuffer &buffer) const
 {
   unsigned int		nb;
