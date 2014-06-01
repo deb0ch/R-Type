@@ -10,6 +10,7 @@ World::World()
   this->_nextEntityID = 1;
   this->_entities.reserve(1000);
   this->_initialized = false;
+  this->_running = true;
 }
 
 World::World(const World& ref)
@@ -17,6 +18,7 @@ World::World(const World& ref)
   this->_entities = ref._entities;
   this->_systems = ref._systems;
   this->_initialized = ref._initialized;
+  this->_running = ref._running;
 }
 
 //----- ----- Destructor ----- ----- //
@@ -31,6 +33,8 @@ World&	World::operator=(const World& ref)
 {
   this->_entities = ref._entities;
   this->_systems = ref._systems;
+  this->_initialized = ref._initialized;
+  this->_running = ref._running;
   return (*this);
 }
 
@@ -250,4 +254,15 @@ void		World::sendEvent(IEvent *event)
 bool		World::hasEventHandler(const std::string &type) const
 {
   return (this->_event_manager.hasHandler(type));
+}
+
+
+void		World::exit()
+{
+  this->_running = false;
+}
+
+bool		World::isRunning() const
+{
+  return this->_running;
 }

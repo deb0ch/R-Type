@@ -15,7 +15,7 @@ int			main()
   try
     {
       states.pushState(new SFMLMenu(&world));
-      while (42)
+      while (states.isRunning())
 	{
 	  timer.startFrame();
 	  states.update();

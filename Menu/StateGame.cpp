@@ -10,12 +10,12 @@ StateGame::StateGame(World *world)
   this->addSharedObjetcs();
   this->addEntities();
 
-  sf::Music *music = new sf::Music();
+  this->_music = new sf::Music();
 
-  if (music->openFromFile("Ressources/Sound/music.ogg"))
+  if (this->_music->openFromFile("Ressources/Sound/music.ogg"))
     {
-      music->setLoop(true);
-      music->play();
+      this->_music->setLoop(true);
+      this->_music->play();
     }
 
   this->_world->start();
@@ -24,6 +24,8 @@ StateGame::StateGame(World *world)
 StateGame::~StateGame()
 {
   this->_world->stop();
+  this->_music->stop();
+  delete this->_music;
 }
 
 void		StateGame::addSharedObjetcs()
@@ -121,8 +123,11 @@ void		StateGame::addSystems()
 		&EntityDeleterSystem::addEntityToDelete);
 }
 
-void		StateGame::update(StateManager&)
-{}
+void		StateGame::update(StateManager &manager)
+{
+  if (!this->_world->isRunning())
+    manager.exit();
+}
 
 void		StateGame::render(const Timer&timer)
 {
