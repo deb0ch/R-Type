@@ -1,4 +1,4 @@
-ENTITY:MONSTER_SPAWNER_BEGIN_1
+ENTITY:MONSTER_SPAWNER_LINE_FULL_0
 	COMPONENT:NetworkSendUpdateComponent
 		update_rate=5
 	!COMPONENT
@@ -7,15 +7,15 @@ ENTITY:MONSTER_SPAWNER_BEGIN_1
 		y=300
 	!COMPONENT
 	COMPONENT:AutoDestructComponent
-		delay=30
+		delay=5
 	!COMPONENT
 	COMPONENT:EntitySpawnerComponent
-		entity=MONSTER_SPAWNER_LINE_FULL_0;1
-		entity=MONSTER_SPAWNER_LINE_FULL_1;1
-		entity=MONSTER_SPAWNER_LINE_FULL_0;1
-		entity=DELAY_SPAWNER_1;1
+		entity=MONSTER_SPAWNER_0_LINE_0;1
+		entity=MONSTER_SPAWNER_0_LINE_1;1
+		entity=MONSTER_SPAWNER_0_LINE_2;1
+		entity=MONSTER_SPAWNER_0_LINE_3;1
 		nb=4
-		delay=5
+		delay=0
 		minPosX=0
 		minPosY=0
 		maxPosX=0
