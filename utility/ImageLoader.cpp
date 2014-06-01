@@ -12,9 +12,7 @@ ImageLoader::ImageLoader()
 
 ImageLoader::~ImageLoader()
 {
-  auto it = this->_images.begin();
-
-  for (it = this->_images.begin(); it != this->_images.end(); ++it)
+  for (auto it = this->_images.begin(); it != this->_images.end(); ++it)
     delete it->second.first;
 }
 

@@ -31,8 +31,6 @@ void	NetworkSendDieEntitySystem::processEntity(Entity *, const float)
 void	NetworkSendDieEntitySystem::afterProcess(const float)
 {
   Room *room = NULL;
-  auto itEnd = this->_toDelete.end();
-  auto it = this->_toDelete.begin();
 
   if (_network && _room_name && (room = this->_network->getRoom(*this->_room_name)))
     {
@@ -40,9 +38,9 @@ void	NetworkSendDieEntitySystem::afterProcess(const float)
 
       std::vector<Remote *> &remotes = room->getRemotes();
       std::for_each(remotes.begin(), remotes.end(),
-		    [this, &it, &itEnd] (Remote *remote)
+		    [this, &itEnd] (Remote *remote)
 		    {
-		      for (it = this->_toDelete.begin(); it != itEnd; ++it)
+		      for (auto it = this->_toDelete.begin(); it != this->_toDelete.end(); ++it)
 			{
 			  for (int i = 0; i < 5; ++i)
 			    {

@@ -193,11 +193,10 @@ void		ServerRelay::manageAllRemotes()
 
 void		ServerRelay::manageRemotes(std::vector<Remote *> &remotes, Room *room)
 {
-  auto itEnd = remotes.end();
   Remote *remote;
   bool	test = false;
 
-  for (auto it = remotes.begin(); it != itEnd; )
+  for (auto it = remotes.begin(); it != remotes.end(); )
     {
       test = false;
       remote = *it;

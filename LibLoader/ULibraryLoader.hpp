@@ -35,10 +35,9 @@ LibraryLoader<T>::~LibraryLoader()
 template <typename T>
 void		LibraryLoader<T>::clearLibraries()
 {
-  auto it = this->libs.begin();
   int		r;
 
-  for (it = this->libs.begin(); it != this->libs.end(); ++it)
+  for (auto it = this->libs.begin(); it != this->libs.end(); ++it)
     if ((r = dlclose(it->second)))
       std::cerr << LibLoaderException(r).what() << std::endl;
   this->libs.clear();
