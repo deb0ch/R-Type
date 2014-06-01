@@ -3,8 +3,8 @@
 #include <iostream>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <stdlib.h>
-#include <errno.h>
+#include <cstdlib>
+#include <cerrno>
 #include "WSocketTCP.hh"
 #include "TCPException.hh"
 

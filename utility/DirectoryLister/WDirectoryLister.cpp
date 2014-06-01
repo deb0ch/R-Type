@@ -3,7 +3,7 @@
 # include <iostream>
 # include <windows.h>
 # include <tchar.h>
-# include <stdio.h>
+# include <cstdio>
 # include <strsafe.h>
 
 #include "WDirectoryLister.hh"

@@ -1,4 +1,4 @@
-#include <errno.h>
+#include <cerrno>
 
 #include "SelectException.hh"
 #include "Select.hh"
