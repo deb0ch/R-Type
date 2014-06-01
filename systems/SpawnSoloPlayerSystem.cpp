@@ -55,15 +55,9 @@ Entity		*SpawnSoloPlayerSystem::spawnPlayer(const std::string &entity_name)
       this->_world->addEntity(player_entity);
       if (player_entity)
 	{
-	  Entity *player_entity = entityFactory->create(entity_name);
-	  this->_world->addEntity(player_entity);
-	  if (player_entity)
-	    {
-	      life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
-	      if (life_component)
-		life_component->setInvulnerabilityTime(3.f);
-	    }
-	  return (player_entity);
+	  life_component = player_entity->getComponent<LifeComponent>("LifeComponent");
+	  if (life_component)
+	    life_component->setInvulnerabilityTime(3.f);
 	}
       return (player_entity);
     }
