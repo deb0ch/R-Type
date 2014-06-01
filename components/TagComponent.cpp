@@ -37,10 +37,8 @@ void TagComponent::removeTag(const std::string& tag)
 
 void	TagComponent::serialize(IBuffer &buffer) const
 {
-  auto itEnd = this->_tags.end();
-
   buffer << static_cast<unsigned int>(this->_tags.size());
-  for (auto it = this->_tags.begin(); it != itEnd; ++it) {
+  for (auto it = this->_tags.begin(); it != this->_tags.end(); ++it) {
     buffer << *it;
   }
 }
