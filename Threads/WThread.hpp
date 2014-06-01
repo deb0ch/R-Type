@@ -14,9 +14,9 @@ class Thread : public IThread<T>
 public:
   virtual void						start(T* obj, void (T::*fct)(Any), Any arg)
 	{
-		_container.obj = obj;
-		_container.fct = fct;
-		_container.arg = arg;
+		_containerArg.obj = obj;
+		_containerArg.fct = fct;
+		_containerArg.arg = arg;
 		if ((_threadHandle = CreateThread(
 			NULL,
 			0,
@@ -28,7 +28,7 @@ public:
 		_status = RUNNING;
 	}
 
-  virtual void						start(T* obj, void (T::*fct)(Any))
+  virtual void						start(T* obj, void (T::*fct)())
 	{
 		_container.obj = obj;
 		_container.fct = fct;
@@ -95,19 +95,16 @@ private:
 	struct		Container
 	{
 		T*		obj;
+		void	(T::*fct)();
+	};
+	struct		ContainerArg
+	{
+		T*		obj;
 		void	(T::*fct)(Any);
 		Any		arg;
 	};
 	struct Container					_container;
-
-	// Private functions
-	static void*						_threadEntryArg(void* args)
-	{
-		Thread<T>::Container*			container = reinterpret_cast<Thread<T>::Container*>(args);
-
-		(container->obj->*(container->fct))(container->arg);
-		return (NULL);
-	}
+	struct ContainerArg					_containerArg;
 
   static void*						_threadEntry(void* args)
 	{
@@ -116,6 +113,14 @@ private:
 		(container->obj->*(container->fct))();
 		return (NULL);
 	}
+  // Private functions
+  static void*						_threadEntryArg(void* args)
+  {
+	  Thread<T>::ContainerArg*			container = reinterpret_cast<Thread<T>::ContainerArg*>(args);
+
+	  (container->obj->*(container->fct))(container->arg);
+	  return (NULL);
+  }
 };
 
 #endif /* !WTHREAD_H_ */
