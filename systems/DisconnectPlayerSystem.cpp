@@ -14,7 +14,7 @@ void		DisconnectPlayerSystem::init()
   this->_world->addEventHandler("DisconnectPlayerEvent", this, &DisconnectPlayerSystem::disconnectPlayerHandler);
 }
 
-bool		DisconnectPlayerSystem::canProcess(Entity *)
+bool		DisconnectPlayerSystem::canProcess(Entity *) const
 {
   return false;
 }

@@ -6,10 +6,10 @@
 class MoveForwardSystem : public ASystem
 {
 public:
-  MoveForwardSystem();
-  virtual ~MoveForwardSystem();
-  virtual bool canProcess(Entity *);
-  virtual void processEntity(Entity *, const float);
+	MoveForwardSystem();
+	virtual ~MoveForwardSystem();
+	virtual bool canProcess(Entity *) const;
+	virtual void processEntity(Entity *, const float);
 };
 
 #endif /* !MOVEFORWARDSYSTEM_H_ */

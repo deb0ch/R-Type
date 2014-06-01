@@ -14,7 +14,7 @@ protected:
   std::map<sf::Keyboard::Key, bool>	_inputs;
   std::map<unsigned int, bool>	_inputsJoystick;
 
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 
   const std::map<std::string, std::vector<sf::Keyboard::Key> >	&getKeyboardInputs() const;

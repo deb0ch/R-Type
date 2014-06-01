@@ -9,7 +9,7 @@ AttachSystem::AttachSystem() : ASystem("AttachSystem")
 AttachSystem::~AttachSystem()
 {}
 
-bool AttachSystem::canProcess(Entity *entity)
+bool AttachSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("AttachComponent"))
     return true;

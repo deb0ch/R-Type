@@ -325,9 +325,6 @@ void		ServerRelay::manageRemotesInRooms()
     }
 }
 
-/**
- * @todo Add more verifications than only id (like Port and IP) to know which client is talking
- */
 void		ServerRelay::receiveUDP()
 {
   IBuffer	*buffer = this->getUDPBuffer();

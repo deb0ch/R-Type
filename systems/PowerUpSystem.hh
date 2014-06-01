@@ -16,7 +16,7 @@ public:
 	void	delete_entity(IEvent *);
 
 protected:
-	virtual bool canProcess(Entity *);
+	virtual bool canProcess(Entity *) const;
 	virtual void processEntity(Entity *, const float);
 
 	std::vector<std::string>	_possible_powerup;

@@ -11,7 +11,7 @@ MoveFollowSystem::MoveFollowSystem()
 MoveFollowSystem::~MoveFollowSystem()
 {}
 
-bool MoveFollowSystem::canProcess(Entity *entity)
+bool MoveFollowSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("MoveFollowComponent") &&
       entity->hasComponent("ActionComponent") &&

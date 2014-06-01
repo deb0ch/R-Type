@@ -26,7 +26,7 @@ void			SpawnSoloPlayerSystem::newPlayerHandler(IEvent *event)
   this->_players_to_spawn.push(new_player->getRemoteId());
 }
 
-bool		SpawnSoloPlayerSystem::canProcess(Entity *)
+bool		SpawnSoloPlayerSystem::canProcess(Entity *) const
 {
   return false;
 }

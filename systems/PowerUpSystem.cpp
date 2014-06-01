@@ -24,7 +24,7 @@ void	PowerUpSystem::init()
   this->_world->addEventHandler("EntityDeletedEvent", this, &PowerUpSystem::delete_entity);
 }
 
-bool PowerUpSystem::canProcess(Entity *)
+bool PowerUpSystem::canProcess(Entity *) const
 {
   return (false);
 }

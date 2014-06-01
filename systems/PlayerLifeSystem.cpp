@@ -16,7 +16,7 @@ void	PlayerLifeSystem::init()
   this->_world->addEventHandler("EntityDeletedEvent", this, &PlayerLifeSystem::entityDeathEvent);
 }
 
-bool	PlayerLifeSystem::canProcess(Entity *)
+bool	PlayerLifeSystem::canProcess(Entity *) const
 {
   return (false);
 }

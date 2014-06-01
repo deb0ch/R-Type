@@ -10,7 +10,7 @@ public:
 		CollisionSystem();
   virtual	~CollisionSystem();
 
-  virtual bool	canProcess(Entity *);
+  virtual bool	canProcess(Entity *) const;
   virtual void	processEntity(Entity *, const float);
 
 protected:

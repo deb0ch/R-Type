@@ -8,7 +8,7 @@ class ResetActionSystem : public ASystem
 public:
 	ResetActionSystem();
 	virtual ~ResetActionSystem();
-	virtual bool canProcess(Entity *);
+	virtual bool canProcess(Entity *) const;
 	virtual void processEntity(Entity *, const float);
 };
 

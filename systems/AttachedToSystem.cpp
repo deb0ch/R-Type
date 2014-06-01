@@ -12,7 +12,7 @@ AttachedToSystem::AttachedToSystem() : ASystem("AttachedToSystem")
 AttachedToSystem::~AttachedToSystem()
 {}
 
-bool AttachedToSystem::canProcess(Entity *entity)
+bool AttachedToSystem::canProcess(Entity *entity) const
 {
   if (entity->hasComponent("AttachedToComponent") && entity->hasComponent("Pos2DComponent"))
     return true;

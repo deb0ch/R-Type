@@ -1,18 +1,21 @@
 #include <algorithm>
 #include "TeamComponent.hh"
 
-TeamComponent::TeamComponent(const unsigned int team) : ACopyableComponent("TeamComponent"){
+TeamComponent::TeamComponent(const unsigned int team) : ACopyableComponent("TeamComponent")
+{
   this->_team = team;
 }
 
-TeamComponent::~TeamComponent(){
-}
+TeamComponent::~TeamComponent()
+{}
 
-void TeamComponent::setTeam(const unsigned int team) {
+void TeamComponent::setTeam(const unsigned int team)
+{
   this->_team = team;
 }
 
-unsigned int TeamComponent::getTeam() const {
+unsigned int TeamComponent::getTeam() const
+{
   return this->_team;
 }
 
