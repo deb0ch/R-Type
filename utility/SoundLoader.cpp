@@ -29,7 +29,7 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
     }
   catch (RTException e)
     {
-      std::cout << e.what() << std::endl;
+      std::cerr << e.what() << std::endl;
       return (NULL);
     }
   return (new sf::Sound(*_sounds.find(fileSound)->second));
