@@ -6,10 +6,10 @@ ENTITY:STAGE_2_MONSTERS
 	COMPONENT:AutoDestructComponent
 		delay=5
 	!COMPONENT
+#entity=MONSTER_SPAWNER_GAME_2;1
 	COMPONENT:EntitySpawnerComponent
-		entity=MONSTER_SPAWNER_GAME_2;1
 		entity=BOSS_SPAWNER_2;1
-		nb=2
+		nb=1
 		delay=0
 		minPosX=0
 		minPosY=0
