@@ -62,11 +62,21 @@ void RunWorldServer::isEnd(bool isEnd) {
 }
 
 void RunWorldServer::run() {
-  while (!this->_isEnd) {
-    this->_timer.startFrame();
-    if (this->_timer.canTick())
-      this->_world->process(this->_timer.getDeltaTime() / 1000000.f);
-    this->_timer.endFrame();
+  try
+    {
+      while (!this->_isEnd) {
+	this->_timer.startFrame();
+	if (this->_timer.canTick())
+	  this->_world->process(this->_timer.getDeltaTime() / 1000000.f);
+	this->_timer.endFrame();
+      }
+    }
+  catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  } catch (const std::string &str) {
+    std::cerr << str << std::endl;
+  } catch (...) {
+    std::cerr << "Unknown error." << std::endl;
   }
   std::cout << "END GAMME" << std::endl;
 }
@@ -151,6 +161,7 @@ void RunWorldServer::addSystems()
       "Box2DComponent",
       "MovementLimitFrame2DComponent",
       "SFMLTextComponent",
+      "SFMLSoundComponent",
       "SFMLJoystickComponent"
     };
 

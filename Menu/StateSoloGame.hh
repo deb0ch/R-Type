@@ -18,6 +18,7 @@
 #include	"NetworkSendUpdateSystem.hh"
 #include	"NetworkReceiveUpdateSystem.hh"
 #include	"SFMLEventSystem.hh"
+#include	"SFMLSoundSystem.hh"
 #include	"MoveFollowSystem.hh"
 #include	"MoveForwardSystem.hh"
 #include	"MoveSequenceSystem.hh"
@@ -93,6 +94,7 @@ protected:
 	void addSharedObjetcs();
 	void addEntities();
 	void addSystems();
+	void createConfigFile() const;
 
 
 	World		*_world;
