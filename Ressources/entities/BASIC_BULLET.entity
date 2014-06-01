@@ -50,7 +50,7 @@ ENTITY:BASIC_BULLET
 		!ANIM
 	!COMPONENT
 	COMPONENT:SFMLSoundComponent
-		filename=Silencer.wav
+		filename=bullet.wav
 		volume=40
 	!COMPONENT
 	COMPONENT:MoveForwardComponent
