@@ -32,10 +32,10 @@ ENTITY:FAT_BULLET
 		speed_coef=300
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=150
+		collisionPower=100
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=5
+		life=30
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent

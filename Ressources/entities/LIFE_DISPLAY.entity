@@ -1,6 +1,6 @@
 ENTITY:LIFE_DISPLAY
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=3
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=0

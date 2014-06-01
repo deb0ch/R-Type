@@ -3,7 +3,15 @@ ENTITY:POWERUP_FORCE
 		tag=BOOST
 	!COMPONENT
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=2
+		update_rate=7
+	!COMPONENT
+	COMPONENT:AutoDestructComponent
+		delay=20
+	!COMPONENT
+	COMPONENT:ExplosionComponent
+		entity=BULLET_EXPLOSION
+		offsetX=0
+		offsetY=0
 	!COMPONENT
 	COMPONENT:Box2DComponent
 		width=35

@@ -1,6 +1,6 @@
 ENTITY:BOSS_1
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=1
+		update_rate=3
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=700
@@ -36,7 +36,7 @@ ENTITY:BOSS_1
 	COMPONENT:FireAlwaysComponent
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=7500
+		life=18000
 		invulnerability=0
 	!COMPONENT
 	COMPONENT:CollisionComponent
