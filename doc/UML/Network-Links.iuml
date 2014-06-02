@@ -8,10 +8,10 @@ SocketUDP ..|> ISocketUDP
 SocketTCP ..|> ISocketTCP
 NetworkBuffer ..|> IBuffer
 
-NetworkException --> std::exception
-TCPException --> NetworkException
-UDPException --> NetworkException
-SelectException --> NetworkException
-BufferException --> NetworkException
+NetworkException --|> std::exception
+TCPException --|> NetworkException
+UDPException --|> NetworkException
+SelectException --|> NetworkException
+BufferException --|> NetworkException
 
 @enduml
