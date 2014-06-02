@@ -1,0 +1,11 @@
+@startuml
+
+title R-Type - Class Diagram
+
+package std {
+    class std::exception
+}
+
+!include ECS-Links.iuml
+
+@enduml

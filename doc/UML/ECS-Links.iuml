@@ -1,0 +1,24 @@
+@startuml
+
+title ECS-Links - Class Diagram
+
+!include ECS-Classes.iuml
+
+AComponent --> IComponent
+AEvent --> IEvent
+ASystem --> ISystem
+Container --> IContainer
+ECSException --> std::exception
+
+Any o-- IContainer
+Entity *-- IComponent
+EventManager *-- IEvent
+
+World *-- Any
+World *-- Entity
+World *-- ISystem
+World o-- EventManager
+World -- VectorDeleter
+World -- ECSException
+
+@enduml

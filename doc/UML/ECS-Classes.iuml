@@ -2,14 +2,14 @@
 
 title ECS - Class Diagram
 
+package ECS {
+
 Interface IComponent {
     +{abstract} getType() const         : const std::string&
     +{abstract} clone() const           : *IComponent
     +{abstract} deserializeFromFile(std::ifstream &input, unsigned int &lineno) : void
     +{abstract} serializeFromFile(std::ofstream &output, unsigned char indent) const : void
 }
-
-
 
 Abstract Class AComponent {
     #std::string _type;  
@@ -182,6 +182,8 @@ Class Entity {
     +getComponent(const T &value, const U &hash) const : X*
     +getId() const; : unsigned int
     +clone() const; : Entity*
+}
+
 }
 
 @enduml
