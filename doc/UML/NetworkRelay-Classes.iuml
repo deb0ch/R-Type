@@ -1,12 +1,6 @@
 
 package NetworkRelay {
 
-enum TCPType {
-	CHANGE_ROOM_QUERY,
-	CHANGE_ROOM_QUERY_YES,
-	CHANGE_ROOM_QUERY_NON
-}
-
 interface INetworkRelay {
   + {abstract} bool		start()
   + {abstract} void		threadStart()
