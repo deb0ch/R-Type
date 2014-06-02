@@ -2,6 +2,8 @@
 
 title Classes - Class Diagram
 
+package Network {
+
 class BufferException {
 +const char *what()
 -const char *_str
@@ -57,7 +59,7 @@ class SocketUDP {
 	- WSADATA wsaData
 	- bool blockSocket
 	- struct sockaddr_in clientService
-  + void		setBlocking(const bool blocking);
+  + void		setBlocking(const bool blocking)
   + bool	isBlocking() const
   + int		getHandle() const
 
@@ -67,9 +69,9 @@ class SocketUDP {
   + int	send(const IBuffer &, const std::string & address, const int port)
   + int	receive(IBuffer &, std::string& address, int& port)
   + void	close()
-  + void	init();
+  + void	init()
 
-  - SocketUDP(const SOCKET & sock);
+  - SocketUDP(const SOCKET & sock)
 }
 
 class	Select {
@@ -79,26 +81,26 @@ class	Select {
   - struct timeval	*_to
   - int			maxFd
 
-  + Select(const int, const int);
+  + Select(const int, const int)
 
   + void	initReads(T const &container)
 
   + void	initWrites(T const &container)
 
-  + void	initReads();
-  + void	initWrites();
-  + void	addRead(int);
-  + void	addWrite(int);
+  + void	initReads()
+  + void	initWrites()
+  + void	addRead(int)
+  + void	addWrite(int)
 
-  + void	removeRead(int);
-  + void	removeWrite(int);
+  + void	removeRead(int)
+  + void	removeWrite(int)
 
-  + void	reset();
+  + void	reset()
 
-  + void	setTimeOut(const int to, const int tu);
-  + void	doSelect();
-  + bool	issetReads(const int);
-  + bool	issetWrites(const int);
+  + void	setTimeOut(const int to, const int tu)
+  + void	doSelect()
+  + bool	issetReads(const int)
+  + bool	issetWrites(const int)
 }
 
 class SocketTCP {
@@ -316,5 +318,6 @@ class NetworkInitializer {
 		- WSADATA wsaData
 }
 
-@enduml
+}
 
+@enduml

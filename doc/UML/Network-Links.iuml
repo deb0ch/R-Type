@@ -1,0 +1,20 @@
+@startuml
+
+title ECS-Links - Class Diagram
+
+!include Network-Classes.iuml
+
+ISocketUDP ..|> ISocket
+ISocketTCP ..|> ISocket
+SocketUDP ..|> ISocketUDP
+SocketTCP ..|> ISocketTCP
+
+NetworkException --> std::exception
+TCPException --> NetworkException
+UDPException --> NetworkException
+SelectException --> NetworkException
+BufferException --> NetworkException
+
+NetworkBuffer ..> IBuffer
+
+@enduml

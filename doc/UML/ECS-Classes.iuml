@@ -5,64 +5,64 @@ title ECS - Class Diagram
 package ECS {
 
 Interface IComponent {
-    +{abstract} getType() const         : const std::string&
-    +{abstract} clone() const           : *IComponent
-    +{abstract} deserializeFromFile(std::ifstream &input, unsigned int &lineno) : void
-    +{abstract} serializeFromFile(std::ofstream &output, unsigned char indent) const : void
+    +{abstract} const std::string&	getType() const
+    +{abstract} *IComponent	clone() const
+    +{abstract} void	deserializeFromFile(std::ifstream &input, unsigned int &lineno)
+    +{abstract} void	serializeFromFile(std::ofstream &output, unsigned char indent) const
 }
 
 Abstract Class AComponent {
-    #std::string _type;  
+    #std::string _type  
 
     +AComponent(const std::string &type)
 
-    +getType() const : const std::string&
-    +deserializeFromFile(std::ifstream &input, unsigned int &lineno) : void
-    +deserializeFromFileSpecial(const std::string &, std::ifstream &, unsigned int&) : void
-    +serializeFromFile(std::ofstream &, unsigned char) const : void
+    +const std::string&	getType() const
+    +void		deserializeFromFile(std::ifstream &input, unsigned int &lineno)
+    +void		deserializeFromFileSpecial(const std::string &, std::ifstream &, unsigned int&)
+    +void		serializeFromFile(std::ofstream &, unsigned char) const
 }
 
 Interface ISystem {
-    +{abstract}getPriority() const : unsigned int;
-    +{abstract}getType() const : const std::string&;
-    +{abstract}setWorld(World *) : void;
-    +{abstract}process(std::vector<Entity *>&, const float delta) : void;
-    +{abstract}init() : void;
-    +{abstract}start() : void;
-    +{abstract}pause() : void;
-    +{abstract}resume() : void;
-    +{abstract}stop() : void;
+    +{abstract}unsigned int	getPriority() const
+    +{abstract}const std::string&	getType() const
+    +{abstract}void	setWorld(World *)
+    +{abstract}void	process(std::vector<Entity *>&, const float delta)
+    +{abstract}void	init()
+    +{abstract}void	start()
+    +{abstract}void	pause()
+    +{abstract}void	resume()
+    +{abstract}void	stop()
 }
 
 Abstract class ASystem {
-  #{static}static const int _default_priority = 20;
+  #{static}static const int _default_priority = 20
 
-  #std::string _type;
-  #unsigned int _priority;
-  #World *_world;
+  #std::string _type
+  #unsigned int _priority
+  #World *_world
 
-  #{abstract}canProcess(Entity *) const : bool
-  #{abstract}processEntity(Entity *, const float delta) : void
-  #sortEntities(std::vector<Entity *>&) const : void
-  #beforeProcess(const float) : void
-  #afterProcess(const float) : void
+  #{abstract}bool	canProcess(Entity *) const
+  #{abstract}void	processEntity(Entity *, const float delta)
+  #void			sortEntities(std::vector<Entity *>&) const
+  #void			beforeProcess(const float)
+  #void			afterProcess(const float)
 
   +ASystem(const std::string &type, unsigned int priority = _default_priority)
   
-  +&getType() const : const std::string&
-  +getPriority() const : unsigned int
-  +setWorld(World *);
-  +process(std::vector<Entity *>&, const float delta);
-  +init() : void
-  +start() : void
-  +pause() : void
-  +resume() : void
-  +stop() : void
+  +const std::string&	getType() const
+  +unsigned int		getPriority() const
+  +void			setWorld(World *)
+  +void			process(std::vector<Entity *>&, const float delta)
+  +void			init()
+  +void			start()
+  +void			pause()
+  +void			resume()
+  +void			stop()
 }
 
 Class World {
-    +{static}bool DEBUG;
-    +{static}bool QUADTREE;
+    +{static}bool DEBUG
+    +{static}bool QUADTREE
 
     -std::vector<Entity*> _entities
     -std::vector<ISystem*> _systems
@@ -72,59 +72,59 @@ Class World {
     -bool _initialized
     -bool _running
 
-    +World();
+    +World()
     
-    +exit() : void
-    +isRunning() const; : bool
-    +createEntity(); : Entity*
-    +addEntity(Entity *); : World*
-    +addSystem(ISystem *); : World*
-    +removeEntity(Entity *); : World*
-    +removeEntity(unsigned int id); : World*
-    +removeSystem(ISystem *); : World*
-    +removeSystem(const std::string &type); : World*
-    +getSystem(const std::string &type) const; : ISystem*
-    +getSystem(const std::string &type) const : T*
-    +addEventHandler(const std::string &type, ISystem *obj, void (T::handler)(IEvent *) : World*
-    +hasEventHandler(const std::string &type) const; : bool
-    +sendEvent(IEvent *event); : void
-    +getEntities() : std::vector<Entity *>&
-    +getEntities() const : const std::vector<Entity *>&
-    +countEntities() const; : int
-    +Entity	*getEntity(const unsigned int id) const : Entity*
-    +process(const float delta); : void
-    +init(); : void
-    +start(); : void
-    +pause(); : void
-    +resume(); : void
-    +stop(); : void
-    +setSharedObject(const std::string &type, T *obj) : void
-    +getSharedObject(const std::string &type) : T*
+    +void		exit()
+    +bool		isRunning() const
+    +Entity*		createEntity()
+    +World*		addEntity(Entity *)
+    +World*		addSystem(ISystem *)
+    +World*		removeEntity(Entity *)
+    +World*		removeEntity(unsigned int id)
+    +World*		removeSystem(ISystem *)
+    +World*		removeSystem(const std::string &type)
+    +ISystem*		getSystem(const std::string &type) const
+    +T*			getSystem(const std::string &type) const
+    +World*		addEventHandler(const std::string &type, ISystem *obj, void (T::handler)(IEvent *)
+    +bool		hasEventHandler(const std::string &type) const
+    +void		sendEvent(IEvent *event)
+    +std::vector<Entity *>&	getEntities()
+    +const std::vector<Entity *>&	getEntities() const
+    +int		countEntities() const
+    +Entity		*getEntity(const unsigned int id) const
+    +void		process(const float delta)
+    +void		init()
+    +void		start()
+    +void		voidpause()
+    +void		resume()
+    +void		stop()
+    +void		setSharedObject(const std::string &type, T *obj)
+    +T*			getSharedObject(const std::string &type)
 }
 
 Interface IEvent {
-    +{abstract}getType() const : const std::string&
+    +{abstract}const std::string&	getType() const
 }
 
 Abstract Class AEvent {
-    #std::string _type;
+    #std::string _type
 
     +AEvent(const std::string &type)
     
-    +getType() const : const std::string&
+    +const std::string&	getType() const
 }
 
 Class Hash {
-    +operator()(const std::string &) const : hash_t
+    +hash_t		operator()(const std::string &) const
 }
 
 Interface IContainer {
 
-    +{abstract}virtual IContainer *clone() const ;
+    +{abstract}IContainer *clone() const 
 }
 
 Class Container {
-    +T *_value;
+    +T *_value
     
     +Container(T *value)
     
@@ -132,56 +132,56 @@ Class Container {
 }
 
 Class Any {
-    #IContainer *_container;
+    #IContainer *_container
 
     +Any(T *value)
 
-    +getValue() const : const T*
-    +getValue() : T*
-    +operator=(T *value) : Any&
+    +const T*		getValue() const
+    +T*			getValue()
+    +Any&		operator=(T *value)
 }
 
 Class VectorDeleter {
-    +operator()(T pointer) : void
+    +bool		operator()(T pointer)
 }
 
 Class EventManager {
-    #std::map<std::string, std::vector<std::pair<T *, void (T::*)(IEvent *)> > > _event_handlers;
+    #std::map<std::string, std::vector<std::pair<T *, void (T::*)(IEvent *)> > > _event_handlers
 
-    +hasHandler(const std::string &type) const : bool
-    +addHandler(const std::string &type, T *obj, void (T::*e)(IEvent *)) : void
-    +sendEvent(IEvent *event) : void
+    +bool		hasHandler(const std::string &type) const
+    +void		addHandler(const std::string &type, T *obj, void (T::*e)(IEvent *))
+    +void		sendEvent(IEvent *event)
 }
 
 Class ECSException {
-    -std::string		_info;
+    -std::string		_info
 
-    +ECSException(const int error);
-    +ECSException(const std::string &error);
-    +ECSException(const std::string &prefix, const int error);
-    +ECSException(const std::string &prefix, const std::string &error);
+    +ECSException(const int error)
+    +ECSException(const std::string &error)
+    +ECSException(const std::string &prefix, const int error)
+    +ECSException(const std::string &prefix, const std::string &error)
 
-    +what() const throw() : const char*
-    -addError(const int error) : void
+    +const char*	what() const throw()
+    -void		addError(const int error)
 }
 
 Class Entity {
-    +unsigned int _id;
-    +std::vector<IComponent*> _components;
+    +unsigned int _id
+    +std::vector<IComponent*> _components
 
-    +addComponent(IComponent *); : Entity*
-    +removeComponent(IComponent *); : Entity*
-    +removeComponent(const std::string &id); : Entity*
-    +removeAllComponent(); : Entity*
-    +removeAllComponentExcept(const IComponent *); : Entity*
-    +removeAllComponentExcept(const std::string &id); : Entity*
-    +hasComponent(const std::string &string_type) const; : bool
-    +getComponent(const std::string &string_type) const; : IComponent*
-    +getComponent(const T &value, const U &hash) const : IComponent*
-    +getComponent(const std::string &string_type) const : T*
-    +getComponent(const T &value, const U &hash) const : X*
-    +getId() const; : unsigned int
-    +clone() const; : Entity*
+    +Entity*		addComponent(IComponent *)
+    +Entity*		removeComponent(IComponent *)
+    +Entity*		removeComponent(const std::string &id)
+    +Entity*		removeAllComponent()
+    +Entity*		removeAllComponentExcept(const IComponent *)
+    +Entity*		removeAllComponentExcept(const std::string &id)
+    +bool		hasComponent(const std::string &string_type) const
+    +IComponent*	getComponent(const std::string &string_type) const
+    +IComponent*	getComponent(const T &value, const U &hash) const
+    +T*			getComponent(const std::string &string_type) const
+    +X*			getComponent(const T &value, const U &hash) const
+    +unsigned int	getId() const
+    +Entity*		clone() const
 }
 
 }
