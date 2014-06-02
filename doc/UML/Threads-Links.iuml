@@ -2,14 +2,40 @@
 
 !include Threads-Classes.iuml
 
-Mutex ..|> IMutex
+ThreadException ..|> std::exception
+SafeFifoException ..|> std::exception
+MutexException ..|> std::exception
+
+Container ..|> IContainer
+
+Any o-- IContainer
+
+ICondVar -- Mutex
 CondVar ..|> ICondVar
-ThreadException --|> std::exception
-SafeFifoException --|> std::exception
+CondVar -- MutexException
+
+Task ..|> ITask
+Task -- Any
+
+CTask ..|> ITask
+
+Thread ..|> IThread
+Thread -- Any
+Thread -- ThreadException
+
+ThreadPool o-- CondVar
+ThreadPool o-- Mutex
+ThreadPool o-- SafeFifo
+ThreadPool o-- ITask
+ThreadPool o-- Thread
+
+SafeFifo o-- Mutex
+SafeFifo -- SafeFifo
+SafeFifo -- ScopedMutex
+
+Mutex ..|> IMutex
+Mutex o-- CondVar
 
 ScopedMutex o-- Mutex
-Mutex o-- STATUS
-
-CondVar -- Mutex
 
 @enduml
