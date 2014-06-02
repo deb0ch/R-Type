@@ -41,7 +41,7 @@ void		SpawnPlayerSystem::updateWorldToRemote(Remote *remote)
 
   update_system = this->_world->getSystem<NetworkSendUpdateSystem>("NetworkSendUpdateSystem");
   if (!update_system)
-    std::cerr << "No update system??" << std::endl;
+    return ;
   std::for_each(entities.begin(), entities.end(),
 		[&remote, &update_system] (const Entity *entity)
 		{
