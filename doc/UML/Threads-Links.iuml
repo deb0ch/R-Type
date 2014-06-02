@@ -1,0 +1,13 @@
+@startuml
+
+Mutex ..|> IMutex
+CondVar ..|> ICondVar
+ThreadException --|> std::exception
+SafeFifoException --|> std::exception
+
+ScopedMutex o-- Mutex
+Mutex o-- STATUS
+
+CondVar -- Mutex
+
+@enduml

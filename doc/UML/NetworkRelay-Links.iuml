@@ -1,5 +1,15 @@
 @startuml
 
 ServerRelay ..|> INetworkRelay
+RoomServer --|> Room
+
+ServerRelay o-- Remote
+ServerRelay o-- IBuffer
+ServerRelay o-- RoomServer
+RunWorldServer o-- World
+RunWorldServer o-- ServerRelay
+RunWorldServer o-- Timer
+
+Room o-- Mutex
 
 @enduml

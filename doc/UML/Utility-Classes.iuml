@@ -1,3 +1,5 @@
+package Utility {
+
 class SoundLoader {
 	- std::map<std::string, sf::SoundBuffer *> _soundBuffers
 	- std::map<std::string, sf::Sound *> _sounds
@@ -130,4 +132,6 @@ class Timer {
 
   + unsigned long	getTime()
   + void			sleep(unsigned long delay) const
+}
+
 }

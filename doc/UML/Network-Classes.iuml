@@ -9,38 +9,6 @@ class BufferException {
 -const char *_str
 }
 
-interface IBuffer {
-+ {abstract} operator<<(const int &)
-+ {abstract} operator<<(const unsigned int &)
-+ {abstract} operator<<(const uint64_t &)
-+ {abstract} operator<<(const float &)
-+ {abstract} operator<<(const std::string &)
-+ {abstract} operator<<(const char &)
-
-+ {abstract} operator>>(int &)
-+ {abstract} operator>>(unsigned int &)
-+ {abstract} operator>>(uint64_t &)
-+ {abstract} operator>>(float &)
-+ {abstract} operator>>(std::string &)
-+ {abstract} operator>>(char &)
-
-+ {abstract} bool                     end() const
-+ {abstract} void                     rewind()
-+ {abstract} void                     gotoEnd()
-+ {abstract} void                     reset()
-+ {abstract} const char               *getBuffer() const
-+ {abstract} char                     *getBuffer()
-+ {abstract} unsigned int             getLength() const
-+ {abstract} void                     setLength(unsigned int)
-+ {abstract} unsigned int             getRemainingLength() const
-+ {abstract} unsigned int             getMaxSize() const
-+ {abstract} unsigned int             getPosition() const
-+ {abstract} void                     setPosition(unsigned int)
-+ {abstract} IBuffer                  &operator=(const IBuffer &)
-+ {abstract} unsigned int             getOffset() const
-+ {abstract} void                     addOffset(int)
-}
-
 class ISocketUDP {
   + {abstract} void		setBlocking(const bool blocking)
   + {abstract} bool	isBlocking() const
@@ -52,26 +20,6 @@ class ISocketUDP {
   + {abstract} int	receive(IBuffer &, std::string& address, int& port)
   + {abstract} void	close()
   + {abstract} void	init()
-}
-
-class SocketUDP {
-	- SOCKET socket
-	- WSADATA wsaData
-	- bool blockSocket
-	- struct sockaddr_in clientService
-  + void		setBlocking(const bool blocking)
-  + bool	isBlocking() const
-  + int		getHandle() const
-
-  + void	bind(const int port, const std::string &address = "")
-
-  + int	send(const IBuffer &, const int address, const int port)
-  + int	send(const IBuffer &, const std::string & address, const int port)
-  + int	receive(IBuffer &, std::string& address, int& port)
-  + void	close()
-  + void	init()
-
-  - SocketUDP(const SOCKET & sock)
 }
 
 class	Select {
@@ -101,32 +49,6 @@ class	Select {
   + void	doSelect()
   + bool	issetReads(const int)
   + bool	issetWrites(const int)
-}
-
-class SocketTCP {
-	- bool blockingSocket
-	- SOCKET socket
-	- WSADATA wsaData
-	- struct sockaddr_in clientService
-	- SocketTCP(const SOCKET &sock)
-
-	+ ISocketTCP	*accept()
-	+ void listen(const std::size_t block)
-	+ void bind(const int port, const std::string & address = "")
-	+ void setBlocking(bool const blocking)
-	+ int getHandle() const
-
-	+ bool isBlocking() const
-	+ void close()
-	+ void init()
-
-	+ void connect(const std::string &address, const int port)
-	+ void connect(const int address, const int port)
-	+ bool	send(IBuffer &)
-	+ int receive(IBuffer &)
-
-	- SocketTCP(const SocketTCP &)
-	- SocketTCP &operator=(const SocketTCP &)
 }
 
 class UDPException {
