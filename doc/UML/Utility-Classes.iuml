@@ -1,0 +1,133 @@
+class SoundLoader {
+	- std::map<std::string, sf::SoundBuffer *> _soundBuffers
+	- std::map<std::string, sf::Sound *> _sounds
+
++ sf::Sound	*getSound(const std::string &fileSound)
+- void		addSound(const std::string &fileSound)
+}
+
+class RTException {
+- std::string		_info
+
++ const char* what() const throw()
+- void addError(const int error)
+}
+
+class		RandomReal {
+  + static std::default_random_engine	seed;
+  
+  + T operator()(T min, T max) const
+}
+
+class		RandomInt {
+  + static std::default_random_engine	seed;
+
+  + T operator()(T min, T max) const
+}
+
+class LockVector {
+  # Mutex		_mutex
+
+  + void		lock()
+  + void		unlock()
+  + bool		trylock()
+}
+
+class ImageLoaderException {
+}
+
+class ImageLoader {
+  - const std::pair<sf::Texture *, ImageLoader::InfImg> &getPair(const std::string &fileImage) const
+  - std::map<std::string, std::pair<sf::Texture *, ImageLoader::InfImg> > _image
+
+  + void addImage(const std::string &fileImage, ImageLoader::NbSprite nbSprite)
+  + void addImage(const std::string &fileImage, std::pair<int, int> nbSprite)
+  + sf::Sprite *createSprite(const std::string &fileImage, const unsigned int numSprite) const
+}
+
+class Factory {
+  # std::map<Key, const U *> _types
+
+  + void	add(const Key &key, const U *obj)
+  + const U	*getOriginal(const Key &key) const
+  + {abstract} U  *create(const Key &key) const = 0
+}
+
+class EntityFileException {
+	# std::string	_filename
+	# std::string	_component
+	# std::string	_message
+	# unsigned int	_lineno
+
+  + {abstract} const char*	what() const throw()
+  + void	   setFilename(const std::string &)
+  + void	   setComponent(const std::string &)
+  + void	   setLineNo(unsigned int)
+}
+
+class EntityFile {
+  + std::pair<std::string, Entity*>	deserialize(std::ifstream &input) const
+  + void serialize(const Entity *e, const std::string &key, std::ofstream &output) const
+}
+
+class EntityFactory {
+  - std::vector<std::string>	_keys;
+
+  + void	addEntity(const std::string &key, Entity *input)
+  + Entity*	create(const std::string &key) const
+  + Entity*	create(const std::string &key)
+  + {abstract} Entity*	create(const hash_t &key) const
+  + void	deserializeAll()
+  + void	init()
+}
+
+class ComponentFactory {
+  - void addComponent(ASerializableComponent *input)
+  
+  + {abstract} void init()
+  + {abstract} ASerializableComponent	*create(const std::string &key) const
+  + {abstract} ASerializableComponent	*create(const hash_t &key) const
+}
+
+class DirectoryLister {
+  + {abstract} std::vector<std::string> listDirectory(const std::string &) const
+}
+
+class IDirectoryLister {
+  + {abstract} std::vector<std::string> listDirectory(const std::string &) const = 0
+}
+
+class ITimer {
+  + {abstract} void				startFrame() = 0
+  + {abstract} void				endFrame() = 0
+  + {abstract} bool				canTick() const = 0
+  + {abstract} float			getDeltaTime() const = 0
+
+  + {abstract} unsigned long	getFps() const = 0
+  + {abstract} unsigned long	getCurrentFps() const = 0
+  + {abstract} void				setFps(unsigned long fps) = 0
+
+  + {abstract} unsigned long	getTime() = 0
+  + {abstract} void				sleep(unsigned long delay) const = 0
+}
+
+class Timer {
+  - inline unsigned long	bufToTime(const struct timespec & timebuff) const
+  - unsigned long			_fps;
+  - struct timespec			_timeBuff;
+  - unsigned long			_timeZero;
+  - unsigned long			_currentTime;
+  - unsigned long			_previousTime
+
+  + void			startFrame()
+  + void			endFrame()
+  + bool			canTick() const
+  + float			getDeltaTime() const
+
+  + unsigned long	getFps() const
+  + unsigned long	getCurrentFps() const
+  + void			setFps(unsigned long fps)
+
+  + unsigned long	getTime()
+  + void			sleep(unsigned long delay) const
+}
