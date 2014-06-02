@@ -1,0 +1,112 @@
+  enum	STATUS {
+      LOCKED,
+      UNLOCKED
+    }
+
+interface IMutex {
+public:
+  + {abstract} void		lock()
+  + {abstract} bool		trylock()
+  + {abstract} void		unlock()
+  + {abstract} STATUS	status() const
+}
+
+class Mutex {
+public:
+  + void		lock()
+  + bool		trylock()
+  + void		unlock()
+  + STATUS	status() const
+
+private:
+  - STATUS		_status
+  - pthread_mutex_t	_mutex
+}
+
+interface ICondVar {
+public:
+  + {abstract} void wait(Mutex *)
+  + {abstract} void signal(void)
+  + {abstract} void broadcast(void)
+}
+
+class CondVar {
+protected:
+	# CONDITION_VARIABLE	_cond
+
+public:
+	+ void wait(Mutex *mutex)
+	+ void signal(void)
+	+ void broadcast(void)
+}
+
+class Mutex {
+public:
+	+ void		lock()
+	+ bool		trylock()
+	+ void		unlock()
+	+ STATUS		status() const
+
+	+ PCRITICAL_SECTION	getCriticalSection()
+
+private:
+	- STATUS				_status
+	- CRITICAL_SECTION	_criticalSection
+}
+
+class CondVar {
+protected:
+  # pthread_cond_t	cond
+
+public:
+  + void wait(Mutex *mutex)
+  + void signal(void)
+  + void broadcast(void)
+}
+
+class ScopedMutex {
+private :
+	- IMutex *_mutex
+}
+
+interface ITask {
+public:
+  + {abstract} void	run()
+  + {abstract} void	operator()()
+}
+
+class SafeFifoException {
+public:
+  + SafeFifoException(const int error)
+  + SafeFifoException(const std::string &error)
+
+  + const char* what() const throw()
+
+private:
+  - void addError(const int error)
+  - std::string	_info
+}
+
+class ThreadException {
+public:
+  + ThreadException(const int error)
+  + ThreadException(const std::string &error)
+
+  + const char* what() const throw()
+
+private:
+  - void addError(const int error)
+  - std::string	_info
+}
+
+class MutexException {
+public:
+  + MutexException(const int error)
+  + MutexException(const std::string &error)
+
+  + const char* what() const throw()
+
+private:
+  - void addError(const int error)
+  - std::string	_info
+}
