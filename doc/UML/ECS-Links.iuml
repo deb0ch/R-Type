@@ -18,5 +18,7 @@ World *-- ISystem
 World o-- EventManager
 World -- VectorDeleter
 World -- ECSException
+World -- IEvent
+ASystem -- Entity
 
 @enduml

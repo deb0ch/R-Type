@@ -8,10 +8,24 @@ RoomServer --|> Room
 ServerRelay o-- Remote
 ServerRelay o-- IBuffer
 ServerRelay o-- RoomServer
+ServerRelay o-- NetworkInitializer
+ServerRelay o-- SocketTCP
+ServerRelay o-- SocketUDP
+ServerRelay o-- Select
+ServerRelay o-- Mutex
+ServerRelay o-- IBuffer
+ServerRelay o-- RoomServer
 RunWorldServer o-- World
 RunWorldServer o-- ServerRelay
 RunWorldServer o-- Timer
 
 Room o-- Mutex
+
+ClientRelay o-- NetworkInitializer
+ClientRelay o-- SocketUDP
+ClientRelay o-- Select
+ClientRelay o-- Room
+ClientRelay o-- Remote
+ClientRelay o-- IBuffer
 
 @enduml

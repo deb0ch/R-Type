@@ -14,4 +14,9 @@ UDPException --|> NetworkException
 SelectException --|> NetworkException
 BufferException --|> NetworkException
 
+ISocketTCP -- IBuffer
+ISocketUDP -- IBuffer
+SocketTCP -- IBuffer
+SocketUDP -- IBuffer
+
 @enduml

@@ -2,4 +2,28 @@
 
 !include Utility-Classes.iuml
 
+DirectoryLister ..|> IDirectoryLister
+Timer ..|> ITimer
+ComponentFactory --|> Factory
+EntityFactory --|> Factory
+ImageLoaderException --|> RTException
+EntityFileException --|> std::exception
+
+LockVector *-- Mutex
+Timer *-- timespec
+SoundLoader *-- sf::SoundBuffer
+SoundLoader *-- sf::Sound
+ImageLoader *-- sf::Texture
+
+ImageLoader -- ImageLoaderException
+
+EntityFile -- EntityFileException
+EntityFactory -- DirectoryLister
+EntityFile -- Entity
+EntityFactory -- Entity
+EntityFactory -- hash_t
+ComponentFactory -- hash_t
+
+SoundLoader -- RTException
+
 @enduml

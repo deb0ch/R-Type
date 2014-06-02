@@ -63,7 +63,6 @@ public:
       {
 	if (!(tmp = dynamic_cast<const Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // TODO: Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);
@@ -80,7 +79,6 @@ public:
       {
 	if (!(tmp = dynamic_cast< Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // TODO: Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);

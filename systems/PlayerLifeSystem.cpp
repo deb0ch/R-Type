@@ -38,7 +38,6 @@ void	PlayerLifeSystem::entityDeathEvent(IEvent *event)
 	  player_respawner = this->_world->getSharedObject<IPlayerRespawner>("PlayerRespawner");
 	  if (!player_respawner)
 	    {
-	      std::cerr << "No player respawner" << std::endl;
 	      return ;
 	    }
 	  if (this->_nb_lives > 0)
@@ -67,7 +66,6 @@ void			PlayerLifeSystem::setNbLives(unsigned int lives)
       player_respawner = this->_world->getSharedObject<IPlayerRespawner>("PlayerRespawner");
       if (!player_respawner)
 	{
-	  std::cerr << "No player respawner" << std::endl;
 	  return ;
 	}
       while (player_respawner->respawnDeadPlayer())

@@ -8,6 +8,7 @@
 # include	<fstream>
 
 # include	"IComponent.hh"
+# include	"ECSException.hh"
 
 class		Entity
 {
@@ -58,8 +59,7 @@ public:
       return (NULL);
     if (!(tmp = dynamic_cast<T*>(component)))
       {
-	std::cerr << ": Invalid type" << std::endl;
-	abort();
+	throw ECSException("Invalid component type");
       }
     return (tmp);
   }
@@ -74,8 +74,7 @@ public:
       return (NULL);
     if (!(tmp = dynamic_cast<X*>(component)))
       {
-	std::cerr << ": Invalid type" << std::endl;
-	abort();
+	throw ECSException("Invalid component type");
       }
     return (tmp);
   }
