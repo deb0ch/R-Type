@@ -25,7 +25,8 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
 	_sounds[fileSound] = new sf::Sound(*(it)->second);
       return (_sounds[fileSound]);
     }
-  if (it->second == NULL)
+  if (it != _soundBuffers.end()
+      && it->second == NULL)
     return (NULL);
   try
     {
