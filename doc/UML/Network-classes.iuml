@@ -1,0 +1,320 @@
+@startuml
+
+title Classes - Class Diagram
+
+class BufferException {
++const char *what()
+-const char *_str
+}
+
+interface IBuffer {
++ {abstract} operator<<(const int &)
++ {abstract} operator<<(const unsigned int &)
++ {abstract} operator<<(const uint64_t &)
++ {abstract} operator<<(const float &)
++ {abstract} operator<<(const std::string &)
++ {abstract} operator<<(const char &)
+
++ {abstract} operator>>(int &)
++ {abstract} operator>>(unsigned int &)
++ {abstract} operator>>(uint64_t &)
++ {abstract} operator>>(float &)
++ {abstract} operator>>(std::string &)
++ {abstract} operator>>(char &)
+
++ {abstract} bool                     end() const
++ {abstract} void                     rewind()
++ {abstract} void                     gotoEnd()
++ {abstract} void                     reset()
++ {abstract} const char               *getBuffer() const
++ {abstract} char                     *getBuffer()
++ {abstract} unsigned int             getLength() const
++ {abstract} void                     setLength(unsigned int)
++ {abstract} unsigned int             getRemainingLength() const
++ {abstract} unsigned int             getMaxSize() const
++ {abstract} unsigned int             getPosition() const
++ {abstract} void                     setPosition(unsigned int)
++ {abstract} IBuffer                  &operator=(const IBuffer &)
++ {abstract} unsigned int             getOffset() const
++ {abstract} void                     addOffset(int)
+}
+
+class ISocketUDP {
+  + {abstract} void		setBlocking(const bool blocking)
+  + {abstract} bool	isBlocking() const
+  + {abstract} int	getHandle() const
+
+  + {abstract} void	bind(const int port, const std::string &address = "")
+  + {abstract} int	send(const IBuffer &, const int address, const int port)
+  + {abstract} int	send(const IBuffer &, const std::string & address, const int port)
+  + {abstract} int	receive(IBuffer &, std::string& address, int& port)
+  + {abstract} void	close()
+  + {abstract} void	init()
+}
+
+class SocketUDP {
+	- SOCKET socket
+	- WSADATA wsaData
+	- bool blockSocket
+	- struct sockaddr_in clientService
+  + void		setBlocking(const bool blocking);
+  + bool	isBlocking() const
+  + int		getHandle() const
+
+  + void	bind(const int port, const std::string &address = "")
+
+  + int	send(const IBuffer &, const int address, const int port)
+  + int	send(const IBuffer &, const std::string & address, const int port)
+  + int	receive(IBuffer &, std::string& address, int& port)
+  + void	close()
+  + void	init();
+
+  - SocketUDP(const SOCKET & sock);
+}
+
+class	Select {
+
+  - fd_set		*_reads
+  - fd_set		*_writes
+  - struct timeval	*_to
+  - int			maxFd
+
+  + Select(const int, const int);
+
+  + void	initReads(T const &container)
+
+  + void	initWrites(T const &container)
+
+  + void	initReads();
+  + void	initWrites();
+  + void	addRead(int);
+  + void	addWrite(int);
+
+  + void	removeRead(int);
+  + void	removeWrite(int);
+
+  + void	reset();
+
+  + void	setTimeOut(const int to, const int tu);
+  + void	doSelect();
+  + bool	issetReads(const int);
+  + bool	issetWrites(const int);
+}
+
+class SocketTCP {
+	- bool blockingSocket
+	- SOCKET socket
+	- WSADATA wsaData
+	- struct sockaddr_in clientService
+	- SocketTCP(const SOCKET &sock)
+
+	+ ISocketTCP	*accept()
+	+ void listen(const std::size_t block)
+	+ void bind(const int port, const std::string & address = "")
+	+ void setBlocking(bool const blocking)
+	+ int getHandle() const
+
+	+ bool isBlocking() const
+	+ void close()
+	+ void init()
+
+	+ void connect(const std::string &address, const int port)
+	+ void connect(const int address, const int port)
+	+ bool	send(IBuffer &)
+	+ int receive(IBuffer &)
+
+	- SocketTCP(const SocketTCP &)
+	- SocketTCP &operator=(const SocketTCP &)
+}
+
+class UDPException {
+  + UDPException(const int error)
+  + UDPException(const std::string &error)
+}
+
+class SelectException {
+  + SelectException(const int error)
+  + SelectException(const std::string &error)
+}
+
+class SocketUDP {
+  + SocketUDP()
+
+  + void	setBlocking(const bool blocking)
+  + bool	isBlocking() const
+  + int	getHandle() const
+
+  + void	bind(const int port, const std::string &address = "")
+  + int	send(const IBuffer &, const int address, const int port)
+  + int	send(const IBuffer &, const std::string & address, const int port)
+  + int	receive(IBuffer &, std::string& address, int& port)
+
+  + void	close()
+  + void	init()
+
+  - SocketUDP(int socke)
+
+  - int	_socket
+  - bool	_isBlocking
+}
+
+class TCPException {
+public:
+  + TCPException(const int error)
+  + TCPException(const std::string &error)
+}
+
+class ISocket {
+  + {abstract} void	setBlocking(const bool blocking)
+  + {abstract} bool	isBlocking() const
+  + {abstract} void	bind(const int port, const std::string & address = "")
+  + {abstract} int	getHandle() const
+
+  + {abstract} void	close()
+  + {abstract} void	init()
+}
+
+class NetworkBuffer {
+  + NetworkBuffer(unsigned int size = 512)
+  + NetworkBuffer(const IBuffer &)
+
+  + {static} bool		isBigEndian()
+
+  + IBuffer	&operator<<(const int &)
+  + IBuffer	&operator<<(const unsigned int &)
+  + IBuffer	&operator<<(const uint64_t &)
+  + IBuffer	&operator<<(const float &)
+  + IBuffer	&operator<<(const std::string &)
+  + IBuffer	&operator<<(const char &)
+
+  + IBuffer	&operator>>(int &)
+  + IBuffer	&operator>>(unsigned int &)
+  + IBuffer	&operator>>(uint64_t &)
+  + IBuffer	&operator>>(float &)
+  + IBuffer	&operator>>(std::string &)
+  + IBuffer	&operator>>(char &)
+
+  + bool		end() const
+  + void		rewind()
+  + void		gotoEnd()
+  + void		reset()
+  + const char	*getBuffer() const
+  + char		*getBuffer()
+  + unsigned int	getLength() const
+  + void		setLength(unsigned int)
+  + unsigned int	getRemainingLength() const
+  + unsigned int	getMaxSize() const
+
+  + unsigned int	getPosition() const
+  + void		setPosition(unsigned int)
+
+  + unsigned int	getOffset() const
+  + void		addOffset(int)
+
+  # unsigned int		_buffer_max_size
+  # char			*_buffer
+  # char			*_buffer_original
+  # unsigned int		_buffer_size
+  # unsigned int		_current_pos
+  # unsigned int		_offset
+
+  - void		serialize(const T &elements)
+  - void		unserialize(T &elements)
+}
+
+class IBuffer {
+  + {abstract} IBuffer &operator<<(const int &)
+  + {abstract} IBuffer &operator<<(const unsigned int &)
+  + {abstract} IBuffer &operator<<(const uint64_t &)
+  + {abstract} IBuffer &operator<<(const float &)
+  + {abstract} IBuffer &operator<<(const std::string &)
+  + {abstract} IBuffer &operator<<(const char &)
+
+  + {abstract} IBuffer &operator>>(int &)
+  + {abstract} IBuffer &operator>>(unsigned int &)
+  + {abstract} IBuffer &operator>>(uint64_t &)
+  + {abstract} IBuffer &operator>>(float &)
+  + {abstract} IBuffer &operator>>(std::string &)
+  + {abstract} IBuffer &operator>>(char &)
+
+  + {abstract} bool			end() const
+  + {abstract} void			rewind()
+  + {abstract} void			gotoEnd()
+  + {abstract} void			reset()
+  + {abstract} const char		*getBuffer() const
+  + {abstract} char			*getBuffer()
+  + {abstract} unsigned int		getLength() const
+  + {abstract} void			setLength(unsigned int)
+  + {abstract} unsigned int		getRemainingLength() const
+  + {abstract} unsigned int		getMaxSize() const
+  + {abstract} unsigned int		getPosition() const
+  + {abstract} void			setPosition(unsigned int)
+  + {abstract} IBuffer			&operator=(const IBuffer &)
+  + {abstract} unsigned int		getOffset() const
+  + {abstract} void			addOffset(int)
+}
+
+class BufferException {
+  + BufferException(IBuffer *, const std::string & = "") throw()
+  + const char *what() const throw()
+  # const char *_str
+}
+
+class ISocketTCP {
+	+ {abstract} ISocketTCP	*accept()
+	+ {abstract} void		listen(const std::size_t block)
+	+ {abstract} void		bind(const int port, const std::string & address = "")
+	+ {abstract}	int		getHandle() const
+
+	+ {abstract} void		setBlocking(const bool blocking)
+	+ {abstract}	bool		isBlocking() const
+
+	+ {abstract} void		connect(const std::string &address, const int port)
+	+ {abstract} void		connect(const int address, const int port)
+	+ {abstract} bool		send(IBuffer &)
+	+ {abstract} int		receive(IBuffer &data)
+	+ {abstract} void		close()
+	+ {abstract} void		init()
+}
+
+class SocketTCP {
+  + ISocketTCP	*accept()
+  + void		listen(const std::size_t block)
+  + void		bind(int port, const std::string & address = "")
+  + int		getHandle() const
+
+  + void setBlocking(const bool blocking)
+  + bool isBlocking() const
+  + void close()
+  + void init()
+
+  + void connect(const std::string &address, const int port)
+  + void connect(const int address, const int port)
+  + bool send(IBuffer &)
+  + int receive(IBuffer &)
+
+  - SocketTCP(int socke)
+
+  - int	_socket
+  - bool	_isBlocking
+}
+
+class NetworkException {
+  + NetworkException(const int error)
+  + NetworkException(const std::string &error)
+
+  + const char* what() const throw()
+
+  # NetworkException(const std::string &prefix, const int error)
+  # NetworkException(const std::string &prefix, const std::string &error)
+
+  - void addError(const int error)
+  - std::string	_info
+}
+
+class NetworkInitializer {
+		- WSADATA wsaData
+}
+
+@enduml
+
