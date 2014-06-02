@@ -2,4 +2,8 @@
 
 !include LibLoader-Classes.iuml
 
+LibLoaderException --|> std::exception
+LibraryLoader --|> ILibraryLoader
+
+
 @enduml
