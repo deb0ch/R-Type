@@ -12,5 +12,11 @@ StateManager *-- IState
 
 SFMLMenu o-- SFMLButton
 SFMLMenu o-- SFMLTextBox
+StateCredit o-- SFMLTextBox
+StateRoom o-- SFMLTextBox
+StateRoom o-- World
+SFMLMenu o-- World
+StateSoloGame o-- World
+StateGame o-- World
 
 @enduml
