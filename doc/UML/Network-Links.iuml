@@ -13,6 +13,6 @@ UDPException --> NetworkException
 SelectException --> NetworkException
 BufferException --> NetworkException
 
-NetworkBuffer ..> IBuffer
+NetworkBuffer ..|> IBuffer
 
 @enduml
