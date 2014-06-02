@@ -14,7 +14,7 @@ ENTITY:BORDER_BOTTOM_LEVEL_4
 		collisionPower=10000
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-30
+		vx=-50
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent

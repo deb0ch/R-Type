@@ -14,7 +14,7 @@ ENTITY:BORDER_TOP_LEVEL_1
 		y=0
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-30
+		vx=-50
 		vy=0
 	!COMPONENT
 	COMPONENT:TeamComponent

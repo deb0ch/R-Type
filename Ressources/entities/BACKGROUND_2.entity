@@ -12,7 +12,7 @@ ENTITY:BACKGROUND_2
 		y=305
 	!COMPONENT
 	COMPONENT:Speed2DComponent
-		vx=-75
+		vx=-30
 		vy=0
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
