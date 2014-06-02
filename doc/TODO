@@ -4,6 +4,8 @@ To do list, par ordre de priorité (environ)
 -> Installer Windows
 -> ajout sprites, monstres, levels, boss...
 -> graphe d'entités
+-> entités orientables (modif pos2DComponent)
+-> interpolation de mouvements (translation * sinusoide + rotation, etc...)
 -> entités de musique
    => entity deleter
 -> ecran game over
