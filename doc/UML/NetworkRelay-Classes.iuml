@@ -1,4 +1,6 @@
 
+package NetworkRelay {
+
 enum TCPType {
 	CHANGE_ROOM_QUERY,
 	CHANGE_ROOM_QUERY_YES,
@@ -167,4 +169,6 @@ class ServerRelay {
   # std::vector<Remote *>			_remotsWithoutRoom
   # LockVector<IBuffer *>			_available_udp
   # LockVector<IBuffer *>			_available_tcp
+}
+
 }

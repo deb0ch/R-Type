@@ -6,8 +6,16 @@ package std {
     Class std::exception
 }
 
+!include ECS-Classes.iuml
+!include Components-Classes.iuml
+!include Network-Classes.iuml
+!include Menu-Classes.iuml
+!include NetworkRelay-Classes.iuml
+
 !include ECS-Links.iuml
 !include Components-Links.iuml
 !include Network-Links.iuml
+!include Menu-Links.iuml
+!include NetworkRelay-Links.iuml
 
 @enduml
