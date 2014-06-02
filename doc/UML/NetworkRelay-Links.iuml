@@ -1,5 +1,7 @@
 @startuml
 
+!include NetworkRelay-Classes.iuml
+
 ServerRelay ..|> INetworkRelay
 RoomServer --|> Room
 

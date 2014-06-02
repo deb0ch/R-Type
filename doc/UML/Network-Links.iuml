@@ -1,5 +1,7 @@
 @startuml
 
+!include Network-Classes.iuml
+
 ISocketUDP ..|> ISocket
 ISocketTCP ..|> ISocket
 SocketUDP ..|> ISocketUDP

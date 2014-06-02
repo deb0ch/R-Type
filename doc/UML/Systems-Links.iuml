@@ -1,5 +1,7 @@
 @startuml
 
+!include Systems-Classes.iuml
+
 MoveSystem --|> ASystem
 
 @enduml

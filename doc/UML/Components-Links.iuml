@@ -1,5 +1,7 @@
 @startuml
 
+!include Components-Classes.iuml
+
 ASerializableComponent --|> AComponent
 ACopyableComponent --|> ASerializableComponent
 

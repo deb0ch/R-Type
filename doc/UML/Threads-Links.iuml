@@ -1,5 +1,7 @@
 @startuml
 
+!include Threads-Classes.iuml
+
 Mutex ..|> IMutex
 CondVar ..|> ICondVar
 ThreadException --|> std::exception

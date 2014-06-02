@@ -1,5 +1,7 @@
 @startuml
 
+!include ECS-Classes.iuml
+
 AComponent ..|> IComponent
 AEvent ..|> IEvent
 ASystem ..|> ISystem

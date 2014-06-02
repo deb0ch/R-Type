@@ -1,5 +1,7 @@
 @startuml
 
+!include Menu-Classes.iuml
+
 SFMLMenu ..|> IState
 StateSoloGame ..|> IState
 StateGame ..|> IState
