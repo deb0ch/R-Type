@@ -25,6 +25,9 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
 	_sounds[fileSound] = new sf::Sound(*(it)->second);
       return (_sounds[fileSound]);
     }
+  if (it != _soundBuffers.end()
+      && it->second == NULL)
+    return (NULL);
   try
     {
       this->addSound(fileSound);
@@ -35,10 +38,10 @@ sf::Sound *SoundLoader::getSound(const std::string &fileSound)
       return (NULL);
     }
   if (_sounds.find(fileSound) == _sounds.end())
-  {
-	  _sounds[fileSound] = new sf::Sound(*_soundBuffers.find(fileSound)->second);
-	  return (_sounds[fileSound]);
-  }
+    {
+      _sounds[fileSound] = new sf::Sound(*_soundBuffers.find(fileSound)->second);
+      return (_sounds[fileSound]);
+    }
   return (NULL);
 }
 
