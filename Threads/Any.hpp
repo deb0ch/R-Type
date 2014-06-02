@@ -6,13 +6,14 @@
 class Any
 {
 private:
+
   class IContainer
   {
     public:
     virtual ~IContainer()
     {}
 
-    virtual IContainer *clone() = 0;
+    virtual IContainer *clone() const = 0;
   };
 
   template <typename T>
@@ -27,13 +28,14 @@ private:
     virtual ~Container()
     {}
 
-    virtual IContainer *clone()
+    virtual IContainer *clone() const
     {
       return new Container<T>(this->_value);
     }
 
     T *_value;
   };
+
 public:
   Any()
   {
@@ -61,7 +63,6 @@ public:
       {
 	if (!(tmp = dynamic_cast<const Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);
@@ -78,7 +79,6 @@ public:
       {
 	if (!(tmp = dynamic_cast< Container<T> * >(this->_container)))
 	  {
-	    std::cerr << "Bad type" << std::endl; // Raise exception
 	    return (NULL);
 	  }
 	return (tmp->_value);
