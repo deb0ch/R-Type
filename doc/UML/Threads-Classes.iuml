@@ -54,7 +54,6 @@ class SafeFifoException {
 
   + const char* what() const throw()
 
-
   - void addError(const int error)
   - std::string	_info
 }
@@ -83,4 +82,110 @@ class MutexException {
   - std::string	_info
 }
 
+class LockGuard {
+public:
+  + LockGuard(T& mutex, bool already_owned = false)
+  + void		setUnLocked()
+private:
+  - T&	_mutex;
+  - bool	_is_locked;
+}
+
+class SafeFifo {
+public:
+  + void	push(const T &value)
+  + unsigned int	size()
+  + bool	tryPop(const T &value)
+  + T &getNext(void)
+  + T &getNextPop(void)
+  + bool	isEmpty(void)
+  + void	clear(void)
+  + unsigned int getSize(void)
+  + bool	pop(void)
+
+protected:
+  # Mutex _mutex
+  # std::vector<T> fifo
+}
+
+class		Container {
+  + T*		obj
+  + void	(T::*fct)()
+}
+
+class		ContainerArg {
+  + T*		obj
+  + void	(T::*fct)(Any)
+  + Any		arg
+}
+
+class Thread {
+	+ void				start(T* obj, void (T::*fct)(Any), Any arg)
+	+ void				start(T* obj, void (T::*fct)())
+	+ void				start(void* (*fct)(void*), void* arg)
+	+ void				exit()
+	+ void				wait()
+	+ IThread::STATUS		status() const
+
+	- DWORD								_ret
+	- DWORD								_thread
+	- HANDLE								_threadHandle
+	- IThread::STATUS			_status
+
+	- Container					_container
+	- ContainerArg					_containerArg
+
+	- static void*						_threadEntry(void* args)
+	- static void*						_threadEntryArg(void* args)
+}
+
+  enum	eStatus {
+      RUNNING,
+      STOPPED
+    }
+
+class ThreadPool {
+  + ThreadPool(unsigned int nbThread)
+  + void			addTask(ITask * task)
+  + void			runThread(Any)
+
+  - eStatus				_status
+  - CondVar				_condvar
+  - Mutex				_mutex
+  - SafeFifo<ITask *>			_tasks
+  - std::vector<Thread< ThreadPool > *>	_pool
+}
+
+class Task {
+  + void	run()
+  + void	operator()()
+  + Task(T* obj, void (T::*fct)(Any), Any arg)
+  # T *		_obj
+  # void		(T::*_fct)(Any)
+  # Any		_arg
+}
+
+class CTask {
+  + void		run()
+  + void		operator()()
+
+  + CTask(void* (*_task)(void*), void* _arg)
+
+  # void*			(*_task)(void*)
+  # void*			_arg
+}
+
+  enum STATUS {
+      UNSTARTED,
+      RUNNING,
+      DEAD
+    }
+
+interface	IThread {
+  + {abstract} void		start(T* obj, void (T::*fct)(Any), Any arg)
+  + {abstract} void		start(T* obj, void (T::*fct)())
+  + {abstract} void		start(void* (*fct)(void*), void* arg)
+  + {abstract} void		exit()
+  + {abstract} void		wait()
+  + {abstract} STATUS	status() const
 }
