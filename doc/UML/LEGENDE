@@ -1,0 +1,4 @@
+A ..|> B	// A Implémente B
+A --|> B	// A Hérite B
+A o-- B		// A Contient B (un ou plusieurs)
+A -- B		// A Utilise B (ou l'inverse)

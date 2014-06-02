@@ -34,6 +34,45 @@ abstract class ACopyableComponent {
 
 }
 
+class ActionComponent
+class ASerializableComponent
+class AttachComponent
+class AttachedToComponent
+class AttachPowerUpComponent
+class AutoDestructComponent
+class Box2DComponent
+class CollisionComponent
+class CollisionPoint
+class CollisionPowerComponent
+class EntitySpawnerComponent
+class ExplosionComponent
+class FireAlwaysComponent
+class Friction2DComponent
+class LifeComponent
+class LifePowerUpComponent
+class MoveFollowComponent
+class MoveForwardComponent
+class MovementLimitFrame2DComponent
+class MovementSpeedComponent
+class MoveSequenceComponent
+class NetworkPlayerComponent
+class NetworkReceiveActionComponent
+class NetworkReceiveUpdateComponent
+class NetworkSendActionComponent
+class NetworkSendUpdateComponent
+class Pos2DComponent
+class SFMLInputComponent
+class SFMLJoystickComponent
+class SFMLSoundComponent
+class SFMLSpriteComponent
+class SFMLTextComponent
+class Speed2DComponent
+class SyncPos2DComponent
+class TagComponent
+class TeamComponent
+class WeaponPowerUpComponent
+class APowerUpComponent
+
 }
 
 @enduml
