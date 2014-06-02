@@ -1,0 +1,39 @@
+@startuml
+
+title Components - Class Diagram
+
+package Components {
+
+Abstract Class ASerializableComponent {
+  +ASerializableComponent(const std::string &type);
+ 
+  +ASerializableComponent	*setNetworkSendUpdateException(unsigned int);
+  +ASerializableComponent	*setNetworkCanSendUpdate(bool);
+  +ASerializableComponent	*setNetworkCanSend(bool);
+  +ASerializableComponent	*setNetworkSendException(unsigned int);
+  +bool				canSend(unsigned int) const;
+  +bool				canSendUpdate(unsigned int) const;
+  +void serialize(IBuffer &) const = 0;
+  +void unserialize(IBuffer &) = 0;
+  +void networkSerialize(Remote *remote, IBuffer &, bool force_send = false) const;
+  +void networkUnSerialize(IBuffer &, World *, Entity *entity);
+  +void networkUnserializeCallback(IBuffer &, World *world, Entity *);
+  +void additionalNetworkSerialize(IBuffer &) const;
+  +ASerializableComponent *cloneSerializable() const = 0;
+  +IComponent *clone() const
+
+  #std::vector<unsigned int>	_exception_send_update
+  #std::vector<unsigned int>	_exception_send
+  #bool				_can_send_update
+  #bool				_can_send
+}
+
+abstract class ACopyableComponent {
+  +ACopyableComponent(const std::string &type)
+  + ASerializableComponent *cloneSerializable() const
+
+}
+
+}
+
+@enduml

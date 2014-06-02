@@ -3,9 +3,11 @@
 title R-Type - Class Diagram
 
 package std {
-    class std::exception
+    Class std::exception
 }
 
 !include ECS-Links.iuml
+!include Components-Links.iuml
+!include Network-Links.iuml
 
 @enduml
