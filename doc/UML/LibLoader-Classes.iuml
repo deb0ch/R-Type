@@ -1,0 +1,42 @@
+@startuml
+
+package LibLoader {
+
+interface ILibraryLoader {
+  +{abstract} T *getInstance(const std::string &path, const std::string &entry = "getInstance");
+  +{abstract} void clearLibraries();
+  +{abstract} void clearLibrary(const std::string &path);
+}
+
+class LibLoaderException {
+
+  +LibLoaderException(const int error);
+  +LibLoaderException(const std::string &error);
+
+  +const char* what() const throw();
+
+  -void addError(const int error);
+  -std::string	_info;
+
+}
+
+class LibraryLoader {
+    +typedef void * handle;
+
+    -  std::map<const std::string, handle> libs;
+
+  +T *getInstance(const std::string &path, const std::string &entry);
+  +void clearLibraries();
+  +void clearLibrary(const std::string &path);
+
++void		LibraryLoader<T>::clearLibraries()
+
++void		LibraryLoader<T>::clearLibrary(const std::string &path)
+
++T *LibraryLoader<T>::getInstance(const std::string &path, const std::string &entry)
+
+}
+
+}
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+
+!include Events-Classes.iuml
+
+SFMLKeyEvent --|> AEvent
+SFMLKeyEvent o-- Keyboard
+
+NewPlayerEvent --|> AEvent
+
+EntityDeletedEvent --|> AEvent
+EntityDeletedEvent o-- Entity
+
+CollisionEvent --|> AEvent
+CollisionEvent o-- Entity
+
+SFMLJoystickEvent --|> AEvent
+
+InputChangedEvent --|> AEvent
+InputChangedEvent o-- Entity
+
+DisconnectPlayerEvent --|> AEvent
+
+@endtuml

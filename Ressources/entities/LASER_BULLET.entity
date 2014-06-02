@@ -33,7 +33,7 @@ ENTITY:LASER_BULLET
 		speed_coef=0
 	!COMPONENT
 	COMPONENT:CollisionPowerComponent
-		collisionPower=6
+		collisionPower=8
 	!COMPONENT
 	COMPONENT:SFMLSpriteComponent
 		filename=Laser.png
