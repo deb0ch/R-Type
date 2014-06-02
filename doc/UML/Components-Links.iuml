@@ -2,45 +2,45 @@
 
 !include Components-Classes.iuml
 
-ASerializableComponent --|> AComponent
+ASerializableComponent -up-|> AComponent
 ACopyableComponent --|> ASerializableComponent
 
-ActionComponent --|> ACopyableComponent
+ActionComponent -right-|> ACopyableComponent
 AttachComponent --|> ACopyableComponent
-AttachedToComponent --|> ACopyableComponent
+AttachedToComponent -right-|> ACopyableComponent
 AttachPowerUpComponent --|> APowerUpComponent
-AutoDestructComponent --|> ACopyableComponent
+AutoDestructComponent -left-|> ACopyableComponent
 Box2DComponent --|> ACopyableComponent
-CollisionComponent --|> ASerializableComponent
+CollisionComponent -left-|> ASerializableComponent
 CollisionPoint --|> ACopyableComponent
-CollisionPowerComponent --|> ACopyableComponent
-EntitySpawnerComponent --|> ACopyableComponent
-ExplosionComponent --|> ACopyableComponent
-FireAlwaysComponent --|> ACopyableComponent
-Friction2DComponent --|> ACopyableComponent
+CollisionPowerComponent -up-|> ACopyableComponent
+EntitySpawnerComponent -left-|> ACopyableComponent
+ExplosionComponent -right-|> ACopyableComponent
+FireAlwaysComponent -up-|> ACopyableComponent
+Friction2DComponent -up-|> ACopyableComponent
 LifeComponent --|> ACopyableComponent
-LifePowerUpComponent --|> APowerUpComponent
-MoveFollowComponent --|> ACopyableComponent
-MoveForwardComponent --|> ACopyableComponent
-MovementLimitFrame2DComponent --|> ACopyableComponent
-MovementSpeedComponent --|> ACopyableComponent
-MoveSequenceComponent --|> ACopyableComponent
-NetworkPlayerComponent --|> ACopyableComponent
-NetworkReceiveActionComponent --|> ACopyableComponent
-NetworkReceiveUpdateComponent --|> ACopyableComponent
-NetworkSendActionComponent --|> ACopyableComponent
-NetworkSendUpdateComponent --|> ACopyableComponent
+LifePowerUpComponent -up-|> APowerUpComponent
+MoveFollowComponent -down-|> ACopyableComponent
+MoveForwardComponent -down-|> ACopyableComponent
+MovementLimitFrame2DComponent -left-|> ACopyableComponent
+MovementSpeedComponent -left-|> ACopyableComponent
+MoveSequenceComponent -right-|> ACopyableComponent
+NetworkPlayerComponent -up-|> ACopyableComponent
+NetworkReceiveActionComponent -right-|> ACopyableComponent
+NetworkReceiveUpdateComponent -up-|> ACopyableComponent
+NetworkSendActionComponent -right-|> ACopyableComponent
+NetworkSendUpdateComponent -up-|> ACopyableComponent
 Pos2DComponent --|> ACopyableComponent
 SFMLInputComponent --|> ACopyableComponent
-SFMLJoystickComponent --|> ACopyableComponent
-SFMLSoundComponent --|> ACopyableComponent
+SFMLJoystickComponent -up-|> ACopyableComponent
+SFMLSoundComponent -up-|> ACopyableComponent
 SFMLSpriteComponent --|> ACopyableComponent
-SFMLTextComponent --|> ACopyableComponent
+SFMLTextComponent -up-|> ACopyableComponent
 Speed2DComponent --|> ACopyableComponent
-SyncPos2DComponent --|> ACopyableComponent
-TagComponent --|> ACopyableComponent
-TeamComponent --|> ACopyableComponent
-WeaponPowerUpComponent --|> APowerUpComponent
-APowerUpComponent --|> ASerializableComponent
+SyncPos2DComponent -up-|> ACopyableComponent
+TagComponent -up-|> ACopyableComponent
+TeamComponent -left-|> ACopyableComponent
+WeaponPowerUpComponent -right-|> APowerUpComponent
+APowerUpComponent -right-|> ASerializableComponent
 
 @enduml
