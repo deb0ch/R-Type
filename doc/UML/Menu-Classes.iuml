@@ -1,0 +1,150 @@
+@startuml
+
+title R-Type - Class Diagram
+
+package Menu {
+
+interface IState {
+	+{abstract} void update(StateManager&)
+	+{abstract} void render(const Timer&)
+}
+
+class SFMLButton {
+	+SFMLButton(sf::RenderWindow *window, float posX, float posY, float width, float height)
+
+	+void	addTexture(const std::string &path, int width, int height)
+	+void	draw()
+	+bool	isMouseOnButton()
+
+	#sf::RenderWindow *_window
+	#sf::RectangleShape *_button
+}
+
+class SFMLMenu {
+	+SFMLMenu(World *world)
+	+SFMLMenu(World *world, sf::RenderWindow *window)
+
+	+const std::string &getIpAddress() const
+
+	+void connect()
+	+ void update(StateManager&)
+	+ void render(const Timer&)
+
+	#void init()
+
+	#World		*_world
+	#sf::Sprite *_background
+	#sf::Sprite *_logo
+	#ClientRelay *_relay
+	#SFMLButton *_buttonplay
+	#SFMLButton *_buttonSolo
+	#SFMLButton *_buttonCredit
+	#SFMLTextBox *_textboxIP
+	#SFMLTextBox *_ipServer
+	#sf::RenderWindow *_window
+  	#sf::Music	*_music
+}
+
+class SFMLTextBox {
+	+SFMLTextBox(sf::RenderWindow *window, float posX, float posY, bool hasBorder,
+		int charSize = 50, unsigned int maxCharacters = 16)
+
+	+void	draw()
+	+void	addCharacter(char character)
+	+void	removelastCharacter()
+
+	+const std::string &getString() const
+	+void setString(const std::string & string)
+	+void setColor(const sf::Color &color)
+	+void setBorderColor(const sf::Color &color)
+	+void setBorderOutLineColor(const sf::Color &color)
+	+void setBorderSize(float width, float height)
+
+	#bool			_hasBorder
+	#int			_charSize
+	#unsigned int			_maxCharacters
+	#std::string		_string
+	#sf::Text		_text
+	#sf::RectangleShape	_borders
+	#sf::RenderWindow	*_window
+	#sf::Font		*_font
+}
+
+class StateCredit {
+
+	+StateCredit(sf::RenderWindow *window)
+
+	+ void update(StateManager&)
+	+ void render(const Timer&)
+
+	#void init()
+
+	#sf::Sprite *_background
+	#std::vector<SFMLTextBox *>_names
+	#sf::RenderWindow *_window
+}
+
+class StateGame {
+
+	+StateGame(World *world);
+
+	+void update(StateManager&);
+	+void render(const Timer&);
+	#void addSharedObjetcs();
+	#void addEntities();
+	#void addSystems();
+	#World		*_world;
+	#sf::Music	*_music;
+}
+
+class		StateManager {
+	+void	popState();
+	+void	pushState(IState* state);
+	+void	update();
+	+void	render(const Timer&);
+	+void	exit();
+	+bool	isRunning() const;
+
+	#std::vector<IState *>	_states;
+	#bool			_running;
+}
+
+class StateRoom {
+	StateRoom(sf::RenderWindow * window, World *world, sf::Music *);
+
+	+virtual void update(StateManager&);
+	+virtual void render(const Timer&);
+
+	#void init();
+	#void accessRoom();
+	#bool parsePacket(LockVector<IBuffer *> &vector, LockVector<IBuffer *>::iterator &it);
+
+	#World			*_world;
+	#sf::Sprite		*_background;
+	#sf::Sprite		*_logo;
+	#SFMLButton		*_buttonplay;
+	#SFMLTextBox		*_textboxRoom;
+	#SFMLTextBox		*_serverRooms;
+	#sf::RenderWindow	*_window;
+	#sf::Music		*_music;
+}
+
+class StateSoloGame {
+
+	+StateSoloGame(World *world);
+
+	+void update(StateManager&);
+	+void render(const Timer&);
+
+	#void addSharedObjetcs();
+	#void addEntities();
+	#void addSystems();
+	#void createConfigFile() const;
+
+	#World		*_world;
+	#sf::Music	*_music;
+}
+
+}
+
+@enduml

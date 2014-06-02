@@ -1,9 +1,5 @@
 @startuml
 
-title ECS-Links - Class Diagram
-
-!include Network-Classes.iuml
-
 ISocketUDP ..|> ISocket
 ISocketTCP ..|> ISocket
 SocketUDP ..|> ISocketUDP
