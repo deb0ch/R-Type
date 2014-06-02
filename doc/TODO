@@ -1,2 +1,14 @@
 
+To do list, par ordre de priorité (environ)
+
 -> Installer Windows
+-> ajout sprites, monstres, levels, boss...
+-> graphe d'entités
+-> entités de musique
+   => entity deleter
+-> ecran game over
+-> ecran pause (solo)
+-> ecran pause (multi)
+-> scripted spawner
+-> network delta diff ou un truc du genre
+-> and so on...
