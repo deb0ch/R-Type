@@ -1,0 +1,174 @@
+
+package NetworkRelay {
+
+enum TCPType {
+	CHANGE_ROOM_QUERY,
+	CHANGE_ROOM_QUERY_YES,
+	CHANGE_ROOM_QUERY_NON
+}
+
+interface INetworkRelay {
+  + {abstract} bool		start()
+  + {abstract} void		threadStart()
+  + {abstract} Room		*getRoom(const std::string &room_name)
+  + {abstract} IBuffer	*getTCPBuffer()
+  + {abstract} IBuffer	*getUDPBuffer()
+  + {abstract} Remote	*getRemote(unsigned int) const
+  + {abstract} Remote	*getRemote(const std::string &ip, const int port) const
+  + {abstract} void		disposeUDPBuffer(IBuffer *)
+  + {abstract} void		disposeTCPBuffer(IBuffer *)
+}
+
+class ClientRelay {
+  + ClientRelay(const std::string &ip, const int port = 42)
+  + bool		start()
+  + void		threadStart()
+  + Room		*getRoom(const std::string &room_name)
+  + IBuffer	*getTCPBuffer()
+  + IBuffer	*getUDPBuffer()
+  + Remote	*getRemote(unsigned int) const
+  + Remote	*getRemote(const std::string &ip, const int port) const
+  + void		disposeUDPBuffer(IBuffer *)
+  + void		disposeTCPBuffer(IBuffer *)
+
+  - void 	waitForEvent()
+  - void 	udpConnect()
+
+  # NetworkInitializer			_network_initializer
+  # SocketUDP				_socket_udp
+  # Select				_select
+  # Room					_room
+  # Remote				*_remote
+  # LockVector<IBuffer *>			_available_udp
+  # LockVector<IBuffer *>			_available_tcp
+}
+
+class RoomServer {
+  + RoomServer(ServerRelay *server, const std::string &nameRoomServer)
+  + void			removeRemote(Remote *remote)
+  + void				addRemote(Remote *remote)
+  + RunWorldServer		&getRunWorldServer()
+  + const RunWorldServer		&getRunWorldServer() const
+
+  # ServerRelay		*_serverRelay
+  # std::string		_nameRoomServer
+  # RunWorldServer	*_runWorldServer
+  # Thread<RunWorldServer> _thread
+}
+
+class Remote {
+  + Remote(ISocketTCP &, unsigned int = 0)
+  + const ISocketTCP		&getTCPSocket() const
+  + ISocketTCP			&getTCPSocket()
+  + const std::string		&getIP() const
+  + int				getPort() const
+  + unsigned int			getPrivateHash() const
+  + void				setIP(const std::string &ip)
+  + void				setPort(const int)
+  + void				setPrivateHash(const unsigned int)
+  + void				sendTCP(IBuffer *)
+  + void				sendUDP(IBuffer *)
+  + LockVector<IBuffer *>		&getRecvBufferUDP()
+  + LockVector<IBuffer *>		&getRecvBufferTCP()
+
+  + const std::string		&getRoom() const
+  + void				setRoom(const std::string &)
+
+  + void				networkSendTCP(INetworkRelay &network)
+  + bool				networkReceiveTCP(INetworkRelay &network)
+  + void				networkSendUDP(INetworkRelay &network, SocketUDP &udp)
+
+  + void				setReady(bool ready)
+  + bool				isReady() const
+
+  + bool				canSendUDP()
+  + bool				canSendTCP()
+
+  - bool				extractTCPPacket(INetworkRelay &)
+
+  # ISocketTCP			*_tcp
+  # std::string			_ip
+  # std::string			_room
+  # int				_port
+  # unsigned int			_private_hash
+  # LockVector<IBuffer *>		_send_buffer_tcp
+  # LockVector<IBuffer *>		_send_buffer_udp
+  # NetworkBuffer			_temporary_tcp_buffer
+  # LockVector<IBuffer *>		_recv_buffer_tcp
+  # LockVector<IBuffer *>		_recv_buffer_udp
+  # bool				_ready
+}
+
+class RunWorldServer {
+  + RunWorldServer(ServerRelay *server, const std::string &nameRoom)
+  + void run(Any)
+  + void run()
+  + World *getWorld()
+  + const World *getWorld() const
+  + void isEnd(bool isEnd)
+
+  - void addSystems()
+  - void addSharedObjetcs()
+  - void addEntities()
+
+  # ServerRelay *_server
+  # World *_world
+  # Timer _timer
+  # std::string _nameRoom
+  # bool _isEnd
+}
+
+class Room {
+  + void				removeRemote(Remote *remote)
+  + void				lock()
+  + void				unlock()
+  + bool				trylock()
+  + std::vector<Remote *>		&getRemotes()
+  + const std::vector<Remote *>	&getRemotes() const
+  + void				disconnectRemote(Remote *remote)
+  + std::vector<Remote *>		&getPendingDisonnectRemotes()
+  + void				sendBroadcastUDP(INetworkRelay &, IBuffer *buffer, bool make_copy = false)
+  + void				sendBroadcastTCP(INetworkRelay &, IBuffer *buffer, bool make_copy = false)
+
+  # std::vector<Remote *>	_remotes
+  # std::vector<Remote *>	_pending_disconnect_remotes
+  # Mutex			_mutex
+}
+
+class ServerRelay {
+  + ServerRelay(int port = 4011, int nb_pending_connection = 42)
+
+  + bool		start()
+  + void		threadStart()
+  + Room		*getRoom(const std::string &room_name)
+  + IBuffer	*getTCPBuffer()
+  + IBuffer	*getUDPBuffer()
+  + Remote	*getRemote(unsigned int) const
+  + Remote	*getRemote(const std::string &ip, const int port) const
+  + void		disposeUDPBuffer(IBuffer *)
+  + void		disposeTCPBuffer(IBuffer *)
+
+  - void			waitForEvent()
+  - void			addClient()
+  - unsigned int		generateHash() const
+  - void			receiveUDP()
+  - void			removeRemote(Remote *remote)
+  - void			manageAllRemotes()
+  - void			manageRemotes(std::vector<Remote *> &remotes, Room *room = NULL)
+  - void			manageRemotesInRooms()
+  - bool			manageRemotesReceiveTCP(std::vector<Remote *> &remotes, Room *room,
+						std::vector<Remote *>::iterator &it, Remote *remote)
+  - void			udpConnect(Remote *remote)
+
+  # NetworkInitializer			_network_initializer
+  # SocketTCP				_server_socket_tcp
+  # SocketUDP				_server_socket_udp
+  # Select				_select
+  # Mutex					_mutex_room
+  # std::map<std::string, RoomServer*>	_rooms
+  # std::vector<Remote *>			_remotsWithoutRoom
+  # LockVector<IBuffer *>			_available_udp
+  # LockVector<IBuffer *>			_available_tcp
+}
+
+}

@@ -1,0 +1,47 @@
+@startuml
+
+!include Components-Classes.iuml
+
+ASerializableComponent --|> AComponent
+ACopyableComponent --|> ASerializableComponent
+
+ActionComponent
+ASerializableComponent
+AttachComponent
+AttachedToComponent
+AttachPowerUpComponent
+AutoDestructComponent
+Box2DComponent
+CollisionComponent
+CollisionPoint
+CollisionPowerComponent
+EntitySpawnerComponent
+ExplosionComponent
+FireAlwaysComponent
+Friction2DComponent
+LifeComponent
+LifePowerUpComponent
+MoveFollowComponent
+MoveForwardComponent
+MovementLimitFrame2DComponent
+MovementSpeedComponent
+MoveSequenceComponent
+NetworkPlayerComponent
+NetworkReceiveActionComponent
+NetworkReceiveUpdateComponent
+NetworkSendActionComponent
+NetworkSendUpdateComponent
+Pos2DComponent
+SFMLInputComponent
+SFMLJoystickComponent
+SFMLSoundComponent
+SFMLSpriteComponent
+SFMLTextComponent
+Speed2DComponent
+SyncPos2DComponent
+TagComponent
+TeamComponent
+WeaponPowerUpComponent
+APowerUpComponent
+
+@enduml

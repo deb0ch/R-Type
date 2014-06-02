@@ -1,0 +1,4 @@
+A ..|> B // A Implémente B
+A --|> B // A Implémente Hérite  B
+A o-- B // A Implémente Hérite  B
+A --|> B // A Implémente Hérite  B

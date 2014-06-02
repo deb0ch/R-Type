@@ -1,0 +1,86 @@
+package Threads {
+
+enum	STATUS {
+      LOCKED,
+      UNLOCKED
+    }
+
+interface IMutex {
+
+  + {abstract} void		lock()
+  + {abstract} bool		trylock()
+  + {abstract} void		unlock()
+  + {abstract} STATUS	status() const
+}
+
+class Mutex {
+
+  + void		lock()
+  + bool		trylock()
+  + void		unlock()
+  + STATUS	status() const
+
+
+  - STATUS		_status
+  - pthread_mutex_t	_mutex
+}
+
+interface ICondVar {
+
+  + {abstract} void wait(Mutex *)
+  + {abstract} void signal(void)
+  + {abstract} void broadcast(void)
+}
+
+class CondVar {
+
+  # pthread_cond_t	cond
+
+
+  + void wait(Mutex *mutex)
+  + void signal(void)
+  + void broadcast(void)
+}
+
+class ScopedMutex {
+
+	- IMutex *_mutex
+}
+
+class SafeFifoException {
+
+  + SafeFifoException(const int error)
+  + SafeFifoException(const std::string &error)
+
+  + const char* what() const throw()
+
+
+  - void addError(const int error)
+  - std::string	_info
+}
+
+class ThreadException {
+
+  + ThreadException(const int error)
+  + ThreadException(const std::string &error)
+
+  + const char* what() const throw()
+
+
+  - void addError(const int error)
+  - std::string	_info
+}
+
+class MutexException {
+
+  + MutexException(const int error)
+  + MutexException(const std::string &error)
+
+  + const char* what() const throw()
+
+
+  - void addError(const int error)
+  - std::string	_info
+}
+
+}

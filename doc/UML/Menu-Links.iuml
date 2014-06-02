@@ -1,0 +1,16 @@
+@startuml
+
+!include Menu-Classes.iuml
+
+SFMLMenu ..|> IState
+StateSoloGame ..|> IState
+StateGame ..|> IState
+StateRoom ..|> IState
+StateCredit ..|> IState
+
+StateManager *-- IState
+
+SFMLMenu o-- SFMLButton
+SFMLMenu o-- SFMLTextBox
+
+@enduml
