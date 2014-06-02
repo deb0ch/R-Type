@@ -38,4 +38,8 @@ Mutex o-- CondVar
 
 ScopedMutex o-- Mutex
 
+Thread o-- STATUS
+ThreadPool o-- eStatus
+Thread o-- ContainerArg
+
 @enduml
