@@ -1,3 +1,7 @@
+@startuml
+
+!include Events-Classes.iuml
+
 SFMLKeyEvent --|> AEvent
 SFMLKeyEvent o-- Keyboard
 
@@ -15,3 +19,5 @@ InputChangedEvent --|> AEvent
 InputChangedEvent o-- Entity
 
 DisconnectPlayerEvent --|> AEvent
+
+@endtuml
