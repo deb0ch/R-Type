@@ -64,7 +64,7 @@ void		SocketTCP::bind(int port, const std::string & address) {
   else
     {
       if ((hostinfo = ::gethostbyname(address.c_str())) == NULL)
-	throw TCPException("Gethostbyname as failed");
+	throw TCPException("Gethostbyname has failed");
       sin.sin_addr = *reinterpret_cast<in_addr*>(hostinfo->h_addr);
     }
   sin.sin_family = AF_INET;
