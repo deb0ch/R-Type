@@ -3,6 +3,8 @@ To do list, par ordre de priorité (environ)
 
 -> Installer Windows
 -> ajout sprites, monstres, levels, boss...
+-> organiser dossier d'entites (modif directoryLister)
+-> animations player bullets
 -> graphe d'entités
 -> entités orientables (modif pos2DComponent)
 -> interpolation de mouvements (translation * sinusoide + rotation, etc...)
