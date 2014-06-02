@@ -1,9 +1,5 @@
 @startuml
 
-title R-Type - Class Diagram
-
-!include Components-Classes.iuml
-
 ASerializableComponent --|> AComponent
 ACopyableComponent --|> ASerializableComponent
 

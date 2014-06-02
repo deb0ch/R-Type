@@ -1,9 +1,5 @@
 @startuml
 
-title ECS-Links - Class Diagram
-
-!include ECS-Classes.iuml
-
 AComponent ..|> IComponent
 AEvent ..|> IEvent
 ASystem ..|> ISystem
