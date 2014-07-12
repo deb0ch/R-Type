@@ -35,6 +35,8 @@
 # include "TeamComponent.hh"
 # include "WeaponPowerUpComponent.hh"
 
+static const	std::string path_files = "/home/ubuntu/rendu/epitech-r-type/Ressources/entities";
+
 class EntityFactory : public Factory<Entity, hash_t>
 {
   std::vector<std::string>	_keys;
@@ -79,12 +81,12 @@ public:
     std::ifstream			input;
     std::pair<std::string, Entity*>	res;
 
-    std::vector<std::string> files = directory_lister.listDirectory("Ressources/entities/");
+    std::vector<std::string> files = directory_lister.listDirectory(path_files + "/");
     for(auto it = files.begin(); it != files.end(); ++it)
       {
 	if ((*it).substr((*it).rfind('.')) != ".entity")
 	  return ;
-	input.open("./Ressources/entities/" + *it);
+	input.open(path_files + "/" + *it);
 	try
 	  {
 	    res = ef.deserialize(input);

@@ -10,7 +10,7 @@ int			main()
 {
   World		world;
   Timer		timer;
-  StateManager states;
+  StateManager	states;
 
   try
     {
@@ -20,9 +20,7 @@ int			main()
 	  timer.startFrame();
 	  states.update();
 	  if (timer.canTick())
-	    {
-	      states.render(timer);
-	    }
+	    states.render(timer);
 	  timer.endFrame();
 	}
     }

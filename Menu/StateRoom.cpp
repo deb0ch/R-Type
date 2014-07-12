@@ -23,7 +23,7 @@ void	StateRoom::init()
 {
   this->_background = NULL;
   sf::Texture *texture = new sf::Texture();
-  if (texture->loadFromFile("Ressources/Images/rooms.jpg"))
+  if (texture->loadFromFile("/home/ubuntu/rendu/epitech-r-type/Ressources/Images/rooms.jpg"))
     {
       this->_background = new sf::Sprite();
       this->_background->setTexture(*texture, true);
@@ -49,7 +49,7 @@ void	StateRoom::accessRoom()
       Remote *remote = NULL;
 
       if (this->_textboxRoom->getString() != "")
-	this->_textboxRoom->setString("defaulte");
+	this->_textboxRoom->setString("default");
       if (!(remote = network->getRemote(0)))
 	throw RTException("Invalid remote");
 

@@ -9,7 +9,7 @@
 # include "RTException.hh"
 # include "Unistd.hh"
 
-# define SOUNDFILE "Ressources/Sound/"
+# define SOUNDFILE "/home/ubuntu/rendu/epitech-r-type/Ressources/Sound/"
 
 class SoundLoader
 {

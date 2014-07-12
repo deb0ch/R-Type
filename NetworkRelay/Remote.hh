@@ -56,7 +56,6 @@ protected:
   LockVector<IBuffer *>		_recv_buffer_tcp;
   LockVector<IBuffer *>		_recv_buffer_udp;
   bool				_ready;
-
 };
 
 #endif /* !REMOTE_H_ */

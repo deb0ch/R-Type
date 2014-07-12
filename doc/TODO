@@ -2,17 +2,21 @@
 To do list, par ordre de priorité (environ)
 
 -> Installer Windows
--> ajout sprites, monstres, levels, boss...
 -> organiser dossier d'entites (modif directoryLister)
--> animations player bullets
--> graphe d'entités
--> entités orientables (modif pos2DComponent)
--> interpolation de mouvements (translation * sinusoide + rotation, etc...)
+-> ajout sprites, monstres, levels, boss...
 -> entités de musique
    => entity deleter
 -> ecran game over
 -> ecran pause (solo)
 -> ecran pause (multi)
+-> Choix stages par le menu
+-> and so on...
+
+Bigger mods:
+
+-> graphe d'entités
+-> entités orientables (modif pos2DComponent pour matrice ou a.i+b)
+-> interpolation de mouvements (translation * sinusoide + rotation, etc...)
 -> scripted spawner
 -> network delta diff ou un truc du genre
 -> and so on...

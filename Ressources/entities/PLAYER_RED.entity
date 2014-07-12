@@ -35,7 +35,7 @@ ENTITY:PLAYER_RED
 		collisionPower=100
 	!COMPONENT
 	COMPONENT:LifeComponent
-		life=1
+		life=1000000000000000
 		invulnerability=1.5
 	!COMPONENT
 	COMPONENT:TeamComponent
@@ -78,9 +78,9 @@ ENTITY:PLAYER_RED
 		entity=BASIC_BULLET;1
 		nb=0
 		delay=0.3
-		minPosX=5
+		minPosX=20
 		minPosY=0
-		maxPosX=5
+		maxPosX=20
 		maxPosY=0
 		random=true
 		abs=false

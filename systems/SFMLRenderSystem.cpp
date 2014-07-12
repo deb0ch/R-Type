@@ -66,8 +66,10 @@ void		SFMLRenderSystem::processEntity(Entity *entity, const float)
   sf::RenderWindow	*_window = this->_world->getSharedObject<sf::RenderWindow>("sfmlwindow");
 
   if (!imageLoader)
-    throw RTException("The world do not content ImageLoader");
+    throw RTException("The world does not contain ImageLoader");
+
   sf::Sprite *sprite = NULL;
+
   if (action != NULL)
     {
       if (action->isActive("UP") && spriteComp->hasAction("UP"))

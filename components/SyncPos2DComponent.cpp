@@ -33,13 +33,14 @@ float		SyncPos2DComponent::getRatio() const
   return this->_ratio;
 }
 
-void			SyncPos2DComponent::networkUnserializeCallback(IBuffer &, World *, Entity *entity)
+void	SyncPos2DComponent::networkUnserializeCallback(IBuffer &, World *, Entity *entity)
 {
-  Pos2DComponent	*pos_component;
+  Pos2DComponent		*pos_component;
   NetworkReceiveUpdateComponent *network_comp;
 
   pos_component = entity->getComponent<Pos2DComponent>("Pos2DComponent");
   network_comp = entity->getComponent<NetworkReceiveUpdateComponent>("NetworkReceiveUpdateComponent");
+
   if (pos_component && network_comp)
     {
       this->_sync_pos.setX(this->_sync_pos.getX() - pos_component->getX());

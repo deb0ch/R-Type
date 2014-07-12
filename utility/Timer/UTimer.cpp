@@ -5,6 +5,7 @@
 # include "Timer.hh"
 
 // Public:
+float			g_currentFps[10];
 
 Timer::Timer(unsigned long fps)
   : _fps(fps)
@@ -15,6 +16,8 @@ Timer::Timer(unsigned long fps)
   _timeZero = this->bufToTime(_timeBuff);
   _previousTime = this->getTime();
   _currentTime = this->getTime();
+  for (int i = 0; i < 10; ++i)
+    g_currentFps[i] = 0;
 }
 
 void	Timer::startFrame()
@@ -42,7 +45,14 @@ unsigned long	Timer::getFps() const
 
 unsigned long	Timer::getCurrentFps() const
 {
-  return (1000000 / (_currentTime - _previousTime));
+  static int	i = 0;
+  float		currentFps = 0;
+
+  g_currentFps[i] = 1000000 / (_currentTime - _previousTime);
+  i = (i + 1) % 10;
+  for (int i = 0; i < 10; ++i)
+    currentFps += g_currentFps[i];
+  return (currentFps / 10.f);
 }
 
 void	Timer::setFps(unsigned long fps)

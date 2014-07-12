@@ -3,7 +3,7 @@
 #include "ImageLoader.hh"
 
 static std::string NAME_CLASS = "RT::ImageLoader";
-static const std::string imageFolder = "Ressources/Images/";
+static const std::string imageFolder = "/home/ubuntu/rendu/epitech-r-type/Ressources/Images/";
 
 ImageLoader::ImageLoader()
 {

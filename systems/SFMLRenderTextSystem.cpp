@@ -2,10 +2,11 @@
 #include "SFMLTextComponent.hh"
 #include "SFMLRenderTextSystem.hh"
 
+static const std::string g_folder = "/home/ubuntu/rendu/epitech-r-type/Ressources/";
+
 SFMLRenderTextSystem::SFMLRenderTextSystem()
   : ASystem("SFMLRenderTextSystem")
-{
-}
+{}
 
 SFMLRenderTextSystem::~SFMLRenderTextSystem()
 {}
@@ -13,7 +14,8 @@ SFMLRenderTextSystem::~SFMLRenderTextSystem()
 //----- ----- Methods ----- ----- //
 bool		SFMLRenderTextSystem::canProcess(Entity *entity) const
 {
-  if (entity->hasComponent("SFMLTextComponent") && entity->hasComponent("Pos2DComponent"))
+  if (entity->hasComponent("SFMLTextComponent")
+      && entity->hasComponent("Pos2DComponent"))
     return (true);
   return (false);
 }
@@ -26,7 +28,7 @@ void		SFMLRenderTextSystem::processEntity(Entity *entity, const float)
   sf::Font font;
   sf::Text text;
 
-  if (renderWindow && font.loadFromFile("Ressources/Fonts/gradius.ttf"))
+  if (renderWindow && font.loadFromFile(g_folder + "/Fonts/gradius.ttf"))
     {
       text.setFont(font);
       text.setString(sfText->getText());

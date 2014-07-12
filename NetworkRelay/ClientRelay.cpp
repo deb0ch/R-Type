@@ -62,7 +62,7 @@ bool			ClientRelay::start()
 	  this->waitForEvent();
 	  if (this->_select.issetReads(this->_socket_udp.getHandle()))
 	    {
-	      IBuffer	*buffer = this->getUDPBuffer();
+	      IBuffer		*buffer = this->getUDPBuffer();
 	      std::string	ip;
 	      int		port;
 
@@ -81,17 +81,14 @@ bool			ClientRelay::start()
 		  this->_remote->getRecvBufferUDP().push_back(buffer);
 		}
 	    }
-
 	  if (this->_select.issetWrites(this->_socket_udp.getHandle()))
 	    {
 	      if (!this->_remote->isReady() && this->_remote->getPrivateHash() != 0)
 		this->udpConnect();
 	      this->_remote->networkSendUDP(*this, this->_socket_udp);
 	    }
-
 	  if (this->_select.issetWrites(this->_remote->getTCPSocket().getHandle()))
 	    this->_remote->networkSendTCP(*this);
-
 	  if (this->_select.issetReads(this->_remote->getTCPSocket().getHandle()))
 	    {
 	      if (!this->_remote->networkReceiveTCP(*this))

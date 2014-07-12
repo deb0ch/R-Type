@@ -2,6 +2,8 @@
 #include	"Any.hpp"
 #include	"AttachedToSystem.hh"
 
+static const std::string g_folder = "/home/ubuntu/rendu/epitech-r-type/Ressources/";
+
 StateGame::StateGame(World *world)
 {
   this->_world = world;
@@ -9,7 +11,7 @@ StateGame::StateGame(World *world)
   this->addSharedObjetcs();
   this->addEntities();
   this->_music = new sf::Music();
-  if (this->_music->openFromFile("Ressources/Sound/music.ogg"))
+  if (this->_music->openFromFile(g_folder + "/Sound/music.ogg"))
     {
       this->_music->setLoop(true);
       this->_music->play();

@@ -1,6 +1,6 @@
 ENTITY:BORDER_SPAWNER_TOP
 	COMPONENT:NetworkSendUpdateComponent
-		update_rate=10
+		update_rate=7
 	!COMPONENT
 	COMPONENT:Pos2DComponent
 		x=840
@@ -12,7 +12,7 @@ ENTITY:BORDER_SPAWNER_TOP
 		entity=BORDER_TOP_LEVEL_3;2
 		entity=BORDER_TOP_LEVEL_4;4
 		nb=0
-		delay=2
+		delay=1.9
 		minPosX=0
 		minPosY=0
 		maxPosX=0

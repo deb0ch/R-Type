@@ -14,8 +14,10 @@ SFMLSpriteComponent::SFMLSpriteComponent()
   this->_counter = 0;
 }
 
-SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename, const std::pair<int, int>& sprites,
-					 const std::map<std::string, std::pair<int, int> > &map, unsigned int tickChange)
+SFMLSpriteComponent::SFMLSpriteComponent(const std::string &filename,
+					 const std::pair<int, int>& sprites,
+					 const std::map<std::string, std::pair<int, int> > &map,
+					 unsigned int tickChange)
   : ACopyableComponent("SFMLSpriteComponent")
 {
   this->_fileName = filename;
@@ -50,7 +52,7 @@ const std::pair<int, int> &SFMLSpriteComponent::getSpriteDim() const
   return this->_sprites;
 }
 
-int			SFMLSpriteComponent::getCurrentSpriteNumber(const std::string &action)
+int	SFMLSpriteComponent::getCurrentSpriteNumber(const std::string &action)
 {
   auto it = this->_map.find(action);
 
