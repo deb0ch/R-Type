@@ -27,12 +27,12 @@ SET(SOURCE_C
 MESSAGE("add subdirectories")
 # CALL OTHER CMAKEFILES
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/components")
-ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/systems")	
+ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/systems")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/events")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/utility")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/NetworkRelay")
 ADD_SUBDIRECTORY("${PROJECT_SOURCE_DIR}/Menu")
-	
+
 ADD_SUBDIRECTORY(Network)
 ADD_SUBDIRECTORY(Threads)
 ADD_SUBDIRECTORY(LibLoader)
@@ -76,11 +76,11 @@ MESSAGE("set build type : " ${CMAKE_BUILD_TYPE})
 
 if (UNIX)
 	MESSAGE("OS TYPE : UNIX")
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-window.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-system.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-network.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-audio.so.2.1)
-	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/libsfml-graphics.so.2.1)
+	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.1)
+	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.1)
+	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/x86_64-linux-gnu/libsfml-network.so.2.1)
+	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/x86_64-linux-gnu/libsfml-audio.so.2.1)
+	TARGET_LINK_LIBRARIES (${CLIENT_BIN} /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.1)
 	TARGET_LINK_LIBRARIES (${SERVER_BIN} rt)
 
 	TARGET_LINK_LIBRARIES (${CLIENT_BIN} pthread)
@@ -109,7 +109,7 @@ if (WIN32)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-system.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-window.lib)
-		
+
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-audio.lib)
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-graphics.lib)
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/lib/sfml-main.lib)
@@ -120,13 +120,13 @@ if (WIN32)
 		FILE(COPY ${DLL} DESTINATION ${CMAKE_BINARY_DIR})
 		FILE(COPY ${RESSOURCES} DESTINATION ${CMAKE_BINARY_DIR}/Release)
 		INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/SFML-src/Window/Release/include)
-		
+
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-audio-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-graphics-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-system-d.lib)
 		TARGET_LINK_LIBRARIES (${CLIENT_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-window-d.lib)
-		
+
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-audio-d.lib)
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-graphics-d.lib)
 		TARGET_LINK_LIBRARIES (${SERVER_BIN} ${CMAKE_SOURCE_DIR}/SFML-src/Window/Debug/lib/sfml-main-d.lib)
